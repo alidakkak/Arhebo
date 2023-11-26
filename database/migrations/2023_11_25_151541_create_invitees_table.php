@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('occasions', function (Blueprint $table) {
+        Schema::create('invitees', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('date');
-            $table->string('time');
-            $table->string('location');
-            $table->foreignId('user_id')->references('id')
-            ->on('users')->onDelete('cascade');
+            $table->string("prefix");
+            $table->string("name");
+            $table->string("phone");
+            $table->integer("seat")->nullable();
+            $table->integer("number_of_people")->default(1);
+            $table->integer("status");
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('occasions');
+        Schema::dropIfExists('invitees');
     }
 };

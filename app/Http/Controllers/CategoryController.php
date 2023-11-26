@@ -29,5 +29,8 @@ class CategoryController extends Controller
         return CategoryResource::make($category);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8de360d84eecb0c2607291ea37da89cc49d2abc7
 }

@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invitees', function (Blueprint $table) {
+        Schema::create('colors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('QR_code');
-            $table->string('seat_number')->nullable();
+            $table->string("color");
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invitees');
+        Schema::dropIfExists('colors');
     }
 };

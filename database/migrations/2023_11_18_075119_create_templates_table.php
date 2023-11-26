@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
             $table->string('image');
             $table->foreignId('category_id')->references('id')
             ->on('categories')->onDelete('cascade');

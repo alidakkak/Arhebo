@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('invitees', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('QR_code');
-            $table->string('seat_number')->nullable();
+            $table->string("prefix");
+            $table->string("name");
+            $table->string("phone");
+            $table->integer("seat")->nullable();
+            $table->integer("number_of_people")->default(1);
+            $table->integer("status");
             $table->timestamps();
         });
     }

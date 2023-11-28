@@ -20,4 +20,8 @@ class Template extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function colorTemplate() {
+        return $this->hasMany(ColorTemplate::class);
+    }
+
 }

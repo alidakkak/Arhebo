@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OffersController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,8 @@ Route::group(['middleware' => 'jwt.auth'], function (){
 
     ///// Offers
     Route::get('offers', [OffersController::class, 'index']);
+
+    //// Template
+    //Route::get('templates',[TemplateController::class,'index']);
 });
+Route::get('templates',[TemplateController::class,'index']);

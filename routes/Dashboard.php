@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OffersController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 /////// Category
@@ -14,3 +15,6 @@ Route::delete('categories/{category}', [CategoryController::class, 'delete']);
 Route::post('offers', [OffersController::class, 'store']);
 Route::post('offers/{offer}', [OffersController::class, 'update']);
 Route::delete('offers/{offer}', [OffersController::class, 'delete']);
+
+/////// Template
+Route::post('templates', [TemplateController::class,'store']);

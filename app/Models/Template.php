@@ -21,7 +21,7 @@ class Template extends Model
     }
 
     public function colorTemplate() {
-        return $this->belongsToMany(Color::class,ColorTemplate::class);
+        return $this->belongsToMany(Color::class,ColorTemplate::class)->withPivot("image","descriptions");
 
     }
 

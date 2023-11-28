@@ -11,7 +11,8 @@ class Color extends Model
 
     protected $guarded = ['id'];
 
-    public function colorTemplate() {
-        return $this->hasMany(ColorTemplate::class);
-    }
-}
+
+    public function template() {
+        return $this->belongsToMany(Template::class,ColorTemplate::class)->withPivot("image","descriptions");
+
+    }}

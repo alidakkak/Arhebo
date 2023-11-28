@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Color;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,13 +15,20 @@ class TemplateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $colors_details = array();
+     foreach ($this->colorTemplate as $index=>$color)
+     {
+         $colors_details[$index]["description"]=$color->pivot->descriptions;
+         $colors_details[$index]["image"]=$color->pivot->image;
+         $colors_details[$index]["color"]=Color::find($color->pivot->color_id)->color;
+     }
         return [
             'id' => $this->id,
             'title' => $this->title,
             'image' => $this->image,
             "size"=>$this->size,
             "format" => $this->format,
-            'color' => ColorResource::collection($this->colorTemplate),
+            'colors' => $colors_details,
         ];
     }
 }

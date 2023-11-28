@@ -20,16 +20,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('{type}/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('forget-password',[ForgetPasswordController::class,'forgetPassword']);
 Route::post('reset-password',[ResetPasswordController::class,'resetPassword']);
-
 
 Route::group(['middleware' => 'jwt.auth'], function (){
     Route::post('/logout', [AuthController::class, 'logout']);

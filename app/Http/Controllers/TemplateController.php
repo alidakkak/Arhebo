@@ -17,16 +17,19 @@ class TemplateController extends Controller
     }
 
     public function store(StoreTemplateRequest $request){
-        $request->validated($request->all());
+
         $template = Template::create($request->all());
-        $colors = $request->color;
-        foreach ($colors as $index => $color){
-            $newColor = Color::create(['color' => $color]);
+
+        foreach ($request->colors as $index => $color){
+            $Color = Color::updateOrCreate(
+                ['color' => $color["name"]],
+                ['color' => $color["name"]]
+            );
             ColorTemplate::create([
-                'color_id' => $newColor->id,
+                'color_id' => $Color->id,
                 'template_id' => $template->id,
-                'descriptions' => $color['descriptions'][$index],
-                'image' => $color['image'][$index],
+                'descriptions' => $color['description'],
+                'image' => $color['image'],
             ]);
         }
         return TemplateResource::make($template);

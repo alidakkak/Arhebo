@@ -24,13 +24,17 @@ class StoreTemplateRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'emoji' => 'required',
+            'emoji' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+//            "description"=>"required|string",
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'colors' => 'required|array',
-            'colors.*' => 'string',
-            'descriptions' => 'required|array',
-            'descriptions.*' => 'string',
+            'colors.*.description' => 'required|string',
+            'colors.*.image' => 'required|image|mimes:jpeg,png,jpg,svg',
+            'colors.*.name' => 'required|string',
+
+
+
         ];
     }
 }

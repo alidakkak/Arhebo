@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Template extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    protected $fillable = ['title',"emoji","size","format","image","category_id"];
 
     public function setImageAttribute ($image){
         $newImageName = uniqid() . '_' . 'templates_image' . '.' . $image->extension();
@@ -21,7 +21,8 @@ class Template extends Model
     }
 
     public function colorTemplate() {
-        return $this->hasMany(ColorTemplate::class);
+        return $this->belongsToMany(Color::class,ColorTemplate::class);
+
     }
 
 }

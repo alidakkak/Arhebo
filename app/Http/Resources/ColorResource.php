@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TemplateResource extends JsonResource
+class ColorResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +15,7 @@ class TemplateResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'image' => $this->image,
-            "size"=>$this->size,
-            "format" => $this->format,
-            'color' => ColorResource::collection($this->colorTemplate),
-
-
+         "color" => $this->color,
         ];
     }
 }

@@ -20,7 +20,7 @@ class TemplateResource extends JsonResource
      {
          $colors_details[$index]["description"]=$color->pivot->descriptions;
          $colors_details[$index]["image"]=$color->pivot->image;
-         $colors_details[$index]["color"]=Color::find($color->pivot->color_id)->color;
+         $colors_details[$index]["color"]=$color->color;
      }
         return [
             'id' => $this->id,

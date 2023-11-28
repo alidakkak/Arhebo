@@ -21,8 +21,6 @@ class TemplateResource extends JsonResource
             "size"=>$this->size,
             "format" => $this->format,
             'color' => ColorResource::collection($this->colorTemplate),
-
-
         ];
     }
 }

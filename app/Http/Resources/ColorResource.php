@@ -15,7 +15,13 @@ class ColorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-         "color" => $this->color,
+         'color' => $this->color,
+         'ColorTemplate' => $this->colorTemplate->map(function ($item) {
+             return [
+                 'description' => $item->descriptions,
+                 'image' => $item->image,
+             ];
+         })
         ];
     }
 }

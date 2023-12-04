@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class ColorTemplate extends Model
 {
     use HasFactory;
-
-    public function setImageAttribute ($image){
-        $newImageName = uniqid() . '_' . 'templates_image' . '.' . $image->extension();
-        $image->move(public_path('templates_image') , $newImageName);
-        return $this->attributes['image'] =  '/'.'templates_image'.'/' . $newImageName;
-    }
     protected $guarded = ['id'];
+
+    public function setTemplateAttribute ($template){
+        $newTemplateName = uniqid() . '_' . 'templates_image' . '.' . $template->extension();
+        $template->move(public_path('templates_image') , $newTemplateName);
+        return $this->attributes['template'] =  '/'.'templates_image'.'/' . $newTemplateName;
+    }
 
     public function color() {
         return $this->belongsTo(Color::class);
     }
 
-    public function template() {
+    public function Template() {
         return $this->belongsTo(Template::class);
     }
 }

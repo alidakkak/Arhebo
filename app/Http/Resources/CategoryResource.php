@@ -18,7 +18,10 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'image' => $this->image,
-            'template' => $this->template
+            'photo' => $this->photo,
+            'description' => $this->descriptions,
+            'template' => TemplateResource::collection($this->Template),
+            'input' => $this->input
         ];
     }
 }

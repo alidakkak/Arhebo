@@ -23,7 +23,7 @@ class CheckUser
                 }
             }
             if($auth==false){
-                return response()->json(['Auth' => 'you are not auth']);
+                return response()->json(['Unauthorized'], 401);
             }
 
         } catch (\Exception $e) {

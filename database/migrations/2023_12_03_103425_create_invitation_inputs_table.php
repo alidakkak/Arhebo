@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('filters', function (Blueprint $table) {
+        Schema::create('invitation_inputs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("category_id")->constrained("categories")->cascadeOnDelete();
-            $table->string("name");
+            $table->string('title');
+            $table->foreignId('invitation_id')->references('id')
+                 ->on('invitations')->onDelete('cascade');
+            $table->foreignId('input_id')->references('id')
+                  ->on('inputs')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filters');
+        Schema::dropIfExists('invitation_inputs');
     }
 };

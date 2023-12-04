@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('package_id')->constrained("packages")->cascadeOnDelete();
             $table->foreignId('template_id')->constrained("templates")->cascadeOnDelete();
             $table->string("image");
-            $table->string("islamic_date");
-            $table->string("gregorian_date");
+            $table->string("hijri_date");
+            $table->string("miladi_date");
             $table->string("from");
             $table->string("to");
             $table->string("event_name");

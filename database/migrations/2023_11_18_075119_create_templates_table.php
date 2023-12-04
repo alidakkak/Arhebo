@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('image');
             $table->string('emoji');
             $table->string('size');
             $table->string('format');
+            $table->string('descriptions');
             $table->foreignId('category_id')->references('id')
             ->on('categories')->onDelete('cascade');
             $table->timestamps();

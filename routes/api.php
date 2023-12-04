@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('{type}/login', [AuthController::class, 'login']);
+Route::post('login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('forget-password',[ForgetPasswordController::class,'forgetPassword']);
 Route::post('reset-password',[ResetPasswordController::class,'resetPassword']);
 
-Route::group(['middleware' => 'jwt.auth'], function (){
+Route::group(['middleware' => 'check_user:2,1'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 
@@ -37,6 +37,6 @@ Route::group(['middleware' => 'jwt.auth'], function (){
     Route::get('offers', [OffersController::class, 'index']);
 
     //// Template
-    //Route::get('templates',[TemplateController::class,'index']);
+    Route::get('templates',[TemplateController::class,'index']);
+    Route::get('trendingNew',[TemplateController::class,'trending']);
 });
-Route::get('templates',[TemplateController::class,'index']);

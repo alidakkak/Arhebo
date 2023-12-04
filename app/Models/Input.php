@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Color extends Model
+class Input extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-
-    public function Template() {
-        return $this->belongsToMany(Template::class,ColorTemplate::class)->withPivot("template","descriptions");
-    }}
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
+}

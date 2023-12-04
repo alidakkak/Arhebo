@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("template_id")->constrained("templates")->cascadeOnDelete();
             $table->foreignId("color_id")->constrained("colors")->cascadeOnDelete();
-            $table->string("image");
+            $table->string("template");
             $table->string('descriptions');
             $table->timestamps();
         });

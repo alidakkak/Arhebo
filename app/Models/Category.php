@@ -17,8 +17,18 @@ class Category extends Model
         return $this->attributes['image'] =  '/'.'categories_image'.'/' . $newImageName;
     }
 
+    public function setPhotoAttribute ($photo){
+        $newPhotoName = uniqid() . '_' . 'categories_image' . '.' . $photo->extension();
+        $photo->move(public_path('categories_image') , $newPhotoName);
+        return $this->attributes['photo'] =  '/'.'categories_image'.'/' . $newPhotoName;
+    }
 
-    public function template() {
+
+    public function Template() {
         return $this->hasMany(Template::class);
+    }
+
+    public function input() {
+        return $this->hasMany(Input::class);
     }
 }

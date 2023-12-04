@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Template extends Model
 {
     use HasFactory;
-    protected $fillable = ['title',"emoji","size","format","image","category_id"];
+    protected $guarded = ['id'];
 
-    public function setImageAttribute ($image){
-        $newImageName = uniqid() . '_' . 'templates_image' . '.' . $image->extension();
-        $image->move(public_path('templates_image') , $newImageName);
-        return $this->attributes['image'] =  '/'.'templates_image'.'/' . $newImageName;
+
+    public function setTemplateAttribute ($template){
+        $newTemplateName = uniqid() . '_' . 'templates_image' . '.' . $template->extension();
+        $template->move(public_path('templates_image') , $newTemplateName);
+        return $this->attributes['template'] =  '/'.'templates_image'.'/' . $newTemplateName;
     }
 
     public function category() {
@@ -21,8 +22,11 @@ class Template extends Model
     }
 
     public function colorTemplate() {
-        return $this->belongsToMany(Color::class,ColorTemplate::class)->withPivot("image","descriptions");
+        return $this->belongsToMany(Color::class,ColorTemplate::class)->withPivot("template","descriptions");
+    }
 
+    public function invitation() {
+        return $this->hasMany(Invitation::class);
     }
 
 }

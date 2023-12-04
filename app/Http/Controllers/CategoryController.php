@@ -6,20 +6,29 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Input;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $category = Category::all();
-        return CategoryResource::collection($category);
+        $category = Category::select('id','name','image')->get();
+        return $category;
     }
 
     public function store(StoreCategoryRequest $request)
     {
         $request->validated($request->all());
         $category = Category::create($request->all());
+        if ($request->inputs) {
+            foreach ($request->inputs as $input) {
+                Input::create([
+                    'category_id' => $category->id,
+                    'input_name' => $input
+                ]);
+            }
+        }
         return CategoryResource::make($category);
     }
 

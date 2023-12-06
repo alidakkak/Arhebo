@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('package_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("package_id")->constrained()->cascadeOnDelete();
-            $table->unsignedMediumInteger("price");
+            $table->foreignId("package_id")->references('id')
+                ->on('packages')->onDelete('cascade');
+            $table->integer("price");
             $table->string("number_of_invitees");
 
             $table->timestamps();

@@ -10,6 +10,20 @@ class Template extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($template) {
+            $lastTemplate = static::latest()->first();
+            if($lastTemplate) {
+                $template->template_code =
+                    str_pad((int)$lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
+            } else {
+                $template->template_code = '0001';
+            }
+        });
+    }
+
 
     public function setTemplateAttribute ($template){
         $newTemplateName = uniqid() . '_' . 'templates_image' . '.' . $template->extension();

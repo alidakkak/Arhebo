@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -23,14 +24,15 @@ class AuthController extends Controller
      */
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email' => 'required_without:phone|email',
+            'phone' => 'required_without:email|numeric',
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json($validator->errors(), 400);
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Unauthorized'], 403);
         }
         return $this->createNewToken($token);
     }
@@ -43,10 +45,11 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
+            'phone' => 'required|max:20|unique:users',
             'password' => 'required|string|confirmed|min:6',
         ]);
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
         $user = User::create(array_merge(
             $validator->validated(),
@@ -77,6 +80,15 @@ class AuthController extends Controller
      */
     public function userProfile() {
         return response()->json(auth()->user());
+    }
+
+    public function update(UpdateProfileRequest $request, User $user) {
+        $request->validated($request->all());
+        $user->update($request->all());
+        return response([
+            'Message' => 'User Updated SuccessFully',
+            'User' => $user
+        ]);
     }
     /**
      * Get the token array structure.

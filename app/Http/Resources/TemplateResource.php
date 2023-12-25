@@ -27,6 +27,7 @@ class TemplateResource extends JsonResource
             'title' => $this->title,
             'description' => $this->descriptions,
             'emoji' => $this->emoji,
+            'template_code' => $this->template_code,
             'category_id' => $this->category_id,
             "size"=>$this->size,
             "format" => $this->format,

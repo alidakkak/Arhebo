@@ -4,6 +4,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TemplateController;
 use App\Models\Package;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,11 @@ Route::delete('offers/{offer}', [OffersController::class, 'delete']);
 
 /////// Template
 Route::post('templates', [TemplateController::class,'store']);
+Route::delete('templates/{template}', [TemplateController::class, 'delete']);
 
 ////// Package
 Route::post('packages', [PackageController::class, 'store']);
+
+////// Services
+    Route::post('services', [ServicesController::class, 'store']);
 });

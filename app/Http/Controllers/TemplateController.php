@@ -20,8 +20,8 @@ class TemplateController extends Controller
     public function trending() {
         $mostUsedTemplate = Template::withCount('invitation')
             ->orderBy('invitation_count', 'desc')
-            ->first();
-        return new TrendingResource($mostUsedTemplate);
+            ->get();
+        return TrendingResource::collection($mostUsedTemplate);
     }
 
     public function store(StoreTemplateRequest $request){
@@ -41,5 +41,18 @@ class TemplateController extends Controller
             ]);
         }
         return TemplateResource::make($template);
+    }
+
+    public function delete(Template $template) {
+        $template->delete();
+        $templates = Template::where('id' , '>' , $template->id)->get();
+        foreach ($templates as $cat) {
+            $cat->template_code = str_pad((int)$cat->template_code - 1, 4, '0', STR_PAD_LEFT);
+            $cat->save();
+        }
+        return response([
+            "Deleted SuccessFully",
+            TemplateResource::make($template)
+        ]);
     }
 }

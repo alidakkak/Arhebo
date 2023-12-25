@@ -18,11 +18,13 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = ['id'];
+
+    public function setImageAttribute ($image){
+        $newImageName = uniqid() . '_' . 'user_image' . '.' . $image->extension();
+        $image->move(public_path('user_image') , $newImageName);
+        return $this->attributes['image'] =  '/'.'user_image'.'/' . $newImageName;
+    }
 
     /**
      * The attributes that should be hidden for serialization.

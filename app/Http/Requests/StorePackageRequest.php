@@ -25,6 +25,7 @@ class StorePackageRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'required|string',
+            'color' => 'required|string',
             'package_id' => Rule::exists('packages', 'id'),
             'price.*' => 'required|string',
             'number_of_invitees.*' => 'required|string',

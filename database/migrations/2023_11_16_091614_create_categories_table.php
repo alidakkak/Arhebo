@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('photo');
             $table->string('descriptions');
+            $table->string('category_code', 2)->unique();
             $table->timestamps();
         });
     }

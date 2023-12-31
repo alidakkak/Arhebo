@@ -29,4 +29,5 @@ class ResetPasswordRequest extends FormRequest
             'password' => ['required','string','min:6'],
         ];
     }
+
 }

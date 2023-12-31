@@ -14,4 +14,8 @@ class Package extends Model
     public function packageDetail() {
         return $this->hasMany(PackageDetail::class);
     }
+
+    public function invitation() {
+        return $this->hasMany(Invitation::class);
+    }
 }

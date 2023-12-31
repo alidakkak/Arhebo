@@ -23,6 +23,7 @@ class PackageController extends Controller
                 PackageDetail::create([
                     'package_id' => $packag->id,
                     'price' => $package['price'],
+                    'price_qr' => $package['price_qr'],
                     'number_of_invitees' => $package['number_of_invitees']
                 ]);
             }

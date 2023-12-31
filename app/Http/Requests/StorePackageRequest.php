@@ -28,6 +28,7 @@ class StorePackageRequest extends FormRequest
             'color' => 'required|string',
             'package_id' => Rule::exists('packages', 'id'),
             'price.*' => 'required|string',
+            'price_qr.*' => 'required|string',
             'number_of_invitees.*' => 'required|string',
         ];
     }

@@ -20,6 +20,18 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $guarded = ['id'];
 
+    public function wishlist() {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function rating() {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function invitation() {
+        return $this->hasMany(Invitation::class);
+    }
+
     public function setImageAttribute ($image){
         $newImageName = uniqid() . '_' . 'user_image' . '.' . $image->extension();
         $image->move(public_path('user_image') , $newImageName);

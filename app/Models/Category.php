@@ -46,4 +46,8 @@ class Category extends Model
     public function input() {
         return $this->hasMany(Input::class);
     }
+
+    public function invitation() {
+        return $this->hasMany(Invitation::class);
+    }
 }

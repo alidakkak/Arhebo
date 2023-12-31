@@ -27,10 +27,11 @@ class StoreTemplateRequest extends FormRequest
             'emoji' => 'required|string',
             "descriptions"=>"required|string",
             'category_id' => ['required', Rule::exists('categories', 'id')],
-            'colors' => 'required|array',
-            'colors.*.description' => 'required|string',
-            'colors.*.template' => 'required|image|mimes:jpeg,png,jpg,svg',
-            'colors.*.name' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg',
+//            'colors' => 'required|array',
+//            'colors.*.description' => 'required|string',
+//            'colors.*.template' => 'required|image|mimes:jpeg,png,jpg,svg',
+//            'colors.*.name' => 'required|string',
 
         ];
     }

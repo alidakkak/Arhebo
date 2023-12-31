@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("package_id")->references('id')
                 ->on('packages')->onDelete('cascade');
-            $table->integer("price");
+            $table->double("price");
+            $table->double("price_qr");
             $table->string("number_of_invitees");
 
             $table->timestamps();

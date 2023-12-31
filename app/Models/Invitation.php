@@ -11,7 +11,19 @@ class Invitation extends Model
 
     protected $guarded = ['id'];
 
+    public function category () {
+        return $this->belongsTo(Category::class);
+    }
+
     public function Template() {
         return $this->belongsTo(Template::class);
+    }
+
+    public function pacgage() {
+        return $this->belongsTo(Package::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

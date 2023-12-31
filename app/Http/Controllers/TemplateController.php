@@ -24,22 +24,28 @@ class TemplateController extends Controller
         return TrendingResource::collection($mostUsedTemplate);
     }
 
+//    public function store(StoreTemplateRequest $request){
+//
+//        $template = Template::create($request->all());
+//
+//        foreach ($request->colors as $index => $color){
+//            $Color = Color::updateOrCreate(
+//                ['color' => $color["name"]],
+//                ['color' => $color["name"]]
+//            );
+//            ColorTemplate::create([
+//                'color_id' => $Color->id,
+//                'template_id' => $template->id,
+//                'descriptions' => $color['description'],
+//                'template' => $color['template'],
+//            ]);
+//        }
+//        return TemplateResource::make($template);
+//    }
+
     public function store(StoreTemplateRequest $request){
-
+        $request->validated($request->all());
         $template = Template::create($request->all());
-
-        foreach ($request->colors as $index => $color){
-            $Color = Color::updateOrCreate(
-                ['color' => $color["name"]],
-                ['color' => $color["name"]]
-            );
-            ColorTemplate::create([
-                'color_id' => $Color->id,
-                'template_id' => $template->id,
-                'descriptions' => $color['description'],
-                'template' => $color['template'],
-            ]);
-        }
         return TemplateResource::make($template);
     }
 
@@ -51,7 +57,7 @@ class TemplateController extends Controller
             $cat->save();
         }
         return response([
-            "Deleted SuccessFully",
+           'message' =>  "Deleted SuccessFully",
             TemplateResource::make($template)
         ]);
     }

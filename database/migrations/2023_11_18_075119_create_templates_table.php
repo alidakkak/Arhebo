@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('size');
             $table->string('format');
             $table->string('descriptions');
+            $table->string('image');
             $table->string('template_code',4)->unique();
             $table->foreignId('category_id')->references('id')
             ->on('categories')->onDelete('cascade');

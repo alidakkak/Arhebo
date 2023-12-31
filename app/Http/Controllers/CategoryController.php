@@ -21,14 +21,6 @@ class CategoryController extends Controller
     {
         $request->validated($request->all());
         $category = Category::create($request->all());
-        if ($request->inputs) {
-            foreach ($request->inputs as $input) {
-                Input::create([
-                    'category_id' => $category->id,
-                    'input_name' => $input
-                ]);
-            }
-        }
         return CategoryResource::make($category);
     }
 
@@ -39,8 +31,12 @@ class CategoryController extends Controller
         return CategoryResource::collection($category);
     }
 
-    public function show(Category $category)
+    public function show($category)
     {
+        $category = Category::find($category);
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
         return CategoryResource::make($category);
     }
 

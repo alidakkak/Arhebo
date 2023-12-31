@@ -15,13 +15,13 @@ class TemplateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $colors_details = array();
-     foreach ($this->colorTemplate as $index=>$color)
-     {
-         $colors_details[$index]["description"]=$color->pivot->descriptions;
-         $colors_details[$index]["template"]=$color->pivot->template;
-         $colors_details[$index]["color"]=$color->color;
-     }
+//        $colors_details = array();
+//     foreach ($this->colorTemplate as $index=>$color)
+//     {
+//         $colors_details[$index]["description"]=$color->pivot->descriptions;
+//         $colors_details[$index]["template"]=$color->pivot->template;
+//         $colors_details[$index]["color"]=$color->color;
+//     }
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -31,7 +31,7 @@ class TemplateResource extends JsonResource
             'category_id' => $this->category_id,
             "size"=>$this->size,
             "format" => $this->format,
-            'colors' => $colors_details,
+            'image' => $this->image,
         ];
     }
 }

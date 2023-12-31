@@ -14,4 +14,8 @@ class Input extends Model
     public function category() {
         return $this->belongsTo(Category::class);
     }
+
+    public function validate() {
+        return $this->hasMany(Validate::class);
+    }
 }

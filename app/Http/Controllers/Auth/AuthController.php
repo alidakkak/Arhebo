@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -32,7 +33,7 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
         if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return response()->json(['error' => trans('auth.failed')], 403);
         }
         return $this->createNewToken($token);
     }
@@ -58,9 +59,11 @@ class AuthController extends Controller
         //  $user->generate_code();
         //  EmailService::sendHtmlEmail($user->email,$user->code);
         //   $user->reset_code();
+        $token = JWTAuth::fromUser($user);
         return response()->json([
             'message' => 'User successfully registered',
-            'user' => $user
+            'access_token' => $token,
+            'user' => $user,
         ], 201);
     }
 

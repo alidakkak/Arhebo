@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreInvitationRequest extends FormRequest
 {
@@ -22,7 +23,19 @@ class StoreInvitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'category_id' => ['required', Rule::exists('categories','id')],
+            'template_id' => ['required', Rule::exists('templates','id')],
+            'package_id' => ['required', Rule::exists('packages','id')],
+            'hijri_date' => 'required|string',
+            'miladi_date' => 'required|string',
+            'from' => 'required|string',
+            'to' => 'required|string',
+            'event_name' => 'required|string',
+            'location_link' => 'required|string',
+            'location_name' => 'required|string',
+            'sponsor_name' => 'required|string',
+            'invitation_text' => 'required|string',
+            'prohibited_thing' => 'required|string',
         ];
     }
 }

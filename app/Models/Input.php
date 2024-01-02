@@ -18,4 +18,8 @@ class Input extends Model
     public function validate() {
         return $this->hasMany(Validate::class);
     }
+
+    public function invitationInput() {
+        return $this->hasMany(InvitationInput::class);
+    }
 }

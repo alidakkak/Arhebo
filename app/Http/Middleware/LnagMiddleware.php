@@ -16,8 +16,8 @@ class LnagMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->has('lang')) {
-            App::setLocale($request->lang);
+        if ($request->header('lang')) {
+            App::setLocale($request->header('lang'));
         }
         return $next($request);
     }

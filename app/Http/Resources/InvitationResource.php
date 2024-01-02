@@ -26,10 +26,14 @@ class InvitationResource extends JsonResource
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
             'prohibited_thing' => $this->prohibited_thing,
-            'category' => CategoryResource::make($this->category),
+            'invitationInput' => $this->invitationInput
+//            'category' =>$this->category,
+//            'template' =>$this->template,
+//            'package' => $this->package,
+           // 'category' => CategoryResource::make($this->category),
             //'template' => TemplateResource::make($this->temolate),
-            'package' => PackageResource::make($this->package),
-            'user' => $this->user
+           // 'package' => PackageResource::make($this->package),
+//            'user' => $this->user
         ];
     }
 }

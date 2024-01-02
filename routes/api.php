@@ -27,14 +27,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+Route::group(['middleware' => 'lang'], function () {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('emailVerification',[EmailVerifyController::class,'emailVerification']);
 Route::post('forget-password',[ForgetPasswordController::class,'forgetPassword']);
 Route::post('reset-password',[ResetPasswordController::class,'resetPassword']);
 
-Route::group(['middleware' => 'check_user:2,1'], function () {
+});
+
+Route::group(['middleware' => 'check_user:2,1', 'lang'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('updateProfile/{user}', [AuthController::class, 'update']);

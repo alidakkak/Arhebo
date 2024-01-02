@@ -19,18 +19,17 @@ class InvitationController extends Controller
     public function store(StoreInvitationRequest $request) {
         $user = auth()->user();
         try {
-            $request->validated($request->all());
             $invitation = Invitation::create(array_merge(['user_id' => $user->id], $request->all()));
-            foreach ($request->inputs as $input) {
+            foreach ($request->answers as $answer) {
             InvitationInput::create([
                'invitation_id' => $invitation->id,
-               'input_id' => $input->input_id,
-               'answer' => $input->answer
+                'input_id' => $answer['input_id'],
+                'answer' => $answer['answer']
             ]);
             }
             return InvitationResource::make($invitation);
         } catch (\Exception $e) {
-            return response(['message' => 'An error occurred while creating the invitation'],500);
+            return response(['message' => 'An error occurred while creating the invitation' . '  ' . $e->getMessage()],500);
         }
     }
 

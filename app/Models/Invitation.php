@@ -19,11 +19,15 @@ class Invitation extends Model
         return $this->belongsTo(Template::class);
     }
 
-    public function pacgage() {
+    public function package() {
         return $this->belongsTo(Package::class);
     }
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function invitationInput() {
+        return $this->hasMany(InvitationInput::class);
     }
 }

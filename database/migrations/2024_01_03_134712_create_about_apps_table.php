@@ -11,11 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('validates', function (Blueprint $table) {
+        Schema::create('about_apps', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('message');
-            $table->foreignId('input_id')->references('id')->on('inputs')->onDelete('cascade');
+            $table->string('title');
+            $table->string('body');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('facebook');
+            $table->string('instagram');
+            $table->string('whatsapp');
+            $table->string('x');
             $table->timestamps();
         });
     }
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('validates');
+        Schema::dropIfExists('about_apps');
     }
 };

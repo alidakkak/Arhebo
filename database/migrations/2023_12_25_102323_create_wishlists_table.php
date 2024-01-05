@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->boolean('isfavorite')->default(1);
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('template_id')->references('id')->on('templates')->onDelete('cascade');
             $table->timestamps();

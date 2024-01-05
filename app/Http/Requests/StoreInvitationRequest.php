@@ -33,11 +33,11 @@ class StoreInvitationRequest extends FormRequest
             'event_name' => 'required|string',
             'location_link' => 'required|string',
             'location_name' => 'required|string',
-            'sponsor_name' => 'required|string',
+            'inviter' => 'required|string',
             'invitation_text' => 'required|string',
             'prohibited_thing' => 'required|string',
-            'answers.*' => 'required',
-            'input_id.*' => ['required', Rule::exists('inputs', 'id')],
+            'answers.*.answer' => 'required',
+            'answers.*.input_id' => ['required', Rule::exists('inputs', 'id')],
         ];
     }
 }

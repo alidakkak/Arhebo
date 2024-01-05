@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('invitees', function (Blueprint $table) {
             $table->id();
-            $table->string("prefix");
-            $table->string("name");
-            $table->string("phone");
-            $table->integer("seat")->nullable();
-            $table->integer("number_of_people")->default(1);
-            $table->integer("status");
+            $table->foreignId('invitation_id')->references('id')
+                ->on('invitations');
+            $table->string('name');
+            $table->string('phone');
+            $table->string('seat')->nullable();
+            $table->integer('number_of_people');
+            $table->string('status')->default('waiting');
             $table->timestamps();
         });
     }

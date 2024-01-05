@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ValidateResource extends JsonResource
+class FAQResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,9 @@ class ValidateResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'message' => $this->message
+            'question' => $this->question,
+            'answer' => $this->answer,
+            'image' => $this->image
         ];
     }
 }

@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 class InputController extends Controller
 {
     public function store(StoreInputRequest $request) {
-        $request->validated($request->all());
         $inputs = Input::create($request->all());
         if($request->validates){
             foreach ($request->validates as $validate) {
-                $validate = Validate::create([
+                 Validate::create([
                    'input_id' => $inputs->id,
-                   'name' => $validate['name']
+                   'name' => $validate['name'],
+                    'message' => $validate['message'],
                 ]);
             }
         }

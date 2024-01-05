@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerifyController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PrivacyPolicyController;
@@ -36,10 +39,11 @@ Route::post('reset-password',[ResetPasswordController::class,'resetPassword']);
 
 });
 
-Route::group(['middleware' => 'check_user:2,1', 'lang'], function () {
+Route::group(['middleware' => ['check_user:2,1', 'lang']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('updateProfile/{user}', [AuthController::class, 'update']);
+    Route::post('deleteProfile',[AuthController::class, 'delete']);
 
     //////// Category
     Route::get('categories', [CategoryController::class, 'index']);
@@ -58,11 +62,14 @@ Route::group(['middleware' => 'check_user:2,1', 'lang'], function () {
     //// Services
     Route::get('services', [ServicesController::class, 'index']);
 
-    ///// Terms And Conditions
-    Route::get('terms', [TermController::class, 'index']);
-
     ////  Privacy Policy
     Route::get('privacyPolicy', [PrivacyPolicyController::class, 'index']);
+
+    ////  AboutApp
+    Route::get('about_apps', [AboutAppController::class, 'index']);
+
+    ////  FAQ
+    Route::get('faq', [FAQController::class, 'index']);
 
     //// Wishlist
     Route::get('wishlists', [WishlistController::class, 'index']);
@@ -78,4 +85,10 @@ Route::group(['middleware' => 'check_user:2,1', 'lang'], function () {
     //// Invitation
     Route::get('invitations', [InvitationController::class, 'myInvitation']);
     Route::post('invitations', [InvitationController::class, 'store']);
+
+    ////  Invitee
+    Route::get('invitees', [InviteeController::class, 'index']);
 });
+
+///// Terms And Conditions
+Route::get('terms', [TermController::class, 'index']);

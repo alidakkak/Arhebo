@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Invitee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,7 +18,7 @@ class InvitationResource extends JsonResource
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,
-            'sponsor_name' => $this->sponsor_name,
+            'inviter' => $this->inviter,
             'hijri_date' => $this->hijri_date,
             'miladi_date' => $this->miladi_date,
             'from' => $this->from,
@@ -26,14 +27,14 @@ class InvitationResource extends JsonResource
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
             'prohibited_thing' => $this->prohibited_thing,
-            'invitationInput' => $this->invitationInput
-//            'category' =>$this->category,
-//            'template' =>$this->template,
-//            'package' => $this->package,
-           // 'category' => CategoryResource::make($this->category),
-            //'template' => TemplateResource::make($this->temolate),
-           // 'package' => PackageResource::make($this->package),
-//            'user' => $this->user
+            'city' => $this->city,
+            'region' => $this->region,
+            'invited' => Invitee::where('invitation_id', $this->id)->count(),
+            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', 'waiting')->count(),
+            'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', 'confirmed')->count(),
+            'rejected' => Invitee::where('invitation_id', $this->id)->where('status', 'rejected')->count(),
+            'invitationInput' => InvitationInputResource::collection($this->invitationInput),
+            'template' => TemplateResource::make($this->template),
         ];
     }
 }

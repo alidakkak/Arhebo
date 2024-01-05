@@ -14,7 +14,6 @@ class WishlistController extends Controller
     public function index(){
         $user = auth()->user();
         $wishlist = Wishlist::where('user_id', $user->id)
-            ->where('isfavorite', 1)
             ->get();
         return WishlistResource::collection($wishlist);
     }
@@ -23,7 +22,6 @@ class WishlistController extends Controller
         $user = auth()->user();
         $wishlist = Wishlist::create([
            'user_id' => $user->id,
-           'isfavorite' => 1,
            'template_id' => $request->template_id
         ]);
         return WishlistResource::make($wishlist);

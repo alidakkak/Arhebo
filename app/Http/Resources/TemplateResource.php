@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Color;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,6 +16,12 @@ class TemplateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $userId = auth()->user()->id;
+        $templateId = $this->id;
+
+        $isFavorite = Wishlist::where('user_id', $userId)
+            ->where('template_id', $templateId)
+            ->exists();
 //        $colors_details = array();
 //     foreach ($this->colorTemplate as $index=>$color)
 //     {
@@ -32,6 +39,7 @@ class TemplateResource extends JsonResource
             "size"=>$this->size,
             "format" => $this->format,
             'image' => $this->image,
+            'is_favorite' => $isFavorite
         ];
     }
 }

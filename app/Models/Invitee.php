@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Invitee extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function invitation() {
+        return $this->belongsTo(Invitation::class);
+    }
 }

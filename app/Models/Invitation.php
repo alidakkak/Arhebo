@@ -30,4 +30,8 @@ class Invitation extends Model
     public function invitationInput() {
         return $this->hasMany(InvitationInput::class);
     }
+
+    public function invitee() {
+        return $this->hasMany(Invitee::class);
+    }
 }

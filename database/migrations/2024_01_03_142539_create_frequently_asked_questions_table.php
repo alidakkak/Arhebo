@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('validates', function (Blueprint $table) {
+        Schema::create('frequently_asked_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('message');
-            $table->foreignId('input_id')->references('id')->on('inputs')->onDelete('cascade');
+            $table->string('image');
+            $table->string('question');
+            $table->string('answer');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('validates');
+        Schema::dropIfExists('frequently_asked_questions');
     }
 };

@@ -5,6 +5,7 @@ use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -93,6 +94,30 @@ class AuthController extends Controller
             'User' => $user
         ]);
     }
+
+    public function delete(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|string|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $user = auth()->user();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['error' => trans('auth.failed')], 403);
+        }
+
+        try {
+            $user->delete();
+            return response()->json(['message' => 'Profile deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting your profile'], 500);
+        }
+    }
+
     /**
      * Get the token array structure.
      *

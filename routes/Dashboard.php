@@ -1,8 +1,11 @@
 <?php
 
 
+use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\InputController;
+use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PrivacyPolicyController;
@@ -39,6 +42,16 @@ Route::post('packages', [PackageController::class, 'store']);
 ////  Privacy Policy
     Route::post('privacyPolicy', [PrivacyPolicyController::class, 'store']);
 
+////  AboutApp
+    Route::post('about_apps', [AboutAppController::class, 'store']);
+
+////  FAQ
+    Route::post('faq', [FAQController::class, 'store']);
+
 ///// Inputs
     Route::post('inputs', [InputController::class, 'store']);
+
+////  Invitee
+    Route::post('invitees', [InviteeController::class, 'store']);
+    Route::patch('invitees/{invitee}', [InviteeController::class, 'update']);
 });

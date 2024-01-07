@@ -34,4 +34,12 @@ class Invitation extends Model
     public function invitee() {
         return $this->hasMany(Invitee::class);
     }
+
+    public function reminder() {
+        return $this->hasMany(Reminder::class);
+    }
+
+    public function reception() {
+        return $this->hasMany(Reception::class);
+    }
 }

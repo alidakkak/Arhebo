@@ -9,6 +9,7 @@ use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PrivacyPolicyController;
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TermController;
@@ -54,4 +55,7 @@ Route::post('packages', [PackageController::class, 'store']);
 ////  Invitee
     Route::post('invitees', [InviteeController::class, 'store']);
     Route::patch('invitees/{invitee}', [InviteeController::class, 'update']);
+
+////  Reminder
+    Route::get('reminders', [ReminderController::class, 'index']);
 });

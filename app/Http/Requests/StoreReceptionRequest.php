@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreApologyRequest extends FormRequest
+class StoreReceptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,8 @@ class StoreApologyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => [Rule::exists('user', 'id')],
-            'invitation_id' => [Rule::exists('invitations', 'id')],
-            'title' => 'required|string',
-            'type' => 'required'
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
         ];
     }
 }

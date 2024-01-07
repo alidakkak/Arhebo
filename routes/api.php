@@ -13,6 +13,8 @@ use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\ReceptionController;
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TermController;
@@ -85,9 +87,17 @@ Route::group(['middleware' => ['check_user:2,1', 'lang']], function () {
     //// Invitation
     Route::get('invitations', [InvitationController::class, 'myInvitation']);
     Route::post('invitations', [InvitationController::class, 'store']);
+    Route::post('invitations/{invitation}', [InvitationController::class, 'delete']);
 
     ////  Invitee
     Route::get('invitees', [InviteeController::class, 'index']);
+
+    ////  Reminder
+    Route::post('reminders', [ReminderController::class, 'store']);
+
+    ////  Reception
+    Route::get('receptions', [ReceptionController::class, 'search']);
+    Route::post('receptions', [ReceptionController::class, 'store']);
 });
 
 ///// Terms And Conditions

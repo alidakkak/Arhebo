@@ -32,6 +32,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Invitation::class);
     }
 
+    public function reminder() {
+        return $this->hasMany(Reminder::class);
+    }
+
+    public function reception() {
+        return $this->hasMany(Reception::class);
+    }
+
     public function setImageAttribute ($image){
         $newImageName = uniqid() . '_' . 'user_image' . '.' . $image->extension();
         $image->move(public_path('user_image') , $newImageName);

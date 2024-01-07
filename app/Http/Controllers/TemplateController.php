@@ -51,11 +51,11 @@ class TemplateController extends Controller
 
     public function delete(Template $template) {
         $template->delete();
-        $templates = Template::where('id' , '>' , $template->id)->get();
-        foreach ($templates as $cat) {
-            $cat->template_code = str_pad((int)$cat->template_code - 1, 4, '0', STR_PAD_LEFT);
-            $cat->save();
-        }
+//        $templates = Template::where('id' , '>' , $template->id)->get();
+//        foreach ($templates as $cat) {
+//            $cat->template_code = str_pad((int)$cat->template_code - 1, 4, '0', STR_PAD_LEFT);
+//            $cat->save();
+//        }
         return response([
            'message' =>  "Deleted SuccessFully",
             TemplateResource::make($template)

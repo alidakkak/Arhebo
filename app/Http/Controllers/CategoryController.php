@@ -42,13 +42,13 @@ class CategoryController extends Controller
 
     public function delete(Category $category) {
         $category->delete();
-        $categories = Category::where('id', '>', $category->id)->get();
-        foreach ($categories as $cat) {
-            $cat->category_code = str_pad((int)$cat->category_code - 1, 2, '0', STR_PAD_LEFT);
-            $cat->save();
-        }
+//        $categories = Category::where('id', '>', $category->id)->get();
+//        foreach ($categories as $cat) {
+//            $cat->category_code = str_pad((int)$cat->category_code - 1, 2, '0', STR_PAD_LEFT);
+//            $cat->save();
+//        }
         return response([
-           "Deleted SuccessFully",
+           "message" => "Deleted SuccessFully",
             CategoryResource::make($category)
         ]);
     }

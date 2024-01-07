@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InviteeResource extends JsonResource
+class ReceptionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +16,8 @@ class InviteeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'seat' => $this->seat,
-            'number_of_people' => $this->number_of_people,
-            'status' => $this->status ?? InviteeTypes::waiting
+            'user' => $this->user,
+            'invitation' => $this->invitation
         ];
     }
 }

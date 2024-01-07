@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Invitee;
+use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -30,9 +31,9 @@ class InvitationResource extends JsonResource
             'city' => $this->city,
             'region' => $this->region,
             'invited' => Invitee::where('invitation_id', $this->id)->count(),
-            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', 'waiting')->count(),
-            'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', 'confirmed')->count(),
-            'rejected' => Invitee::where('invitation_id', $this->id)->where('status', 'rejected')->count(),
+            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count(),
+            'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->count(),
+            'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count(),
             'invitationInput' => InvitationInputResource::collection($this->invitationInput),
             'template' => TemplateResource::make($this->template),
         ];

@@ -18,6 +18,6 @@ class ReceptionController extends Controller
     public function search(Request $request) {
     $user = User::where('phone', $request->phone)->with('invitation')->get();
     return $user;
-}
+    }
 
 }

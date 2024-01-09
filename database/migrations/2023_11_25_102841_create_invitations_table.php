@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
+            $table->foreignId('package_detail_id')->constrained('package_details')->cascadeOnDelete();
             $table->foreignId('template_id')->constrained('templates')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained("users")->cascadeOnDelete();
             $table->string("hijri_date");
@@ -29,6 +30,8 @@ return new class extends Migration
             $table->string('inviter');
             $table->string("invitation_text");
             $table->string("prohibited_thing");
+            $table->boolean('is_active')->default(1);
+            $table->boolean('is_with_qr');
             $table->timestamps();
         });
     }

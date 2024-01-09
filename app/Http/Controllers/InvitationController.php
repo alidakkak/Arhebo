@@ -64,17 +64,25 @@ class InvitationController extends Controller
 
     public function delete(StoreApologyRequest $request, Invitation $invitation) {
         $user = auth()->user();
-        try {
-            DB::beginTransaction();
-            $invitationId = $invitation->id;
-            $apology = Message::create(array_merge(['user_id' => $user->id, 'invitation_id' => $invitationId], $request->all()));
-            $invitation->delete();
-            DB::commit();
-            return ApologyResource::make($apology);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response(['message' => 'An error occurred while deleting the invitation and creating the apology message' . '  ' . $e->getMessage()], 500);
+        $message = Message::where('user_id', $user->id)->where('invitation_id', $invitation->id)->first();
+        if($message) {
+            return response()->json(['message' => 'Invitation is Inactive']);
+        }else {
+            try {
+                DB::beginTransaction();
+                $invitationId = $invitation->id;
+                $apology = Message::create(array_merge(['user_id' => $user->id, 'invitation_id' => $invitationId], $request->all()));
+                $invitation->update([
+                    'is_active' => 0
+                ]);
+                DB::commit();
+                return ApologyResource::make($apology);
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return response(['message' => 'An error occurred while deleting the invitation and creating the apology message' . '  ' . $e->getMessage()], 500);
+            }
         }
+
     }
 
 

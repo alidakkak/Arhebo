@@ -18,7 +18,6 @@ return new class extends Migration
                 ->on('invitations')->onDelete('cascade');
             $table->string('name');
             $table->string('phone');
-            $table->string('seat')->nullable();
             $table->integer('number_of_people');
             $table->string('status')->default(InviteeTypes::waiting);
             $table->timestamps();

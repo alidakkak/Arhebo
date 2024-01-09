@@ -34,8 +34,10 @@ class WishlistController extends Controller
         return WishlistResource::make($wishlist);
     }
 
-    public function delete($wishlist) {
-        $wishlist = Wishlist::find($wishlist);
+    public function delete($template) {
+        $user = auth()->user();
+        $wishlist = Wishlist::where('template_id', $template)
+            ->where('user_id', $user->id)->first();
         if (!$wishlist) {
             return response()->json(['message' => 'Wishlist not found'], 404);
         }

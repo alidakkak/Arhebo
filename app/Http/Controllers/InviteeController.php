@@ -19,9 +19,22 @@ class InviteeController extends Controller
     }
 
     public function store(StoreInviteeRequest $request) {
-        $invitee = Invitee::create($request->all());
-        return InviteeResource::make($invitee);
+        $inviteesData = $request->input('invitees', []);
+        $invitees = [];
+        foreach ($inviteesData as $invitee) {
+                $newInvitee = Invitee::create([
+                    'name' => $invitee['name'],
+                    'phone' => $invitee['phone'],
+                    'number_of_people' => $invitee['number_of_people'],
+                    'invitation_id' => $request->input('invitation_id'),
+                ]);
+                $invitees[] = $newInvitee;
+            }
+        return InviteeResource::collection($invitees);
     }
+
+
+
 
     /// API For conformed Or Rejected Invitation
     public function update(UpdateInviteeRequest $request,Invitee $invitee) {

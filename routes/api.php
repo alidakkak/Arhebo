@@ -76,8 +76,8 @@ Route::group(['middleware' => ['check_user:2,1', 'lang']], function () {
     //// Wishlist
     Route::get('wishlists', [WishlistController::class, 'index']);
     Route::post('wishlists', [WishlistController::class, 'store']);
-    Route::patch('wishlists/{wishlist}', [WishlistController::class, 'switch']);
-    Route::delete('wishlists/{wishlist}', [WishlistController::class, 'delete']);
+   // Route::patch('wishlists/{wishlist}', [WishlistController::class, 'switch']);
+    Route::delete('wishlists/{template}', [WishlistController::class, 'delete']);
 
     //// Rating
     Route::get('ratings', [RatingController::class, 'index']);

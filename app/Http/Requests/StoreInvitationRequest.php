@@ -26,6 +26,7 @@ class StoreInvitationRequest extends FormRequest
             'category_id' => ['required', Rule::exists('categories','id')],
             'template_id' => ['required', Rule::exists('templates','id')],
             'package_id' => ['required', Rule::exists('packages','id')],
+            'package_detail_id' => ['required', Rule::exists('packages','id')],
             'hijri_date' => 'required|string',
             'miladi_date' => 'required|string',
             'from' => 'required|string',
@@ -36,6 +37,7 @@ class StoreInvitationRequest extends FormRequest
             'inviter' => 'required|string',
             'invitation_text' => 'required|string',
             'prohibited_thing' => 'required|string',
+            'is_with_qr' => 'required|string',
             'answers.*.answer' => 'required',
             'answers.*.input_id' => ['required', Rule::exists('inputs', 'id')],
         ];

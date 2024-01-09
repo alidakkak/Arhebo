@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invitation_id')->nullable()->references('id')
-                ->on('invitations')->nullOnDelete();
+            $table->foreignId('invitation_id')->references('id')
+                ->on('invitations')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
             $table->string('title');
-            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

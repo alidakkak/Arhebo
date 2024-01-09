@@ -42,4 +42,12 @@ class Invitation extends Model
     public function reception() {
         return $this->hasMany(Reception::class);
     }
+
+    public function packageDetail() {
+        return $this->belongsTo(PackageDetail::class);
+    }
+
+    public function message() {
+        return $this->hasMany(Message::class);
+    }
 }

@@ -14,6 +14,11 @@ class Template extends Model
         return $this->hasMany(Wishlist::class);
     }
 
+    public function inputs()
+    {
+        return $this->hasMany(Input::class, 'category_id', 'category_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

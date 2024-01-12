@@ -22,7 +22,6 @@ class CategoryResource extends JsonResource
             'description' => $this->descriptions,
             'category_code' => $this->category_code,
             'template' => TemplateResource::collection($this->Template),
-            'input' => InputResource::collection($this->input)
         ];
     }
 }

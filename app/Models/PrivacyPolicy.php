@@ -11,10 +11,4 @@ class PrivacyPolicy extends Model
 
     protected $guarded = ['id'];
 
-    public function setImageAttribute($image)
-    {
-        $newImageName = uniqid() . '_' . 'services_image' . '.' . $image->extension();
-        $image->move(public_path('services_image'), $newImageName);
-        return $this->attributes['image'] = '/' . 'services_image' . '/' . $newImageName;
-    }
 }

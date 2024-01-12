@@ -17,8 +17,7 @@ return new class extends Migration
                 ->on('packages')->onDelete('cascade');
             $table->double("price");
             $table->double("price_qr");
-            $table->string("number_of_invitees");
-
+            $table->integer("number_of_invitees");
             $table->timestamps();
         });
     }

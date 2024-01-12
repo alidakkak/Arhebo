@@ -18,7 +18,6 @@ class TermResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
-            'image' => $this->image,
             'is_agree' => $this->is_agree
         ];
     }

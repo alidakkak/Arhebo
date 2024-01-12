@@ -11,9 +11,4 @@ class FrequentlyAskedQuestion extends Model
 
     protected $guarded = ['id'];
 
-    public function setImageAttribute ($image){
-        $newImageName = uniqid() . '_' . 'FAQ_image' . '.' . $image->extension();
-        $image->move(public_path('FAQ_image') , $newImageName);
-        return $this->attributes['image'] =  '/'.'FAQ_image'.'/' . $newImageName;
-    }
 }

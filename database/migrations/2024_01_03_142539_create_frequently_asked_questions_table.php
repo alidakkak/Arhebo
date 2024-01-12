@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('frequently_asked_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
             $table->string('question');
             $table->string('answer');
             $table->timestamps();

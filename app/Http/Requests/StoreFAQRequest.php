@@ -22,7 +22,6 @@ class StoreFAQRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
             'answer' => 'required|string',
             'question' => 'required|string',
         ];

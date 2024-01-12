@@ -24,7 +24,6 @@ class StoreTermRequest extends FormRequest
         return [
             'title' => 'required|string',
             'body' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
             'is_agree' => 'required|bool'
         ];
     }

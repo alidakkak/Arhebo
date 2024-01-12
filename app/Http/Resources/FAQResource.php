@@ -18,7 +18,6 @@ class FAQResource extends JsonResource
             'id' => $this->id,
             'question' => $this->question,
             'answer' => $this->answer,
-            'image' => $this->image
         ];
     }
 }

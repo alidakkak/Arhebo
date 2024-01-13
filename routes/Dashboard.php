@@ -52,10 +52,4 @@ Route::post('packages', [PackageController::class, 'store']);
 ///// Inputs
     Route::post('inputs', [InputController::class, 'store']);
 
-////  Invitee
-    Route::post('invitees', [InviteeController::class, 'store']);
-    Route::patch('invitees/{invitee}', [InviteeController::class, 'update']);
-
-////  Reminder
-    Route::get('reminders', [ReminderController::class, 'index']);
 });

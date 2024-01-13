@@ -41,7 +41,7 @@ Route::post('reset-password',[ResetPasswordController::class,'resetPassword']);
 
 });
 
-Route::group(['middleware' => ['check_user:2,1', 'lang']], function () {
+Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('updateProfile/{user}', [AuthController::class, 'update']);
@@ -87,7 +87,8 @@ Route::group(['middleware' => ['check_user:2,1', 'lang']], function () {
     //// Invitation
     Route::get('invitations', [InvitationController::class, 'myInvitation']);
     Route::post('invitations', [InvitationController::class, 'store']);
-    Route::post('invitations/{invitation}', [InvitationController::class, 'delete']);
+    Route::post('invitations/{invitationId}', [InvitationController::class, 'delete']);
+    Route::patch('invitations/{invitationId}', [InvitationController::class, 'update']);
 
     ////  Invitee
     Route::get('invitees', [InviteeController::class, 'index']);
@@ -98,6 +99,7 @@ Route::group(['middleware' => ['check_user:2,1', 'lang']], function () {
     ////  Reception
     Route::get('receptions', [ReceptionController::class, 'search']);
     Route::post('receptions', [ReceptionController::class, 'store']);
+    Route::post('receptions', [ReceptionController::class, 'delete']);
 });
 
 ///// Terms And Conditions

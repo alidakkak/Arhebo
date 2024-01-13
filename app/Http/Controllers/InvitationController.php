@@ -42,27 +42,45 @@ class InvitationController extends Controller
     }
 
 
-    public function update(UpdateInvitationRequest $request, Invitation $invitation) {
+    public function update(UpdateInvitationRequest $request, $invitationId) {
         $user = auth()->user();
+        $invitation = Invitation::where('user_id', $user->id)->find($invitationId);
+
+        if (!$invitation) {
+            return response()->json(['message' => 'Invitation not found'], 404);
+        }
+
         try {
             DB::beginTransaction();
-            $invitation -> update(array_merge(['user_id' => $user->id], $request->all()));
+            $invitation->update($request->all());
             foreach ($request->answers as $answer) {
-                InvitationInput::create([
-                    'invitation_id' => $invitation->id,
-                    'input_id' => $answer['input_id'],
-                    'answer' => $answer['answer']
-                ]);
+                $invitationInput = InvitationInput::where('invitation_id', $invitation->id)
+                    ->where('input_id', $answer['input_id'])
+                    ->first();
+                if ($invitationInput) {
+                    $invitationInput->update(['answer' => $answer['answer']]);
+                } else {
+                    InvitationInput::create([
+                        'invitation_id' => $invitation->id,
+                        'input_id' => $answer['input_id'],
+                        'answer' => $answer['answer']
+                    ]);
+                }
             }
             DB::commit();
             return InvitationResource::make($invitation);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response(['message' => 'An error occurred while creating the invitation' . '  ' . $e->getMessage()],500);
+            return response()->json(['message' => 'An error occurred while updating the invitation: ' . $e->getMessage()], 500);
         }
     }
 
-    public function delete(StoreApologyRequest $request, Invitation $invitation) {
+
+    public function delete(StoreApologyRequest $request, $invitationId) {
+        $invitation = Invitation::find($invitationId);
+        if (!$invitation) {
+            return response()->json(['message' => 'Invitation not found'], 404);
+        }
         $user = auth()->user();
         $message = Message::where('user_id', $user->id)->where('invitation_id', $invitation->id)->first();
         if($message) {

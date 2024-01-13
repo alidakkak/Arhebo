@@ -24,5 +24,13 @@ class DatabaseSeeder extends Seeder
             'type' => UserTypes::SUPER_ADMIN
         ]);
 
+        \App\Models\User::factory()->create([
+            'name' => 'Support',
+            'email' => 'support@gmail.com',
+            'phone' => '0937356470',
+            'password' => '00000000',
+            'type' => UserTypes::SUPPORT
+        ]);
+
     }
 }

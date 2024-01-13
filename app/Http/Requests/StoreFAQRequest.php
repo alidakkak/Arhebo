@@ -23,7 +23,9 @@ class StoreFAQRequest extends FormRequest
     {
         return [
             'answer' => 'required|string',
+            'answer_ar' => 'required|string',
             'question' => 'required|string',
+            'question_ar' => 'required|string',
         ];
     }
 }

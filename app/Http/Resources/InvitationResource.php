@@ -38,6 +38,7 @@ class InvitationResource extends JsonResource
             'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count(),
             'invitationInput' => InvitationInputResource::collection($this->invitationInput),
             'template' => TemplateResource::make($this->template),
+//            'message' => $this->message
         ];
     }
 }

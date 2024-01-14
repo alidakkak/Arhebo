@@ -40,6 +40,7 @@ class UpdateInvitationRequest extends FormRequest
             'invitation_text' => 'string',
             'prohibited_thing' => 'string',
             'is_with_qr' => 'boolean',
+//            'title' => 'required|string',
             'answers.*.answer' => 'string',
             'answers.*.input_id' => [Rule::exists('inputs', 'id')],
         ];

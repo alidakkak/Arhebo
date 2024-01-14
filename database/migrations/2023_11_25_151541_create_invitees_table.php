@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->integer('number_of_people');
+            $table->string('apology_message')->nullable();
             $table->string('status')->default(InviteeTypes::waiting);
             $table->timestamps();
         });

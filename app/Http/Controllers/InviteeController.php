@@ -7,16 +7,22 @@ use App\Http\Requests\UpdateInviteeRequest;
 use App\Http\Resources\InviteeResource;
 use App\Models\Invitation;
 use App\Models\Invitee;
+use App\Statuses\InviteeTypes;
+use App\Statuses\UserTypes;
 use Illuminate\Http\Request;
 
 class InviteeController extends Controller
 {
     public function index(Request $request) {
-        $uesr = auth()->user();
-        $invitee = Invitee::where('status' , $request->status)
-            ->where('invitation_id', $request->invitation_id)
-            ->get();
-        return InviteeResource::collection($invitee);
+        if($request->status == InviteeTypes::invited) {
+            $invitee = Invitee::where('invitation_id', $request->invitation_id)->get();
+            return InviteeResource::collection($invitee);
+        } else {
+            $invitee = Invitee::where('status' , $request->status)
+                ->where('invitation_id', $request->invitation_id)
+                ->get();
+            return InviteeResource::collection($invitee);
+        }
     }
 
     public function store(StoreInviteeRequest $request) {
@@ -49,10 +55,22 @@ class InviteeController extends Controller
 
 
     /// API For conformed Or Rejected Invitation
-    public function update(UpdateInviteeRequest $request,Invitee $invitee) {
-       $invitee->update([
-           'status' => $request->status
-        ]);
+    public function update(UpdateInviteeRequest $request, Invitee $invitee) {
+        $status = $request->status;
+        if ($status == InviteeTypes::rejected) {
+            $this->validate($request, [
+                'apology_message' => 'required'
+            ]);
+            $invitee->update([
+                'status' => $status,
+                'apology_message' => $request->apology_message
+            ]);
+        } else {
+            $invitee->update([
+                'status' => $status
+            ]);
+        }
         return InviteeResource::make($invitee);
     }
+
 }

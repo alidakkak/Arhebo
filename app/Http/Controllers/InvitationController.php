@@ -21,6 +21,10 @@ class InvitationController extends Controller
         return InvitationResource::collection($invitation);
     }
 
+    public function myEvent() {
+
+    }
+
     public function store(StoreInvitationRequest $request) {
         $user = auth()->user();
         try {
@@ -52,6 +56,11 @@ class InvitationController extends Controller
 
         try {
             DB::beginTransaction();
+//            $message = Message::create([
+//                'user_id' => $user->id,
+//                'invitation_id' =>$invitation->id,
+//                'title' => $request->title
+//            ]);
             $invitation->update($request->all());
             foreach ($request->answers as $answer) {
                 $invitationInput = InvitationInput::where('invitation_id', $invitation->id)

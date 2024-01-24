@@ -20,34 +20,42 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $guarded = ['id'];
 
-    public function wishlist() {
+    public function wishlist()
+    {
         return $this->hasMany(Wishlist::class);
     }
 
-    public function rating() {
+    public function rating()
+    {
         return $this->hasMany(Rating::class);
     }
 
-    public function invitation() {
+    public function invitation()
+    {
         return $this->hasMany(Invitation::class);
     }
 
-    public function reminder() {
+    public function reminder()
+    {
         return $this->hasMany(Reminder::class);
     }
 
-    public function reception() {
+    public function reception()
+    {
         return $this->hasMany(Reception::class);
     }
 
-    public function message() {
+    public function message()
+    {
         return $this->hasMany(Message::class);
     }
 
-    public function setImageAttribute ($image){
-        $newImageName = uniqid() . '_' . 'user_image' . '.' . $image->extension();
-        $image->move(public_path('user_image') , $newImageName);
-        return $this->attributes['image'] =  '/'.'user_image'.'/' . $newImageName;
+    public function setImageAttribute($image)
+    {
+        $newImageName = uniqid().'_'.'user_image'.'.'.$image->extension();
+        $image->move(public_path('user_image'), $newImageName);
+
+        return $this->attributes['image'] = '/'.'user_image'.'/'.$newImageName;
     }
 
     /**
@@ -75,15 +83,18 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier() {
+    public function getJWTIdentifier()
+    {
         return $this->getKey();
     }
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *
      * @return array
      */
-    public function getJWTCustomClaims() {
+    public function getJWTCustomClaims()
+    {
         return [];
     }
 
@@ -94,6 +105,7 @@ class User extends Authenticatable implements JWTSubject
         $this->expired_at = now()->addMinute(10);
         $this->save();
     }
+
     public function reset_code()
     {
         $this->timestamps = false;

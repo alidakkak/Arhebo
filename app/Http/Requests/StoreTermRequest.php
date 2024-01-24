@@ -24,7 +24,7 @@ class StoreTermRequest extends FormRequest
         return [
             'title' => 'required|string',
             'body' => 'required|string',
-            'is_agree' => 'required|bool'
+            'is_agree' => 'required|bool',
         ];
     }
 }

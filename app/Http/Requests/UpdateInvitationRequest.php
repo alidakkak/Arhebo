@@ -23,16 +23,16 @@ class UpdateInvitationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => [Rule::exists('categories','id')],
-            'template_id' => [ Rule::exists('templates','id')],
-            'package_id' => [ Rule::exists('packages','id')],
-            'package_detail_id' => [Rule::exists('package_details','id')],
+            'category_id' => [Rule::exists('categories', 'id')],
+            'template_id' => [Rule::exists('templates', 'id')],
+            'package_id' => [Rule::exists('packages', 'id')],
+            'package_detail_id' => [Rule::exists('package_details', 'id')],
             'hijri_date' => 'string',
             'miladi_date' => 'string',
             'from' => 'string',
             'to' => 'string',
-//            'city' => 'string',
-//            'region' => 'string',
+            //            'city' => 'string',
+            //            'region' => 'string',
             'event_name' => 'string',
             'location_link' => 'string',
             'location_name' => 'string',
@@ -40,7 +40,7 @@ class UpdateInvitationRequest extends FormRequest
             'invitation_text' => 'string',
             'prohibited_thing' => 'string',
             'is_with_qr' => 'boolean',
-//            'title' => 'required|string',
+            //            'title' => 'required|string',
             'answers.*.answer' => 'string',
             'answers.*.input_id' => [Rule::exists('inputs', 'id')],
         ];

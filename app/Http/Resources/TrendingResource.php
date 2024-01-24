@@ -25,24 +25,25 @@ class TrendingResource extends JsonResource
         $template = Template::with(['inputs' => function ($query) {
             $query->where('category_id', $this->category_id);
         }])->find($templateId);
-//        $colors_details = array();
-//        foreach ($this->colorTemplate as $index=>$color)
-//        {
-//            $colors_details[$index]["description"]=$color->pivot->descriptions;
-//            $colors_details[$index]["template"]=$color->pivot->template;
-//            $colors_details[$index]["color"]=$color->color;
-//        }
+
+        //        $colors_details = array();
+        //        foreach ($this->colorTemplate as $index=>$color)
+        //        {
+        //            $colors_details[$index]["description"]=$color->pivot->descriptions;
+        //            $colors_details[$index]["template"]=$color->pivot->template;
+        //            $colors_details[$index]["color"]=$color->color;
+        //        }
         return [
             'id' => $this->id,
             'title' => $this->title,
             'emoji' => $this->emoji,
             'category_id' => $this->category_id,
-            "size"=>$this->size,
-            "format" => $this->format,
+            'size' => $this->size,
+            'format' => $this->format,
             'image' => $this->image,
             'is_favorite' => $isFavorite,
             'invitation_count' => $this->invitation_count,
-            'inputs' => InputResource::collection($template->inputs)
+            'inputs' => InputResource::collection($template->inputs),
         ];
     }
 }

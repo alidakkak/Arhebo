@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
+use App\Models\ProhibitedThing;
 use App\Statuses\UserTypes;
 use Illuminate\Database\Seeder;
 
@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'phone' => '0937356470',
             'password' => '00000000',
-            'type' => UserTypes::SUPER_ADMIN
+            'type' => UserTypes::SUPER_ADMIN,
         ]);
 
         \App\Models\User::factory()->create([
@@ -29,7 +29,15 @@ class DatabaseSeeder extends Seeder
             'email' => 'support@gmail.com',
             'phone' => '0937356470',
             'password' => '00000000',
-            'type' => UserTypes::SUPPORT
+            'type' => UserTypes::SUPPORT,
+        ]);
+
+        ProhibitedThing::create([
+            'name' => 'Children are not allowed',
+        ]);
+
+        ProhibitedThing::create([
+            'name' => 'Mobile photography is not allowed',
         ]);
 
     }

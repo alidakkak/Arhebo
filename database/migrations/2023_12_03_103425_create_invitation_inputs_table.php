@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('answer');
             $table->foreignId('invitation_id')->references('id')
-                 ->on('invitations')->onDelete('cascade');
+                ->on('invitations')->onDelete('cascade');
             $table->foreignId('input_id')->references('id')
-                  ->on('inputs')->onDelete('cascade');
+                ->on('inputs')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -11,11 +11,13 @@ class Wishlist extends Model
 
     protected $guarded = ['id'];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function template() {
+    public function template()
+    {
         return $this->belongsTo(Template::class);
     }
 }

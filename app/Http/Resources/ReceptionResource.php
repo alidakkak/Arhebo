@@ -17,7 +17,7 @@ class ReceptionResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => $this->user,
-            'invitation' => $this->invitation
+            'invitation' => $this->invitation,
         ];
     }
 }

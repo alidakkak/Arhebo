@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('q_r_codes', function (Blueprint $table) {
+        Schema::create('prohibited_things', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invitee_id')->references('id')
-                ->on('invitees')->onDelete('cascade');
-            $table->string('qr_code');
-            $table->boolean('status')->default(0);
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('q_r_codes');
+        Schema::dropIfExists('prohibited_things');
     }
 };

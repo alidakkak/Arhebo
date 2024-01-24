@@ -11,11 +11,13 @@ class Package extends Model
 
     protected $guarded = ['id'];
 
-    public function packageDetail() {
+    public function packageDetail()
+    {
         return $this->hasMany(PackageDetail::class);
     }
 
-    public function invitation() {
+    public function invitation()
+    {
         return $this->hasMany(Invitation::class);
     }
 }

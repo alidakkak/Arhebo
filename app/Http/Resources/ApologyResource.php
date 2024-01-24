@@ -18,7 +18,7 @@ class ApologyResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'invitation' => $this->invitation,
-            'user' => $this->user
+            'user' => $this->user,
         ];
     }
 }

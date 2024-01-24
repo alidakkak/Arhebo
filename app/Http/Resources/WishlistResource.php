@@ -40,5 +40,4 @@ class WishlistResource extends JsonResource
             return [];
         }
     }
-
 }

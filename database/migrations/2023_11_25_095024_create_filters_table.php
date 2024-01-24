@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('filters', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("category_id")->constrained("categories")->cascadeOnDelete();
-            $table->string("name");
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            $table->string('name');
             $table->timestamps();
         });
     }

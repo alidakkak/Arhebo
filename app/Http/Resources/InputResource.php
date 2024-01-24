@@ -17,7 +17,7 @@ class InputResource extends JsonResource
         return [
             'id' => $this->id,
             'input_name' => $this->input_name,
-            'validate' => ValidateResource::collection($this->validate)
+            'validate' => ValidateResource::collection($this->validate),
         ];
     }
 }

@@ -11,15 +11,18 @@ class Input extends Model
 
     protected $guarded = ['id'];
 
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function validate() {
+    public function validate()
+    {
         return $this->hasMany(Validate::class);
     }
 
-    public function invitationInput() {
+    public function invitationInput()
+    {
         return $this->hasMany(InvitationInput::class);
     }
 }

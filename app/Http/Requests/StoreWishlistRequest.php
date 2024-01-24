@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StoreWishlistRequest extends FormRequest
 {
@@ -23,7 +22,7 @@ class StoreWishlistRequest extends FormRequest
     public function rules(): array
     {
         return [
-         //   'isfavorite' => 'required|bool',
+            //   'isfavorite' => 'required|bool',
             'template_id' => 'required|exists:templates,id',
         ];
     }

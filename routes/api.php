@@ -12,6 +12,7 @@ use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PrivacyPolicyController;
+use App\Http\Controllers\ProhibitedThingController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\ReceptionController;
 use App\Http\Controllers\ReminderController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TermController;
 use App\Http\Controllers\WishlistController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,11 +33,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::group(['middleware' => 'lang'], function () {
-Route::post('login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('emailVerification',[EmailVerifyController::class,'emailVerification']);
-Route::post('forget-password',[ForgetPasswordController::class,'forgetPassword']);
-Route::post('reset-password',[ResetPasswordController::class,'resetPassword']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('emailVerification', [EmailVerifyController::class, 'emailVerification']);
+    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
+    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 });
 
@@ -45,7 +45,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('updateProfile/{user}', [AuthController::class, 'update']);
-    Route::post('deleteProfile',[AuthController::class, 'delete']);
+    Route::post('deleteProfile', [AuthController::class, 'delete']);
 
     //////// Category
     Route::get('categories', [CategoryController::class, 'index']);
@@ -55,8 +55,8 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::get('offers', [OffersController::class, 'index']);
 
     //// Template
-    Route::get('templates',[TemplateController::class,'index']);
-    Route::get('trendingNew',[TemplateController::class,'trending']);
+    Route::get('templates', [TemplateController::class, 'index']);
+    Route::get('trendingNew', [TemplateController::class, 'trending']);
 
     //// Package
     Route::get('packages', [PackageController::class, 'index']);
@@ -76,7 +76,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     //// Wishlist
     Route::get('wishlists', [WishlistController::class, 'index']);
     Route::post('wishlists', [WishlistController::class, 'store']);
-   // Route::patch('wishlists/{wishlist}', [WishlistController::class, 'switch']);
+    // Route::patch('wishlists/{wishlist}', [WishlistController::class, 'switch']);
     Route::delete('wishlists/{template}', [WishlistController::class, 'delete']);
 
     //// Rating
@@ -98,8 +98,13 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 
     ////  Reception
     Route::get('receptions', [ReceptionController::class, 'search']);
+    Route::get('receptionsEvent', [ReceptionController::class, 'myEvent']);
     Route::post('receptions', [ReceptionController::class, 'store']);
-    Route::post('receptions', [ReceptionController::class, 'delete']);
+    Route::post('receptionsDelete', [ReceptionController::class, 'delete']);
+    Route::post('receptionList', [ReceptionController::class, 'receptionList']);
+
+    //// Prohibited Thing
+    Route::get('prohibitedThing', [ProhibitedThingController::class, 'index']);
 });
 
 ///// Terms And Conditions

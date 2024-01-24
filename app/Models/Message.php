@@ -11,11 +11,13 @@ class Message extends Model
 
     protected $guarded = ['id'];
 
-    public function invitation() {
+    public function invitation()
+    {
         return $this->belongsTo(Invitation::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

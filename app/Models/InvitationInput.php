@@ -11,11 +11,13 @@ class InvitationInput extends Model
 
     protected $guarded = ['id'];
 
-    public function input() {
+    public function input()
+    {
         return $this->belongsTo(Input::class);
     }
 
-    public function invitation() {
+    public function invitation()
+    {
         return $this->belongsTo(Invitation::class);
     }
 }

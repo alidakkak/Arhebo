@@ -10,5 +10,4 @@ class FrequentlyAskedQuestion extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-
 }

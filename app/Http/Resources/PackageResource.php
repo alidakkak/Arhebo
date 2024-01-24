@@ -19,7 +19,7 @@ class PackageResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'color' => $this->color,
-            'Package Details' => $this->packageDetail
+            'Package Details' => $this->packageDetail,
         ];
     }
 }

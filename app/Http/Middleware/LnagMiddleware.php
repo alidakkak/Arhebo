@@ -19,6 +19,7 @@ class LnagMiddleware
         if ($request->header('lang')) {
             App::setLocale($request->header('lang'));
         }
+
         return $next($request);
     }
 }

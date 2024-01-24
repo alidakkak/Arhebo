@@ -20,7 +20,7 @@ class ReminderResource extends JsonResource
             'title' => $this->title,
             'user' => $this->user,
             'invitation' => $this->invitation,
-            'inviteeWaiting' => $this->invitation->invitee->filter(function($invitee) {
+            'inviteeWaiting' => $this->invitation->invitee->filter(function ($invitee) {
                 return $invitee->status == InviteeTypes::waiting;
             }),
         ];

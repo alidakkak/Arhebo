@@ -11,7 +11,13 @@ class Invitee extends Model
 
     protected $guarded = ['id'];
 
-    public function invitation() {
+    public function invitation()
+    {
         return $this->belongsTo(Invitation::class);
+    }
+
+    public function qr()
+    {
+        return $this->hasMany(QR::class);
     }
 }

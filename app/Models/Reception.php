@@ -9,13 +9,15 @@ class Reception extends Model
 {
     use HasFactory;
 
-    protected $guarded =['id'];
+    protected $guarded = ['id'];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function invitation() {
+    public function invitation()
+    {
         return $this->belongsTo(Invitation::class);
     }
 }

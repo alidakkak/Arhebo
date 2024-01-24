@@ -11,43 +11,58 @@ class Invitation extends Model
 
     protected $guarded = ['id'];
 
-    public function category () {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function Template() {
+    public function Template()
+    {
         return $this->belongsTo(Template::class);
     }
 
-    public function package() {
+    public function package()
+    {
         return $this->belongsTo(Package::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function invitationInput() {
+    public function invitationInput()
+    {
         return $this->hasMany(InvitationInput::class);
     }
 
-    public function invitee() {
+    public function invitee()
+    {
         return $this->hasMany(Invitee::class);
     }
 
-    public function reminder() {
+    public function reminder()
+    {
         return $this->hasMany(Reminder::class);
     }
 
-    public function reception() {
+    public function reception()
+    {
         return $this->hasMany(Reception::class);
     }
 
-    public function packageDetail() {
+    public function packageDetail()
+    {
         return $this->belongsTo(PackageDetail::class);
     }
 
-    public function message() {
+    public function message()
+    {
         return $this->hasMany(Message::class);
+    }
+
+    public function InvitationProhibited()
+    {
+        return $this->hasMany(InvitationProhibited::class);
     }
 }

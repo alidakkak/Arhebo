@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('package_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("package_id")->references('id')
+            $table->foreignId('package_id')->references('id')
                 ->on('packages')->onDelete('cascade');
-            $table->double("price");
-            $table->double("price_qr");
-            $table->integer("number_of_invitees");
+            $table->double('price');
+            $table->double('price_qr');
+            $table->integer('number_of_invitees');
             $table->timestamps();
         });
     }

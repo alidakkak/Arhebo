@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->boolean("isVisible")->default(1);
+            $table->boolean('isVisible')->default(1);
             $table->timestamps();
         });
     }

@@ -21,11 +21,10 @@ class ForgetPasswordRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    
     public function rules()
     {
         return [
-            'email' => ['required','email','exists:users'],
+            'email' => ['required', 'email', 'exists:users'],
         ];
     }
 }

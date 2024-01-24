@@ -22,7 +22,8 @@ class InviteeResource extends JsonResource
             'seat' => $this->seat,
             'number_of_people' => $this->number_of_people,
             'apology_message' => $this->apology_message,
-            'status' => $this->status ?? InviteeTypes::waiting
+            'status' => $this->status ?? InviteeTypes::waiting,
+            'QRCode' => $this->qr,
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Invitee;
+use App\Models\ProhibitedThing;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,7 +28,6 @@ class InvitationResource extends JsonResource
             'location_name' => $this->location_name,
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
-            'prohibited_thing' => $this->prohibited_thing,
             'is_with_qr' => $this->is_with_qr,
             'is_active' => $this->is_active,
             'city' => $this->city,
@@ -36,9 +36,12 @@ class InvitationResource extends JsonResource
             'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count(),
             'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->count(),
             'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count(),
+            'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
+                $query->where('invitation_id', $this->id);
+            })->get()),
             'invitationInput' => InvitationInputResource::collection($this->invitationInput),
             'template' => TemplateResource::make($this->template),
-//            'message' => $this->message
+            //            'message' => $this->message
         ];
     }
 }

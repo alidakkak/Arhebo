@@ -24,7 +24,7 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'email' => 'email|unique:users,email,' . Auth::user()->id,
+            'email' => 'email|unique:users,email,'.Auth::user()->id,
         ];
     }
 }

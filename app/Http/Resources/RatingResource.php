@@ -18,7 +18,7 @@ class RatingResource extends JsonResource
             'id' => $this->id,
             'value' => $this->value,
             'title' => $this->title,
-            'user' => $this->user
+            'user' => $this->user,
         ];
     }
 }

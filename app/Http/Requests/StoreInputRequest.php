@@ -23,9 +23,9 @@ class StoreInputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', Rule::exists('categories','id')],
+            'category_id' => ['required', Rule::exists('categories', 'id')],
             'input_name' => 'required',
-//            'validates.*' => 'required'
+            //            'validates.*' => 'required'
         ];
     }
 }

@@ -15,6 +15,4 @@ class QR extends Model
     {
         return $this->belongsTo(Invitee::class);
     }
-
-
 }

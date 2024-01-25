@@ -102,6 +102,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('receptions', [ReceptionController::class, 'store']);
     Route::post('receptionsDelete', [ReceptionController::class, 'delete']);
     Route::post('receptionList', [ReceptionController::class, 'receptionList']);
+    Route::post('scanQRCodeForInvitee', [ReceptionController::class, 'scanQRCodeForInvitee']);
 
     //// Prohibited Thing
     Route::get('prohibitedThing', [ProhibitedThingController::class, 'index']);

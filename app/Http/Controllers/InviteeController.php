@@ -33,19 +33,26 @@ class InviteeController extends Controller
     public function generateQRCodeForInvitee($inviteeId)
     {
         $invitee = Invitee::find($inviteeId);
-        $numberOfPeople = $invitee->number_of_people;
-        for ($i = 0; $i < $numberOfPeople; $i++) {
-            $qrCodeData = 'QR Code for person '.($i + 1).' of invitee '.$invitee->name;
-            $qrCode = QrCode::format('svg')
-                ->size(300)
-                ->generate($qrCodeData);
-            $fileName = '/qr-codes/'.$invitee->id.'_'.$i.'.svg';
-            $path = storage_path('app/public/'.$fileName);
-            file_put_contents($path, $qrCode);
-            QR::create([
-                'invitee_id' => $invitee->id,
-                'qr_code' => '/storage'.$fileName,
-            ]);
+        $invitation = $invitee->invitation()->where('is_with_qr', 1)->first();
+        if ($invitation) {
+            $numberOfPeople = $invitee->number_of_people;
+            for ($i = 0; $i < $numberOfPeople; $i++) {
+                $qrCodeData = 'InviteeNumber: '.($i + 1).' InviteeName: '.$invitee->name.' InviteeID: '.$invitee->id;
+                $qrCode = QrCode::format('svg')
+                    ->size(300)
+                    ->generate($qrCodeData);
+                $fileName = '/qr-codes/'.$invitee->id.'_'.$i.'.svg';
+                $path = storage_path('app/public/'.$fileName);
+                if (! file_exists(dirname($path))) {
+                    mkdir(dirname($path), 0755, true);
+                }
+                file_put_contents($path, $qrCode);
+                QR::create([
+                    'invitee_id' => $invitee->id,
+                    'qr_code' => '/storage'.$fileName,
+                    'InviteeNumber' => $i + 1,
+                ]);
+            }
         }
     }
 

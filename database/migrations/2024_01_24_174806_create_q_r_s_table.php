@@ -17,6 +17,7 @@ return new class extends Migration
                 ->on('invitees')->onDelete('cascade');
             $table->text('qr_code');
             $table->boolean('status')->default(0);
+            $table->integer('InviteeNumber');
             $table->timestamps();
         });
     }

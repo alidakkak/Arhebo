@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReceptionRequest;
 use App\Http\Resources\ReceptionEventResource;
 use App\Http\Resources\ReceptionResource;
+use App\Models\QR;
 use App\Models\Reception;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -79,6 +80,26 @@ class ReceptionController extends Controller
             return response()->json(['message' => 'Deleted Successfully']);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to delete the reception', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function scanQRCodeForInvitee(Request $request)
+    {
+        $validatedData = $request->validate([
+            'invitee_id' => ['required', Rule::exists('invitees', 'id')],
+            'InviteeNumber' => 'required|numeric',
+        ]);
+        $qrCode = QR::where('invitee_id', $validatedData['invitee_id'])
+            ->where('InviteeNumber', $validatedData['InviteeNumber'])
+            ->first();
+        if ($qrCode) {
+            $qrCode->update([
+                'status' => 1,
+            ]);
+
+            return response()->json(['message' => 'QR code scanned successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Invalid QR code'], 400);
         }
     }
 }

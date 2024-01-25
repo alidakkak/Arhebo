@@ -1,5 +1,6 @@
 <?php
 
+use App\Statuses\InvitationTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->string('location_name');
             $table->string('inviter');
             $table->string('invitation_text');
-            $table->boolean('is_active')->default(1);
+            $table->string('status')->default(InvitationTypes::active);
             $table->boolean('is_with_qr');
             $table->timestamps();
         });

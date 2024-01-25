@@ -7,14 +7,26 @@ use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Requests\UpdateInvitationRequest;
 use App\Http\Resources\ApologyResource;
 use App\Http\Resources\InvitationResource;
+use App\Http\Resources\InvitationSupportResource;
 use App\Models\Invitation;
 use App\Models\InvitationInput;
 use App\Models\InvitationProhibited;
 use App\Models\Message;
+use App\Statuses\InvitationTypes;
 use Illuminate\Support\Facades\DB;
 
 class InvitationController extends Controller
 {
+    //// Orders
+    public function index() {
+        $invitation = Invitation::all();
+        return InvitationSupportResource::collection($invitation);
+    }
+
+    public function showOrders() {
+        $invitation = Invitation::all();
+        return InvitationResource::collection($invitation);
+    }
     public function myInvitation()
     {
         $user = auth()->user();
@@ -115,7 +127,7 @@ class InvitationController extends Controller
                 $invitationId = $invitation->id;
                 $apology = Message::create(array_merge(['user_id' => $user->id, 'invitation_id' => $invitationId], $request->all()));
                 $invitation->update([
-                    'is_active' => 0,
+                    'status' => InvitationTypes::deleted,
                 ]);
                 DB::commit();
 

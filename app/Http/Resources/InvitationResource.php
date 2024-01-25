@@ -29,7 +29,7 @@ class InvitationResource extends JsonResource
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
             'is_with_qr' => $this->is_with_qr,
-            'is_active' => $this->is_active,
+            'status' => $this->status,
             'city' => $this->city,
             'region' => $this->region,
             'invited' => Invitee::where('invitation_id', $this->id)->count(),

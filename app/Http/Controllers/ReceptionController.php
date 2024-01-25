@@ -23,6 +23,7 @@ class ReceptionController extends Controller
         return ReceptionResource::collection($receptionList);
     }
 
+    ///Reception Event
     public function myEvent()
     {
         $user = auth()->user();

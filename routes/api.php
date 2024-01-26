@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutAppController;
+use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerifyController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
@@ -100,12 +101,16 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::get('receptions', [ReceptionController::class, 'search']);
     Route::get('receptionsEvent', [ReceptionController::class, 'myEvent']);
     Route::post('receptions', [ReceptionController::class, 'store']);
-    Route::post('receptionsDelete', [ReceptionController::class, 'delete']);
-    Route::post('receptionList', [ReceptionController::class, 'receptionList']);
+    Route::delete('receptionsDelete', [ReceptionController::class, 'delete']);
+    Route::get('receptionList', [ReceptionController::class, 'receptionList']);
     Route::post('scanQRCodeForInvitee', [ReceptionController::class, 'scanQRCodeForInvitee']);
 
     //// Prohibited Thing
     Route::get('prohibitedThing', [ProhibitedThingController::class, 'index']);
+
+    ////  Additional Package
+    Route::get('additionalPackage', [AdditionalPackageController::class, 'index']);
+    Route::post('additionalInvitee', [AdditionalPackageController::class, 'additionalInvitee']);
 });
 
 ///// Terms And Conditions

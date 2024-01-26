@@ -65,4 +65,9 @@ class Invitation extends Model
     {
         return $this->hasMany(InvitationProhibited::class);
     }
+
+    public function invitationAdditionalPackage()
+    {
+        return $this->hasMany(InvitationAdditionalPackage::class);
+    }
 }

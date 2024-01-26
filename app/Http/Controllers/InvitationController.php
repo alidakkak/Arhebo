@@ -18,15 +18,20 @@ use Illuminate\Support\Facades\DB;
 class InvitationController extends Controller
 {
     //// Orders
-    public function index() {
+    public function index()
+    {
         $invitation = Invitation::all();
+
         return InvitationSupportResource::collection($invitation);
     }
 
-    public function showOrders() {
+    public function showOrders()
+    {
         $invitation = Invitation::all();
+
         return InvitationResource::collection($invitation);
     }
+
     public function myInvitation()
     {
         $user = auth()->user();

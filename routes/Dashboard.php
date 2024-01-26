@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutAppController;
+use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\InputController;
@@ -52,5 +53,8 @@ Route::group(['middleware' => 'check_user:1'], function () {
 
     //// Prohibited Thing
     Route::post('prohibitedThing', [ProhibitedThingController::class, 'store']);
+
+    ////  Additional Package
+    Route::post('additionalPackage', [AdditionalPackageController::class, 'store']);
 
 });

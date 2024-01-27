@@ -41,8 +41,6 @@ class TemplateResource extends JsonResource
             'emoji' => $this->emoji,
             'template_code' => $this->template_code,
             'category_id' => $this->category_id,
-            'size' => $this->size,
-            'format' => $this->format,
             'image' => $this->image,
             'is_favorite' => $isFavorite,
             'inputs' => InputResource::collection($template->inputs),

@@ -4,9 +4,9 @@ namespace App\Statuses;
 
 class MessageTypes
 {
-    public const delete = 1;
+    public const deleted = 1;
 
-    public const edit = 2;
+    public const updated = 2;
 
-    public static array $statuses = [self::delete, self::edit];
+    public static array $statuses = [self::deleted, self::updated];
 }

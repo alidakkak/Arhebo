@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreApologyRequest;
 use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Requests\UpdateInvitationRequest;
-use App\Http\Resources\ApologyResource;
 use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Models\Invitation;
@@ -13,6 +12,7 @@ use App\Models\InvitationInput;
 use App\Models\InvitationProhibited;
 use App\Models\Message;
 use App\Statuses\InvitationTypes;
+use App\Statuses\MessageTypes;
 use Illuminate\Support\Facades\DB;
 
 class InvitationController extends Controller
@@ -74,46 +74,71 @@ class InvitationController extends Controller
             return response(['message' => 'An error occurred while creating the invitation'.'  '.$e->getMessage()], 500);
         }
     }
+    /*
+        public function update(UpdateInvitationRequest $request, $invitationId)
+        {
+            $user = auth()->user();
+            $invitation = Invitation::where('user_id', $user->id)->find($invitationId);
 
-    public function update(UpdateInvitationRequest $request, $invitationId)
+            if (! $invitation) {
+                return response()->json(['message' => 'Invitation not found'], 404);
+            }
+
+            try {
+                DB::beginTransaction();
+                //            $message = Message::create([
+                //                'user_id' => $user->id,
+                //                'invitation_id' =>$invitation->id,
+                //                'title' => $request->title
+                //            ]);
+                $invitation->update($request->all());
+                foreach ($request->answers as $answer) {
+                    $invitationInput = InvitationInput::where('invitation_id', $invitation->id)
+                        ->where('input_id', $answer['input_id'])
+                        ->first();
+                    if ($invitationInput) {
+                        $invitationInput->update(['answer' => $answer['answer']]);
+                    } else {
+                        InvitationInput::create([
+                            'invitation_id' => $invitation->id,
+                            'input_id' => $answer['input_id'],
+                            'answer' => $answer['answer'],
+                        ]);
+                    }
+                }
+                DB::commit();
+
+                return InvitationResource::make($invitation);
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'An error occurred while updating the invitation: '.$e->getMessage()], 500);
+            }
+        }
+    */
+
+    public function update(StoreApologyRequest $request, $invitationId)
     {
         $user = auth()->user();
-        $invitation = Invitation::where('user_id', $user->id)->find($invitationId);
-
+        $invitation = Invitation::find($invitationId);
+        $message = Message::where('user_id', $user->id)->where('invitation_id', $invitation->id)
+            ->where('type', MessageTypes::deleted)
+            ->first();
+        if ($message) {
+            return response()->json(['message' => 'Invitation is Inactive']);
+        }
         if (! $invitation) {
             return response()->json(['message' => 'Invitation not found'], 404);
         }
+        $invitationId = $invitation->id;
+        Message::create(array_merge(['user_id' => $user->id,
+            'invitation_id' => $invitationId,
+            'type' => MessageTypes::updated], $request->all()));
+        $invitation->update([
+            'status' => InvitationTypes::updated,
+        ]);
 
-        try {
-            DB::beginTransaction();
-            //            $message = Message::create([
-            //                'user_id' => $user->id,
-            //                'invitation_id' =>$invitation->id,
-            //                'title' => $request->title
-            //            ]);
-            $invitation->update($request->all());
-            foreach ($request->answers as $answer) {
-                $invitationInput = InvitationInput::where('invitation_id', $invitation->id)
-                    ->where('input_id', $answer['input_id'])
-                    ->first();
-                if ($invitationInput) {
-                    $invitationInput->update(['answer' => $answer['answer']]);
-                } else {
-                    InvitationInput::create([
-                        'invitation_id' => $invitation->id,
-                        'input_id' => $answer['input_id'],
-                        'answer' => $answer['answer'],
-                    ]);
-                }
-            }
-            DB::commit();
-
-            return InvitationResource::make($invitation);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json(['message' => 'An error occurred while updating the invitation: '.$e->getMessage()], 500);
-        }
+        return response()->json(['message' => 'Updated Successfully']);
     }
 
     public function delete(StoreApologyRequest $request, $invitationId)
@@ -123,20 +148,23 @@ class InvitationController extends Controller
             return response()->json(['message' => 'Invitation not found'], 404);
         }
         $user = auth()->user();
-        $message = Message::where('user_id', $user->id)->where('invitation_id', $invitation->id)->first();
+        $message = Message::where('user_id', $user->id)->where('invitation_id', $invitation->id)
+            ->where('type', MessageTypes::deleted)
+            ->first();
         if ($message) {
             return response()->json(['message' => 'Invitation is Inactive']);
         } else {
             try {
                 DB::beginTransaction();
                 $invitationId = $invitation->id;
-                $apology = Message::create(array_merge(['user_id' => $user->id, 'invitation_id' => $invitationId], $request->all()));
+                Message::create(array_merge(['user_id' => $user->id, 'invitation_id' => $invitationId,
+                    'type' => MessageTypes::deleted], $request->all()));
                 $invitation->update([
                     'status' => InvitationTypes::deleted,
                 ]);
                 DB::commit();
 
-                return ApologyResource::make($apology);
+                return response()->json(['message' => 'Deleted Successfully']);
             } catch (\Exception $e) {
                 DB::rollBack();
 

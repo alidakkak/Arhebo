@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('emoji');
-            $table->string('size');
-            $table->string('format');
             $table->string('descriptions');
             $table->string('image');
             $table->string('template_code', 4)->unique();

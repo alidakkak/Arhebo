@@ -10,5 +10,7 @@ class InvitationTypes
 
     public const deleted = 3;
 
-    public static array $statuses = [self::active, self::deleted, self::done];
+    public const updated = 4;
+
+    public static array $statuses = [self::active, self::deleted, self::done, self::updated];
 }

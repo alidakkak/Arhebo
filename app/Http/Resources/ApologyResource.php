@@ -17,6 +17,7 @@ class ApologyResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'type' => $this->type,
             'invitation' => $this->invitation,
             'user' => $this->user,
         ];

@@ -38,8 +38,6 @@ class TrendingResource extends JsonResource
             'title' => $this->title,
             'emoji' => $this->emoji,
             'category_id' => $this->category_id,
-            'size' => $this->size,
-            'format' => $this->format,
             'image' => $this->image,
             'is_favorite' => $isFavorite,
             'invitation_count' => $this->invitation_count,

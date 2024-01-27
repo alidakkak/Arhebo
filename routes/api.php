@@ -89,7 +89,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::get('invitations', [InvitationController::class, 'myInvitation']);
     Route::post('invitations', [InvitationController::class, 'store']);
     Route::post('invitations/{invitationId}', [InvitationController::class, 'delete']);
-    Route::patch('invitations/{invitationId}', [InvitationController::class, 'update']);
+    Route::post('invitationUpdate/{invitationId}', [InvitationController::class, 'update']);
 
     ////  Invitee
     Route::get('invitees', [InviteeController::class, 'index']);

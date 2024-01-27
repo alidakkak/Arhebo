@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Invitee;
 use App\Models\ProhibitedThing;
+use App\Statuses\InvitationTypes;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,7 +30,7 @@ class InvitationResource extends JsonResource
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
             'is_with_qr' => $this->is_with_qr,
-            'status' => $this->status,
+            'status' => $this->status ?? InvitationTypes::active,
             'city' => $this->city,
             'region' => $this->region,
             'invited' => Invitee::where('invitation_id', $this->id)->count(),

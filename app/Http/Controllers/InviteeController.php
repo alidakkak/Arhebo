@@ -37,7 +37,11 @@ class InviteeController extends Controller
         if ($invitation) {
             $numberOfPeople = $invitee->number_of_people;
             for ($i = 0; $i < $numberOfPeople; $i++) {
-                $qrCodeData = 'InviteeNumber: '.($i + 1).' InviteeName: '.$invitee->name.' InviteeID: '.$invitee->id;
+                $qrCodeData = json_encode([
+                    'InviteeNumber' => $i + 1,
+                    'InviteeName' => $invitee->name,
+                    'InviteeID' => $invitee->id,
+                ]);
                 $qrCode = QrCode::format('svg')
                     ->size(300)
                     ->generate($qrCodeData);

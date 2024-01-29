@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Color;
+use App\Models\ProhibitedThing;
 use App\Models\Template;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -27,6 +28,8 @@ class TemplateResource extends JsonResource
             $query->where('category_id', $this->category_id);
         }])->find($templateId);
 
+        $prohibitedThing = ProhibitedThing::all();
+
         //        $colors_details = array();
         //     foreach ($this->colorTemplate as $index=>$color)
         //     {
@@ -44,6 +47,7 @@ class TemplateResource extends JsonResource
             'image' => $this->image,
             'is_favorite' => $isFavorite,
             'inputs' => InputResource::collection($template->inputs),
+            'prohibitedThing' =>  ProhibitedThingResource::collection($prohibitedThing)
         ];
     }
 }

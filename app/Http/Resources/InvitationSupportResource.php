@@ -15,6 +15,7 @@ class InvitationSupportResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'clint' => $this->user->name,
             'package' => $this->package->name,
             'number' => $this->packageDetail->number_of_invitees,

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Requests\UpdateInvitationRequest;
 use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
+use App\Http\Resources\ShowOrdersResource;
 use App\Models\Invitation;
 use App\Models\InvitationInput;
 use App\Models\InvitationProhibited;
@@ -25,11 +26,13 @@ class InvitationController extends Controller
         return InvitationSupportResource::collection($invitation);
     }
 
-    public function showOrders()
+    public function showOrders($invitationId)
     {
-        $invitation = Invitation::all();
-
-        return InvitationResource::collection($invitation);
+        $invitation = Invitation::find($invitationId);
+        if (! $invitation) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        return ShowOrdersResource::make($invitation);
     }
 
     public function myInvitation()

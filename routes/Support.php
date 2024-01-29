@@ -15,5 +15,5 @@ Route::group(['middleware' => 'check_user:1,3'], function () {
 
     ////  Orders Invitation
     Route::get('orders', [InvitationController::class, 'index']);
-    Route::get('showOrders', [InvitationController::class, 'showOrders']);
+    Route::get('showOrders/{invitationId}', [InvitationController::class, 'showOrders']);
 });

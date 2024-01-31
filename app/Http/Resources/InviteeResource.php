@@ -24,6 +24,7 @@ class InviteeResource extends JsonResource
             'apology_message' => $this->apology_message,
             'status' => $this->status ?? InviteeTypes::waiting,
             'QRCode' => $this->qr,
+            'link' => $this->link
         ];
     }
 }

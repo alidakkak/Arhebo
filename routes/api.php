@@ -115,3 +115,5 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 
 ///// Terms And Conditions
 Route::get('terms', [TermController::class, 'index']);
+Route::get('get_info_for_link/{uuid}', [InviteeController::class, 'get_info_for_link']);
+Route::put('update_stauts/{uuid}', [InviteeController::class, 'update_stauts']);

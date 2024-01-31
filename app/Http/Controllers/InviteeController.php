@@ -12,6 +12,7 @@ use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Mail\CustomEmail;
 
@@ -64,9 +65,9 @@ class InviteeController extends Controller
 
     public function store(StoreInviteeRequest $request)
     {
-        $name = 'ali';
-        Mail::to('alidakak21@gmail.com')->send(new CustomEmail($name));
-        return 's';
+//        $name = 'ali';
+//        Mail::to('alidakak21@gmail.com')->send(new CustomEmail($name));
+//        return 's';
         DB::beginTransaction();
         try {
             ////  The total number of people invited to the invitation
@@ -82,11 +83,14 @@ class InviteeController extends Controller
                         ', The number of invitees you have added '.$number_of_people,
                     ]);
                 }
+                $uuid=Str::uuid();
                 $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
                     'phone' => $invitee['number'],
                     'number_of_people' => $invitee['count'],
                     'invitation_id' => $request->input('invitation_id'),
+                    'uuid' => $uuid,
+                    'link'=>'show_invite/'.$uuid
                 ]);
                 $invitees[] = $newInvitee;
                 $number_of_people += $invitee['count'];
@@ -122,4 +126,31 @@ class InviteeController extends Controller
 
         return InviteeResource::make($invitee);
     }
+
+    public function get_info_for_link($uuid)
+    {
+        $invitee=Invitee::where('uuid',$uuid)->first();
+        if($invitee->status==InviteeTypes::waiting){
+        return response()->json(
+            [    'access'=>true,
+                'invitation'=>[
+                    'category_name'=>$invitee->invitation->category->name,
+                    'category_photo'=>$invitee->invitation->category->image,
+                    'template_photo'=>$invitee->invitation->Template->image],
+            ]
+        );
+           }
+        else{
+            return response()->json(['access'=>false],403);
+        }
+    }
+    public function update_stauts($uuid,Request $request)
+    {
+        $invitee=Invitee::where('uuid',$uuid)->first();
+        if($invitee->status==InviteeTypes::waiting) {
+            $invitee->update(['status' => $request->stauts]);
+        }
+        return response(['msg'=>'success']);
+    }
+
 }

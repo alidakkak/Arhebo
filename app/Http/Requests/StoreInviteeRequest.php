@@ -25,8 +25,8 @@ class StoreInviteeRequest extends FormRequest
         return [
             'invitation_id' => ['required', Rule::exists('invitations', 'id')],
             'invitees.*.name' => 'required',
-            'invitees.*.phone' => 'required',
-            'invitees.*.number_of_people' => 'required',
+            'invitees.*.number' => 'required',
+            'invitees.*.count' => 'required',
         ];
     }
 }

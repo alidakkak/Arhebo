@@ -11,7 +11,9 @@ use App\Models\QR;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Mail\CustomEmail;
 
 class InviteeController extends Controller
 {
@@ -62,6 +64,9 @@ class InviteeController extends Controller
 
     public function store(StoreInviteeRequest $request)
     {
+        $name = 'ali';
+        Mail::to('alidakak21@gmail.com')->send(new CustomEmail($name));
+        return 's';
         DB::beginTransaction();
         try {
             ////  The total number of people invited to the invitation
@@ -72,24 +77,24 @@ class InviteeController extends Controller
             $inviteesData = $request->input('invitees', []);
             $invitees = [];
             foreach ($inviteesData as $invitee) {
-                if ($number_of_people + $invitee['number_of_people'] > $package_detail_number) {
+                if ($number_of_people + $invitee['count'] > $package_detail_number) {
                     return response()->json(['message' => 'You have reached the maximum number of invitees'.
                         ', The number of invitees you have added '.$number_of_people,
                     ]);
                 }
                 $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
-                    'phone' => $invitee['phone'],
-                    'number_of_people' => $invitee['number_of_people'],
+                    'phone' => $invitee['number'],
+                    'number_of_people' => $invitee['count'],
                     'invitation_id' => $request->input('invitation_id'),
                 ]);
                 $invitees[] = $newInvitee;
-                $number_of_people += $invitee['number_of_people'];
+                $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             DB::commit();
-
-            return InviteeResource::collection($invitees);
+        return response()->json(['message' => 'Added SuccessFully']);
+        //    return InviteeResource::collection($invitees);
         } catch (\Exception $e) {
             DB::rollBack();
 

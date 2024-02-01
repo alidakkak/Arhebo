@@ -23,6 +23,7 @@ class UpdateInviteeRequest extends FormRequest
     {
         return [
             'status' => 'required',
+            'uuid' => 'required'
         ];
     }
 }

@@ -3,10 +3,8 @@
 namespace App\Http\Resources;
 
 use App\Models\Input;
-use App\Models\Invitee;
 use App\Models\ProhibitedThing;
 use App\Statuses\InvitationTypes;
-use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,11 +18,31 @@ class ShowOrdersResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-        $invitaionInput = $this->invitationInput->map(fn($input) =>
-            [
-                'name' => Input::where('id' , $input->input_id)->first()->input_name,
-                'value' => $input->answer
-            ]
+
+        if ($request->route()->uri === "api/showInvitationInfo/{invitee}"){
+            return [
+                'id' => $this->id,
+                'event_name' => $this->invitation->event_name,
+                'inviter' => $this->invitation->inviter,
+                'hijri_date' => $this->invitation->hijri_date,
+                'miladi_date' => $this->invitation->miladi_date,
+                'from' => $this->invitation->from,
+                'to' => $this->invitation->to,
+                'location_name' => $this->invitation->location_name,
+                'location_link' => $this->invitation->location_link,
+                'invitation_text' => $this->invitation->invitation_text,
+                'is_with_qr' => $this->invitation->is_with_qr,
+                'status' => $this->invitation->status ?? InvitationTypes::active,
+                'city' => $this->invitation->city,
+                'region' => $this->invitation->region,
+                'template' => asset($this->invitation->template->image),
+            ];
+        }
+
+        $invitaionInput = $this->invitationInput->map(fn ($input) => [
+            'name' => Input::where('id', $input->input_id)->first()->input_name,
+            'value' => $input->answer,
+        ]
         );
 
         return [

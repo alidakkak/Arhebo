@@ -47,7 +47,7 @@ class TemplateResource extends JsonResource
             'image' => $this->image,
             'is_favorite' => $isFavorite,
             'inputs' => InputResource::collection($template->inputs),
-            'prohibitedThing' =>  ProhibitedThingResource::collection($prohibitedThing)
+            'prohibitedThing' => ProhibitedThingResource::collection($prohibitedThing),
         ];
     }
 }

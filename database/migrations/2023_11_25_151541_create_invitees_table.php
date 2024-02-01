@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('uuid');
             $table->integer('number_of_people');
-            $table->string('link');
+            $table->string('link')->nullable();
             $table->string('apology_message')->nullable();
             $table->string('status')->default(InviteeTypes::waiting);
             $table->timestamps();

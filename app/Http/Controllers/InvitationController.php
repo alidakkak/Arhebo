@@ -32,6 +32,7 @@ class InvitationController extends Controller
         if (! $invitation) {
             return response()->json(['message' => 'Not Found'], 404);
         }
+
         return ShowOrdersResource::make($invitation);
     }
 
@@ -41,6 +42,16 @@ class InvitationController extends Controller
         $invitation = Invitation::where('user_id', $user->id)->get();
 
         return InvitationResource::collection($invitation);
+    }
+
+    public function showInvitation($invitation)
+    {
+        $show = Invitation::find($invitation);
+        if (! $show) {
+            return response()->json(['message' => 'Not Found']);
+        }
+
+        return InvitationResource::make($invitation);
     }
 
     public function myEvent()

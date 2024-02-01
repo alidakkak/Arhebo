@@ -45,7 +45,7 @@ class TrendingResource extends JsonResource
             'is_favorite' => $isFavorite,
             'invitation_count' => $this->invitation_count,
             'inputs' => InputResource::collection($template->inputs),
-            'prohibitedThing' =>  ProhibitedThingResource::collection($prohibitedThing)
+            'prohibitedThing' => ProhibitedThingResource::collection($prohibitedThing),
         ];
     }
 }

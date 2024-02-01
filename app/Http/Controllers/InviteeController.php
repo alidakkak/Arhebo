@@ -93,7 +93,7 @@ class InviteeController extends Controller
                     //                    'link'=>'show_invite/'.$uuid
                 ]);
                 $newInvitee->update([
-                    'link' => '/localhost:3000/invitaion/'.$newInvitee->id.'?id='.$uuid,
+                    'link' => 'http://localhost:3000/invitaion/'.$newInvitee->id.'?id='.$uuid,
                 ]);
                 $invitees[] = $newInvitee;
                 $number_of_people += $invitee['count'];

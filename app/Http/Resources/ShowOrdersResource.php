@@ -22,6 +22,7 @@ class ShowOrdersResource extends JsonResource
         if ($request->route()->uri === "api/showInvitationInfo/{invitee}"){
             return [
                 'id' => $this->id,
+                'category' => $this->invitation->category->name,
                 'event_name' => $this->invitation->event_name,
                 'inviter' => $this->invitation->inviter,
                 'hijri_date' => $this->invitation->hijri_date,

@@ -135,7 +135,6 @@ class InviteeController extends Controller
     }
 
     public function showInvitationInfo(Request $request,Invitee $invitee) {
-        $request->validate(['uuid' => 'required']);
         if($invitee->uuid !== $request->uuid) {
             return response()->json(['message' => 'هذه الدعوة غير مخصصة لك']);
         }

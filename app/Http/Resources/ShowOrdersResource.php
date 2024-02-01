@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Input;
 use App\Models\Invitee;
 use App\Models\ProhibitedThing;
 use App\Statuses\InvitationTypes;
@@ -18,6 +19,14 @@ class ShowOrdersResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        $invitaionInput = $this->invitationInput->map(fn($input) =>
+            [
+                'name' => Input::where('id' , $input->input_id)->first()->input_name,
+                'value' => $input->answer
+            ]
+        );
+
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,
@@ -33,15 +42,11 @@ class ShowOrdersResource extends JsonResource
             'status' => $this->status ?? InvitationTypes::active,
             'city' => $this->city,
             'region' => $this->region,
-            'invited' => Invitee::where('invitation_id', $this->id)->count(),
-            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count(),
-            'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->count(),
-            'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count(),
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),
-            'invitationInput' => InvitationInputResource::collection($this->invitationInput),
-            'template' => TemplateResource::make($this->template),
+            'invitationInput' => $invitaionInput,
+            'template' => asset($this->template->image),
         ];
     }
 }

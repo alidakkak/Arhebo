@@ -33,6 +33,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
 Route::group(['middleware' => 'lang'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
@@ -122,4 +124,4 @@ Route::get('terms', [TermController::class, 'index']);
 //Route::put('update_stauts/{uuid}', [InviteeController::class, 'update_stauts']);
 
 
-Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
+

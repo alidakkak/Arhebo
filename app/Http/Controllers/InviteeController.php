@@ -136,7 +136,7 @@ class InviteeController extends Controller
 
     public function showInvitationInfo(Request $request,Invitee $invitee) {
         if($invitee->uuid !== $request->uuid) {
-            return response()->json(['message' => 'هذه الدعوة غير مخصصة لك']);
+            return response()->json(['message' => 'هذه الدعوة غير مخصصة لك'], 403);
         }
        return ShowOrdersResource::make($invitee);
     }

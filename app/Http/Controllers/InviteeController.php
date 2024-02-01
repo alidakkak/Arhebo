@@ -131,37 +131,41 @@ class InviteeController extends Controller
             ]);
         }
 
-        return response()->json(['message' => 'SuccessFully']);
+        return response()->json(['message' => $status == 1 ? 'تم قبول الدعوة بنجاح' : 'تم رفض الدعوة بنجاح']);
     }
 
-    public function showInvitationInfo(Invitee $invitee) {
+    public function showInvitationInfo(Request $request,Invitee $invitee) {
+        $request->validate(['uuid' => 'required']);
+        if($invitee->uuid !== $request->uuid) {
+            return response()->json(['message' => 'هذه الدعوة غير مخصصة لك']);
+        }
        return ShowOrdersResource::make($invitee);
     }
 
-    public function get_info_for_link($uuid)
-    {
-        $invitee = Invitee::where('uuid', $uuid)->first();
-        if ($invitee->status == InviteeTypes::waiting) {
-            return response()->json(
-                ['access' => true,
-                    'invitation' => [
-                        'category_name' => $invitee->invitation->category->name,
-                        'category_photo' => $invitee->invitation->category->image,
-                        'template_photo' => $invitee->invitation->Template->image],
-                ]
-            );
-        } else {
-            return response()->json(['access' => false], 403);
-        }
-    }
+//    public function get_info_for_link($uuid)
+//    {
+//        $invitee = Invitee::where('uuid', $uuid)->first();
+//        if ($invitee->status == InviteeTypes::waiting) {
+//            return response()->json(
+//                ['access' => true,
+//                    'invitation' => [
+//                        'category_name' => $invitee->invitation->category->name,
+//                        'category_photo' => $invitee->invitation->category->image,
+//                        'template_photo' => $invitee->invitation->Template->image],
+//                ]
+//            );
+//        } else {
+//            return response()->json(['access' => false], 403);
+//        }
+//    }
 
-    public function update_stauts($uuid, Request $request)
-    {
-        $invitee = Invitee::where('uuid', $uuid)->first();
-        if ($invitee->status == InviteeTypes::waiting) {
-            $invitee->update(['status' => $request->stauts]);
-        }
-
-        return response(['msg' => 'success']);
-    }
+//    public function update_stauts($uuid, Request $request)
+//    {
+//        $invitee = Invitee::where('uuid', $uuid)->first();
+//        if ($invitee->status == InviteeTypes::waiting) {
+//            $invitee->update(['status' => $request->stauts]);
+//        }
+//
+//        return response(['msg' => 'success']);
+//    }
 }

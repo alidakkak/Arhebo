@@ -122,4 +122,4 @@ Route::get('terms', [TermController::class, 'index']);
 //Route::put('update_stauts/{uuid}', [InviteeController::class, 'update_stauts']);
 
 
-Route::get('showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
+Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);

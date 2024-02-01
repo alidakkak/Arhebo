@@ -33,7 +33,7 @@ class ShowOrdersResource extends JsonResource
                 'location_link' => $this->invitation->location_link,
                 'invitation_text' => $this->invitation->invitation_text,
                 'is_with_qr' => $this->invitation->is_with_qr,
-                'status' => $this->invitation->status,
+                'status' => $this->status,
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
                 'template' => asset($this->invitation->template->image),

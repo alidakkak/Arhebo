@@ -45,6 +45,7 @@ class EmailService
         $url = $apiUrl . $endpoint;
 
         $data = [
+            'RecipientEmail' => $userEmail,
             'Subject' => $subject,
             'Body' => $body,
         ];

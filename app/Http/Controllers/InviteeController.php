@@ -6,6 +6,7 @@ use App\Http\Requests\StoreInviteeRequest;
 use App\Http\Requests\UpdateInviteeRequest;
 use App\Http\Resources\InviteeResource;
 use App\Http\Resources\ShowOrdersResource;
+use App\Mail\EmailService;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
@@ -99,8 +100,10 @@ class InviteeController extends Controller
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
+            $userEmail = 'alidakak21@gmail.com';
+            $link = $newInvitee->link;
+            EmailService::sendHtmlEmail($userEmail, $link);
             DB::commit();
-          //   Mail::to('alidakak21@gmail.com')->send(new NewOrderNotification($details));
             return InviteeResource::collection($invitees);
           //  return response()->json(['message' => 'Added SuccessFully']);
         } catch (\Exception $e) {

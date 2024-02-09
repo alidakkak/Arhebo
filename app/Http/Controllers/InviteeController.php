@@ -10,13 +10,10 @@ use App\Mail\EmailService;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
-use App\Models\User;
-use App\Notifications\NewOrderNotification;
 use App\Statuses\InviteeTypes;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -100,12 +97,13 @@ class InviteeController extends Controller
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $userEmail = 'firasaljabi1111@gmail.com';
-            $link = $newInvitee->link;
-            EmailService::sendHtmlEmail($userEmail, $link);
+            //            $userEmail = 'firasaljabi1111@gmail.com';
+            //            $link = $newInvitee->link;
+            //            EmailService::sendHtmlEmail($userEmail, $link);
             DB::commit();
+
             return InviteeResource::collection($invitees);
-          //  return response()->json(['message' => 'Added SuccessFully']);
+            //  return response()->json(['message' => 'Added SuccessFully']);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -116,7 +114,7 @@ class InviteeController extends Controller
     /// API For conformed Or Rejected Invitation
     public function update(UpdateInviteeRequest $request, Invitee $invitee)
     {
-        if($request->uuid !== $invitee->uuid){
+        if ($request->uuid !== $invitee->uuid) {
             return Response()->json(['message' => 'false'], 403);
         }
         $status = $request->status;
@@ -137,37 +135,39 @@ class InviteeController extends Controller
         return response()->json(['message' => $status == 1 ? 'تم قبول الدعوة بنجاح' : 'تم رفض الدعوة بنجاح']);
     }
 
-    public function showInvitationInfo(Request $request,Invitee $invitee) {
-        if($invitee->uuid !== $request->uuid) {
+    public function showInvitationInfo(Request $request, Invitee $invitee)
+    {
+        if ($invitee->uuid !== $request->uuid) {
             return response()->json(['message' => 'هذه الدعوة غير مخصصة لك'], 403);
         }
-       return ShowOrdersResource::make($invitee);
+
+        return ShowOrdersResource::make($invitee);
     }
 
-//    public function get_info_for_link($uuid)
-//    {
-//        $invitee = Invitee::where('uuid', $uuid)->first();
-//        if ($invitee->status == InviteeTypes::waiting) {
-//            return response()->json(
-//                ['access' => true,
-//                    'invitation' => [
-//                        'category_name' => $invitee->invitation->category->name,
-//                        'category_photo' => $invitee->invitation->category->image,
-//                        'template_photo' => $invitee->invitation->Template->image],
-//                ]
-//            );
-//        } else {
-//            return response()->json(['access' => false], 403);
-//        }
-//    }
+    //    public function get_info_for_link($uuid)
+    //    {
+    //        $invitee = Invitee::where('uuid', $uuid)->first();
+    //        if ($invitee->status == InviteeTypes::waiting) {
+    //            return response()->json(
+    //                ['access' => true,
+    //                    'invitation' => [
+    //                        'category_name' => $invitee->invitation->category->name,
+    //                        'category_photo' => $invitee->invitation->category->image,
+    //                        'template_photo' => $invitee->invitation->Template->image],
+    //                ]
+    //            );
+    //        } else {
+    //            return response()->json(['access' => false], 403);
+    //        }
+    //    }
 
-//    public function update_stauts($uuid, Request $request)
-//    {
-//        $invitee = Invitee::where('uuid', $uuid)->first();
-//        if ($invitee->status == InviteeTypes::waiting) {
-//            $invitee->update(['status' => $request->stauts]);
-//        }
-//
-//        return response(['msg' => 'success']);
-//    }
+    //    public function update_stauts($uuid, Request $request)
+    //    {
+    //        $invitee = Invitee::where('uuid', $uuid)->first();
+    //        if ($invitee->status == InviteeTypes::waiting) {
+    //            $invitee->update(['status' => $request->stauts]);
+    //        }
+    //
+    //        return response(['msg' => 'success']);
+    //    }
 }

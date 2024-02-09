@@ -4,6 +4,7 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\ReminderController;
 use Illuminate\Support\Facades\Route;
+
 Route::patch('invitees/{invitee}', [InviteeController::class, 'update']);
 Route::group(['middleware' => 'check_user:1,3'], function () {
     ////  Invitee

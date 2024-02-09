@@ -88,8 +88,9 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::delete('ratings/{rating}', [RatingController::class, 'delete']);
 
     //// Invitation
-    Route::get('invitations', [InvitationController::class, 'myInvitation']);
-    Route::get('invitations/{invitation}', [InvitationController::class, 'showInvitation']);
+    Route::get('invitations', [InvitationController::class, 'myEvent']);
+    Route::get('invitations/{invitation}', [InvitationController::class, 'showEvent']);
+    Route::get('event', [InvitationController::class, 'myInvitation']);
     Route::post('invitations', [InvitationController::class, 'store']);
     Route::post('invitations/{invitationId}', [InvitationController::class, 'delete']);
     Route::post('invitationUpdate/{invitationId}', [InvitationController::class, 'update']);
@@ -103,6 +104,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     ////  Reception
     Route::get('receptions', [ReceptionController::class, 'search']);
     Route::get('receptionsEvent', [ReceptionController::class, 'myEvent']);
+    Route::get('receptionsEvent/{Id}', [ReceptionController::class, 'myEventById']);
     Route::post('receptions', [ReceptionController::class, 'store']);
     Route::delete('receptionsDelete', [ReceptionController::class, 'delete']);
     Route::get('receptionList', [ReceptionController::class, 'receptionList']);
@@ -122,6 +124,3 @@ Route::get('terms', [TermController::class, 'index']);
 //
 //Route::get('get_info_for_link/{uuid}', [InviteeController::class, 'get_info_for_link']);
 //Route::put('update_stauts/{uuid}', [InviteeController::class, 'update_stauts']);
-
-
-

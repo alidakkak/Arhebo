@@ -8,7 +8,7 @@ class EmailService
 {
     public static function sendHtmlEmail($userEmail, $link)
     {
-        $subject = 'Welcome to ' . htmlspecialchars('Arhebo');
+        $subject = 'Welcome to '.htmlspecialchars('Arhebo');
         $body = '
                 <html>
                 <head>
@@ -31,8 +31,8 @@ class EmailService
                     <div class="container">
                         <h1>Welcome to Our Company</h1>
                         <ul>
-                            <li><strong>Email:</strong> ' . htmlspecialchars($userEmail) . '</li>
-                            <li><strong>Link:</strong> ' . htmlspecialchars($link) . '</li>
+                            <li><strong>Email:</strong> '.htmlspecialchars($userEmail).'</li>
+                            <li><strong>Link:</strong> '.htmlspecialchars($link).'</li>
                         </ul>
                     </div>
                 </body>
@@ -42,7 +42,7 @@ class EmailService
         $apiKey = 'rm1GEVrZlW3HEgjR/CJjQRUYp3m7xoocfHlgW5SuNf2kyb1+1wPYQZUlycrkfZTMq0fuO5T1o+Tl0G0aWdhGp+f1Yd/JPmgGSi7UPCnzbMfqHOpt7H1WggMzq7lAP9Z9VAfQpdwkDD2HBY1F38n5qkex4V3jGCHq/YnNJC5mxt0=';
 
         $endpoint = 'htmlsend';
-        $url = $apiUrl . $endpoint;
+        $url = $apiUrl.$endpoint;
 
         $data = [
             'RecipientEmail' => $userEmail,

@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -17,7 +16,6 @@ class NewOrderNotification extends Notification
      * Create a new notification instance.
      */
     public function __construct($details)
-
     {
 
         $this->details = $details;
@@ -30,10 +28,9 @@ class NewOrderNotification extends Notification
      * @return array<int, string>
      */
     public function via($notifiable)
-
     {
 
-        return ['mail','database'];
+        return ['mail', 'database'];
 
     }
 
@@ -41,7 +38,6 @@ class NewOrderNotification extends Notification
      * Get the mail representation of the notification.
      */
     public function toMail($notifiable)
-
     {
 
         return (new MailMessage)
@@ -57,12 +53,11 @@ class NewOrderNotification extends Notification
     }
 
     public function toDatabase($notifiable)
-
     {
 
         return [
 
-            'order_id' => $this->details['order_id']
+            'order_id' => $this->details['order_id'],
 
         ];
 

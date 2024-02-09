@@ -32,6 +32,17 @@ class ReceptionController extends Controller
         return ReceptionEventResource::collection($reception);
     }
 
+    public function myEventById($Id)
+    {
+        $user = auth()->user();
+        $reception = Reception::where('id', $Id)->where('user_id', $user->id)->first();
+        if (!$reception) {
+            return response()->json(['message' => 'Reception event not found or access denied.'], 404);
+        }
+
+        return ReceptionEventResource::make($reception);
+    }
+
     public function store(StoreReceptionRequest $request)
     {
         $receptionData = $request->input('receptions', []);
@@ -93,14 +104,17 @@ class ReceptionController extends Controller
         $qrCode = QR::where('invitee_id', $validatedData['invitee_id'])
             ->where('InviteeNumber', $validatedData['InviteeNumber'])
             ->first();
-        if ($qrCode) {
-            $qrCode->update([
-                'status' => 1,
-            ]);
-
-            return response()->json(['message' => 'QR code scanned successfully'], 200);
-        } else {
-            return response()->json(['message' => 'Invalid QR code'], 400);
+        if (! $qrCode) {
+            return response()->json(['message' => 'Invalid QR Code'], 400);
         }
+
+        if ($qrCode->status == 1) {
+            return response()->json(['message' => 'QR Code has been scanned before']);
+        }
+        $qrCode->update([
+            'status' => 1,
+        ]);
+
+        return response()->json(['message' => 'QR Code scanned successfully']);
     }
 }

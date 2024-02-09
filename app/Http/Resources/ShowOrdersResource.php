@@ -18,8 +18,7 @@ class ShowOrdersResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-
-        if ($request->route()->uri === "api/showInvitationInfo/{invitee}"){
+        if ($request->route()->uri === 'api/showInvitationInfo/{invitee}') {
             return [
                 'id' => $this->id,
                 'category' => $this->invitation->category->name,

@@ -11,7 +11,9 @@ use App\Http\Resources\ShowOrdersResource;
 use App\Models\Invitation;
 use App\Models\InvitationInput;
 use App\Models\InvitationProhibited;
+use App\Models\Invitee;
 use App\Models\Message;
+use App\Models\User;
 use App\Statuses\InvitationTypes;
 use App\Statuses\MessageTypes;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +38,7 @@ class InvitationController extends Controller
         return ShowOrdersResource::make($invitation);
     }
 
-    public function myInvitation()
+    public function myEvent()
     {
         $user = auth()->user();
         $invitation = Invitation::where('user_id', $user->id)->get();
@@ -44,19 +46,24 @@ class InvitationController extends Controller
         return InvitationResource::collection($invitation);
     }
 
-    public function showInvitation($invitation)
+    public function showEvent($invitation)
     {
         $show = Invitation::find($invitation);
         if (! $show) {
-            return response()->json(['message' => 'Not Found']);
+            return response()->json(['message' => 'Not Found'], 403);
         }
 
-        return InvitationResource::make($invitation);
+        return InvitationResource::make($show);
     }
 
-    public function myEvent()
+    //// The invitations I was invited on
+    public function myInvitation()
     {
+        $user = auth()->user();
+        $userPhone = User::where('id', $user->id)->select('phone');
+        $invitation = Invitee::where('phone', $userPhone)->get();
 
+        return InvitationResource::collection($invitation);
     }
 
     public function store(StoreInvitationRequest $request)

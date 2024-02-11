@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('title_ar');
             $table->string('emoji');
-            $table->string('descriptions');
-            $table->string('descriptions_ar');
+            $table->string('description');
+            $table->string('description_ar');
             $table->string('image');
             $table->string('template_code', 4)->unique();
             $table->foreignId('category_id')->references('id')

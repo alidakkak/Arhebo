@@ -20,8 +20,8 @@ class CategoryResource extends JsonResource
             'name_ar' => $this->name_ar,
             'image' => $this->image,
             'photo' => $this->photo,
-            'description' => $this->descriptions,
-            'description_ar' => $this->descriptions_ar,
+            'description' => $this->description,
+            'description_ar' => $this->description_ar,
             'category_code' => $this->category_code,
             'template' => TemplateResource::collection($this->Template),
         ];

@@ -23,6 +23,7 @@ class StoreProhibitedThingRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'name_ar' => 'required|string',
         ];
     }
 }

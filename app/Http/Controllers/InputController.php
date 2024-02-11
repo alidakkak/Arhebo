@@ -18,6 +18,7 @@ class InputController extends Controller
                     'input_id' => $inputs->id,
                     'name' => $validate['name'],
                     'message' => $validate['message'],
+                    'message_ar' => $validate['message_ar'],
                 ]);
             }
         }

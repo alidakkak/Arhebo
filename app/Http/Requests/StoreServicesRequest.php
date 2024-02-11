@@ -23,7 +23,9 @@ class StoreServicesRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'title_ar' => 'required|string',
             'body' => 'required|string',
+            'body_ar' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ];
     }

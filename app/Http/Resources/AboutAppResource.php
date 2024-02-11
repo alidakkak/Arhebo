@@ -17,7 +17,9 @@ class AboutAppResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'title_ar' => $this->title_ar,
             'body' => $this->body,
+            'body_ar' => $this->body_ar,
             'phone' => $this->phone,
             'email' => $this->email,
             'facebook' => $this->facebook,

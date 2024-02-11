@@ -39,8 +39,11 @@ class TrendingResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'title_ar' => $this->title_ar,
             'emoji' => $this->emoji,
             'category_id' => $this->category_id,
+            'description' => $this->descriptions,
+            'description_ar' => $this->descriptions_ar,
             'image' => $this->image,
             'is_favorite' => $isFavorite,
             'invitation_count' => $this->invitation_count,

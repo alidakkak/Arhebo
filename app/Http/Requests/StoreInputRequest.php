@@ -25,6 +25,7 @@ class StoreInputRequest extends FormRequest
         return [
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'input_name' => 'required',
+            'input_name_ar' => 'required',
             //            'validates.*' => 'required'
         ];
     }

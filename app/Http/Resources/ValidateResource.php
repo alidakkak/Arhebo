@@ -18,6 +18,7 @@ class ValidateResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'message' => $this->message,
+            'message_ar' => $this->message_ar,
         ];
     }
 }

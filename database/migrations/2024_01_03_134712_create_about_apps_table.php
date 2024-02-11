@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('about_apps', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('title_ar');
             $table->string('body');
+            $table->string('body_ar');
             $table->string('phone');
             $table->string('email');
             $table->string('facebook');

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('message');
+            $table->string('message_ar');
             $table->foreignId('input_id')->references('id')->on('inputs')->onDelete('cascade');
             $table->timestamps();
         });

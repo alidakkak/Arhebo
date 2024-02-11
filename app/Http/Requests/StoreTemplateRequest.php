@@ -24,8 +24,10 @@ class StoreTemplateRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'title_ar' => 'required|string',
             'emoji' => 'required|string',
             'descriptions' => 'required|string',
+            'descriptions_ar' => 'required|string',
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
             //            'colors' => 'required|array',

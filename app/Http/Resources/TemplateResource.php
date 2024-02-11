@@ -40,7 +40,9 @@ class TemplateResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'title_ar' => $this->title_ar,
             'description' => $this->descriptions,
+            'description_ar' => $this->descriptions_ar,
             'emoji' => $this->emoji,
             'template_code' => $this->template_code,
             'category_id' => $this->category_id,

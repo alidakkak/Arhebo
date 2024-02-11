@@ -17,7 +17,9 @@ class TermResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'title_ar' => $this->title_ar,
             'body' => $this->body,
+            'body_ar' => $this->body_ar,
             'is_agree' => $this->is_agree,
         ];
     }

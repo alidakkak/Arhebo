@@ -23,7 +23,9 @@ class StoreAboutAppRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'title_ar' => 'required|string',
             'body' => 'required|string',
+            'body_ar' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|string',
             'facebook' => 'required|string',

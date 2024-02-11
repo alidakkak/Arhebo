@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('title_ar');
             $table->string('body');
+            $table->string('body_ar');
             $table->boolean('is_agree');
             $table->timestamps();
         });

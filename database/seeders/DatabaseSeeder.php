@@ -34,10 +34,12 @@ class DatabaseSeeder extends Seeder
 
         ProhibitedThing::create([
             'name' => 'Children are not allowed',
+            'name_ar' => 'الأطفال غير مسموح بهم',
         ]);
 
         ProhibitedThing::create([
             'name' => 'Mobile photography is not allowed',
+            'name_ar' => 'غير مسموح بل كميرات',
         ]);
 
     }

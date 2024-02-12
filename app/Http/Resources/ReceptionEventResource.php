@@ -39,7 +39,7 @@ class ReceptionEventResource extends JsonResource
             'city' => $this->invitation->city,
             'region' => $this->invitation->region,
             'template' => $this->invitation->template->image,
-            'invitees' => Invitee::where('invitation_id', $this->id)->sum('number_of_people'),
+            'invitees' => Invitee::where('invitation_id', $this->invitation->id)->sum('number_of_people'),
             'attendees' => $attendees,
         ];
     }

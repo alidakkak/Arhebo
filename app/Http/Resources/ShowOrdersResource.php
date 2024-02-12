@@ -3,8 +3,10 @@
 namespace App\Http\Resources;
 
 use App\Models\Input;
+use App\Models\Message;
 use App\Models\ProhibitedThing;
 use App\Statuses\InvitationTypes;
+use App\Statuses\MessageTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -46,6 +48,15 @@ class ShowOrdersResource extends JsonResource
         ]
         );
 
+        $message_delete = Message::where('invitation_id', $this->id)
+            ->where('type', MessageTypes::deleted)->value('title');
+
+        $message_update = Message::where('invitation_id', $this->id)
+            ->where('type', MessageTypes::updated)
+            ->select('id', 'title')
+            ->get();
+
+
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,
@@ -58,9 +69,11 @@ class ShowOrdersResource extends JsonResource
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
             'is_with_qr' => $this->is_with_qr,
-            'status' => $this->status ?? InvitationTypes::active,
+            'status' => $this->status ,
             'city' => $this->city,
             'region' => $this->region,
+            'message_when_delete_invitation' => $message_delete,
+            'message_when_update_invitation' => $message_update,
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),

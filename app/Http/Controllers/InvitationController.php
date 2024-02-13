@@ -79,11 +79,13 @@ class InvitationController extends Controller
                     'answer' => $answer['answer'],
                 ]);
             }
-            foreach ($request->prohibited as $prohibite) {
-                InvitationProhibited::create([
-                    'invitation_id' => $invitation->id,
-                    'prohibited_thing_id' => $prohibite['prohibited_thing_id'],
-                ]);
+            if($request->prohibited) {
+                foreach ($request->prohibited as $prohibite) {
+                    InvitationProhibited::create([
+                        'invitation_id' => $invitation->id,
+                        'prohibited_thing_id' => $prohibite['prohibited_thing_id'],
+                    ]);
+                }
             }
 
             DB::commit();

@@ -9,6 +9,7 @@ use App\Models\QR;
 use App\Models\Reception;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class ReceptionController extends Controller
@@ -66,9 +67,16 @@ class ReceptionController extends Controller
 
     public function search(Request $request)
     {
-        $user = User::where('phone', $request->phone)->with('invitation')->get();
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $phone = $request->input('phone') . '%';
+        $users = User::where('phone', 'LIKE', $phone)->with('invitation')->get();
 
-        return $user;
+        return $users;
     }
 
     public function delete(Request $request)

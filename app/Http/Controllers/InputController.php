@@ -26,9 +26,16 @@ class InputController extends Controller
         return InputResource::make($inputs);
     }
 
-    public function delete($Id)
+    public function delete($id)
     {
-        $Id->delete();
-        return response()->json(['message' => 'Deleted']);
+        $record = Input::find($id);
+    
+        if ($record) {
+            $record->delete();
+            return response()->json(['message' => 'Deleted']);
+        } else {
+            return response()->json(['message' => 'Record not found'], 404);
+        }
     }
+    
 }

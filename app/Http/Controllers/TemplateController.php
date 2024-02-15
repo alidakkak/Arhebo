@@ -21,6 +21,7 @@ class TemplateController extends Controller
     public function trending()
     {
         $mostUsedTemplate = Template::withCount('invitation')
+            ->having('invitation_count', '>', 0)
             ->orderBy('invitation_count', 'desc')->limit(6)
             ->get();
 

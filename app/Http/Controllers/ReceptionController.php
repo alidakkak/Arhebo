@@ -37,7 +37,7 @@ class ReceptionController extends Controller
     {
         $user = auth()->user();
         $reception = Reception::where('id', $Id)->where('user_id', $user->id)->first();
-        if (!$reception) {
+        if (! $reception) {
             return response()->json(['message' => 'Reception event not found or access denied.'], 404);
         }
 
@@ -73,7 +73,7 @@ class ReceptionController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $phone = $request->input('phone') . '%';
+        $phone = $request->input('phone').'%';
         $users = User::where('phone', 'LIKE', $phone)->with('invitation')->get();
 
         return $users;

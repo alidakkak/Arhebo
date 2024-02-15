@@ -79,7 +79,7 @@ class InvitationController extends Controller
                     'answer' => $answer['answer'],
                 ]);
             }
-            if($request->prohibited) {
+            if ($request->prohibited) {
                 foreach ($request->prohibited as $prohibite) {
                     InvitationProhibited::create([
                         'invitation_id' => $invitation->id,

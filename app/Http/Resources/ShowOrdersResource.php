@@ -5,7 +5,6 @@ namespace App\Http\Resources;
 use App\Models\Input;
 use App\Models\Message;
 use App\Models\ProhibitedThing;
-use App\Statuses\InvitationTypes;
 use App\Statuses\MessageTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -56,7 +55,6 @@ class ShowOrdersResource extends JsonResource
             ->select('id', 'title')
             ->get();
 
-
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,
@@ -69,7 +67,7 @@ class ShowOrdersResource extends JsonResource
             'location_link' => $this->location_link,
             'invitation_text' => $this->invitation_text,
             'is_with_qr' => $this->is_with_qr,
-            'status' => $this->status ,
+            'status' => $this->status,
             'city' => $this->city,
             'region' => $this->region,
             'message_when_delete_invitation' => $message_delete,

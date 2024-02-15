@@ -65,14 +65,12 @@ class DatabaseSeeder extends Seeder
             'answer_ar' => 'نعم، يمكن حذف المناسبة ولكن لا يسمح بالحذف في حال تبقى على انعقاد المناسبة أقل من 72 ساعة',
         ]);
 
-
         FrequentlyAskedQuestion::create([
             'question' => 'Does Welcome have a supervisor for the portal?',
             'answer' => 'No, we do not currently have a portal supervisor, but we are working on it, and our supervisors will be chosen with great care so that you have a wonderful experience.',
             'question_ar' => 'هل يتوفر لدى ارحبو مشرف/ـة للبوابة؟',
             'answer_ar' => 'لا لا يتوفر لدينا مشرف بوابة حالياً ولكننا نعمل على ذلك، وسيتم اختيار مشرفينا بعناية تامة لتحصلوا على تجربة رائعة.',
         ]);
-
 
         FrequentlyAskedQuestion::create([
             'question' => 'What are the extent of the powers of the portal supervisor in managing the event and invitations?',

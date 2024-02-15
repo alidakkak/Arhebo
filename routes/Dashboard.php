@@ -50,6 +50,7 @@ Route::group(['middleware' => 'check_user:1'], function () {
 
     ///// Inputs
     Route::post('inputs', [InputController::class, 'store']);
+    Route::delete('inputs/{Id}', [InputController::class, 'delete']);
 
     //// Prohibited Thing
     Route::post('prohibitedThing', [ProhibitedThingController::class, 'store']);

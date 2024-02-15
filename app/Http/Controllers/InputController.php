@@ -25,4 +25,10 @@ class InputController extends Controller
 
         return InputResource::make($inputs);
     }
+
+    public function delete($Id)
+    {
+        $Id->delete();
+        return response()->json(['message' => 'Deleted']);
+    }
 }

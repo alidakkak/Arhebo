@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\OffersController;
@@ -44,6 +45,9 @@ Route::group(['middleware' => 'check_user:1'], function () {
 
     ////  AboutApp
     Route::post('about_apps', [AboutAppController::class, 'store']);
+
+    ////  Contact Us
+    Route::post('contactUs', [ContactUsController::class, 'store']);
 
     ////  FAQ
     Route::post('faq', [FAQController::class, 'store']);

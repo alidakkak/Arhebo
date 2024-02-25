@@ -36,7 +36,6 @@ class StoreInvitationRequest extends FormRequest
             //            'city' => 'string',
             //            'region' => 'string',
             'location_link' => 'required|string',
-            'location_name' => 'required|string',
             'inviter' => 'required|string',
             'invitation_text' => 'required|string',
             'is_with_qr' => 'required|boolean',

@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('about_apps', function (Blueprint $table) {
+        Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('title_ar');
-            $table->longText('body');
-            $table->longText('body_ar');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('facebook');
+            $table->string('instagram');
+            $table->string('whatsapp');
+            $table->string('x');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('about_apps');
+        Schema::dropIfExists('contact_us');
     }
 };

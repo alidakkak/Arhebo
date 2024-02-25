@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\EmailVerifyController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\InviteeController;
@@ -72,6 +73,9 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 
     ////  AboutApp
     Route::get('about_apps', [AboutAppController::class, 'index']);
+
+    ////  Contact us
+    Route::get('contactUs', [ContactUsController::class, 'index']);
 
     ////  FAQ
     Route::get('faq', [FAQController::class, 'index']);

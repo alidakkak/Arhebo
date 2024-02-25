@@ -29,13 +29,13 @@ class InputController extends Controller
     public function delete($id)
     {
         $record = Input::find($id);
-    
+
         if ($record) {
             $record->delete();
+
             return response()->json(['message' => 'Deleted']);
         } else {
             return response()->json(['message' => 'Record not found'], 404);
         }
     }
-    
 }

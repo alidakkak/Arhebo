@@ -72,12 +72,14 @@ class InvitationController extends Controller
         try {
             DB::beginTransaction();
             $invitation = Invitation::create(array_merge(['user_id' => $user->id], $request->all()));
-            foreach ($request->answers as $answer) {
-                InvitationInput::create([
-                    'invitation_id' => $invitation->id,
-                    'input_id' => $answer['input_id'],
-                    'answer' => $answer['answer'],
-                ]);
+            if ($request->answers) {
+                foreach ($request->answers as $answer) {
+                    InvitationInput::create([
+                        'invitation_id' => $invitation->id,
+                        'input_id' => $answer['input_id'],
+                        'answer' => $answer['answer'],
+                    ]);
+                }
             }
             if ($request->prohibited) {
                 foreach ($request->prohibited as $prohibite) {

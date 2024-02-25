@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTemplateRequest;
+use App\Http\Resources\TemplateByCodeResource;
 use App\Http\Resources\TemplateResource;
 use App\Http\Resources\TrendingResource;
 use App\Models\Color;
 use App\Models\ColorTemplate;
 use App\Models\Template;
+use Illuminate\Http\Request;
 
 class TemplateController extends Controller
 {
@@ -68,5 +70,14 @@ class TemplateController extends Controller
             'message' => 'Deleted SuccessFully',
             TemplateResource::make($template),
         ]);
+    }
+
+    //// Search Template By Code
+    public function templateByCode(Request $request) {
+        $template = Template::where('template_code', $request->template_code)->first();
+        if (!$template) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        return TemplateByCodeResource::make($template);
     }
 }

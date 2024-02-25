@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('title_ar');
-            $table->string('body');
-            $table->string('body_ar');
+            $table->longText('body');
+            $table->longText('body_ar');
             $table->timestamps();
         });
     }

@@ -18,18 +18,40 @@ class CategoryController extends Controller
 
     public function store(StoreCategoryRequest $request)
     {
-        $request->validated($request->all());
-        $category = Category::create($request->all());
+        try {
+            $category = Category::create($request->all());
 
-        return CategoryResource::make($category);
+            return response()->json([
+                'message' => 'Created SuccessFully',
+                'data' => CategoryResource::make($category),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $categoryId)
     {
-        $request->validated($request->all());
-        $category->update($request->all());
+        try {
+            $category = Category::find($categoryId);
+            if (! $category) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $category->update($request->all());
 
-        return CategoryResource::collection($category);
+            return response()->json([
+                'message' => 'Updated SuccessFully',
+                'data' => CategoryResource::make($category),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function show($category)
@@ -42,18 +64,29 @@ class CategoryController extends Controller
         return CategoryResource::make($category);
     }
 
-    public function delete(Category $category)
+    public function delete($categoryId)
     {
-        $category->delete();
+        try {
+            $category = Category::find($categoryId);
+            if (! $category) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $category->delete();
 
-        //        $categories = Category::where('id', '>', $category->id)->get();
-        //        foreach ($categories as $cat) {
-        //            $cat->category_code = str_pad((int)$cat->category_code - 1, 2, '0', STR_PAD_LEFT);
-        //            $cat->save();
-        //        }
-        return response([
-            'message' => 'Deleted SuccessFully',
-            CategoryResource::make($category),
-        ]);
+            //        $categories = Category::where('id', '>', $category->id)->get();
+            //        foreach ($categories as $cat) {
+            //            $cat->category_code = str_pad((int)$cat->category_code - 1, 2, '0', STR_PAD_LEFT);
+            //            $cat->save();
+            //        }
+            return response()->json([
+                'message' => 'Deleted SuccessFully',
+                'data' => CategoryResource::make($category),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

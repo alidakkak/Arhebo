@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StorePackageRequest extends FormRequest
 {
@@ -28,10 +27,6 @@ class StorePackageRequest extends FormRequest
             'description' => 'required|string',
             'description_ar' => 'required|string',
             'color' => 'required|string',
-            'package_id' => Rule::exists('packages', 'id'),
-            'price.*' => 'required|string',
-            'price_qr.*' => 'required|string',
-            'number_of_invitees.*' => 'required|string',
         ];
     }
 }

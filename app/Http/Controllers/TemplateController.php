@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTemplateRequest;
+use App\Http\Requests\UpdateTemplateRequest;
 use App\Http\Resources\TemplateByCodeResource;
 use App\Http\Resources\TemplateResource;
 use App\Http\Resources\TrendingResource;
@@ -51,33 +52,77 @@ class TemplateController extends Controller
 
     public function store(StoreTemplateRequest $request)
     {
-        $request->validated($request->all());
-        $template = Template::create($request->all());
+        try {
+            $template = Template::create($request->all());
 
-        return TemplateResource::make($template);
+            return response()->json([
+                'message' => 'Created SuccessFully',
+                'data' => TemplateResource::make($template),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    public function delete(Template $template)
+    public function update(UpdateTemplateRequest $request, $templateId)
     {
-        $template->delete();
+        try {
+            $template = Template::find($templateId);
+            if (! $template) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $template->update($request->all());
 
-        //        $templates = Template::where('id' , '>' , $template->id)->get();
-        //        foreach ($templates as $cat) {
-        //            $cat->template_code = str_pad((int)$cat->template_code - 1, 4, '0', STR_PAD_LEFT);
-        //            $cat->save();
-        //        }
-        return response([
-            'message' => 'Deleted SuccessFully',
-            TemplateResource::make($template),
-        ]);
+            return response()->json([
+                'message' => 'Updated SuccessFully',
+                'data' => TemplateResource::make($template),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    //// Search Template By Code
-    public function templateByCode(Request $request) {
+    public function delete($templateId)
+    {
+        try {
+            $template = Template::find($templateId);
+            if (! $template) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $template->delete();
+
+            //        $templates = Template::where('id' , '>' , $template->id)->get();
+            //        foreach ($templates as $cat) {
+            //            $cat->template_code = str_pad((int)$cat->template_code - 1, 4, '0', STR_PAD_LEFT);
+            //            $cat->save();
+            //        }
+
+            return response()->json([
+                'message' => 'Deleted SuccessFully',
+                // 'data' => TemplateResource::make($template),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    //// Search Template By Code (Support)
+    public function templateByCode(Request $request)
+    {
         $template = Template::where('template_code', $request->template_code)->first();
-        if (!$template) {
+        if (! $template) {
             return response()->json(['message' => 'Not Found'], 404);
         }
+
         return TemplateByCodeResource::make($template);
     }
 }

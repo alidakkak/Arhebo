@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePackageRequest;
+use App\Http\Requests\UpdatePackageRequest;
 use App\Http\Resources\PackageResource;
 use App\Models\Package;
-use App\Models\PackageDetail;
 
 class PackageController extends Controller
 {
@@ -18,19 +18,60 @@ class PackageController extends Controller
 
     public function store(StorePackageRequest $request)
     {
-        $request->validated($request->all());
-        $packag = Package::create($request->all());
-        if ($request->package_detalis) {
-            foreach ($request->package_detalis as $package) {
-                PackageDetail::create([
-                    'package_id' => $packag->id,
-                    'price' => $package['price'],
-                    'price_qr' => $package['price_qr'],
-                    'number_of_invitees' => $package['number_of_invitees'],
-                ]);
-            }
-        }
+        try {
+            $package = Package::create($request->all());
 
-        return PackageResource::make($packag);
+            return response()->json([
+                'message' => 'Created SuccessFully',
+                'data' => PackageResource::make($package),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function update(UpdatePackageRequest $request, $packageId)
+    {
+        try {
+            $package = Package::find($packageId);
+            if (! $package) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $package->update($request->all());
+
+            return response()->json([
+                'message' => 'Updated SuccessFully',
+                'data' => PackageResource::make($package),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function delete($packageId)
+    {
+        try {
+            $package = Package::find($packageId);
+            if (! $package) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $package->delete();
+
+            return response()->json([
+                'message' => 'Deleted SuccessFully',
+                'data' => PackageResource::make($package),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

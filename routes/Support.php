@@ -19,5 +19,5 @@ Route::group(['middleware' => 'check_user:1,3'], function () {
     Route::get('showOrders/{invitationId}', [InvitationController::class, 'showOrders']);
 
     ////  Template By Code
-    Route::get('templateByCode',[TemplateController::class, 'templateByCode']);
+    Route::get('templateByCode', [TemplateController::class, 'templateByCode']);
 });

@@ -21,7 +21,7 @@ class PackageResource extends JsonResource
             'description' => $this->description,
             'description_ar' => $this->description_ar,
             'color' => $this->color,
-            'Package Details' => $this->packageDetail,
+            'Package Details' => PackageDetalisResource::collection($this->packageDetail)
         ];
     }
 }

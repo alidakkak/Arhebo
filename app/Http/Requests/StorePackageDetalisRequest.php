@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateOfferRequest extends FormRequest
+class StorePackageDetalisRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +23,10 @@ class UpdateOfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'image|mimes:jpg,png,jpeg|max:2048',
+            'package_id' => ['required', Rule::exists('packages', 'id')],
+            'package_details.*.price' => 'required|string',
+            'package_details.*.price_qr' => 'required|string',
+            'package_details.*.number_of_invitees' => 'required|string',
         ];
     }
 }

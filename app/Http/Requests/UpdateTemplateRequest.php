@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTemplateRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateTemplateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,13 @@ class UpdateTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'string',
+            'title_ar' => 'string',
+            'emoji' => 'string',
+            'description' => 'string',
+            'description_ar' => 'string',
+            'category_id' => [Rule::exists('categories', 'id')],
+            'image' => 'image|mimes:jpeg,png,jpg,svg',
         ];
     }
 }

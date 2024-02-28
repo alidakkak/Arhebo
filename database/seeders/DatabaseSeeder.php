@@ -132,65 +132,63 @@ Transparency and honesty: We are committed to transparency and honesty in every 
             'facebook' => 'facebook.linc',
             'instagram' => 'instagram.linc',
             'whatsapp' => 'whatsapp',
-            'x' => 'x.linc'
+            'x' => 'x.linc',
         ]);
 
         Term::create([
-            'title' => 'Definitions' ,
-            'title_ar' => 'التعاريف' ,
+            'title' => 'Definitions',
+            'title_ar' => 'التعاريف',
             'body' => '• Institution: Institution (write the name of the institution).
 • Arhaboa platform: An electronic platform that aims to serve event owners (such as: wedding, engagement, graduation, etc.) to overcome the difficulties that they may encounter during the process of managing and directing invitations to the invitees.
 • User: Any person who uses the Arhaboo platform as a visitor, as an event host, as an additional invitee, as an invitee, as a gatekeeper, or
-  As a card designer.' ,
+  As a card designer.',
             'body_ar' => '• المؤسسة: مؤسسة (نكتب اسم المؤسسة ) .
 • منصة  آرحبوا: منصة إلكترونية تهدف إلى خدمة أصحاب المناسبات (مثل: حفل الزفاف، الخطبة، التخرج، إلخ) للتغلب على الصعوبات التي من الممكن أن تواجههم خلال عملية إدارة وتوجيه الدعوات إلى المدعوين.
 • المستخدم: أي شخص يقوم باستخدام منصة  آرحبوا كزائر أو كصاحب مناسبة أو كداعي إضافي أو كمدعو أو كحارس بوابة أو
- كمصمم بطاقات.' ,
-            'is_agree' => '1' ,
+ كمصمم بطاقات.',
+            'is_agree' => '1',
         ]);
 
         Term::create([
-            'title' => 'Introduction' ,
-            'title_ar' => 'المقدمة' ,
+            'title' => 'Introduction',
+            'title_ar' => 'المقدمة',
             'body' => 'We welcome you, and thank you for using the Arhaboo platform, with its products, services, and features.
 
 The following controls and conditions represent an official agreement (contract) between the organization and the users of the Arhaboo platform. Your use of the Welcome platform also constitutes your acceptance of this contract and its provisions without restriction or condition. Accordingly, you must not use it if you do not agree to the terms and conditions contained in this contract.
 
-The organization reserves the right to amend or change these terms and conditions from time to time without prior notice, in order to provide better service and higher quality. It is your responsibility as a user of the Arhaboo platform to review the terms and conditions of use periodically to know the updates that occur to them, and your continued use constitutes your full agreement to all Changes are made, we hope you review our Privacy Policy to learn more about how the organization uses the information provided by users. Note that any violation of this contract by the user may subject his account to suspension without prior notice and without any refundable amounts in some cases.' ,
+The organization reserves the right to amend or change these terms and conditions from time to time without prior notice, in order to provide better service and higher quality. It is your responsibility as a user of the Arhaboo platform to review the terms and conditions of use periodically to know the updates that occur to them, and your continued use constitutes your full agreement to all Changes are made, we hope you review our Privacy Policy to learn more about how the organization uses the information provided by users. Note that any violation of this contract by the user may subject his account to suspension without prior notice and without any refundable amounts in some cases.',
             'body_ar' => 'نرحب بك، ونشكرك على استخدام منصة  آرحبوا بما تتضمنه من منتجات وخدمات ومميزات.
 
 إن الضوابط والشروط التالية تمثل اتفاق رسمي (عقد) بين المؤسسة ومستخدمي منصة  آرحبوا. كما يشكل استخدامك لمنصة  آرحبوا موافقة منك على هذا العقد وأحكامه دون قيد أو شرط، وتبعاً لذلك يجب عليك عدم استخدامها في حال لم تكن موافقاً على الأحكام والشروط الواردة في هذا العقد.
 
 تحتفظ المؤسسة بحق تعديل أو تغيير هذه الأحكام والشروط من حين لآخر دون إشعار مسبق، وذلك من أجل خدمة أفضل وجودة أعلى، ويكون من مسؤوليتك كمستخدم لمنصة  آرحبوا مراجعة شروط وأحكام الاستخدام بشكل دوري لمعرفة التحديثات التي تطرأ عليها، كما يشكل استخدامك المستمر موافقتك التامة على كل التغييرات التي يتم إجراؤها، ونأمل مراجعة سياسة الخصوصية لدينا لمعرفة المزيد حول كيفية استخدام المؤسسة للمعلومات التي تقدم من قبل المستخدمين. علماً بأن أي مخالفة لهذا العقد من قبل المستخدم قد تعرض حسابه للإيقاف دون إشعار مسبق وبلا أي مبالغ مسترجعة في بعض الحالات.
-' ,
-            'is_agree' => '1' ,
+',
+            'is_agree' => '1',
         ]);
 
-
         Term::create([
-            'title' => 'Language of terms' ,
-            'title_ar' => 'لغة الشروط' ,
+            'title' => 'Language of terms',
+            'title_ar' => 'لغة الشروط',
             'body' => '• Where we provide you with a translation of the Arabic version of the Terms, you agree that the translation may be provided for your convenience only and that the Arabic version of the Terms is the version that will depend on and govern your relationship with the Corporation.
-• In the event of any contradiction between what is contained in the Arabic version of the terms and what is contained in the translation, what is contained in the Arabic version will be the reliable reference.' ,
+• In the event of any contradiction between what is contained in the Arabic version of the terms and what is contained in the translation, what is contained in the Arabic version will be the reliable reference.',
             'body_ar' => '• حيثما نوفر لك ترجمة للنسخة العربية من الشروط، فإنك توافق على أن الترجمة قد يتم توفيرها للتسهيل عليك فقط وأن النسخة العربية للشروط هي النسخة التي سوف تعتمد وتحكم علاقتك بـالمؤسسة.
 • في حالة وجود أي تناقض بين ما هو وارد في النسخة العربية من الشروط وما هو وارد في الترجمة، سيكون ما هو وارد في النسخة العربية المرجع الذي يعتد به.
-' ,
-            'is_agree' => '1' ,
+',
+            'is_agree' => '1',
         ]);
 
         Term::create([
-            'title' => 'Modifications' ,
-            'title_ar' => 'التعديلات' ,
+            'title' => 'Modifications',
+            'title_ar' => 'التعديلات',
             'body' => 'The Foundation has the right to update the Arhaboa platform from time to time, and it may also change any of its contents at its sole discretion, or change, suspend or discontinue any service (including, but not limited to, providing any feature, database or content) in any At any time, by posting a notification on the platform or by sending a notification to you via mobile phone or email. The Organization may also impose limits on certain features and services or limit your access to parts or all of the Arhaboo Platform without notice or liability. It should also be taken into account that the content of the Arhaboo platform may not be up to date at all times. The Foundation also does not guarantee that the Arhaboo platform or any of its contents are free of any error or incorrect information.
-​' ,
-            'body_ar' => 'يحق للمؤسسة تحديث منصة  آرحبوا من وقت لآخر، كما يجوز لها تغيير أي من محتوياتها من وفق تقديرها الخاص، أو تغيير أي خدمة أو تعليقها أو إيقافها (بما في ذلك على سبيل المثال لا الحصر، توفير أي ميزة أو قاعدة بيانات أو محتوى) في أي وقت، وذلك بنشر إخطار على المنصة أو بإرسال إخطار لك عبر الجوال أو البريد الإلكتروني. كما يجوز للمؤسسة أن تضع قيودًا على ميزات وخدمات مُعيَّنة أو تحد من وصولك إلى أجزاء من منصة  آرحبوا أو بأكملها دون إخطار أو مسؤولية. كذلك يجب مراعاة أن محتوى منصة  آرحبوا قد لا يكون محدثا في جميع الأوقات. كما لا تضمن المؤسسة خلو منصة  آرحبوا أو أي من محتوياتها من أي خطأ أو معلومات غير صحيحة.' ,
-            'is_agree' => '1' ,
+​',
+            'body_ar' => 'يحق للمؤسسة تحديث منصة  آرحبوا من وقت لآخر، كما يجوز لها تغيير أي من محتوياتها من وفق تقديرها الخاص، أو تغيير أي خدمة أو تعليقها أو إيقافها (بما في ذلك على سبيل المثال لا الحصر، توفير أي ميزة أو قاعدة بيانات أو محتوى) في أي وقت، وذلك بنشر إخطار على المنصة أو بإرسال إخطار لك عبر الجوال أو البريد الإلكتروني. كما يجوز للمؤسسة أن تضع قيودًا على ميزات وخدمات مُعيَّنة أو تحد من وصولك إلى أجزاء من منصة  آرحبوا أو بأكملها دون إخطار أو مسؤولية. كذلك يجب مراعاة أن محتوى منصة  آرحبوا قد لا يكون محدثا في جميع الأوقات. كما لا تضمن المؤسسة خلو منصة  آرحبوا أو أي من محتوياتها من أي خطأ أو معلومات غير صحيحة.',
+            'is_agree' => '1',
         ]);
 
-
         Term::create([
-            'title' => 'Users who are eligible to use the Arhaboo platform' ,
-            'title_ar' => 'المستخدمون المؤهلون لاستخدام منصة ارحبو' ,
+            'title' => 'Users who are eligible to use the Arhaboo platform',
+            'title_ar' => 'المستخدمون المؤهلون لاستخدام منصة ارحبو',
             'body' => '• Permissible age:
 You must be at least 13 years old to use the Arhaboo platform.
 
@@ -198,7 +196,7 @@ You must be at least 13 years old to use the Arhaboo platform.
 If you are under 18 years of age, you must obtain permission from a parent or legal guardian to use the Arhaboo platform. Please ask them to read this contract with you. If you are a parent or legal guardian of a user under the age of 18, by allowing your child to use the Arhabooa Platform, you are bound by the provisions of this contract and responsible for his or her use of the Arhabooa Platform.
 
 • Commercial activities:
-If you are using the Arhaboa platform on behalf of a company, institution, government entity, or private, for-profit or non-profit facility, you pledge to us that you have the authority to act on behalf of this entity and confirm to us that this entity agrees to this contract.' ,
+If you are using the Arhaboa platform on behalf of a company, institution, government entity, or private, for-profit or non-profit facility, you pledge to us that you have the authority to act on behalf of this entity and confirm to us that this entity agrees to this contract.',
             'body_ar' => '
 • السن المسموح به:
 يجب أن تبلغ من العمر 13 عامًا على الأقل لتتمكن من استخدام منصة  آرحبوا.
@@ -208,30 +206,28 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
 
 • الأنشطة التجارية:
 إذا كنت تستخدم منصة  آرحبوا نيابةً عن شركة أو مؤسسة أو جهة حكومية أو منشأة خاصة ربحية أو غير ربحية، فإنك تتعهد لنا أن لديك الصلاحية للتصرف نيابةً عن هذا الكيان وتؤكد لنا موافقة هذا الكيان على هذا العقد.
-' ,
-            'is_agree' => '1' ,
+',
+            'is_agree' => '1',
         ]);
 
-
         Term::create([
-            'title' => 'Entitlement to services' ,
-            'title_ar' => 'أحقية الحصول على الخدمات' ,
+            'title' => 'Entitlement to services',
+            'title_ar' => 'أحقية الحصول على الخدمات',
             'body' => 'To obtain the Services, Products and Features, you represent and warrant that:
 • Your use of the Arhaboo platform has never been disabled or prevented from using it at any time.
 • You are not a competitor to the Arhaboo platform, nor do you offer any product competing with the services, products, and features provided by the organization.
-• That you have full legal capacity to contract and that you will not be in violation of any law or contract.' ,
+• That you have full legal capacity to contract and that you will not be in violation of any law or contract.',
             'body_ar' => 'للحصول على الخدمات والمنتجات والمميزات، أنت تقر وتضمن التالي:
 • أنه لم يسبق أن تم تعطيل استخدامك لمنصة  آرحبوا أو منعك من استخدامها في أي وقت من الأوقات.
 • أنك لست منافساً لمنصة  آرحبوا، كما أنك لا تقدم أي منتج منافس للخدمات والمنتجات والمميزات المقدمة من قبل المؤسسة.
 • أنك تتمتع بكامل الأهلية الشرعية للتعاقد وأنك بذلك لن تكون منتهكاً لأي قانون أو عقد.
-' ,
-            'is_agree' => '1' ,
+',
+            'is_agree' => '1',
         ]);
 
-
         Term::create([
-            'title' => 'Pledges and guarantees' ,
-            'title_ar' => 'التعهدات والضمانات' ,
+            'title' => 'Pledges and guarantees',
+            'title_ar' => 'التعهدات والضمانات',
             'body' => 'To obtain the Services, Products and Features, you represent and warrant that you will:
 • Comply with all applicable laws and regulations in the Kingdom of Saudi Arabia.
 • Provides correct information and updates it periodically.
@@ -244,7 +240,7 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
 • You will not copy or distribute any of the contents of the Arhaboa platform without obtaining written permission from the organization.
 • You will keep your account password or any identification method we provide you that allows access to your account secure and confidential.
 • You will provide us with all evidence proving your identity at the institution’s sole discretion.
-• The organization has the right to refuse to provide use of the Arhaboa platform without giving any reasons.' ,
+• The organization has the right to refuse to provide use of the Arhaboa platform without giving any reasons.',
             'body_ar' => 'للحصول على الخدمات والمنتجات والمميزات، أنت تقر وتضمن بأنك سوف:
 • تمتثل لكافة القوانين واللوائح المعمول بها في المملكة العربية السعودية.
 • تقدم معلومات صحيحة وتقوم بتحديثها بشكل دوري.
@@ -258,8 +254,8 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
 • سوف تحافظ على كلمة المرور لحسابك أو أي وسيلة تعريف نقدمها لك وتتيح الدخول إلى حسابك، بشكلٍ آمن وسري.
 • سوف تقدم لنا كافة الدلائل التي تثبت هويتك وفقاً لتقدير المؤسسة الخاص.
 • يحق للمؤسسة رفض إتاحة استخدام منصة  آرحبوا دون إبداء أي أسباب.
-' ,
-            'is_agree' => '1' ,
+',
+            'is_agree' => '1',
         ]);
 
         PrivacyPolicy::create([
@@ -288,7 +284,6 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
             'body_ar' => 'تقوم المؤسسة بجمع بعض المعلومات الشخصية للمستخدمين بطرق مختلفة، وتشمل ولا تقتصر فقط على: أوقات زيارة المستخدم لمنصة آرحبوا، والتسجيل في منصة آرحبوا، وملء الطلب، ونموذج تعبئة الاستبانة، وغير ذلك من الأنشطة والخدمات والمميزات أو المصادر التي قد نوفرها على منصة آرحبوا. كما أنه قد يُطلب من المستخدمين توضيح الاسم بشكل كامل وعنوان البريد الإلكتروني ورقم الهاتف ومعلومات العنوان، ومعلومات عن جهات الاتصال (المدعوين)، والموقع الجغرافي للمناسبة وجزء من بيانات بطاقة الائتمان. ويكون تقديم كل هذه البيانات طواعية من قبل المستخدم، ويتم جمع تلك المعلومات بشكل حصري لأداء الوظائف المقدمة عبر منصة آرحبوا. وأيضًا لتزويد المستخدمين بكافة العروض والخدمات الأخرى التي قد نعتقد أنها تثير اهتمامهم',
         ]);
 
-
         PrivacyPolicy::create([
             'title' => 'payment information',
             'title_ar' => 'معلومات الدفع',
@@ -296,14 +291,12 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
             'body_ar' => 'عندما تقوم بطلب خدمة من منصة آرحبوا، فإنك مطالب باختيار طريقة الدفع، وأن المؤسسة تضمن لك حماية بياناتك واتخاذ الحرص الشديد والسرية التامة للحفاظ على إجراءات الحماية الإلكترونية والعملية. كما لا تقوم المؤسسة بحفظ معلومات بطاقات الائتمان أو غيرها من المعلومات المالية الحساسة التي يتم استخدامها على منصة آرحبوا، بخلاف البيانات المالية الخاصة بالشراء عن طريق الحوالات المصرفية والتي تقوم بمعالجتها بشكل مباشر. حيث أن معلومات بطاقات الائتمان تصل مباشرة للوسيط المالي ()نكتب اسم الوسيط هنا  حفاظا على خصوصية العميل وحمايةً له من عمليات الاحتيال، ويمكنك زيارة الموقع الإلكتروني الخاص ببوابة الدفع ()نكتب اسم الوسيط هنا  للاطلاع على بنود سياسة الخصوصية الخاصة بهم',
         ]);
 
-
         PrivacyPolicy::create([
             'title' => 'other information',
             'title_ar' => 'معلومات أخرى',
             'body' => 'The organization collects some information about users wherever they interact with the Arhaboo platform, and this information does not relate to the user personally, but may include technical information about the user’s methods of connecting to the service, such as the company used to provide the Internet service and other similar information.',
             'body_ar' => 'تقوم المؤسسة بجمع بعض المعلومات عن المستخدمين أينما تفاعلوا مع منصة آرحبوا، وهذه المعلومات لا تتعلق بالمستخدم بشكل شخصي، إنما قد تتضمن معلومات تقنية عن أساليب اتصال المستخدم بالخدمة، مثل الشركة المستخدمة لتقديم خدمة الإنترنت وغيرها من المعلومات المشابهة.',
         ]);
-
 
         PrivacyPolicy::create([
             'title' => 'Marketing',

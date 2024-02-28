@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOfferRequest extends FormRequest
+class UpdatePackageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,11 @@ class UpdateOfferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'image|mimes:jpg,png,jpeg|max:2048',
+            'name' => 'string',
+            'name_ar' => 'string',
+            'description' => 'string',
+            'description_ar' => 'string',
+            'color' => 'string',
         ];
     }
 }

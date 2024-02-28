@@ -18,27 +18,60 @@ class OffersController extends Controller
 
     public function store(StoreOfferRequest $request)
     {
-        $request->validated($request->all());
-        $offer = Offer::create($request->all());
+        try {
+            $offer = Offer::create($request->all());
 
-        return OffersResource::make($offer);
+            return response()->json([
+                'message' => 'Created SuccessFully',
+                'data' => OffersResource::make($offer),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    public function update(UpdateOfferRequest $request, Offer $offer)
+    public function update(UpdateOfferRequest $request, $offerId)
     {
-        $request->validated($request->all());
-        $offer->update($request->all());
+        try {
+            $offer = Offer::find($offerId);
+            if (! $offer) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $offer->update($request->all());
 
-        return OffersResource::collection($offer);
+            return response()->json([
+                'message' => 'Updated SuccessFully',
+                'data' => OffersResource::make($offer),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    public function delete(Offer $offer)
+    public function delete($offerId)
     {
-        $offer->delete();
+        try {
+            $offer = Offer::find($offerId);
+            if (! $offer) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $offer->delete();
 
-        return response([
-            'Deleted SuccessFully',
-            OffersResource::make($offer),
-        ]);
+            return response([
+                'message' => 'Deleted SuccessFully',
+                'data' => OffersResource::make($offer),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

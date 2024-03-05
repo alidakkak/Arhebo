@@ -97,7 +97,7 @@ class InviteeController extends Controller
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $userEmail = 'Lele881@hotmail.com';
+            $userEmail = 'lulumhmd762@gmail.com';
             $link = $newInvitee->link;
             EmailService::sendHtmlEmail($userEmail, $link);
             DB::commit();

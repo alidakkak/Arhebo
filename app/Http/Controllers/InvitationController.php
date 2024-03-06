@@ -96,7 +96,7 @@ class InvitationController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response(['message' => 'An error occurred while creating the invitation'.'  '.$e->getMessage()], 500);
+            return response(['message' => 'An error occurred while creating the invitation'], 500);
         }
     }
     /*

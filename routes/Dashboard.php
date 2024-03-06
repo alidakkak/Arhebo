@@ -45,12 +45,18 @@ Route::group(['middleware' => 'check_user:1'], function () {
 
     ////// Services
     Route::post('services', [ServicesController::class, 'store']);
+    Route::post('services/{serviceId}', [ServicesController::class, 'update']);
+    Route::delete('services/{serviceId}', [ServicesController::class, 'delete']);
 
     ///// Terms And Conditions
     Route::post('terms', [TermController::class, 'store']);
+    Route::post('terms/{termId}', [TermController::class, 'update']);
+    Route::delete('terms/{termId}', [TermController::class, 'delete']);
 
     ////  Privacy Policy
     Route::post('privacyPolicy', [PrivacyPolicyController::class, 'store']);
+    Route::post('privacyPolicy/{Id}', [PrivacyPolicyController::class, 'update']);
+    Route::delete('privacyPolicy/{Id}', [PrivacyPolicyController::class, 'delete']);
 
     ////  AboutApp
     Route::post('about_apps', [AboutAppController::class, 'store']);
@@ -67,6 +73,8 @@ Route::group(['middleware' => 'check_user:1'], function () {
 
     //// Prohibited Thing
     Route::post('prohibitedThing', [ProhibitedThingController::class, 'store']);
+    Route::post('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'update']);
+    Route::delete('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'delete']);
 
     ////  Additional Package
     Route::post('additionalPackage', [AdditionalPackageController::class, 'store']);

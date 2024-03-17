@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('name_ar');
             $table->string('image');
             $table->string('photo');
-            $table->string('description');
-            $table->string('description_ar');
+            $table->longText('description');
+            $table->longText('description_ar');
             $table->string('category_code', 2)->unique();
             $table->timestamps();
         });

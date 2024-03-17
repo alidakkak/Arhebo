@@ -34,7 +34,6 @@ class PackageDetalisController extends Controller
         }
     }
 
-
     public function update(UpdatePackageDetalisRequest $request, $packageDetailsId)
     {
         try {

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreInputRequest extends FormRequest
+class UpdateFilterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class StoreInputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-            'input_name' => 'required|string',
-            'input_name_ar' => 'required|string',
+            'category_id' => [Rule::exists('categories', 'id')],
+            'name' => 'string',
         ];
     }
 }

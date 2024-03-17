@@ -56,4 +56,8 @@ class Category extends Model
     {
         return $this->hasMany(Invitation::class);
     }
+
+    public function filter() {
+        return $this->hasMany(Filter::class);
+    }
 }

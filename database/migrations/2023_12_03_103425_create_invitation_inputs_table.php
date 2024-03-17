@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('invitation_inputs', function (Blueprint $table) {
             $table->id();
-            $table->string('answer');
+            $table->text('answer');
             $table->foreignId('invitation_id')->references('id')
                 ->on('invitations')->onDelete('cascade');
             $table->foreignId('input_id')->references('id')

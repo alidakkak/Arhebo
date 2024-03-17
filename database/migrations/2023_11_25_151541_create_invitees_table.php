@@ -18,10 +18,10 @@ return new class extends Migration
                 ->on('invitations')->onDelete('cascade');
             $table->string('name');
             $table->string('phone');
-            $table->string('uuid');
+            $table->text('uuid');
             $table->integer('number_of_people');
-            $table->string('link')->nullable();
-            $table->string('apology_message')->nullable();
+            $table->longText('link')->nullable();
+            $table->text('apology_message')->nullable();
             $table->string('status')->default(InviteeTypes::waiting);
             $table->timestamps();
         });

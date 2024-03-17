@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateInviteeRequest;
 use App\Http\Resources\InviteeResource;
 use App\Http\Resources\ShowOrdersResource;
 use App\Mail\EmailService;
+use App\Models\AdditionalPackage;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
@@ -73,10 +74,15 @@ class InviteeController extends Controller
             ////  The number of people in package detail
             $package_detail = Invitation::find($request->invitation_id)->packageDetail()->select('number_of_invitees')->first();
             $package_detail_number = $package_detail->number_of_invitees;
+            ////  Sum Of Additional Package
+            $additional = AdditionalPackage::join('invitation_additional_packages', 'additional_packages.id', '=',
+                'invitation_additional_packages.additional_package_id')
+                ->where('invitation_additional_packages.invitation_id', $request->invitation_id)
+                ->sum('additional_packages.number_of_invitees');
             $inviteesData = $request->input('invitees', []);
             $invitees = [];
             foreach ($inviteesData as $invitee) {
-                if ($number_of_people + $invitee['count'] > $package_detail_number) {
+                if ($number_of_people + $invitee['count'] > $package_detail_number + $additional) {
                     return response()->json(['message' => 'You have reached the maximum number of invitees'.
                         ', The number of invitees you have added '.$number_of_people,
                     ]);
@@ -97,9 +103,9 @@ class InviteeController extends Controller
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $userEmail = 'lulumhmd762@gmail.com';
-            $link = $newInvitee->link;
-            EmailService::sendHtmlEmail($userEmail, $link);
+            //            $userEmail = 'lulumhmd762@gmail.com';
+            //            $link = $newInvitee->link;
+            //            EmailService::sendHtmlEmail($userEmail, $link);
             DB::commit();
 
             return InviteeResource::collection($invitees);

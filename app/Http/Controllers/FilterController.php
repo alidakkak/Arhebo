@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAboutAppRequest;
-use App\Http\Requests\UpdateAboutAppRequest;
-use App\Http\Resources\AboutAppResource;
-use App\Models\AboutApp;
+use App\Http\Requests\StoreFilterRequest;
+use App\Http\Requests\UpdateFilterRequest;
+use App\Http\Resources\FilterResource;
+use App\Models\Filter;
 
-class AboutAppController extends Controller
+class FilterController extends Controller
 {
     public function index()
     {
-        $about = AboutApp::all();
+        $filter = Filter::all();
 
-        return AboutAppResource::collection($about);
+        return FilterResource::collection($filter);
     }
 
-    public function store(StoreAboutAppRequest $request)
+    public function store(StoreFilterRequest $request)
     {
         try {
-            $about = AboutApp::create($request->all());
+            $filter = Filter::create($request->all());
 
             return response()->json([
                 'message' => 'Created SuccessFully',
-                'data' => AboutAppResource::make($about),
+                'data' => FilterResource::make($filter),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -33,18 +33,18 @@ class AboutAppController extends Controller
         }
     }
 
-    public function update(UpdateAboutAppRequest $request, $Id)
+    public function update(UpdateFilterRequest $request, $filterId)
     {
         try {
-            $about = AboutApp::find($Id);
-            if (! $about) {
+            $filter = Filter::find($filterId);
+            if (! $filter) {
                 return response()->json(['message' => 'Not Found'], 404);
             }
-            $about->update($request->all());
+            $filter->update($request->all());
 
             return response()->json([
                 'message' => 'Updated SuccessFully',
-                'data' => AboutAppResource::make($about),
+                'data' => FilterResource::make($filter),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -54,18 +54,18 @@ class AboutAppController extends Controller
         }
     }
 
-    public function delete($Id)
+    public function delete($filterId)
     {
         try {
-            $about = AboutApp::find($Id);
-            if (! $about) {
+            $filter = Filter::find($filterId);
+            if (! $filter) {
                 return response()->json(['message' => 'Not Found'], 404);
             }
-            $about->delete();
+            $filter->delete();
 
             return response()->json([
                 'message' => 'Deleted SuccessFully',
-                'data' => AboutAppResource::make($about),
+                'data' => FilterResource::make($filter),
             ]);
         } catch (\Exception $e) {
             return response()->json([

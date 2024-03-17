@@ -33,7 +33,6 @@ class PrivacyPolicyController extends Controller
         }
     }
 
-
     public function update(UpdatePrivacyPolicyRequest $request, $Id)
     {
         try {
@@ -54,7 +53,6 @@ class PrivacyPolicyController extends Controller
             ], 500);
         }
     }
-
 
     public function delete($Id)
     {

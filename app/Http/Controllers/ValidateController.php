@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAboutAppRequest;
-use App\Http\Requests\UpdateAboutAppRequest;
-use App\Http\Resources\AboutAppResource;
-use App\Models\AboutApp;
+use App\Http\Requests\StoreValidateRequest;
+use App\Http\Requests\UpdateValidateRequest;
+use App\Http\Resources\ValidateResource;
+use App\Models\Validate;
 
-class AboutAppController extends Controller
+class ValidateController extends Controller
 {
     public function index()
     {
-        $about = AboutApp::all();
+        $validate = Validate::all();
 
-        return AboutAppResource::collection($about);
+        return ValidateResource::collection($validate);
     }
 
-    public function store(StoreAboutAppRequest $request)
+    public function store(StoreValidateRequest $request)
     {
         try {
-            $about = AboutApp::create($request->all());
+            $validate = Validate::create($request->all());
 
             return response()->json([
                 'message' => 'Created SuccessFully',
-                'data' => AboutAppResource::make($about),
+                'data' => ValidateResource::make($validate),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -33,18 +33,18 @@ class AboutAppController extends Controller
         }
     }
 
-    public function update(UpdateAboutAppRequest $request, $Id)
+    public function update(UpdateValidateRequest $request, $validateId)
     {
         try {
-            $about = AboutApp::find($Id);
-            if (! $about) {
+            $validate = Validate::find($validateId);
+            if (! $validate) {
                 return response()->json(['message' => 'Not Found'], 404);
             }
-            $about->update($request->all());
+            $validate->update($request->all());
 
             return response()->json([
                 'message' => 'Updated SuccessFully',
-                'data' => AboutAppResource::make($about),
+                'data' => ValidateResource::make($validate),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -54,18 +54,18 @@ class AboutAppController extends Controller
         }
     }
 
-    public function delete($Id)
+    public function delete($validateId)
     {
         try {
-            $about = AboutApp::find($Id);
-            if (! $about) {
+            $validate = Validate::find($validateId);
+            if (! $validate) {
                 return response()->json(['message' => 'Not Found'], 404);
             }
-            $about->delete();
+            $validate->delete();
 
             return response()->json([
                 'message' => 'Deleted SuccessFully',
-                'data' => AboutAppResource::make($about),
+                'data' => ValidateResource::make($validate),
             ]);
         } catch (\Exception $e) {
             return response()->json([

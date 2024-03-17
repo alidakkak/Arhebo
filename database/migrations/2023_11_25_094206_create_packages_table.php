@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name_ar');
-            $table->text('description');
-            $table->text('description_ar');
+            $table->text('name');
+            $table->text('name_ar');
+            $table->longText('description');
+            $table->longText('description_ar');
             $table->string('color');
             $table->timestamps();
         });

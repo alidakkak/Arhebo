@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('title_ar');
             $table->longText('body');
             $table->longText('body_ar');
-            $table->boolean('is_agree');
             $table->timestamps();
         });
     }

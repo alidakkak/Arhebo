@@ -33,7 +33,8 @@ class ServicesController extends Controller
         }
     }
 
-    public function update(UpdateServicesRequest $request, $serviceId) {
+    public function update(UpdateServicesRequest $request, $serviceId)
+    {
         try {
             $service = Services::find($serviceId);
             if (! $service) {

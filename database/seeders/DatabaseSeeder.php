@@ -140,13 +140,10 @@ Transparency and honesty: We are committed to transparency and honesty in every 
             'title_ar' => 'التعاريف',
             'body' => '• Institution: Institution (write the name of the institution).
 • Arhaboa platform: An electronic platform that aims to serve event owners (such as: wedding, engagement, graduation, etc.) to overcome the difficulties that they may encounter during the process of managing and directing invitations to the invitees.
-• User: Any person who uses the Arhaboo platform as a visitor, as an event host, as an additional invitee, as an invitee, as a gatekeeper, or
-  As a card designer.',
+• User: Any person who uses the Arhaboo platform as a visitor, as an event host, as an additional invitee, as an invitee, as a gatekeeper, or As a card designer.',
             'body_ar' => '• المؤسسة: مؤسسة (نكتب اسم المؤسسة ) .
 • منصة  آرحبوا: منصة إلكترونية تهدف إلى خدمة أصحاب المناسبات (مثل: حفل الزفاف، الخطبة، التخرج، إلخ) للتغلب على الصعوبات التي من الممكن أن تواجههم خلال عملية إدارة وتوجيه الدعوات إلى المدعوين.
-• المستخدم: أي شخص يقوم باستخدام منصة  آرحبوا كزائر أو كصاحب مناسبة أو كداعي إضافي أو كمدعو أو كحارس بوابة أو
- كمصمم بطاقات.',
-            'is_agree' => '1',
+• المستخدم: أي شخص يقوم باستخدام منصة  آرحبوا كزائر أو كصاحب مناسبة أو كداعي إضافي أو كمدعو أو كحارس بوابة أو كمصمم بطاقات.',
         ]);
 
         Term::create([
@@ -163,7 +160,6 @@ The organization reserves the right to amend or change these terms and condition
 
 تحتفظ المؤسسة بحق تعديل أو تغيير هذه الأحكام والشروط من حين لآخر دون إشعار مسبق، وذلك من أجل خدمة أفضل وجودة أعلى، ويكون من مسؤوليتك كمستخدم لمنصة  آرحبوا مراجعة شروط وأحكام الاستخدام بشكل دوري لمعرفة التحديثات التي تطرأ عليها، كما يشكل استخدامك المستمر موافقتك التامة على كل التغييرات التي يتم إجراؤها، ونأمل مراجعة سياسة الخصوصية لدينا لمعرفة المزيد حول كيفية استخدام المؤسسة للمعلومات التي تقدم من قبل المستخدمين. علماً بأن أي مخالفة لهذا العقد من قبل المستخدم قد تعرض حسابه للإيقاف دون إشعار مسبق وبلا أي مبالغ مسترجعة في بعض الحالات.
 ',
-            'is_agree' => '1',
         ]);
 
         Term::create([
@@ -174,7 +170,6 @@ The organization reserves the right to amend or change these terms and condition
             'body_ar' => '• حيثما نوفر لك ترجمة للنسخة العربية من الشروط، فإنك توافق على أن الترجمة قد يتم توفيرها للتسهيل عليك فقط وأن النسخة العربية للشروط هي النسخة التي سوف تعتمد وتحكم علاقتك بـالمؤسسة.
 • في حالة وجود أي تناقض بين ما هو وارد في النسخة العربية من الشروط وما هو وارد في الترجمة، سيكون ما هو وارد في النسخة العربية المرجع الذي يعتد به.
 ',
-            'is_agree' => '1',
         ]);
 
         Term::create([
@@ -183,7 +178,6 @@ The organization reserves the right to amend or change these terms and condition
             'body' => 'The Foundation has the right to update the Arhaboa platform from time to time, and it may also change any of its contents at its sole discretion, or change, suspend or discontinue any service (including, but not limited to, providing any feature, database or content) in any At any time, by posting a notification on the platform or by sending a notification to you via mobile phone or email. The Organization may also impose limits on certain features and services or limit your access to parts or all of the Arhaboo Platform without notice or liability. It should also be taken into account that the content of the Arhaboo platform may not be up to date at all times. The Foundation also does not guarantee that the Arhaboo platform or any of its contents are free of any error or incorrect information.
 ​',
             'body_ar' => 'يحق للمؤسسة تحديث منصة  آرحبوا من وقت لآخر، كما يجوز لها تغيير أي من محتوياتها من وفق تقديرها الخاص، أو تغيير أي خدمة أو تعليقها أو إيقافها (بما في ذلك على سبيل المثال لا الحصر، توفير أي ميزة أو قاعدة بيانات أو محتوى) في أي وقت، وذلك بنشر إخطار على المنصة أو بإرسال إخطار لك عبر الجوال أو البريد الإلكتروني. كما يجوز للمؤسسة أن تضع قيودًا على ميزات وخدمات مُعيَّنة أو تحد من وصولك إلى أجزاء من منصة  آرحبوا أو بأكملها دون إخطار أو مسؤولية. كذلك يجب مراعاة أن محتوى منصة  آرحبوا قد لا يكون محدثا في جميع الأوقات. كما لا تضمن المؤسسة خلو منصة  آرحبوا أو أي من محتوياتها من أي خطأ أو معلومات غير صحيحة.',
-            'is_agree' => '1',
         ]);
 
         Term::create([
@@ -207,7 +201,6 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
 • الأنشطة التجارية:
 إذا كنت تستخدم منصة  آرحبوا نيابةً عن شركة أو مؤسسة أو جهة حكومية أو منشأة خاصة ربحية أو غير ربحية، فإنك تتعهد لنا أن لديك الصلاحية للتصرف نيابةً عن هذا الكيان وتؤكد لنا موافقة هذا الكيان على هذا العقد.
 ',
-            'is_agree' => '1',
         ]);
 
         Term::create([
@@ -222,7 +215,6 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
 • أنك لست منافساً لمنصة  آرحبوا، كما أنك لا تقدم أي منتج منافس للخدمات والمنتجات والمميزات المقدمة من قبل المؤسسة.
 • أنك تتمتع بكامل الأهلية الشرعية للتعاقد وأنك بذلك لن تكون منتهكاً لأي قانون أو عقد.
 ',
-            'is_agree' => '1',
         ]);
 
         Term::create([
@@ -255,7 +247,6 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
 • سوف تقدم لنا كافة الدلائل التي تثبت هويتك وفقاً لتقدير المؤسسة الخاص.
 • يحق للمؤسسة رفض إتاحة استخدام منصة  آرحبوا دون إبداء أي أسباب.
 ',
-            'is_agree' => '1',
         ]);
 
         PrivacyPolicy::create([

@@ -54,7 +54,6 @@ class TermController extends Controller
         }
     }
 
-
     public function delete($termId)
     {
         try {

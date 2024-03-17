@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('prohibited_things', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name_ar');
+            $table->text('name');
+            $table->text('name_ar');
             $table->timestamps();
         });
     }

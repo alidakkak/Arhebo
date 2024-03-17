@@ -25,10 +25,10 @@ return new class extends Migration
             $table->string('to');
             $table->string('city')->nullable();
             $table->string('region')->nullable();
-            $table->string('event_name');
-            $table->string('location_link');
+            $table->text('event_name');
+            $table->text('location_link');
             $table->string('inviter');
-            $table->string('invitation_text');
+            $table->text('invitation_text');
             $table->string('status')->default(InvitationTypes::active);
             $table->boolean('is_with_qr');
             $table->timestamps();

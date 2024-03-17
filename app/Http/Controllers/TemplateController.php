@@ -9,8 +9,10 @@ use App\Http\Resources\TemplateResource;
 use App\Http\Resources\TrendingResource;
 use App\Models\Color;
 use App\Models\ColorTemplate;
+use App\Models\FilterTemplate;
 use App\Models\Template;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TemplateController extends Controller
 {
@@ -52,14 +54,21 @@ class TemplateController extends Controller
 
     public function store(StoreTemplateRequest $request)
     {
+        DB::beginTransaction();
         try {
             $template = Template::create($request->all());
 
+            FilterTemplate::create([
+               'template_id' => $template->id,
+               'filter_id' => $request->input('filter_id'),
+            ]);
+            DB::commit();
             return response()->json([
                 'message' => 'Created SuccessFully',
                 'data' => TemplateResource::make($template),
             ]);
         } catch (\Exception $e) {
+            DB::rollback();
             return response()->json([
                 'message' => 'An error occurred',
                 'error' => $e->getMessage(),

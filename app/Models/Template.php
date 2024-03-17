@@ -56,4 +56,9 @@ class Template extends Model
     {
         return $this->hasMany(Invitation::class);
     }
+
+    public function filterTemplate()
+    {
+        return $this->hasMany(FilterTemplate::class);
+    }
 }

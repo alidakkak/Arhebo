@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('validates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('message');
-            $table->string('message_ar');
+            $table->text('message');
+            $table->text('message_ar');
             $table->foreignId('input_id')->references('id')->on('inputs')->onDelete('cascade');
             $table->timestamps();
         });

@@ -3,39 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreInputRequest;
+use App\Http\Requests\UpdateInputRequest;
 use App\Http\Resources\InputResource;
 use App\Models\Input;
-use App\Models\Validate;
 
 class InputController extends Controller
 {
-    public function store(StoreInputRequest $request)
+    public function index()
     {
-        $inputs = Input::create($request->all());
-        if ($request->validates) {
-            foreach ($request->validates as $validate) {
-                Validate::create([
-                    'input_id' => $inputs->id,
-                    'name' => $validate['name'],
-                    'message' => $validate['message'],
-                    'message_ar' => $validate['message_ar'],
-                ]);
-            }
-        }
+        $inputs = Input::all();
 
-        return InputResource::make($inputs);
+        return InputResource::collection($inputs);
     }
 
-    public function delete($id)
+    public function store(StoreInputRequest $request)
     {
-        $record = Input::find($id);
+        try {
+            $inputs = Input::create($request->all());
 
-        if ($record) {
-            $record->delete();
+            return response()->json([
+                'message' => 'Created SuccessFully',
+                'data' => InputResource::make($inputs),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 
-            return response()->json(['message' => 'Deleted']);
-        } else {
-            return response()->json(['message' => 'Record not found'], 404);
+    public function update(UpdateInputRequest $request, $inputId)
+    {
+        try {
+            $inputs = Input::find($inputId);
+            if (! $inputs) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $inputs->update($request->all());
+
+            return response()->json([
+                'message' => 'Updated SuccessFully',
+                'data' => InputResource::make($inputs),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function delete($inputId)
+    {
+        try {
+            $inputs = Input::find($inputId);
+            if (! $inputs) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $inputs->delete();
+
+            return response()->json([
+                'message' => 'Deleted SuccessFully',
+                'data' => InputResource::make($inputs),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 }

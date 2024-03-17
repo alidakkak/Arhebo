@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreInputRequest extends FormRequest
+class UpdateValidateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,10 @@ class StoreInputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', Rule::exists('categories', 'id')],
-            'input_name' => 'required|string',
-            'input_name_ar' => 'required|string',
+            'input_id' => [Rule::exists('inputs', 'id')],
+            'name' => 'string',
+            'message' => 'string',
+            'message_ar' => 'string',
         ];
     }
 }

@@ -20,7 +20,7 @@ class FilterResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'category_id' => $this->category_id,
-            'template' => TemplateResource::collection($this->filterTemplate),
+            'template' => TemplateResource::collection($this->filterTemplate->map->template),
         ];
     }
 }

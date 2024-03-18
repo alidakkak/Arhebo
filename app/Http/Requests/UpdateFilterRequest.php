@@ -23,7 +23,7 @@ class UpdateFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => [Rule::exists('categories', 'id')],
+            'category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'name' => 'string',
             'name_ar' => 'string',
         ];

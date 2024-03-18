@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Template extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
 
@@ -25,7 +26,7 @@ class Template extends Model
     {
         parent::boot();
         static::creating(function ($template) {
-            $lastTemplate = static::latest()->first();
+            $lastTemplate = static::withTrashed()->latest()->first();
             if ($lastTemplate) {
                 $template->template_code =
                     str_pad((int) $lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);

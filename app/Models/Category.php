@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
 
@@ -16,7 +17,7 @@ class Category extends Model
         parent::boot();
 
         static::creating(function ($category) {
-            $latestCategory = static::latest()->first();
+            $latestCategory = static::withTrashed()->latest()->first();
             if ($latestCategory) {
                 $category->category_code =
                     str_pad((int) $latestCategory->category_code + 1, 2, '0', STR_PAD_LEFT);

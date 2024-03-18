@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePackageDetalisRequest extends FormRequest
 {
@@ -22,7 +23,10 @@ class UpdatePackageDetalisRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'package_id' => [Rule::exists('packages', 'id')->whereNull('deleted_at')],
+            'price' => 'string',
+            'price_qr' => 'string',
+            'number_of_invitees' => 'string',
         ];
     }
 }

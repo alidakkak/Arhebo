@@ -18,6 +18,7 @@ return new class extends Migration
             $table->double('price');
             $table->double('price_qr');
             $table->integer('number_of_invitees');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

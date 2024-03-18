@@ -23,7 +23,7 @@ class StorePackageDetalisRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'package_id' => ['required', Rule::exists('packages', 'id')],
+            'package_id' => ['required', Rule::exists('packages', 'id')->whereNull('deleted_at')],
             'package_details.*.price' => 'required|string',
             'package_details.*.price_qr' => 'required|string',
             'package_details.*.number_of_invitees' => 'required|string',

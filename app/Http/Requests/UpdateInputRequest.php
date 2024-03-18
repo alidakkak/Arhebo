@@ -23,7 +23,7 @@ class UpdateInputRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => [Rule::exists('categories', 'id')],
+            'category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'input_name' => 'string',
             'input_name_ar' => 'string',
         ];

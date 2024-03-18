@@ -28,7 +28,7 @@ class StoreTemplateRequest extends FormRequest
             'emoji' => 'string',
             'description' => 'required|string',
             'description_ar' => 'required|string',
-            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
             'filter_id' => ['required', Rule::exists('filters', 'id')],
             //            'colors' => 'required|array',

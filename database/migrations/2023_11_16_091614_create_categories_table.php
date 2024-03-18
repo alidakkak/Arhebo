@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('description');
             $table->longText('description_ar');
             $table->string('category_code', 2)->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

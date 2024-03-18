@@ -25,6 +25,7 @@ class StoreFilterRequest extends FormRequest
         return [
             'category_id' => ['required', Rule::exists('categories', 'id')],
             'name' => 'required|string',
+            'name_ar' => 'required|string',
         ];
     }
 }

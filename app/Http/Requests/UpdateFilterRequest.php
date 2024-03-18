@@ -25,6 +25,7 @@ class UpdateFilterRequest extends FormRequest
         return [
             'category_id' => [Rule::exists('categories', 'id')],
             'name' => 'string',
+            'name_ar' => 'string',
         ];
     }
 }

@@ -19,6 +19,7 @@ class FilterResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'name_ar' => $this->name_ar,
             'category_id' => $this->category_id,
             'template' => TemplateResource::collection($this->filterTemplate->map->template),
         ];

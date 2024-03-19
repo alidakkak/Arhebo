@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('input_name');
             $table->string('input_name_ar');
+            $table->string('placeholder');
+            $table->string('placeholder_ar');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

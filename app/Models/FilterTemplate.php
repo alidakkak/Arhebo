@@ -11,6 +11,7 @@ class FilterTemplate extends Model
 
     protected $guarded = ['id'];
 
+
     public function filter()
     {
         return $this->belongsTo(Filter::class);

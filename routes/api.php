@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\OffersController;
@@ -54,6 +55,9 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     //////// Category
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{category}', [CategoryController::class, 'show']);
+
+    ////  Filters
+    Route::get('filters/{categoryId}', [FilterController::class, 'getFilterByCategory']);
 
     ///// Offers
     Route::get('offers', [OffersController::class, 'index']);

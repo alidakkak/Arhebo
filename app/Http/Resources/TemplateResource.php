@@ -18,7 +18,7 @@ class TemplateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $userId = auth()->user()->id;
+        $userId = $request->user()->id;
         $templateId = $this->id;
 
         $isFavorite = Wishlist::where('user_id', $userId)

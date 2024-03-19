@@ -26,6 +26,8 @@ class StoreInputRequest extends FormRequest
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'input_name' => 'required|string',
             'input_name_ar' => 'required|string',
+            'placeholder' => 'required|string',
+            'placeholder_ar' => 'required|string',
         ];
     }
 }

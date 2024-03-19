@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFilterRequest;
 use App\Http\Requests\UpdateFilterRequest;
 use App\Http\Resources\FilterResource;
+use App\Models\Category;
 use App\Models\Filter;
+use Illuminate\Support\Facades\Request;
 
 class FilterController extends Controller
 {
@@ -73,5 +75,14 @@ class FilterController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function getFilterByCategory($categoryId) {
+        $category = Category::find($categoryId);
+        if(!$category) {
+            return response()->json(['message' => 'Not Found'], 401);
+        }
+
+
     }
 }

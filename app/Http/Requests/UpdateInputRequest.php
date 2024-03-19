@@ -26,6 +26,8 @@ class UpdateInputRequest extends FormRequest
             'category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'input_name' => 'string',
             'input_name_ar' => 'string',
+            'placeholder' => 'string',
+            'placeholder_ar' => 'string',
         ];
     }
 }

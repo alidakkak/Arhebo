@@ -16,8 +16,8 @@ class Filter extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function filterTemplate()
+    public function templates()
     {
-        return $this->hasMany(FilterTemplate::class);
+        return $this->belongsToMany(Template::class, 'filter_templates', 'filter_id', 'template_id');
     }
 }

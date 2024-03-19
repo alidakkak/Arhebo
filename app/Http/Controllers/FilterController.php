@@ -78,11 +78,8 @@ class FilterController extends Controller
     }
 
     public function getFilterByCategory($categoryId) {
-        $category = Category::find($categoryId);
-        if(!$category) {
-            return response()->json(['message' => 'Not Found'], 401);
-        }
-
+        $filter = Filter::where('category_id', $categoryId)->get();
+        return FilterResource::collection($filter);
 
     }
 }

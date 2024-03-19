@@ -58,8 +58,8 @@ class Template extends Model
         return $this->hasMany(Invitation::class);
     }
 
-    public function filterTemplate()
+    public function filters()
     {
-        return $this->hasMany(FilterTemplate::class);
+        return $this->belongsToMany(Filter::class, 'filter_templates', 'template_id', 'filter_id');
     }
 }

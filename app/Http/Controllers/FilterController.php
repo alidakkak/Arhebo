@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreFilterRequest;
 use App\Http\Requests\UpdateFilterRequest;
 use App\Http\Resources\FilterResource;
-use App\Models\Category;
 use App\Models\Filter;
-use Illuminate\Support\Facades\Request;
 
 class FilterController extends Controller
 {
@@ -77,8 +75,10 @@ class FilterController extends Controller
         }
     }
 
-    public function getFilterByCategory($categoryId) {
+    public function getFilterByCategory($categoryId)
+    {
         $filter = Filter::where('category_id', $categoryId)->get();
+
         return FilterResource::collection($filter);
 
     }

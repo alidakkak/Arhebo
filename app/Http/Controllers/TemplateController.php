@@ -59,16 +59,18 @@ class TemplateController extends Controller
             $template = Template::create($request->all());
 
             FilterTemplate::create([
-               'template_id' => $template->id,
-               'filter_id' => $request->input('filter_id'),
+                'template_id' => $template->id,
+                'filter_id' => $request->input('filter_id'),
             ]);
             DB::commit();
+
             return response()->json([
                 'message' => 'Created SuccessFully',
                 'data' => TemplateResource::make($template),
             ]);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json([
                 'message' => 'An error occurred',
                 'error' => $e->getMessage(),

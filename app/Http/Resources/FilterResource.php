@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Filter;
-use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +19,7 @@ class FilterResource extends JsonResource
             'name' => $this->name,
             'name_ar' => $this->name_ar,
             'category_id' => $this->category_id,
-            'template' => TemplateResource::collection($this->filters),
+            'template' => TemplateResource::collection($this->templates),
         ];
     }
 }

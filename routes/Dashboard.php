@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InputController;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'check_user:1'], function () {
     /////// Category
+    Route::get('searchCategories', [CategoryController::class, 'searchCategory']); /// Get And Search
     Route::post('categories', [CategoryController::class, 'store']);
     Route::post('categories/{categoryId}', [CategoryController::class, 'update']);
     Route::delete('categories/{categoryId}', [CategoryController::class, 'delete']);
@@ -37,6 +39,7 @@ Route::group(['middleware' => 'check_user:1'], function () {
     Route::delete('offers/{offerId}', [OffersController::class, 'delete']);
 
     /////// Template
+    Route::get('searchTemplate', [TemplateController::class, 'searchTemplate']);
     Route::post('templates', [TemplateController::class, 'store']);
     Route::post('templates/{templateId}', [TemplateController::class, 'update']);
     Route::delete('templates/{templateId}', [TemplateController::class, 'delete']);
@@ -82,7 +85,7 @@ Route::group(['middleware' => 'check_user:1'], function () {
     Route::delete('faq/{Id}', [FAQController::class, 'delete']);
 
     ///// Inputs
-    Route::get('inputs', [InputController::class, 'index']);
+    Route::get('categories/{categoryId}/inputs', [InputController::class, 'index']);
     Route::post('inputs', [InputController::class, 'store']);
     Route::post('inputs/{inputId}', [InputController::class, 'update']);
     Route::delete('inputs/{inputId}', [InputController::class, 'delete']);
@@ -102,5 +105,9 @@ Route::group(['middleware' => 'check_user:1'], function () {
     Route::post('additionalPackage', [AdditionalPackageController::class, 'store']);
     Route::post('additionalPackage/{Id}', [AdditionalPackageController::class, 'update']);
     Route::delete('additionalPackage/{Id}', [AdditionalPackageController::class, 'delete']);
+
+    ////  Coupon
+    Route::get('coupons', [CouponController::class, 'index']);
+    Route::post('coupons', [CouponController::class, 'store']);
 
 });

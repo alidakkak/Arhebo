@@ -18,7 +18,6 @@ class RatingController extends Controller
     public function store(StoreRatingRequest $request)
     {
         $user = auth()->user();
-        $request->validated($request->all());
         $existingRating = Rating::where('user_id', $user->id)->first();
         if ($existingRating) {
             $existingRating->update($request->all());

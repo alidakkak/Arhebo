@@ -19,6 +19,15 @@ class ContactUsController extends Controller
     public function store(StoreContactUsRequest $request)
     {
         try {
+            $isExisting = ContactUs::first();
+            if ($isExisting) {
+                $isExisting->update($request->all());
+
+                return response()->json([
+                    'message' => 'Updated SuccessFully',
+                    'data' => ContactUsResource::make($isExisting),
+                ]);
+            }
             $contact = ContactUs::create($request->all());
 
             return response()->json([
@@ -33,26 +42,43 @@ class ContactUsController extends Controller
         }
     }
 
-    public function update(UpdateContactUsRequest $request, $Id)
-    {
-        try {
-            $contact = ContactUs::find($Id);
-            if (! $contact) {
-                return response()->json(['message' => 'Not Found'], 404);
-            }
-            $contact->update($request->all());
+    //    public function store(StoreContactUsRequest $request)
+    //    {
+    //        try {
+    //            $contact = ContactUs::updateOrCreate($request->all());
+    //
+    //            return response()->json([
+    //                'message' => 'Created SuccessFully',
+    //                'data' => ContactUsResource::make($contact),
+    //            ]);
+    //        } catch (\Exception $e) {
+    //            return response()->json([
+    //                'message' => 'An error occurred',
+    //                'error' => $e->getMessage(),
+    //            ], 500);
+    //        }
+    //    }
 
-            return response()->json([
-                'message' => 'Updated SuccessFully',
-                'data' => ContactUsResource::make($contact),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'An error occurred',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-    }
+    //    public function update(UpdateContactUsRequest $request, $Id)
+    //    {
+    //        try {
+    //            $contact = ContactUs::find($Id);
+    //            if (! $contact) {
+    //                return response()->json(['message' => 'Not Found'], 404);
+    //            }
+    //            $contact->update($request->all());
+    //
+    //            return response()->json([
+    //                'message' => 'Updated SuccessFully',
+    //                'data' => ContactUsResource::make($contact),
+    //            ]);
+    //        } catch (\Exception $e) {
+    //            return response()->json([
+    //                'message' => 'An error occurred',
+    //                'error' => $e->getMessage(),
+    //            ], 500);
+    //        }
+    //    }
 
     public function delete($Id)
     {

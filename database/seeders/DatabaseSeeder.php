@@ -5,7 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\AboutApp;
-use App\Models\ContactUs;
 use App\Models\FrequentlyAskedQuestion;
 use App\Models\PrivacyPolicy;
 use App\Models\ProhibitedThing;
@@ -124,15 +123,6 @@ Development and Innovation: We work hard to stay up to date on the latest develo
             'body' => 'Commitment to quality: We always strive to achieve the highest quality standards in every detail of our work.
 Collaboration and Team: We believe in the importance of working as a team, and we value continuous cooperation to achieve success.
 Transparency and honesty: We are committed to transparency and honesty in every regulatory process, based on the trust built with our clients',
-        ]);
-
-        ContactUs::create([
-            'phone' => '096532456',
-            'email' => 'arhbo@gmail.com',
-            'facebook' => 'facebook.linc',
-            'instagram' => 'instagram.linc',
-            'whatsapp' => 'whatsapp',
-            'x' => 'x.linc',
         ]);
 
         Term::create([

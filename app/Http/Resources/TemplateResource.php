@@ -6,6 +6,7 @@ use App\Models\Color;
 use App\Models\ProhibitedThing;
 use App\Models\Template;
 use App\Models\Wishlist;
+use App\Statuses\UserTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -46,7 +47,7 @@ class TemplateResource extends JsonResource
             'emoji' => $this->emoji,
             'template_code' => $this->template_code,
             'category_id' => $this->category_id,
-            'image' => $this->image,
+            'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
             'is_favorite' => $isFavorite,
             'inputs' => InputResource::collection($template->inputs),
             'prohibitedThing' => ProhibitedThingResource::collection($prohibitedThing),

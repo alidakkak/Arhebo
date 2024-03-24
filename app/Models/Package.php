@@ -21,4 +21,9 @@ class Package extends Model
     {
         return $this->hasMany(Invitation::class);
     }
+
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class, 'coupon_packages', 'package_id', 'coupon_id');
+    }
 }

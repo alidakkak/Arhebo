@@ -23,6 +23,14 @@ class TemplateController extends Controller
         return TemplateResource::collection($template);
     }
 
+    public function searchTemplate(Request $request)
+    {
+        $search = '%'.$request->input('search').'%';
+        $template = Template::where('title', 'LIKE', $search)->get();
+
+        return TemplateResource::collection($template);
+    }
+
     public function trending()
     {
         $mostUsedTemplate = Template::withCount('invitation')
@@ -116,7 +124,7 @@ class TemplateController extends Controller
 
             return response()->json([
                 'message' => 'Deleted SuccessFully',
-                // 'data' => TemplateResource::make($template),
+                //   'data' => TemplateResource::make($template),
             ]);
         } catch (\Exception $e) {
             return response()->json([

@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreInputRequest;
 use App\Http\Requests\UpdateInputRequest;
 use App\Http\Resources\InputResource;
+use App\Models\Category;
 use App\Models\Input;
 
 class InputController extends Controller
 {
-    public function index()
+    public function index($categoryId)
     {
-        $inputs = Input::all();
+        $category = Category::find($categoryId);
+        if (! $category) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        $inputs = Input::where('category_id', $category->id)->get();
 
         return InputResource::collection($inputs);
     }

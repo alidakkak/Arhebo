@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Statuses\UserTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ServicesResource extends JsonResource
+class CouponResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +16,12 @@ class ServicesResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'title_ar' => $this->title_ar,
-            'body' => $this->body,
-            'body_ar' => $this->body_ar,
-            'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
+            'coupon_code' => $this->coupon_code,
+            'offer' => $this->offer,
+            'coupon_status' => $this->coupon_status,
+            'number_of_used' => $this->number_of_used,
+            'category' => $this->categories,
+            'package' => $this->packages,
         ];
     }
 }

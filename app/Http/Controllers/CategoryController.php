@@ -6,6 +6,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -14,6 +15,14 @@ class CategoryController extends Controller
         $category = Category::select('id', 'name', 'name_ar', 'image', 'photo', 'category_code')->get();
 
         return $category;
+    }
+
+    public function searchCategory(Request $request)
+    {
+        $search = '%'.$request->input('search').'%';
+        $category = Category::where('name', 'LIKE', $search)->get();
+
+        return CategoryResource::collection($category);
     }
 
     public function store(StoreCategoryRequest $request)

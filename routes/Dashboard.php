@@ -79,6 +79,7 @@ Route::group(['middleware' => 'check_user:1'], function () {
     ////  AboutApp
     Route::post('about_apps', [AboutAppController::class, 'store']);
     Route::patch('about_apps/{Id}', [AboutAppController::class, 'update']);
+    Route::get('about_apps/{Id}', [AboutAppController::class, 'show']);
     Route::delete('about_apps/{Id}', [AboutAppController::class, 'delete']);
 
     ////  Contact Us
@@ -107,6 +108,7 @@ Route::group(['middleware' => 'check_user:1'], function () {
     //// Prohibited Thing
     Route::post('prohibitedThing', [ProhibitedThingController::class, 'store']);
     Route::patch('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'update']);
+    Route::get('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'show']);
     Route::delete('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'delete']);
 
     ////  Additional Package

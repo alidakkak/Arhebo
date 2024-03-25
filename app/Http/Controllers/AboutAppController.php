@@ -54,6 +54,16 @@ class AboutAppController extends Controller
         }
     }
 
+    public function show($Id)
+    {
+        $about = AboutApp::find($Id);
+        if (! $about) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return AboutAppResource::make($about);
+    }
+
     public function delete($Id)
     {
         try {

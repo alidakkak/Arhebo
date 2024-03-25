@@ -54,6 +54,16 @@ class ProhibitedThingController extends Controller
         }
     }
 
+    public function show($prohibitedThingId)
+    {
+        $prohibitedThing = ProhibitedThing::find($prohibitedThingId);
+        if (! $prohibitedThing) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return ProhibitedThingResource::make($prohibitedThing);
+    }
+
     public function delete($prohibitedThingId)
     {
         try {

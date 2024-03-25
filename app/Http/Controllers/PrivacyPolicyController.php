@@ -54,6 +54,16 @@ class PrivacyPolicyController extends Controller
         }
     }
 
+    public function show($Id)
+    {
+        $privacyPolicy = PrivacyPolicy::find($Id);
+        if (! $privacyPolicy) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return PrivacyPolicyResource::make($privacyPolicy);
+    }
+
     public function delete($Id)
     {
         try {

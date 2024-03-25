@@ -54,6 +54,16 @@ class FilterController extends Controller
         }
     }
 
+    public function show($filterId)
+    {
+        $filter = Filter::find($filterId);
+        if (! $filter) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return FilterResource::make($filter);
+    }
+
     public function delete($filterId)
     {
         try {

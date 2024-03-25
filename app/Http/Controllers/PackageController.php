@@ -54,6 +54,16 @@ class PackageController extends Controller
         }
     }
 
+    public function show($packageId)
+    {
+        $package = Package::find($packageId);
+        if (! $package) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return PackageResource::make($package);
+    }
+
     public function delete($packageId)
     {
         try {

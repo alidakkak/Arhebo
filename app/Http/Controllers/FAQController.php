@@ -54,6 +54,16 @@ class FAQController extends Controller
         }
     }
 
+    public function show($Id)
+    {
+        $FAQ = FrequentlyAskedQuestion::find($Id);
+        if (! $FAQ) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return FAQResource::make($FAQ);
+    }
+
     public function delete($Id)
     {
         try {

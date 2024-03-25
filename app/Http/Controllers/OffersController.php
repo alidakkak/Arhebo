@@ -54,6 +54,16 @@ class OffersController extends Controller
         }
     }
 
+    public function show($offerId)
+    {
+        $offer = Offer::find($offerId);
+        if (! $offer) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return OffersResource::make($offer);
+    }
+
     public function delete($offerId)
     {
         try {

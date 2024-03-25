@@ -54,6 +54,16 @@ class TermController extends Controller
         }
     }
 
+    public function show($termId)
+    {
+        $term = Term::find($termId);
+        if (! $term) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return TermResource::make($term);
+    }
+
     public function delete($termId)
     {
         try {

@@ -30,80 +30,88 @@ Route::group(['middleware' => 'check_user:1'], function () {
     ////// Filter
     Route::get('filters', [FilterController::class, 'index']);
     Route::post('filters', [FilterController::class, 'store']);
-    Route::post('filters/{filterId}', [FilterController::class, 'update']);
+    Route::patch('filters/{filterId}', [FilterController::class, 'update']);
+    Route::get('filter/{filterId}', [FilterController::class, 'show']);
     Route::delete('filters/{filterId}', [FilterController::class, 'delete']);
 
     /////// Offers
     Route::post('offers', [OffersController::class, 'store']);
-    Route::post('offers/{offerId}', [OffersController::class, 'update']);
+    Route::patch('offers/{offerId}', [OffersController::class, 'update']);
+    Route::get('offer/{offerId}', [OffersController::class, 'show']);
     Route::delete('offers/{offerId}', [OffersController::class, 'delete']);
 
     /////// Template
     Route::get('searchTemplate', [TemplateController::class, 'searchTemplate']);
     Route::post('templates', [TemplateController::class, 'store']);
     Route::post('templates/{templateId}', [TemplateController::class, 'update']);
+    Route::get('template/{templateId}', [TemplateController::class, 'show']);
     Route::delete('templates/{templateId}', [TemplateController::class, 'delete']);
 
     ////// Package
     Route::post('packages', [PackageController::class, 'store']);
-    Route::post('packages/{packageId}', [PackageController::class, 'update']);
+    Route::patch('packages/{packageId}', [PackageController::class, 'update']);
+    Route::get('package/{packageId}', [PackageController::class, 'show']);
     Route::delete('packages/{packageId}', [PackageController::class, 'delete']);
 
     ////// Package Details
     Route::post('packageDetails', [PackageDetalisController::class, 'store']);
-    Route::post('packageDetails/{packageDetailsId}', [PackageDetalisController::class, 'update']);
+    Route::patch('packageDetails/{packageDetailsId}', [PackageDetalisController::class, 'update']);
     Route::delete('packageDetails/{packageDetailsId}', [PackageDetalisController::class, 'delete']);
 
     ////// Services
     Route::post('services', [ServicesController::class, 'store']);
     Route::post('services/{serviceId}', [ServicesController::class, 'update']);
+    Route::get('service/{serviceId}', [ServicesController::class, 'show']);
     Route::delete('services/{serviceId}', [ServicesController::class, 'delete']);
 
     ///// Terms And Conditions
     Route::post('terms', [TermController::class, 'store']);
-    Route::post('terms/{termId}', [TermController::class, 'update']);
+    Route::patch('terms/{termId}', [TermController::class, 'update']);
+    Route::get('term/{termId}', [TermController::class, 'show']);
     Route::delete('terms/{termId}', [TermController::class, 'delete']);
 
     ////  Privacy Policy
     Route::post('privacyPolicy', [PrivacyPolicyController::class, 'store']);
-    Route::post('privacyPolicy/{Id}', [PrivacyPolicyController::class, 'update']);
+    Route::patch('privacyPolicy/{Id}', [PrivacyPolicyController::class, 'update']);
+    Route::get('privacyPolicy/{Id}', [PrivacyPolicyController::class, 'show']);
     Route::delete('privacyPolicy/{Id}', [PrivacyPolicyController::class, 'delete']);
 
     ////  AboutApp
     Route::post('about_apps', [AboutAppController::class, 'store']);
-    Route::post('about_apps/{Id}', [AboutAppController::class, 'update']);
+    Route::patch('about_apps/{Id}', [AboutAppController::class, 'update']);
     Route::delete('about_apps/{Id}', [AboutAppController::class, 'delete']);
 
     ////  Contact Us
     Route::post('contactUs', [ContactUsController::class, 'store']);
-    Route::post('contactUs/{Id}', [ContactUsController::class, 'update']);
+    Route::patch('contactUs/{Id}', [ContactUsController::class, 'update']);
     Route::delete('contactUs/{Id}', [ContactUsController::class, 'delete']);
 
     ////  FAQ
     Route::post('faq', [FAQController::class, 'store']);
-    Route::post('faq/{Id}', [FAQController::class, 'update']);
+    Route::patch('faq/{Id}', [FAQController::class, 'update']);
+    Route::get('faq/{Id}', [FAQController::class, 'show']);
     Route::delete('faq/{Id}', [FAQController::class, 'delete']);
 
     ///// Inputs
     Route::get('categories/{categoryId}/inputs', [InputController::class, 'index']);
     Route::post('inputs', [InputController::class, 'store']);
-    Route::post('inputs/{inputId}', [InputController::class, 'update']);
+    Route::patch('inputs/{inputId}', [InputController::class, 'update']);
     Route::delete('inputs/{inputId}', [InputController::class, 'delete']);
 
     /////  Validate
     Route::get('validates', [ValidateController::class, 'index']);
     Route::post('validates', [ValidateController::class, 'store']);
-    Route::post('validates/{validateId}', [ValidateController::class, 'update']);
+    Route::patch('validates/{validateId}', [ValidateController::class, 'update']);
     Route::delete('validates/{validateId}', [ValidateController::class, 'delete']);
 
     //// Prohibited Thing
     Route::post('prohibitedThing', [ProhibitedThingController::class, 'store']);
-    Route::post('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'update']);
+    Route::patch('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'update']);
     Route::delete('prohibitedThing/{prohibitedThingId}', [ProhibitedThingController::class, 'delete']);
 
     ////  Additional Package
     Route::post('additionalPackage', [AdditionalPackageController::class, 'store']);
-    Route::post('additionalPackage/{Id}', [AdditionalPackageController::class, 'update']);
+    Route::patch('additionalPackage/{Id}', [AdditionalPackageController::class, 'update']);
     Route::delete('additionalPackage/{Id}', [AdditionalPackageController::class, 'delete']);
 
     ////  Coupon

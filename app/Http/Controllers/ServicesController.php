@@ -54,6 +54,16 @@ class ServicesController extends Controller
         }
     }
 
+    public function show($serviceId)
+    {
+        $service = Services::find($serviceId);
+        if (! $service) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return ServicesResource::make($service);
+    }
+
     public function delete($serviceId)
     {
         try {

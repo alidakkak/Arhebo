@@ -107,6 +107,16 @@ class TemplateController extends Controller
         }
     }
 
+    public function show($templateId)
+    {
+        $template = Template::find($templateId);
+        if (! $template) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return TemplateResource::make($template);
+    }
+
     public function delete($templateId)
     {
         try {

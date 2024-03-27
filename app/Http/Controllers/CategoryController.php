@@ -6,6 +6,10 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\Invitation;
+use App\Models\Invitee;
+use App\Models\Template;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -97,5 +101,23 @@ class CategoryController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    //// Statistics For Category, Template, Invitation, Users, Invitees
+    public function statistics()
+    {
+        $categoriesCount = Category::count();
+        $templatesCount = Template::count();
+        $invitationsCount = Invitation::count();
+        $usersCount = User::count();
+        $inviteesCount = Invitee::count();
+
+        return [
+            'categories' => $categoriesCount,
+            'templates' => $templatesCount,
+            'invitations' => $invitationsCount,
+            'users' => $usersCount,
+            'invitees' => $inviteesCount,
+        ];
     }
 }

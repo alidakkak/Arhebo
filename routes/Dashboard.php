@@ -23,12 +23,14 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'check_user:1'], function () {
     /////// Category
     Route::get('searchCategories', [CategoryController::class, 'searchCategory']); /// Get And Search
+    Route::get('statistics', [CategoryController::class, 'statistics']);
     Route::post('categories', [CategoryController::class, 'store']);
     Route::post('categories/{categoryId}', [CategoryController::class, 'update']);
     Route::delete('categories/{categoryId}', [CategoryController::class, 'delete']);
 
     ////// Filter
     Route::get('filters', [FilterController::class, 'index']);
+    Route::get('categories/{categoryId}/filters', [FilterController::class, 'getFilterByCategory']);
     Route::post('filters', [FilterController::class, 'store']);
     Route::patch('filters/{filterId}', [FilterController::class, 'update']);
     Route::get('filter/{filterId}', [FilterController::class, 'show']);

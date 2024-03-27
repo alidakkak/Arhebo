@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class StoreTemplateRequest extends FormRequest
@@ -30,7 +31,12 @@ class StoreTemplateRequest extends FormRequest
             'description_ar' => 'required|string',
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
-            'filter_id' => ['required', Rule::exists('filters', 'id')],
+            'filter_id' => [
+                'required',
+                Rule::exists('filters', 'id')->where(function ($query) {
+                    return $query->where('category_id', $this->category_id);
+                }),
+            ],
             //            'colors' => 'required|array',
             //            'colors.*.description' => 'required|string',
             //            'colors.*.template' => 'required|image|mimes:jpeg,png,jpg,svg',

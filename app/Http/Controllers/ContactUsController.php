@@ -13,7 +13,7 @@ class ContactUsController extends Controller
     {
         $contact = ContactUs::all();
 
-        return ContactUsResource::collection($contact);
+        return ContactUsResource::make($contact);
     }
 
     public function store(StoreContactUsRequest $request)

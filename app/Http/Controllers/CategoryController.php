@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CategoryWithFilterResource;
 use App\Models\Category;
 use App\Models\Invitation;
 use App\Models\Invitee;
@@ -27,6 +28,13 @@ class CategoryController extends Controller
         $category = Category::where('name', 'LIKE', $search)->get();
 
         return CategoryResource::collection($category);
+    }
+
+    public function categoryWithFilter()
+    {
+        $category = Category::all();
+
+        return CategoryWithFilterResource::collection($category);
     }
 
     public function store(StoreCategoryRequest $request)

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'check_user:1'], function () {
     /////// Category
     Route::get('searchCategories', [CategoryController::class, 'searchCategory']); /// Get And Search
+    Route::get('categoryWithFilter', [CategoryController::class, 'categoryWithFilter']);
     Route::get('statistics', [CategoryController::class, 'statistics']);
     Route::post('categories', [CategoryController::class, 'store']);
     Route::post('categories/{categoryId}', [CategoryController::class, 'update']);

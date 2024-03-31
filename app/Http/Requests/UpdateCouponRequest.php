@@ -25,8 +25,10 @@ class UpdateCouponRequest extends FormRequest
         return [
             'coupon_code' => 'string',
             'offer' => 'numeric|min:1|max:100',
-            'categories.*.category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
-            'packages.*.package_id' => [Rule::exists('packages', 'id')->whereNull('deleted_at')],
+            'categories' => 'required|array',
+            'categories.*' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],
+            'packages' => 'required|array',
+            'packages.*' => ['required', 'numeric', Rule::exists('packages', 'id')->whereNull('deleted_at')],
         ];
     }
 }

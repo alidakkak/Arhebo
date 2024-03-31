@@ -54,33 +54,50 @@ class CouponController extends Controller
         }
     }
 
-
     public function update(UpdateCouponRequest $request, $couponId)
     {
         try {
             DB::beginTransaction();
-            $couponId->update($request->all());
+            $coupon = Coupon::find($couponId);
 
-            foreach ($request->categories as $category) {
-                CouponCategory::update([
-                    'category_id' => $category['category_id'],
-                ]);
+            if (! $coupon) {
+                return response()->json(['message' => 'Not Found'], 404);
             }
 
-            foreach ($request->packages as $package) {
-                CouponPackage::update([
-                    'package_id' => $package['package_id'],
-                ]);
-            }
+            $coupon->update($request->all());
+
+            $coupon->categories()->sync($request->categories);
+            $coupon->packages()->sync($request->packages);
             DB::commit();
 
             return response()->json([
                 'message' => 'Updated SuccessFully',
-                'data' => CouponResource::make($couponId),
+                'data' => CouponResource::make($coupon),
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
+            return response()->json([
+                'message' => 'An error occurred',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function delete($couponId)
+    {
+        try {
+            $coupon = Coupon::find($couponId);
+            if (! $coupon) {
+                return response()->json(['message' => 'Not Found'], 404);
+            }
+            $coupon->delete();
+
+            return response()->json([
+                'message' => 'Deleted SuccessFully',
+                'data' => CouponResource::make($coupon),
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'An error occurred',
                 'error' => $e->getMessage(),

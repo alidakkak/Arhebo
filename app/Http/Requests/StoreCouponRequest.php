@@ -23,7 +23,7 @@ class StoreCouponRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'coupon_code' => 'required',
+            'coupon_code' => 'string|required',
             'offer' => 'required|numeric|min:1|max:100',
             'categories' => 'required|array',
             'categories.*' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],

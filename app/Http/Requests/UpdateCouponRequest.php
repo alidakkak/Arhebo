@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCouponRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateCouponRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,10 @@ class UpdateCouponRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'coupon_code' => 'string',
+            'offer' => 'numeric|min:1|max:100',
+            'categories.*.category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
+            'packages.*.package_id' => [Rule::exists('packages', 'id')->whereNull('deleted_at')],
         ];
     }
 }

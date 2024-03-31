@@ -25,8 +25,10 @@ class StoreCouponRequest extends FormRequest
         return [
             'coupon_code' => 'required',
             'offer' => 'required|numeric|min:1|max:100',
-            'categories.*.category_id' => ['required', Rule::exists('categories', 'id')],
-            'packages.*.package_id' => ['required', Rule::exists('packages', 'id')],
+            'categories' => 'required|array',
+            'categories.*' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],
+            'packages' => 'required|array',
+            'packages.*' => ['required', 'numeric', Rule::exists('packages', 'id')->whereNull('deleted_at')],
         ];
     }
 }

@@ -122,5 +122,6 @@ Route::group(['middleware' => 'check_user:1'], function () {
     ////  Coupon
     Route::get('coupons', [CouponController::class, 'index']);
     Route::post('coupons', [CouponController::class, 'store']);
+    Route::patch('coupons/{couponId}', [CouponController::class, 'update']);
 
 });

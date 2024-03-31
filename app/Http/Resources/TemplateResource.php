@@ -19,6 +19,27 @@ class TemplateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($request->route()->uri === 'api/template/{templateId}') {
+            return [
+                'id' => $this->id,
+                'title' => $this->title,
+                'title_ar' => $this->title_ar,
+                'description' => $this->description,
+                'description_ar' => $this->description_ar,
+                'emoji' => $this->emoji,
+                'template_code' => $this->template_code,
+                'category_id' => $this->category_id,
+                'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
+                'filters' => $this->filters->map(function ($filter) {
+                    return [
+                        'id' => $filter->id,
+                        'name' => $filter->name,
+                        'name_ar' => $filter->name_ar,
+                    ];
+                }),
+                'category' => optional($this->category)->only(['id', 'name', 'name_ar']),
+            ];
+        }
         $userId = $request->user()->id;
         $templateId = $this->id;
 

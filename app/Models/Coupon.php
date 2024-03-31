@@ -13,11 +13,11 @@ class Coupon extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'coupon_categories', 'category_id', 'coupon_id');
+        return $this->belongsToMany(Category::class, 'coupon_categories', 'coupon_id', 'category_id');
     }
 
     public function packages()
     {
-        return $this->belongsToMany(Package::class, 'coupon_packages', 'package_id', 'coupon_id');
+        return $this->belongsToMany(Package::class, 'coupon_packages', 'coupon_id', 'package_id');
     }
 }

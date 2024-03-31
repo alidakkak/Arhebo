@@ -20,8 +20,19 @@ class CouponResource extends JsonResource
             'offer' => $this->offer,
             'coupon_status' => $this->coupon_status,
             'number_of_used' => $this->number_of_used,
-            'category' => $this->categories,
-            'package' => $this->packages,
+            'categories' => $this->categories->map(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'name_ar' => $category->name_ar,
+                ];
+            }),
+            'packages' => $this->packages->map(function ($package) {
+                return [
+                    'id' => $package->id,
+                    'name' => $package->name,
+                ];
+            }),
         ];
     }
 }

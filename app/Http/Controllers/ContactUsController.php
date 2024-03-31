@@ -11,7 +11,7 @@ class ContactUsController extends Controller
 {
     public function index()
     {
-        $contact = ContactUs::all();
+        $contact = ContactUs::first();
 
         return ContactUsResource::make($contact);
     }

@@ -13,6 +13,10 @@ class ContactUsController extends Controller
     {
         $contact = ContactUs::first();
 
+        if (! $contact) {
+            return [];
+        }
+
         return ContactUsResource::make($contact);
     }
 

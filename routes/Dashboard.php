@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CouponController;
@@ -20,7 +21,10 @@ use App\Http\Controllers\ValidateController;
 use App\Models\Package;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'check_user:1'], function () {
+Route::group(['middleware' => ['check_user:1', 'lang']], function () {
+    //// Admin&Support
+    Route::post('addAdminSupport',[AdminController::class, 'addAdminSupport']);
+
     /////// Category
     Route::get('searchCategories', [CategoryController::class, 'searchCategory']); /// Get And Search
     Route::get('categoryWithFilter', [CategoryController::class, 'categoryWithFilter']);

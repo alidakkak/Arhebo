@@ -7,7 +7,7 @@ use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::patch('invitees/{invitee}', [InviteeController::class, 'update']);
-Route::group(['middleware' => 'check_user:1,3'], function () {
+Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
     ////  Invitee
     Route::post('invitees', [InviteeController::class, 'store']);
 

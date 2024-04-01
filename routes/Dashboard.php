@@ -123,6 +123,7 @@ Route::group(['middleware' => 'check_user:1'], function () {
     Route::get('coupons', [CouponController::class, 'index']);
     Route::post('coupons', [CouponController::class, 'store']);
     Route::patch('coupons/{couponId}', [CouponController::class, 'update']);
+    Route::get('coupon/{couponId}', [CouponController::class, 'show']);
     Route::delete('coupons/{couponId}', [CouponController::class, 'delete']);
 
 });

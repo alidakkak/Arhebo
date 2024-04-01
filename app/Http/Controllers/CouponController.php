@@ -84,6 +84,16 @@ class CouponController extends Controller
         }
     }
 
+    public function show($couponId)
+    {
+        $coupon = Coupon::find($couponId);
+        if (! $coupon) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return CouponResource::make($coupon);
+    }
+
     public function delete($couponId)
     {
         try {

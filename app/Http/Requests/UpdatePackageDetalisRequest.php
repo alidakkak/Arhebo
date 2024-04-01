@@ -24,9 +24,9 @@ class UpdatePackageDetalisRequest extends FormRequest
     {
         return [
             'package_id' => [Rule::exists('packages', 'id')->whereNull('deleted_at')],
-            'price' => 'string',
-            'price_qr' => 'string',
-            'number_of_invitees' => 'string',
+            'price' => 'numeric',
+            'price_qr' => 'numeric',
+            'number_of_invitees' => 'numeric',
         ];
     }
 }

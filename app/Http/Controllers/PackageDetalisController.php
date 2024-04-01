@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePackageDetalisRequest;
 use App\Http\Requests\UpdatePackageDetalisRequest;
 use App\Http\Resources\PackageDetalisResource;
+use App\Models\Package;
 use App\Models\PackageDetail;
 
 class PackageDetalisController extends Controller
@@ -12,19 +13,11 @@ class PackageDetalisController extends Controller
     public function store(StorePackageDetalisRequest $request)
     {
         try {
-            $createdPackageDetails = [];
-            foreach ($request->package_details as $package) {
-                $createdPackageDetails[] = PackageDetail::create([
-                    'package_id' => $request->package_id,
-                    'price' => $package['price'],
-                    'price_qr' => $package['price_qr'],
-                    'number_of_invitees' => $package['number_of_invitees'],
-                ]);
-            }
+            $packageDetails = PackageDetail::create($request->all());
 
             return response()->json([
                 'message' => 'Created SuccessFully',
-                'data' => PackageDetalisResource::collection($createdPackageDetails),
+                'data' => PackageDetalisResource::make($packageDetails),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -53,6 +46,17 @@ class PackageDetalisController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function getPackageDetailsByPackageId($packageId)
+    {
+        $package = Package::find($packageId);
+        if (! $package) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        $packageDetails = PackageDetail::where('package_id', $package->id)->get();
+
+        return PackageDetalisResource::collection($packageDetails);
     }
 
     public function delete($packageDetailsId)

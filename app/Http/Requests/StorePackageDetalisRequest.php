@@ -24,9 +24,9 @@ class StorePackageDetalisRequest extends FormRequest
     {
         return [
             'package_id' => ['required', Rule::exists('packages', 'id')->whereNull('deleted_at')],
-            'package_details.*.price' => 'required|string',
-            'package_details.*.price_qr' => 'required|string',
-            'package_details.*.number_of_invitees' => 'required|string',
+            'price' => 'required|string',
+            'price_qr' => 'required|string',
+            'number_of_invitees' => 'required|string',
         ];
     }
 }

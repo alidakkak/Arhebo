@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     //// Admin&Support
-    Route::post('addAdminSupport',[AdminController::class, 'addAdminSupport']);
+    Route::post('addAdminSupport', [AdminController::class, 'addAdminSupport']);
 
     /////// Category
     Route::get('searchCategories', [CategoryController::class, 'searchCategory']); /// Get And Search
@@ -63,6 +63,7 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     ////// Package Details
     Route::post('packageDetails', [PackageDetalisController::class, 'store']);
     Route::patch('packageDetails/{packageDetailsId}', [PackageDetalisController::class, 'update']);
+    Route::get('packageDetails/{packageId}', [PackageDetalisController::class, 'getPackageDetailsByPackageId']);
     Route::delete('packageDetails/{packageDetailsId}', [PackageDetalisController::class, 'delete']);
 
     ////// Services

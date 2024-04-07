@@ -7,11 +7,13 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryWithFilterResource;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\Template;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -119,6 +121,9 @@ class CategoryController extends Controller
         $invitationsCount = Invitation::count();
         $usersCount = User::count();
         $inviteesCount = Invitee::count();
+        $number_of_people_invited_by_app = Invitee::select(DB::raw('count(distinct(phone)) as total'))->value('total');
+        $number_of_coupons = Coupon::count();
+        $number_of_in_used_coupons = Coupon::where('number_of_used', '!=', '0')->count(); // Number of coupons used
 
         return [
             'categories' => $categoriesCount,
@@ -126,6 +131,9 @@ class CategoryController extends Controller
             'invitations' => $invitationsCount,
             'users' => $usersCount,
             'invitees' => $inviteesCount,
+            'number_of_people_invited_by_app' => $number_of_people_invited_by_app,
+            'number_of_coupons' => $number_of_coupons,
+            'number_of_in_used_coupons' => $number_of_in_used_coupons,
         ];
     }
 }

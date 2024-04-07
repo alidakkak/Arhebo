@@ -26,8 +26,11 @@ class TemplateController extends Controller
     public function searchTemplate(Request $request)
     {
         $search = '%'.$request->input('search').'%';
-        $template = Template::where('title', 'LIKE', $search)->get();
-
+        $template = Template::where('title', 'LIKE', $search)
+            ->orWhere('title_ar', 'LIKE', $search)
+            ->orWhere('description', 'LIKE', $search)
+            ->orWhere('description_ar', 'LIKE', $search)
+            ->orWhere('template_code', 'LIKE', $search)->get();
         return TemplateResource::collection($template);
     }
 

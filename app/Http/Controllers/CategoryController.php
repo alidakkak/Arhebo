@@ -27,7 +27,11 @@ class CategoryController extends Controller
     public function searchCategory(Request $request)
     {
         $search = '%'.$request->input('search').'%';
-        $category = Category::where('name', 'LIKE', $search)->get();
+        $category = Category::where('name', 'LIKE', $search)
+            ->orWhere('name_ar', 'LIKE', $search)
+            ->orWhere('description', 'LIKE', $search)
+            ->orWhere('description_ar', 'LIKE', $search)
+            ->orWhere('category_code', 'LIKE', $search)->get();
 
         return CategoryResource::collection($category);
     }

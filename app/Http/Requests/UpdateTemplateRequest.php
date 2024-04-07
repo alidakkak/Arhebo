@@ -30,7 +30,11 @@ class UpdateTemplateRequest extends FormRequest
             'description_ar' => 'string',
             'category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'image' => 'image|mimes:jpeg,png,jpg,svg',
-            'filter_id' => [Rule::exists('filters', 'id')],
+            'filter_id' => [
+                Rule::exists('filters', 'id')->where(function ($query) {
+                    return $query->where('category_id', $this->category_id);
+                }),
+            ],
         ];
     }
 }

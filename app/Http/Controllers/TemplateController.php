@@ -89,17 +89,23 @@ class TemplateController extends Controller
     public function update(UpdateTemplateRequest $request, $templateId)
     {
         try {
+            DB::beginTransaction();
             $template = Template::find($templateId);
             if (! $template) {
                 return response()->json(['message' => 'Not Found'], 404);
             }
             $template->update($request->all());
 
+            $template->filters()->sync($request->filter_id);
+            DB::commit();
+
             return response()->json([
                 'message' => 'Updated SuccessFully',
                 'data' => TemplateResource::make($template),
             ]);
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return response()->json([
                 'message' => 'An error occurred',
                 'error' => $e->getMessage(),

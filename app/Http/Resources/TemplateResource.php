@@ -29,7 +29,7 @@ class TemplateResource extends JsonResource
                 'emoji' => $this->emoji,
                 'template_code' => $this->template_code,
                 'category_id' => $this->category_id,
-                'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
+                'image' => $request->user()->type === UserTypes::USER ? $this->image : asset($this->image),
                 'filters' => $this->filters->map(function ($filter) {
                     return [
                         'id' => $filter->id,
@@ -68,7 +68,7 @@ class TemplateResource extends JsonResource
             'emoji' => $this->emoji,
             'template_code' => $this->template_code,
             'category_id' => $this->category_id,
-            'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
+            'image' => $request->user()->type === UserTypes::USER ? $this->image : asset($this->image),
             'is_favorite' => $isFavorite,
             'inputs' => InputResource::collection($template->inputs),
             'prohibitedThing' => ProhibitedThingResource::collection($prohibitedThing),

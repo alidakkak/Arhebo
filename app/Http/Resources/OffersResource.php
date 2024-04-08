@@ -17,7 +17,7 @@ class OffersResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
+            'image' => $request->user()->type === UserTypes::USER ? $this->image : asset($this->image),
         ];
     }
 }

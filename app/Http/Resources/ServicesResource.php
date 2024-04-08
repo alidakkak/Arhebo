@@ -21,7 +21,7 @@ class ServicesResource extends JsonResource
             'title_ar' => $this->title_ar,
             'body' => $this->body,
             'body_ar' => $this->body_ar,
-            'image' => $this->userType === UserTypes::USER ? $this->image : asset($this->image),
+            'image' => $request->user()->type === UserTypes::USER ? $this->image : asset($this->image),
         ];
     }
 }

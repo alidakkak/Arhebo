@@ -38,10 +38,10 @@ class Template extends Model
 
     public function setImageAttribute($image)
     {
-        $newImageName = uniqid().'_'.'categories_image'.'.'.$image->extension();
-        $image->move(public_path('categories_image'), $newImageName);
+        $newImageName = uniqid().'_'.'templates_image'.'.'.$image->extension();
+        $image->move(public_path('templates_image'), $newImageName);
 
-        return $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
+        return $this->attributes['image'] = '/'.'templates_image'.'/'.$newImageName;
     }
 
     public function category()

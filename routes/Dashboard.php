@@ -43,7 +43,7 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
 
     /////// Offers
     Route::post('offers', [OffersController::class, 'store']);
-    Route::patch('offers/{offerId}', [OffersController::class, 'update']);
+    Route::post('offers/{offerId}', [OffersController::class, 'update']);
     Route::get('offer/{offerId}', [OffersController::class, 'show']);
     Route::delete('offers/{offerId}', [OffersController::class, 'delete']);
 

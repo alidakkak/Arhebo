@@ -31,6 +31,7 @@ class TemplateController extends Controller
             ->orWhere('description', 'LIKE', $search)
             ->orWhere('description_ar', 'LIKE', $search)
             ->orWhere('template_code', 'LIKE', $search)->get();
+
         return TemplateResource::collection($template);
     }
 

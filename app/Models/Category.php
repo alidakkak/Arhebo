@@ -27,21 +27,47 @@ class Category extends Model
         });
     }
 
+//    public function setImageAttribute($image)
+//    {
+//        $newImageName = uniqid().'_'.'categories_image'.'.'.$image->extension();
+//        $image->move(public_path('categories_image'), $newImageName);
+//
+//        return $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
+//    }
+
     public function setImageAttribute($image)
     {
-        $newImageName = uniqid().'_'.'categories_image'.'.'.$image->extension();
-        $image->move(public_path('categories_image'), $newImageName);
-
-        return $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
+        if ($image instanceof \Illuminate\Http\UploadedFile) {
+            $newImageName = uniqid().'_'.'categories_image'.'.'.$image->extension();
+            $image->move(public_path('categories_image'), $newImageName);
+            $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
+        } else if (is_string($image)) {
+            // Assume it's a path or another handling strategy
+            $this->attributes['image'] = $image;
+        }
     }
+
+
+//    public function setPhotoAttribute($photo)
+//    {
+//        $newPhotoName = uniqid().'_'.'categories_image'.'.'.$photo->extension();
+//        $photo->move(public_path('categories_image'), $newPhotoName);
+//
+//        return $this->attributes['photo'] = '/'.'categories_image'.'/'.$newPhotoName;
+//    }
 
     public function setPhotoAttribute($photo)
     {
-        $newPhotoName = uniqid().'_'.'categories_image'.'.'.$photo->extension();
-        $photo->move(public_path('categories_image'), $newPhotoName);
-
-        return $this->attributes['photo'] = '/'.'categories_image'.'/'.$newPhotoName;
+        if ($photo instanceof \Illuminate\Http\UploadedFile) {
+            $newImageName = uniqid().'_'.'categories_image'.'.'.$photo->extension();
+            $photo->move(public_path('categories_image'), $newImageName);
+            $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
+        } else if (is_string($photo)) {
+            // Assume it's a path or another handling strategy
+            $this->attributes['photo'] = $photo;
+        }
     }
+
 
     public function Template()
     {

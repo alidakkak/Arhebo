@@ -65,9 +65,9 @@ class AuthController extends Controller
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
-          $user->generate_code();
-          EmailService::sendHtmlEmail($user->email,$user->code);
-           $user->reset_code();
+//          $user->generate_code();
+//          EmailService::sendHtmlEmail($user->email,$user->code);
+//           $user->reset_code();
         $token = JWTAuth::fromUser($user);
 
         return response()->json([

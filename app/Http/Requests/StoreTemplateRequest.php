@@ -32,7 +32,6 @@ class StoreTemplateRequest extends FormRequest
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
             'filter_id' => [
-                'required',
                 Rule::exists('filters', 'id')->where(function ($query) {
                     return $query->where('category_id', $this->category_id);
                 }),

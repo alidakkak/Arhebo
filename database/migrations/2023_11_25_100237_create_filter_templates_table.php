@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('filter_templates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('template_id')->constrained('templates')->cascadeOnDelete();
-            $table->foreignId('filter_id')->constrained('filters')->cascadeOnDelete();
+            $table->foreignId('template_id')->nullable()->constrained('templates')->cascadeOnDelete();
+            $table->foreignId('filter_id')->nullable()->constrained('filters')->cascadeOnDelete();
             $table->timestamps();
         });
     }

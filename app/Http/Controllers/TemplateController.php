@@ -69,11 +69,12 @@ class TemplateController extends Controller
         DB::beginTransaction();
         try {
             $template = Template::create($request->all());
-
-            FilterTemplate::create([
-                'template_id' => $template->id,
-                'filter_id' => $request->input('filter_id'),
-            ]);
+            if ($request->filter_id){
+                FilterTemplate::create([
+                    'template_id' => $template->id,
+                    'filter_id' => $request->input('filter_id'),
+                ]);
+            }
             DB::commit();
 
             return response()->json([

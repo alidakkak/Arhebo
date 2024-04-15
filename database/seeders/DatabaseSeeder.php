@@ -44,6 +44,16 @@ class DatabaseSeeder extends Seeder
             'type' => UserTypes::USER,
         ]);
 
+    Category::create([
+        'name' => 'Wedding',
+        'name_ar' => 'قِرَان',
+        'description' => 'Be inspired and fall in love with
+our timeless Save the date invitations.',
+        'description_ar' => 'كن مصدر إلهام وتقع في الحب
+لدينا الخالدة حفظ دعوات التاريخ.',
+        'image' => 'categories_image\Wedding.png',
+        'photo' => 'categories_image\Wedding.png',
+    ]);
 
         ProhibitedThing::create([
             'name' => 'Children are not allowed',

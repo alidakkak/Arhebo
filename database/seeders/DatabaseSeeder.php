@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
 //    ]);
 
         Offer::create([
-           'image' => 'offers_image\black-friday-offer-arh1 (2) 1.png'
+           'image' => 'offers_image/black-friday-offer.png'
         ]);
 
         ProhibitedThing::create([

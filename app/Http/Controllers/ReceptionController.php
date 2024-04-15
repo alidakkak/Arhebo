@@ -117,7 +117,7 @@ class ReceptionController extends Controller
         }
 
         if ($qrCode->status == 1) {
-            return response()->json(['message' => 'QR Code has been scanned before']);
+            return response()->json(['message' => 'QR Code has been scanned before'], 400);
         }
         $qrCode->update([
             'status' => 1,

@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'password' => '00000000',
             'type' => UserTypes::SUPPORT,
         ]);
-/*
+
         ProhibitedThing::create([
             'name' => 'Children are not allowed',
             'name_ar' => 'ممنوع اصطحاب الأطفال',
@@ -283,6 +283,6 @@ If you are using the Arhaboa platform on behalf of a company, institution, gover
             'body' => 'The organization guarantees the user not to sell, rent, or give his personal information to others to serve the marketing purposes of a third party.',
             'body_ar' => 'تضمن المؤسسة للمستخدم عدم بيع أو تأجير أو إعطاء معلوماته الشخصية إلى الغير لخدمة الأغراض التسويقية لطرف ثالث.',
         ]);
-*/
+
     }
 }

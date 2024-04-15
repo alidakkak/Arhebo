@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\AboutApp;
+use App\Models\Category;
 use App\Models\FrequentlyAskedQuestion;
 use App\Models\PrivacyPolicy;
 use App\Models\ProhibitedThing;
@@ -34,6 +35,25 @@ class DatabaseSeeder extends Seeder
             'password' => '00000000',
             'type' => UserTypes::SUPPORT,
         ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'Ali',
+            'email' => 'ali@gmail.com',
+            'phone' => '0937356470',
+            'password' => '00000000',
+            'type' => UserTypes::USER,
+        ]);
+
+    Category::create([
+        'name' => 'Wedding',
+        'name_ar' => 'قِرَان',
+        'description' => 'Be inspired and fall in love with
+our timeless Save the date invitations.',
+        'description_ar' => 'كن مصدر إلهام وتقع في الحب
+لدينا الخالدة حفظ دعوات التاريخ.',
+        'image' => 'public\categories_image\Wedding.png',
+        'photo' => 'public\categories_image\Wedding.png',
+    ]);
 
         ProhibitedThing::create([
             'name' => 'Children are not allowed',

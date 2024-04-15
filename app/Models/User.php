@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -56,6 +57,31 @@ class User extends Authenticatable implements JWTSubject
         $image->move(public_path('user_image'), $newImageName);
 
         return $this->attributes['image'] = '/'.'user_image'.'/'.$newImageName;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($user) {
+            if ($user->image) {
+                $imagePath = public_path($user->image);
+                if (File::exists($imagePath)) {
+                    File::delete($imagePath);
+                }
+            }
+
+        });
+        static::updated(function ($user) {
+            if ($user->image) {
+                if ($user->isDirty('image')) {
+                    $oldImagePath = public_path($user->getOriginal('image'));
+                    if (File::exists($oldImagePath)) {
+                        File::delete($oldImagePath);
+                    }
+                }
+            }
+
+        });
     }
 
     /**

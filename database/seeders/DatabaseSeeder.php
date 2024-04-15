@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\AboutApp;
 use App\Models\Category;
 use App\Models\FrequentlyAskedQuestion;
+use App\Models\Offer;
 use App\Models\PrivacyPolicy;
 use App\Models\ProhibitedThing;
 use App\Models\Term;
@@ -44,16 +45,20 @@ class DatabaseSeeder extends Seeder
             'type' => UserTypes::USER,
         ]);
 
-    Category::create([
-        'name' => 'Wedding',
-        'name_ar' => 'قِرَان',
-        'description' => 'Be inspired and fall in love with
-our timeless Save the date invitations.',
-        'description_ar' => 'كن مصدر إلهام وتقع في الحب
-لدينا الخالدة حفظ دعوات التاريخ.',
-        'image' => 'categories_image\Wedding.png',
-        'photo' => 'categories_image\Wedding.png',
-    ]);
+//    Category::create([
+//        'name' => 'Wedding',
+//        'name_ar' => 'قِرَان',
+//        'description' => 'Be inspired and fall in love with
+//our timeless Save the date invitations.',
+//        'description_ar' => 'كن مصدر إلهام وتقع في الحب
+//لدينا الخالدة حفظ دعوات التاريخ.',
+//        'image' => 'categories_image\Wedding.png',
+//        'photo' => 'categories_image\Wedding.png',
+//    ]);
+
+        Offer::create([
+           'image' => 'offers_image\black-friday-offer-arh1 (2) 1.png'
+        ]);
 
         ProhibitedThing::create([
             'name' => 'Children are not allowed',

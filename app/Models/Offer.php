@@ -12,12 +12,24 @@ class Offer extends Model
 
     protected $guarded = ['id'];
 
+//    public function setImageAttribute($image)
+//    {
+//        $newPhotoName = uniqid().'_'.'offers_image'.'.'.$image->extension();
+//        $image->move(public_path('offers_image'), $newPhotoName);
+//
+//        return $this->attributes['image'] = '/'.'offers_image'.'/'.$newPhotoName;
+//    }
+
     public function setImageAttribute($image)
     {
-        $newPhotoName = uniqid().'_'.'offers_image'.'.'.$image->extension();
-        $image->move(public_path('offers_image'), $newPhotoName);
-
-        return $this->attributes['image'] = '/'.'offers_image'.'/'.$newPhotoName;
+        if ($image instanceof \Illuminate\Http\UploadedFile) {
+            $newImageName = uniqid().'_'.'offers_image'.'.'.$image->extension();
+            $image->move(public_path('offers_image'), $newImageName);
+            $this->attributes['image'] = '/'.'offers_image'.'/'.$newImageName;
+        } else if (is_string($image)) {
+            // Assume it's a path or another handling strategy
+            $this->attributes['image'] = $image;
+        }
     }
 
     protected static function boot()

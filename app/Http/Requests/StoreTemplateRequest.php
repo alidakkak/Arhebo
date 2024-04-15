@@ -26,7 +26,7 @@ class StoreTemplateRequest extends FormRequest
         return [
             'title' => 'required|string',
             'title_ar' => 'required|string',
-            'emoji' => 'string',
+            'emoji' => 'string|nullable',
             'description' => 'required|string',
             'description_ar' => 'required|string',
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],

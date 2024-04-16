@@ -13,6 +13,8 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        Category::$isSeederRunning = true;
+
         Category::create([
             'name' => 'Wedding',
             'name_ar' => 'قِرَان',

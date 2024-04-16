@@ -12,20 +12,25 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
+    public static $isSeederRunning = false;
+
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($category) {
-            $latestCategory = static::withTrashed()->latest()->first();
-            if ($latestCategory) {
-                $category->category_code =
-                    str_pad((int) $latestCategory->category_code + 1, 2, '0', STR_PAD_LEFT);
-            } else {
-                $category->category_code = '01';
+            if (!self::$isSeederRunning) {
+                $latestCategory = static::withTrashed()->latest()->first();
+                if ($latestCategory) {
+                    $category->category_code = str_pad((int) $latestCategory->category_code + 1, 2, '0', STR_PAD_LEFT);
+                } else {
+                    $category->category_code = '01';
+                }
             }
         });
     }
+
+
 
     public function setImageAttribute($image)
     {

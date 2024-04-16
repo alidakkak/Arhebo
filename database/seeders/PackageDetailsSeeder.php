@@ -84,8 +84,68 @@ class PackageDetailsSeeder extends Seeder
         PackageDetail::create([
             'package_id' => '2',
             'price' => '195',
-            'price_qr' => '245',
+            'price_qr' => '235',
             'number_of_invitees' => '25',
+        ]);
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '335',
+            'price_qr' => '375',
+            'number_of_invitees' => '50',
+        ]);
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '625',
+            'price_qr' => '675',
+            'number_of_invitees' => '100',
+        ]);
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '895',
+            'price_qr' => '945',
+            'number_of_invitees' => '150',
+        ]);
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '1185',
+            'price_qr' => '1265',
+            'number_of_invitees' => '200',
+        ]);
+
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '1495',
+            'price_qr' => '1535',
+            'number_of_invitees' => '250',
+        ]);
+
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '1785',
+            'price_qr' => '1845',
+            'number_of_invitees' => '300',
+        ]);
+
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '2295',
+            'price_qr' => '2375',
+            'number_of_invitees' => '400',
+        ]);
+
+
+        PackageDetail::create([
+            'package_id' => '2',
+            'price' => '2785',
+            'price_qr' => '2845',
+            'number_of_invitees' => '500',
         ]);
 
         PackageDetail::create([

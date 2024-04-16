@@ -58,7 +58,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Social Events.png"',
+            'image' => '/categories_image/Social Events.png',
             'photo' => '/categories_image/Categories Background -Social Events 1.png',
             'category_code' => '04'
         ]);

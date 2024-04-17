@@ -19,7 +19,7 @@ class Category extends Model
         parent::boot();
 
         static::creating(function ($category) {
-            if (!self::$isSeederRunning) {
+            if (! self::$isSeederRunning) {
                 $latestCategory = static::withTrashed()->latest()->first();
                 if ($latestCategory) {
                     $category->category_code = str_pad((int) $latestCategory->category_code + 1, 2, '0', STR_PAD_LEFT);
@@ -30,15 +30,13 @@ class Category extends Model
         });
     }
 
-
-
     public function setImageAttribute($image)
     {
         if ($image instanceof \Illuminate\Http\UploadedFile) {
             $newImageName = uniqid().'_'.'categories_image'.'.'.$image->extension();
             $image->move(public_path('categories_image'), $newImageName);
             $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
-        } else if (is_string($image)) {
+        } elseif (is_string($image)) {
             $this->attributes['image'] = $image;
         }
     }
@@ -49,11 +47,10 @@ class Category extends Model
             $newImageName = uniqid().'_'.'categories_image'.'.'.$photo->extension();
             $photo->move(public_path('categories_image'), $newImageName);
             $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
-        } else if (is_string($photo)) {
+        } elseif (is_string($photo)) {
             $this->attributes['photo'] = $photo;
         }
     }
-
 
     public function Template()
     {

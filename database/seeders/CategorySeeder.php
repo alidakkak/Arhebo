@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Category;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Seeder;
+
 class CategorySeeder extends Seeder
 {
     /**
@@ -24,7 +23,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Wedding.png',
             'photo' => '/categories_image/Categories Background - Save The Date.png',
-            'category_code' => '01'
+            'category_code' => '01',
         ]);
 
         Category::create([
@@ -36,7 +35,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Business.png',
             'photo' => '/categories_image/Categories Background - Business.png',
-            'category_code' => '02'
+            'category_code' => '02',
         ]);
 
         Category::create([
@@ -48,7 +47,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Save the Date.png',
             'photo' => '/categories_image/Categories Background - Save The Date.png',
-            'category_code' => '03'
+            'category_code' => '03',
         ]);
 
         Category::create([
@@ -60,7 +59,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Social Events.png',
             'photo' => '/categories_image/Categories Background -Social Events 1.png',
-            'category_code' => '04'
+            'category_code' => '04',
         ]);
 
         Category::create([
@@ -72,7 +71,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/baby.png',
             'photo' => '/categories_image/Categories Background - Baby.png',
-            'category_code' => '05'
+            'category_code' => '05',
         ]);
 
         Category::create([
@@ -84,7 +83,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Bridal Shower.png',
             'photo' => '/categories_image/Categories Background - Bridal Shower.png',
-            'category_code' => '06'
+            'category_code' => '06',
         ]);
 
         Category::create([
@@ -96,7 +95,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Entertaining.png',
             'photo' => '/categories_image/Categories Background - Birthday 1.png',
-            'category_code' => '07'
+            'category_code' => '07',
         ]);
 
         Category::create([
@@ -108,7 +107,7 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Graduation.png',
             'photo' => '/categories_image/Categories Background - Graduation.png',
-            'category_code' => '08'
+            'category_code' => '08',
         ]);
     }
 }

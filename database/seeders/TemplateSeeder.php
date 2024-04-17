@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\FilterTemplate;
 use App\Models\Template;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TemplateSeeder extends Seeder
@@ -25,7 +24,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0001',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png',
-                'filter_id' => '1'
+                'filter_id' => '1',
             ],
             [
                 'title' => 'Gold Stars',
@@ -35,7 +34,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0002',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding Men/Wedding Men - Gold Stars - 2.png',
-                'filter_id' => '1'
+                'filter_id' => '1',
             ],
             [
                 'title' => 'Elegant Triangle',
@@ -45,7 +44,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0003',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding Men/Wedding Men - Elegant Triangle - 3.png',
-                'filter_id' => '1'
+                'filter_id' => '1',
             ],
             [
                 'title' => 'Gold flowers',
@@ -55,7 +54,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0004',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding Men/Wedding Men - Gold flowers - 4.png',
-                'filter_id' => '1'
+                'filter_id' => '1',
             ],
             [
                 'title' => 'Silver Leaf',
@@ -65,7 +64,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0005',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding Men/Wedding Men - Silver Leaf - 5.png',
-                'filter_id' => '1'
+                'filter_id' => '1',
             ],
             [
                 'title' => 'Lovely blossom plum',
@@ -75,7 +74,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0006',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding woman/Wedding woman - Lovely blossom plum  - 1.png',
-                'filter_id' => '2'
+                'filter_id' => '2',
             ],
             [
                 'title' => 'Shy love',
@@ -85,7 +84,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0007',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding woman/Wedding woman -Shy love - 2.png',
-                'filter_id' => '2'
+                'filter_id' => '2',
             ],
             [
                 'title' => 'Warm winter',
@@ -95,7 +94,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0008',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding woman/Wedding woman - warm winter - 3.png',
-                'filter_id' => '2'
+                'filter_id' => '2',
             ],
             [
                 'title' => 'Blue Jasmine',
@@ -105,7 +104,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0009',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding woman/Wedding woman - Blue Jasmine - 4.png',
-                'filter_id' => '2'
+                'filter_id' => '2',
             ],
             [
                 'title' => 'Sultan',
@@ -115,7 +114,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0010',
                 'category_id' => '1',
                 'image' => '/templates_image/Wedding woman/Wedding woman - Sultan - 5.png',
-                'filter_id' => '2'
+                'filter_id' => '2',
             ],
             [
                 'title' => 'Dahlia',
@@ -125,7 +124,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0011',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement Men/Engagment  Men - Dahlia -1 .png',
-                'filter_id' => '3'
+                'filter_id' => '3',
             ],
             [
                 'title' => 'Masterpiece',
@@ -135,7 +134,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0012',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement Men/Engagment  Men - Masterpiece  - 2.png',
-                'filter_id' => '3'
+                'filter_id' => '3',
             ],
             [
                 'title' => 'Black Roze',
@@ -145,7 +144,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0013',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement Men/Engagment  Men - Black Roze - 3.png',
-                'filter_id' => '3'
+                'filter_id' => '3',
             ],
             [
                 'title' => 'Dreamy Gold',
@@ -155,7 +154,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0014',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement Men/Engagment  Men - Dreamy Gold - 4.png',
-                'filter_id' => '3'
+                'filter_id' => '3',
             ],
             [
                 'title' => 'Imaginary Love',
@@ -165,7 +164,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0015',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement Men/Engagment  Men - Imaginary Love - 5.png',
-                'filter_id' => '3'
+                'filter_id' => '3',
             ],
             [
                 'title' => 'Warm green',
@@ -175,7 +174,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0016',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement woman/Engagement woman - Warm green - 1 .png',
-                'filter_id' => '4'
+                'filter_id' => '4',
             ],
             [
                 'title' => 'Autumn leaf',
@@ -185,7 +184,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0017',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement woman/Engagement woman - Autumn leaf - 2 .png',
-                'filter_id' => '4'
+                'filter_id' => '4',
             ],
             [
                 'title' => 'Cherry love',
@@ -195,7 +194,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0018',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement woman/Engagement woman -Cherry love - 3 .png',
-                'filter_id' => '4'
+                'filter_id' => '4',
             ],
             [
                 'title' => 'lovely pink',
@@ -205,7 +204,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0019',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement woman/Engagement woman - lovely pink - 4 .png',
-                'filter_id' => '4'
+                'filter_id' => '4',
             ],
             [
                 'title' => 'Love Gate',
@@ -215,7 +214,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0020',
                 'category_id' => '1',
                 'image' => '/templates_image/Engagement woman/Engagement woman - Love Gate - 5 .png',
-                'filter_id' => '4'
+                'filter_id' => '4',
             ],
             [
                 'title' => 'Soft Ornaments',
@@ -225,7 +224,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0021',
                 'category_id' => '1',
                 'image' => '/templates_image/Henna/Henna - Soft Ornaments - 1 .png',
-                'filter_id' => '5'
+                'filter_id' => '5',
             ],
             [
                 'title' => 'Beautiful hands',
@@ -235,7 +234,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0022',
                 'category_id' => '1',
                 'image' => '/templates_image/Henna/Henna - Beautiful hands - 2 .png',
-                'filter_id' => '5'
+                'filter_id' => '5',
             ],
             [
                 'title' => 'Delicate decoration',
@@ -245,7 +244,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0023',
                 'category_id' => '1',
                 'image' => '/templates_image/Henna/Henna - Delicate decoration - 3 .png',
-                'filter_id' => '5'
+                'filter_id' => '5',
             ],
             [
                 'title' => 'Wave of love',
@@ -255,7 +254,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0024',
                 'category_id' => '1',
                 'image' => '/templates_image/Henna/Henna - Wave of love - 4 .png',
-                'filter_id' => '5'
+                'filter_id' => '5',
             ],
             [
                 'title' => 'Rose decoration',
@@ -265,7 +264,7 @@ class TemplateSeeder extends Seeder
                 'template_code' => '0025',
                 'category_id' => '1',
                 'image' => '/templates_image/Henna/Henna - Rose decoration - 5 .png',
-                'filter_id' => '5'
+                'filter_id' => '5',
             ],
             [
                 'title' => 'Elegant Pattern',
@@ -438,6 +437,266 @@ class TemplateSeeder extends Seeder
                 'category_id' => '3',
                 'image' => '/templates_image/Save the date/Save the date - a whisper of love - 10.png',
             ],
+            [
+                'title' => 'cute illustrations',
+                'title_ar' => 'الرسوم التوضيحية لطيف',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0045',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - cute illustrations - 1 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'cute flowers',
+                'title_ar' => 'زهور لطيفة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0046',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - cute flowers - 2 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'watercolor leaf illustrations',
+                'title_ar' => 'الرسوم التوضيحية أوراق الألوان المائية',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0047',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - watercolor leaf illustrations - 3 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Vector leaves',
+                'title_ar' => 'أوراق المتجهات',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0048',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - Vector leaves - 4 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Snowy day',
+                'title_ar' => 'يوم مثلج',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0049',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - Snowy day - 5 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Autumn butterflies',
+                'title_ar' => 'فراشات الخريف',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0050',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - Autumn butterflies - 7 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Simple illustrations',
+                'title_ar' => 'الرسوم التوضيحية البسيطة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0051',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - Simple illustrations - 8 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Happy flowers Vector',
+                'title_ar' => 'ناقل الزهور السعيدة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0052',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - Happy flowers Vector  -9 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Green beautiful leaf',
+                'title_ar' => 'ورقة خضراء جميلة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0053',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Aqiqah/Aqiqah - Green beautiful leaf  -10 .png',
+                'filter_id' => '6',
+            ],
+            [
+                'title' => 'Red flowers',
+                'title_ar' => 'الزهور الحمراء',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0054',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - Red flowers - 1 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'Lovely silk flowers',
+                'title_ar' => 'زهور الحرير الجميلة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0055',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - Lovely silk flowers - 2 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'ELegant gold and deep blue',
+                'title_ar' => 'ذهبي أنيق وأزرق غامق',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0056',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - ELegant gold and deep blue - 3 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'Beautiful floral ornaments',
+                'title_ar' => 'الحلي الزهرية الجميلة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0057',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - beautiful floral ornaments - 4 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'lively Purple',
+                'title_ar' => 'الأرجواني النابض بالحياة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0058',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - lively Purple - 5 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'lively rose',
+                'title_ar' => 'ارتفع حية',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0059',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - lively rose - 5 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'violet',
+                'title_ar' => 'البنفسجي',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0060',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - violet - 6 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'Pearls and flowers',
+                'title_ar' => 'اللؤلؤ والزهور',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0061',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - Pearls and flowers  - 7.png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'Lovely olive green',
+                'title_ar' => 'زيتون أخضر جميل',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0062',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - Lovely olive green  - 8.png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'lively Pine green',
+                'title_ar' => 'الصنوبر الأخضر النابض بالحياة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0063',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Retirement/Retirement - lively Pine green -9 .png',
+                'filter_id' => '7',
+            ],
+            [
+                'title' => 'Magnolia',
+                'title_ar' => 'ماغنوليا',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0064',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - Magnolia - 1.png',
+                'filter_id' => '8',
+            ],
+            [
+                'title' => 'Lvly flowers and roses',
+                'title_ar' => 'زهور وورود لفلي',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0065',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - Livly flowers and roses -3 .png',
+                'filter_id' => '8',
+            ],
+            [
+                'title' => 'pink and white roses',
+                'title_ar' => 'الورود الوردية والبيضاء',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0066',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - pink and white roses - 4.png',
+                'filter_id' => '8',
+            ],
+            [
+                'title' => 'branches',
+                'title_ar' => 'الفروع',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0067',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - branches - 5.png',
+                'filter_id' => '8',
+            ],
+            [
+                'title' => 'Simple floral ornament',
+                'title_ar' => 'زخرفة نباتية بسيطة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0068',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - Simple floral ornament - 6 .png',
+                'filter_id' => '8',
+            ],
+            [
+                'title' => 'Geometric flowers',
+                'title_ar' => 'زهور هندسية',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0069',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - Geometric flowers - 8 png.png',
+                'filter_id' => '8',
+            ],
+            [
+                'title' => 'Simple spring floral',
+                'title_ar' => 'زهور الربيع البسيطة',
+                'description' => 'Dark theme with Pink flower',
+                'description_ar' => 'موضوع الظلام مع زهرة وردية',
+                'template_code' => '0070',
+                'category_id' => '4',
+                'image' => '/templates_image/Social Events/Teacher Day/Teacher Day - Simple spring floral - 9 .png',
+                'filter_id' => '8',
+            ],
         ];
 
         foreach ($templates as $data) {
@@ -454,11 +713,10 @@ class TemplateSeeder extends Seeder
             if ($template && isset($data['filter_id'])) {
                 FilterTemplate::create([
                     'template_id' => $template->id,
-                    'filter_id' => $data['filter_id']
+                    'filter_id' => $data['filter_id'],
                 ]);
             }
         }
-
 
     }
 }

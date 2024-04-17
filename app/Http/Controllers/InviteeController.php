@@ -12,7 +12,6 @@ use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
 use App\Statuses\InviteeTypes;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -50,7 +49,7 @@ class InviteeController extends Controller
                 $qrCode = QrCode::format('svg')
                     ->size(300)
                     ->generate($qrCodeData);
-                $fileName = '/qr-codes/'.$invitee->id.'_'.($i+1).'.svg';
+                $fileName = '/qr-codes/'.$invitee->id.'_'.($i + 1).'.svg';
                 $path = storage_path('app/public/'.$fileName);
                 if (! file_exists(dirname($path))) {
                     mkdir(dirname($path), 0755, true);
@@ -103,9 +102,9 @@ class InviteeController extends Controller
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-                        $userEmail = 'ahmadafif613@gmail.com';
-                        $link = $newInvitee->link;
-                        EmailService::sendHtmlEmail($userEmail, $link);
+            $userEmail = 'ahmadafif613@gmail.com';
+            $link = $newInvitee->link;
+            EmailService::sendHtmlEmail($userEmail, $link);
             DB::commit();
 
             return InviteeResource::collection($invitees);

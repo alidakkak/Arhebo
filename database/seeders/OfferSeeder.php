@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Offer;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class OfferSeeder extends Seeder
@@ -14,7 +13,7 @@ class OfferSeeder extends Seeder
     public function run(): void
     {
         Offer::create([
-            'image' => '/offers_image/black-friday-offer.png'
+            'image' => '/offers_image/black-friday-offer.png',
         ]);
     }
 }

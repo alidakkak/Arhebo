@@ -18,7 +18,7 @@ class Offer extends Model
             $newImageName = uniqid().'_'.'offers_image'.'.'.$image->extension();
             $image->move(public_path('offers_image'), $newImageName);
             $this->attributes['image'] = '/'.'offers_image'.'/'.$newImageName;
-        } else if (is_string($image)) {
+        } elseif (is_string($image)) {
             $this->attributes['image'] = $image;
         }
     }

@@ -23,15 +23,16 @@ class Template extends Model
     }
 
     public static $isSeederRunning = false;
+
     protected static function boot()
     {
         parent::boot();
         static::creating(function ($template) {
-            if (!self::$isSeederRunning) {
+            if (! self::$isSeederRunning) {
                 $lastTemplate = static::withTrashed()->latest()->first();
                 if ($lastTemplate) {
                     $template->template_code =
-                        str_pad((int)$lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
+                        str_pad((int) $lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
                 } else {
                     $template->template_code = '0001';
                 }
@@ -42,11 +43,11 @@ class Template extends Model
     public function setImageAttribute($image)
     {
         if ($image instanceof \Illuminate\Http\UploadedFile) {
-            $newImageName = uniqid() . '_' . 'templates_image' . '.' . $image->extension();
+            $newImageName = uniqid().'_'.'templates_image'.'.'.$image->extension();
             $image->move(public_path('templates_image'), $newImageName);
 
-            return $this->attributes['image'] = '/' . 'templates_image' . '/' . $newImageName;
-        } else if (is_string($image)) {
+            return $this->attributes['image'] = '/'.'templates_image'.'/'.$newImageName;
+        } elseif (is_string($image)) {
             $this->attributes['image'] = $image;
         }
     }

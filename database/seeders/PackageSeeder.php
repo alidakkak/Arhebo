@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Package;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PackageSeeder extends Seeder
@@ -14,9 +13,9 @@ class PackageSeeder extends Seeder
     public function run(): void
     {
         Package::create([
-           'name' => 'Bronze package services :',
-           'name_ar' => 'خدمات الباقة  البرونزية :',
-           'description' => 'A ready -to -call design is chosen from the application designs.
+            'name' => 'Bronze package services :',
+            'name_ar' => 'خدمات الباقة  البرونزية :',
+            'description' => 'A ready -to -call design is chosen from the application designs.
 Send invitations from the application.
 Confirm attendance or apology to the invitees.
 Call for apology and disruption
@@ -25,7 +24,7 @@ Knowledge of acceptance and apology for the name.
 A special entry code for every invitee.
 The feature of scanning entry codes from the application.
 Send a reminder before the occasion.',
-           'description_ar' => '.تصميم جاهز للدعوة يتم الأختيار من التصاميم الموجودة بالتطبيق .
+            'description_ar' => '.تصميم جاهز للدعوة يتم الأختيار من التصاميم الموجودة بالتطبيق .
 إرسال الدعوات من التطبيق.
 تأكيد الحضور أو الإعتذار للمدعوين.
 دعوات تعويضية عن الإعتذار و التعطيل
@@ -34,7 +33,7 @@ Send a reminder before the occasion.',
 كود دخول خاص لكل مدعو.
 خاصية مسح أكواد الدخول من التطبيق.
 إرسال تذكير قبل المناسبة بــ يوم.',
-           'color' => '#CD7F32',
+            'color' => '#CD7F32',
         ]);
 
         Package::create([
@@ -98,7 +97,6 @@ Review the file of names of invitees before sending.',
 مراجعة ملف أسماء المدعوين قبل الأرسال.',
             'color' => '#FFD700',
         ]);
-
 
         Package::create([
             'name' => 'Diamond package services:',

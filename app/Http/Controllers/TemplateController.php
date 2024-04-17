@@ -69,7 +69,7 @@ class TemplateController extends Controller
         DB::beginTransaction();
         try {
             $template = Template::create($request->all());
-            if ($request->filter_id){
+            if ($request->filter_id) {
                 FilterTemplate::create([
                     'template_id' => $template->id,
                     'filter_id' => $request->input('filter_id'),

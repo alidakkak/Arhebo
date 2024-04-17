@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Filter;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class FilterSeeder extends Seeder
@@ -16,31 +15,49 @@ class FilterSeeder extends Seeder
         Filter::create([
             'category_id' => '1',
             'name' => 'Wedding Men',
-            'name_ar' => 'رجال الزفاف'
+            'name_ar' => 'رجال الزفاف',
         ]);
 
         Filter::create([
             'category_id' => '1',
             'name' => 'Wedding woman',
-            'name_ar' => 'امرأة الزفاف'
+            'name_ar' => 'امرأة الزفاف',
         ]);
 
         Filter::create([
             'category_id' => '1',
             'name' => 'Engagement Men',
-            'name_ar' => 'رجال الخطوبة'
+            'name_ar' => 'رجال الخطوبة',
         ]);
 
         Filter::create([
             'category_id' => '1',
             'name' => 'Engagement woman',
-            'name_ar' => 'امرأة الخطوبة'
+            'name_ar' => 'امرأة الخطوبة',
         ]);
 
         Filter::create([
             'category_id' => '1',
             'name' => 'Henna',
-            'name_ar' => 'الحناء'
+            'name_ar' => 'الحناء',
+        ]);
+
+        Filter::create([
+            'category_id' => '4',
+            'name' => 'Aqiqah',
+            'name_ar' => 'عقيقة',
+        ]);
+
+        Filter::create([
+            'category_id' => '4',
+            'name' => 'Retirement',
+            'name_ar' => 'التقاعد',
+        ]);
+
+        Filter::create([
+            'category_id' => '4',
+            'name' => 'Retirement',
+            'name_ar' => 'التقاعد',
         ]);
     }
 }

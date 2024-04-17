@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\PackageDetail;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PackageDetailsSeeder extends Seeder
@@ -48,14 +47,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '200',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1125',
             'price_qr' => '1200',
             'number_of_invitees' => '250',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '1',
@@ -64,7 +61,6 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '300',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1695',
@@ -72,14 +68,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '400',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1985',
             'price_qr' => '2200',
             'number_of_invitees' => '500',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '2',
@@ -116,14 +110,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '200',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '2',
             'price' => '1495',
             'price_qr' => '1535',
             'number_of_invitees' => '250',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '2',
@@ -132,14 +124,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '300',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '2',
             'price' => '2295',
             'price_qr' => '2375',
             'number_of_invitees' => '400',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '2',
@@ -176,14 +166,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '200',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '3',
             'price' => '2985',
             'price_qr' => '3045',
             'number_of_invitees' => '250',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '3',
@@ -192,14 +180,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '300',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '3',
             'price' => '4585',
             'price_qr' => '4865',
             'number_of_invitees' => '400',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '3',
@@ -229,14 +215,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '200',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '4',
             'price' => '4585',
             'price_qr' => '4665',
             'number_of_invitees' => '250',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '4',
@@ -245,14 +229,12 @@ class PackageDetailsSeeder extends Seeder
             'number_of_invitees' => '300',
         ]);
 
-
         PackageDetail::create([
             'package_id' => '4',
             'price' => '7185',
             'price_qr' => '7445',
             'number_of_invitees' => '400',
         ]);
-
 
         PackageDetail::create([
             'package_id' => '4',

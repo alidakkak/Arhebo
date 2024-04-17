@@ -39,7 +39,6 @@ class Category extends Model
             $image->move(public_path('categories_image'), $newImageName);
             $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
         } else if (is_string($image)) {
-            // Assume it's a path or another handling strategy
             $this->attributes['image'] = $image;
         }
     }

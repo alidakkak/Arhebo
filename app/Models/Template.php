@@ -41,10 +41,14 @@ class Template extends Model
 
     public function setImageAttribute($image)
     {
-        $newImageName = uniqid().'_'.'templates_image'.'.'.$image->extension();
-        $image->move(public_path('templates_image'), $newImageName);
+        if ($image instanceof \Illuminate\Http\UploadedFile) {
+            $newImageName = uniqid() . '_' . 'templates_image' . '.' . $image->extension();
+            $image->move(public_path('templates_image'), $newImageName);
 
-        return $this->attributes['image'] = '/'.'templates_image'.'/'.$newImageName;
+            return $this->attributes['image'] = '/' . 'templates_image' . '/' . $newImageName;
+        } else if (is_string($image)) {
+            $this->attributes['image'] = $image;
+        }
     }
 
     public function category()

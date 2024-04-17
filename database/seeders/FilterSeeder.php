@@ -59,5 +59,23 @@ class FilterSeeder extends Seeder
             'name' => 'Teacher Day',
             'name_ar' => 'يوم المعلم',
         ]);
+
+        Filter::create([
+            'category_id' => '5',
+            'name' => 'New Baby',
+            'name_ar' => 'طفل جديد',
+        ]);
+
+        Filter::create([
+            'category_id' => '5',
+            'name' => 'Baby Shower',
+            'name_ar' => 'استحمام الطفل',
+        ]);
+
+        Filter::create([
+            'category_id' => '4',
+            'name' => 'Eid al-Adha',
+            'name_ar' => 'عيد الأضحى',
+        ]);
     }
 }

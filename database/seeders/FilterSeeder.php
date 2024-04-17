@@ -56,8 +56,8 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '4',
-            'name' => 'Retirement',
-            'name_ar' => 'التقاعد',
+            'name' => 'Teacher Day',
+            'name_ar' => 'يوم المعلم',
         ]);
     }
 }

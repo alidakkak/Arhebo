@@ -27,14 +27,14 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '1',
-            'name' => 'Engagement woman',
-            'name_ar' => 'امرأة الخطوبة'
+            'name' => 'Engagement Men',
+            'name_ar' => 'رجال الخطوبة'
         ]);
 
         Filter::create([
             'category_id' => '1',
-            'name' => 'Engagement Men',
-            'name_ar' => 'رجال الخطوبة'
+            'name' => 'Engagement woman',
+            'name_ar' => 'امرأة الخطوبة'
         ]);
 
         Filter::create([

@@ -22,16 +22,19 @@ class Template extends Model
         return $this->hasMany(Input::class, 'category_id', 'category_id');
     }
 
+    public static $isSeederRunning = false;
     protected static function boot()
     {
         parent::boot();
         static::creating(function ($template) {
-            $lastTemplate = static::withTrashed()->latest()->first();
-            if ($lastTemplate) {
-                $template->template_code =
-                    str_pad((int) $lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
-            } else {
-                $template->template_code = '0001';
+            if (!self::$isSeederRunning) {
+                $lastTemplate = static::withTrashed()->latest()->first();
+                if ($lastTemplate) {
+                    $template->template_code =
+                        str_pad((int)$lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
+                } else {
+                    $template->template_code = '0001';
+                }
             }
         });
     }

@@ -100,8 +100,9 @@ class TemplateController extends Controller
                 return response()->json(['message' => 'Not Found'], 404);
             }
             $template->update($request->all());
-
-            $template->filters()->sync($request->filter_id);
+            if ($request->filter_id) {
+                $template->filters()->sync($request->filter_id);
+            }
             DB::commit();
 
             return response()->json([

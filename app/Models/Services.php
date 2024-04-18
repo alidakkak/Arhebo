@@ -19,7 +19,7 @@ class Services extends Model
             $image->move(public_path('services_image'), $newImageName);
 
             return $this->attributes['image'] = '/'.'services_image'.'/'.$newImageName;
-        } elseif (is_string($image)){
+        } elseif (is_string($image)) {
             $this->attributes['image'] = $image;
         }
     }

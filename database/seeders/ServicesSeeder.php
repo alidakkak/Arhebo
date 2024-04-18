@@ -25,7 +25,7 @@ Tincidunt vel sit eget tincidunt
 sed. Nullam ',
             'body_ar' => 'لوريم إيبسوم هو نص العنصر النائب عادة
        المستخدمة في الرسم.',
-            'image' => '/services_image/17-dedicated-service.png"',
+            'image' => '/services_image/17-dedicated-service.png',
         ]);
     }
 }

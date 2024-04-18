@@ -14,10 +14,14 @@ class Services extends Model
 
     public function setImageAttribute($image)
     {
-        $newImageName = uniqid().'_'.'services_image'.'.'.$image->extension();
-        $image->move(public_path('services_image'), $newImageName);
+        if ($image instanceof \Illuminate\Http\UploadedFile) {
+            $newImageName = uniqid().'_'.'services_image'.'.'.$image->extension();
+            $image->move(public_path('services_image'), $newImageName);
 
-        return $this->attributes['image'] = '/'.'services_image'.'/'.$newImageName;
+            return $this->attributes['image'] = '/'.'services_image'.'/'.$newImageName;
+        } elseif (is_string($image)){
+            $this->attributes['image'] = $image;
+        }
     }
 
     protected static function boot()

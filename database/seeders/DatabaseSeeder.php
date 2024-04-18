@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PrivacyPolicySeeder::class);
         $this->call(ProhibitedThingSeeder::class);
         $this->call(TermSeeder::class);
+        $this->call(ServicesSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(PackageSeeder::class);
         $this->call(PackageDetailsSeeder::class);

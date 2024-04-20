@@ -96,13 +96,13 @@ class InviteeController extends Controller
                     //                    'link'=>'show_invite/'.$uuid
                 ]);
                 $newInvitee->update([
-                    'link' => 'https://gomaplustesting.tech/invitaion-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => 'https://booking.ar7ebo.com/invitaion-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $invitees[] = $newInvitee;
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $userEmail = 'ahmadafif613@gmail.com';
+            $userEmail = 'lulumhmd762@gmail.com';
             $link = $newInvitee->link;
             EmailService::sendHtmlEmail($userEmail, $link);
             DB::commit();

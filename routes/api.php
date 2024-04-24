@@ -35,6 +35,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+    //// Package
+Route::get('packages', [PackageController::class, 'index']);
+Route::get('categories', [CategoryController::class, 'index']);
 
 Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
 Route::group(['middleware' => 'lang'], function () {
@@ -53,7 +56,6 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('deleteProfile', [AuthController::class, 'delete']);
 
     //////// Category
-    Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{category}', [CategoryController::class, 'show']);
 
     ////  Filters
@@ -65,9 +67,6 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     //// Template
     Route::get('templates', [TemplateController::class, 'index']);
     Route::get('trendingNew', [TemplateController::class, 'trending']);
-
-    //// Package
-    Route::get('packages', [PackageController::class, 'index']);
 
     //// Services
     Route::get('services', [ServicesController::class, 'index']);

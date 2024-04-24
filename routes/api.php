@@ -37,6 +37,9 @@ use Illuminate\Support\Facades\Route;
 */
     //// Package
 Route::get('packages', [PackageController::class, 'index']);
+    ////  Contact us
+Route::get('contactUs', [ContactUsController::class, 'index']);
+
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
@@ -76,9 +79,6 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 
     ////  AboutApp
     Route::get('about_apps', [AboutAppController::class, 'index']);
-
-    ////  Contact us
-    Route::get('contactUs', [ContactUsController::class, 'index']);
 
     ////  FAQ
     Route::get('faq', [FAQController::class, 'index']);

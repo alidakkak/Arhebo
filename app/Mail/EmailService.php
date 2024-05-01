@@ -38,8 +38,11 @@ class EmailService
                 </body>
                 </html>
          ';
-        $apiUrl = 'https://emailnotification.time.gomaplus.tech:7217/api/sender/';
-        $apiKey = 'rm1GEVrZlW3HEgjR/CJjQRUYp3m7xoocfHlgW5SuNf2kyb1+1wPYQZUlycrkfZTMq0fuO5T1o+Tl0G0aWdhGp+f1Yd/JPmgGSi7UPCnzbMfqHOpt7H1WggMzq7lAP9Z9VAfQpdwkDD2HBY1F38n5qkex4V3jGCHq/YnNJC5mxt0=';
+        // $apiUrl = 'https://emailnotification.time.gomaplus.tech:7217/api/sender/';
+        // $apiKey = 'rm1GEVrZlW3HEgjR/CJjQRUYp3m7xoocfHlgW5SuNf2kyb1+1wPYQZUlycrkfZTMq0fuO5T1o+Tl0G0aWdhGp+f1Yd/JPmgGSi7UPCnzbMfqHOpt7H1WggMzq7lAP9Z9VAfQpdwkDD2HBY1F38n5qkex4V3jGCHq/YnNJC5mxt0=';
+
+        $apiUrl = 'https://live-mt-server.wati.io/206676/api/sender/';
+        $apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1MzI4YzY3Yi03Nzc0LTQyZmQtYTg5ZS0xNGYxOTgyMWNkYTAiLCJ1bmlxdWVfbmFtZSI6ImdjY0B3YXRpLmlvIiwibmFtZWlkIjoiZ2NjQHdhdGkuaW8iLCJlbWFpbCI6ImdjY0B3YXRpLmlvIiwiYXV0aF90aW1lIjoiMDQvMjcvMjAyNCAwMDoyMDozMiIsImRiX25hbWUiOiJtdC1wcm9kLVRlbmFudHMiLCJ0ZW5hbnRfaWQiOiIyMDY2NzYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiVEVNUExBVEVfTUFOQUdFUiIsIkNPTlRBQ1RfTUFOQUdFUiIsIk9QRVJBVE9SIiwiREVWRUxPUEVSIiwiREFTSEJPQVJEX1ZJRVdFUiIsIkFVVE9NQVRJT05fTUFOQUdFUiJdLCJleHAiOjI1MzQwMjMwMDgwMCwiaXNzIjoiQ2xhcmVfQUkiLCJhdWQiOiJDbGFyZV9BSSJ9.JmZmuKBPy6HS2aoojgh6auKKwOvl92amx6eguABpJqk';
 
         $endpoint = 'htmlsend';
         $url = $apiUrl.$endpoint;

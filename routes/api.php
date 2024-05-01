@@ -22,6 +22,7 @@ use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TermController;
+use App\Http\Controllers\TestInvitationController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +36,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-    //// Package
+//// Package
 Route::get('packages', [PackageController::class, 'index']);
-    ////  Contact us
+////  Contact us
 Route::get('contactUs', [ContactUsController::class, 'index']);
-
+/// Category
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
@@ -123,7 +124,10 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     ////  Additional Package
     Route::get('additionalPackage', [AdditionalPackageController::class, 'index']);
     Route::post('additionalInvitee', [AdditionalPackageController::class, 'additionalInvitee']);
+
 });
 
 ///// Terms And Conditions
 Route::get('terms', [TermController::class, 'index']);
+//// Test Invitation
+Route::post('testInvitation', [TestInvitationController::class, 'testInvitation']);

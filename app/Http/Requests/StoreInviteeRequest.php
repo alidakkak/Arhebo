@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniquePhoneNumberWithinRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -27,7 +28,7 @@ class StoreInviteeRequest extends FormRequest
             'invitees.*.name' => 'required',
             'invitees.*.number' => [
                 'required',
-                'numeric',
+                new UniquePhoneNumberWithinRequest(request()->input('invitees'), 'number'),
                 Rule::unique('invitees', 'phone')->where(function ($query) {
                     return $query->where('invitation_id', request()->invitation_id);
                 }),

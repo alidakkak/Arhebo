@@ -14,11 +14,73 @@ use App\Models\QR;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InviteeController extends Controller
 {
+    private $url;
+
+    private $token;
+
+    public function __construct()
+    {
+        $this->url = env('WHATSAPP_API_URL');
+        $this->token = env('WHATSAPP_API_TOKEN');
+    }
+
+    public function sendWhatsAppMessages(array $invitees)
+    {
+        $receivers = [];
+        foreach ($invitees as $invitee) {
+            $receivers[] = [
+                'whatsappNumber' => $invitee['phone'],
+                'customParams' => [
+                    ['name' => 'product_image_url', 'value' => $invitee['template_photo']],
+                    ['name' => 'messagebody', 'value' => "نتشرف لدعوتك لحضور زفاف اخيك"],
+                    ['name' => 'any_name', 'value' => $invitee['name']],
+                    ['name' => 'button_url', 'value' => $invitee['link']],
+                ],
+            ];
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.$this->token,
+            'Content-Type' => 'application/json',
+        ])->post($this->url, [
+            'template_name' => 'ar7ebo_1',
+            'broadcast_name' => 'ar7ebo_1',
+            'receivers' => $receivers,
+        ]);
+        dd($response->json());
+        return $response->json();
+    }
+
+//    public function sendWhatsAppMessages()
+//    {
+//        $response = Http::withHeaders([
+//            'Authorization' => 'Bearer ' . $this->token,
+//            'Content-Type' => 'application/json',
+//        ])->post($this->url, [
+//            'template_name' => 'ar7ebo_1',
+//            'broadcast_name' => 'ar7ebo_1',
+//            'receivers' => [
+//                [
+//                    'whatsappNumber' => '+966540269079',
+//                    'customParams' => [
+//                        ['name' => 'product_image_url', 'value' => 'https://plus.unsplash.com/premium_photo-1676637000058-96549206fe71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'],
+//                        ['name' => 'any_name', 'value' => 'المكرم عمر'],
+//                        ['name' => 'messagebody', 'value' => 'نتشرف لدعوتك لحضور زفاف اخيك'],
+//                        ['name' => 'button_url', 'value' => '?uuid=1']
+//                    ]
+//                ]
+//            ]
+//        ]);
+//
+//        return $response->json();
+//
+//    }
     public function index(Request $request)
     {
         if ($request->status == InviteeTypes::invited) {
@@ -93,18 +155,24 @@ class InviteeController extends Controller
                     'number_of_people' => $invitee['count'],
                     'invitation_id' => $request->input('invitation_id'),
                     'uuid' => $uuid,
-                    //                    'link'=>'show_invite/'.$uuid
                 ]);
                 $newInvitee->update([
-                    'link' => 'https://booking.ar7ebo.com/invitaion-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => 'invitaion-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $invitees[] = $newInvitee;
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $userEmail = 'lulumhmd762@gmail.com';
-            $link = $newInvitee->link;
-            EmailService::sendHtmlEmail($userEmail, $link);
+            $inviteesData1 = [];
+            foreach ($invitees as $invitee) {
+                $inviteesData1[] = [
+                    'phone' => $invitee->phone,
+                    'link' => $invitee->link,
+                    'template_photo' => url($invitee->invitation->Template->image),
+                    'name' => $invitee->name,
+                ];
+            }
+            $this->sendWhatsAppMessages($inviteesData1);
             DB::commit();
 
             return InviteeResource::collection($invitees);
@@ -149,30 +217,8 @@ class InviteeController extends Controller
         return ShowOrdersResource::make($invitee);
     }
 
-    //    public function get_info_for_link($uuid)
-    //    {
-    //        $invitee = Invitee::where('uuid', $uuid)->first();
-    //        if ($invitee->status == InviteeTypes::waiting) {
-    //            return response()->json(
-    //                ['access' => true,
-    //                    'invitation' => [
-    //                        'category_name' => $invitee->invitation->category->name,
-    //                        'category_photo' => $invitee->invitation->category->image,
-    //                        'template_photo' => $invitee->invitation->Template->image],
-    //                ]
-    //            );
-    //        } else {
-    //            return response()->json(['access' => false], 403);
-    //        }
-    //    }
+    // $userEmail = 'lulumhmd762@gmail.com';
+    // $link = $newInvitee->link;
+    // EmailService::sendHtmlEmail($userEmail, $link);
 
-    //    public function update_stauts($uuid, Request $request)
-    //    {
-    //        $invitee = Invitee::where('uuid', $uuid)->first();
-    //        if ($invitee->status == InviteeTypes::waiting) {
-    //            $invitee->update(['status' => $request->stauts]);
-    //        }
-    //
-    //        return response(['msg' => 'success']);
-    //    }
 }

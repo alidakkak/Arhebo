@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreReminderRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class StoreReminderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
+            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
         ];
     }
 }

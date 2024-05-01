@@ -17,7 +17,6 @@ class ReminderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
             'user' => $this->user,
             'invitation' => $this->invitation,
             'inviteeWaiting' => $this->invitation->invitee->filter(function ($invitee) {

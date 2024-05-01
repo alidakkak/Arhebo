@@ -21,4 +21,3 @@ Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
     ////  Template By Code
     Route::get('templateByCode', [TemplateController::class, 'templateByCode']);
 });
-Route::post('sendMessage', [InviteeController::class, 'sendWhatsAppMessages']);

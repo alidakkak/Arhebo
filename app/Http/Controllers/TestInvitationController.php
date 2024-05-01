@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTestInvitation;
-use App\Http\Requests\StorTestInvitation;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 
 class TestInvitationController extends Controller
 {
@@ -14,44 +13,38 @@ class TestInvitationController extends Controller
 
     public function __construct()
     {
-        $this->url = env('WHATSAPP_API_URL');
+        $this->url = env('WHATSAPP_API_URL1');
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function testInvitation()
+    public function testInvitation(Request $request)
     {
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
+            'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
-            'whatsappNumber' => '+966540269079',
-        ])->post($this->url, [
-            'template_name' => 'ar7ebo_reservation_message',
-            'broadcast_name' => 'ar7ebo_reservation_message',
+        ])->post($this->url . $request->input('phone'), [
+            'template_name' => 'ar7ebo_1',
+            'broadcast_name' => 'ar7ebo_1',
             'parameters' => [
                 [
-                    "name" => "product_image_url",
-                    "value" => "https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png"
+                    'name' => 'product_image_url',
+                    'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png',
                 ],
                 [
-                    "name" => "cat_name_ar_oradb",
-                    "value" => "ارحبو ل اسم الداعي: احمد"
+                    'name' => 'any_name',
+                    'value' => $request->input('username'),
                 ],
                 [
-                    "name" => "app_time",
-                    "value" => "المكرم/ة الاء"
+                    'name' => 'messagebody',
+                    'value' => 'تتشرف غيداء بنت محمد وعائشة بنت بندر بدعوتك لحضور حفل زفاف ليان محمد وسالم أحمد.',
                 ],
                 [
-                    "name" => "contact",
-                    "value" => "+966540269079"
-                ],
-                [
-                    "name" => "button_url",
-                    "value" => "uuid=12"
+                    'name' => 'button_url',
+                    'value' => 'https://booking.ar7ebo.com/invitaion-card/10?uuid=68e07e6c-c7be-4993-8aa9-f56ce4b22345',
                 ]
-            ]
+            ],
         ]);
 
         return $response->json();
     }
-
 }

@@ -17,9 +17,13 @@ class ReminderController extends Controller
 
     public function store(StoreReminderRequest $request)
     {
-        $user = auth()->user();
-        $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->all()));
+        try {
+            $user = auth()->user();
+            $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->all()));
 
-        return ReminderResource::make($reminder);
+            return ReminderResource::make($reminder);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'error'],500);
+        }
     }
 }

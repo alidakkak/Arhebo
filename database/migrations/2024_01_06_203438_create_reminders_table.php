@@ -17,7 +17,7 @@ return new class extends Migration
                 ->on('invitations')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')
                 ->on('users')->onDelete('cascade');
-            $table->text('title');
+//            $table->text('title');
             $table->timestamps();
         });
     }

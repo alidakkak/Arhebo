@@ -38,7 +38,7 @@ class InviteeController extends Controller
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
                     ['name' => 'product_image_url', 'value' => $invitee['template_photo']],
-                    ['name' => 'messagebody', 'value' => "نتشرف لدعوتك لحضور زفاف اخيك"],
+                    ['name' => 'messagebody', 'value' => 'تتشرف غيداء بنت محمد وعائشة بنت بندر بدعوتك لحضور حفل زفاف ليان محمد وسالم أحمد.'],
                     ['name' => 'any_name', 'value' => $invitee['name']],
                     ['name' => 'button_url', 'value' => $invitee['link']],
                 ],
@@ -53,33 +53,10 @@ class InviteeController extends Controller
             'broadcast_name' => 'ar7ebo_1',
             'receivers' => $receivers,
         ]);
+
         return $response->json();
     }
 
-//    public function sendWhatsAppMessages()
-//    {
-//        $response = Http::withHeaders([
-//            'Authorization' => 'Bearer ' . $this->token,
-//            'Content-Type' => 'application/json',
-//        ])->post($this->url, [
-//            'template_name' => 'ar7ebo_1',
-//            'broadcast_name' => 'ar7ebo_1',
-//            'receivers' => [
-//                [
-//                    'whatsappNumber' => '+966540269079',
-//                    'customParams' => [
-//                        ['name' => 'product_image_url', 'value' => 'https://plus.unsplash.com/premium_photo-1676637000058-96549206fe71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'],
-//                        ['name' => 'any_name', 'value' => 'المكرم عمر'],
-//                        ['name' => 'messagebody', 'value' => 'نتشرف لدعوتك لحضور زفاف اخيك'],
-//                        ['name' => 'button_url', 'value' => '?uuid=1']
-//                    ]
-//                ]
-//            ]
-//        ]);
-//
-//        return $response->json();
-//
-//    }
     public function index(Request $request)
     {
         if ($request->status == InviteeTypes::invited) {

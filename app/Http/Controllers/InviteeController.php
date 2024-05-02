@@ -143,7 +143,7 @@ class InviteeController extends Controller
             $invitation->update([
                 'image' => $request->image
             ]);
-            $image = Invitation::where('invitation_id', $request->invitation_id)->get('image');
+            $image = $invitation->image;
             $inviteesData1 = [];
             foreach ($invitees as $invitee) {
                 $inviteesData1[] = [
@@ -152,8 +152,7 @@ class InviteeController extends Controller
                     'name' => $invitee->name,
                 ];
             }
-            return $image;
-            $this->sendWhatsAppMessages($inviteesData1, $message, ($image));
+            $this->sendWhatsAppMessages($inviteesData1, $message, url($image));
             DB::commit();
 
             return InviteeResource::collection($invitees);

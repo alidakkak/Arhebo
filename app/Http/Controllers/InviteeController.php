@@ -139,20 +139,20 @@ class InviteeController extends Controller
                 $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
+            $message = $request->input('message');
+            $invitation = Invitation::find($request->invitation_id);
+            $image = $invitation->update([
+                'image' => $request->input('image')
+            ]);
             $inviteesData1 = [];
             foreach ($invitees as $invitee) {
                 $inviteesData1[] = [
                     'phone' => $invitee->phone,
                     'link' => $invitee->link,
-                    'template_photo' => url($invitee->invitation->Template->image),
+                    'template_photo' => url($image),
                     'name' => $invitee->name,
                 ];
             }
-            $message = $request->input('message');
-            $invitation = Invitation::find($request->invitation_id);
-            $invitation->update([
-               'image' => $request->input('image')
-            ]);
             $this->sendWhatsAppMessages($inviteesData1, $message);
             DB::commit();
 

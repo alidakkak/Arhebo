@@ -53,7 +53,6 @@ class InviteeController extends Controller
             'broadcast_name' => 'ar7ebo_1',
             'receivers' => $receivers,
         ]);
-
         return $response->json();
     }
 

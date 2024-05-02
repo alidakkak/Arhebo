@@ -32,6 +32,7 @@ class InviteeController extends Controller
 
     public function sendWhatsAppMessages(array $invitees, $message, $image)
     {
+        dd($image);
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [

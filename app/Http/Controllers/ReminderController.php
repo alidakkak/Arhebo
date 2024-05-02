@@ -77,3 +77,4 @@ class ReminderController extends Controller
     }
 }
 ///'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'
+/// /invitations_image/6633f8bfc2f11_invitations_image.png

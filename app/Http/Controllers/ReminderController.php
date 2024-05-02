@@ -26,4 +26,8 @@ class ReminderController extends Controller
             return response()->json(['message' => 'error'],500);
         }
     }
+
+    public function sendWhatsAppReminder() {
+
+    }
 }

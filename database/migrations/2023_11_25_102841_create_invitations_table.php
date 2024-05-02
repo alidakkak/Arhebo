@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('event_name');
             $table->text('location_link');
             $table->string('inviter');
-            $table->text('invitation_text');
+            $table->text('invitation_text')->nullable();
             $table->string('status')->default(InvitationTypes::active);
             $table->boolean('is_with_qr');
             $table->timestamps();

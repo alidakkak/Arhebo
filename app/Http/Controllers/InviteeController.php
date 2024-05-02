@@ -32,7 +32,6 @@ class InviteeController extends Controller
 
     public function sendWhatsAppMessages(array $invitees, $message, $image)
     {
-        dd($image);
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [
@@ -142,7 +141,7 @@ class InviteeController extends Controller
             $message = $request->input('message');
             $invitation = Invitation::find($request->invitation_id);
             $invitation->update([
-                'image' => $request->file('image')
+                'image' => $request->image
             ]);
             $image = $invitation->image;
             $inviteesData1 = [];

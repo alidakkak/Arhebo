@@ -29,7 +29,7 @@ class Template extends Model
         parent::boot();
         static::creating(function ($template) {
             if (! self::$isSeederRunning) {
-                $lastTemplate = static::withTrashed()->latest()->first();
+                $lastTemplate = static::withTrashed()->latest('id')->first();
                 if ($lastTemplate) {
                     $template->template_code =
                         str_pad((int) $lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);

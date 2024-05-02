@@ -37,7 +37,7 @@ class InviteeController extends Controller
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => url($image)],
+                    ['name' => 'product_image_url', 'value' => $image],
                     ['name' => 'messagebody', 'value' => $message],
                     ['name' => 'any_name', 'value' => $invitee['name']],
                     ['name' => 'button_url', 'value' => $invitee['link']],
@@ -53,7 +53,6 @@ class InviteeController extends Controller
             'broadcast_name' => 'ar7ebo_1',
             'receivers' => $receivers,
         ]);
-        dd($response->json());
         return $response->json();
     }
 
@@ -153,7 +152,7 @@ class InviteeController extends Controller
                     'name' => $invitee->name,
                 ];
             }
-            $this->sendWhatsAppMessages($inviteesData1, $message, $image);
+            $this->sendWhatsAppMessages($inviteesData1, $message, url($image));
             DB::commit();
 
             return InviteeResource::collection($invitees);

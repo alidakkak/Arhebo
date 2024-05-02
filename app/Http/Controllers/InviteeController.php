@@ -153,6 +153,7 @@ class InviteeController extends Controller
                     'name' => $invitee->name,
                 ];
             }
+            dd($inviteesData1);
             $this->sendWhatsAppMessages($inviteesData1, $message);
             DB::commit();
 

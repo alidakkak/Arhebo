@@ -34,6 +34,8 @@ class StoreInviteeRequest extends FormRequest
                 }),
             ],
             'invitees.*.count' => 'required|integer|min:1',
+            'message' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ];
     }
 }

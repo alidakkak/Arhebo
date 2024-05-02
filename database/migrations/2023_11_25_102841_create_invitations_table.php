@@ -31,6 +31,7 @@ return new class extends Migration
             $table->text('invitation_text')->nullable();
             $table->string('status')->default(InvitationTypes::active);
             $table->boolean('is_with_qr');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

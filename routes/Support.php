@@ -13,6 +13,7 @@ Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
 
     ////  Reminder
     Route::get('reminders', [ReminderController::class, 'index']);
+    Route::post('sendWhatsAppReminder/{invitationID}', [ReminderController::class, 'sendWhatsAppReminder']);
 
     ////  Orders Invitation
     Route::get('orders', [InvitationController::class, 'index']);

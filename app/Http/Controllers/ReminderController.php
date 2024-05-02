@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReminderRequest;
 use App\Http\Resources\ReminderResource;
+use App\Models\Invitation;
 use App\Models\Reminder;
+use App\Statuses\InviteeTypes;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Request;
 
 class ReminderController extends Controller
 {
@@ -38,16 +41,18 @@ class ReminderController extends Controller
         }
     }
 
-    public function sendWhatsAppReminder() {
+    public function sendWhatsAppReminder($invitationID) {
+        $invitation = Invitation::where('id' , $invitationID)->first();
+        $invitees = $invitation->invitee()->get(['phone','name','link']);
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => $invitee['template_photo']],
-                    ['name' => 'messagebody', 'value' => 'تتشرف غيداء بنت محمد وعائشة بنت بندر بدعوتك لحضور حفل زفاف ليان محمد وسالم أحمد.'],
-                    ['name' => 'any_name', 'value' => $invitee['name']],
-                    ['name' => 'button_url', 'value' => $invitee['link']],
+                    ['name' => 'product_image_url', 'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'],
+                    ['name' => 'messagebody', 'value' => \request('message')],
+                    ['name' => 'any_name', 'value' => $invitee->name],
+                    ['name' => 'button_url', 'value' => $invitee->link],
                 ],
             ];
         }
@@ -61,6 +66,14 @@ class ReminderController extends Controller
             'receivers' => $receivers,
         ]);
 
-        return $response->json();
+        $responseData = json_decode($response->body(), true);
+        $result = $responseData['result'] ?? false;
+        if ($result){
+            $invitation->reminder->delete();
+        }else
+            return response([
+                'message' => "sent successfully"
+            ] , 200);
     }
 }
+///'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'

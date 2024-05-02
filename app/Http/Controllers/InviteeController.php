@@ -143,7 +143,7 @@ class InviteeController extends Controller
             $invitation->update([
                 'image' => $request->image
             ]);
-            $image = Invitation::where('invitation_id', $request->invitation_id)->select('image');
+            $image = Invitation::where('invitation_id', $request->invitation_id)->get('image');
             $inviteesData1 = [];
             foreach ($invitees as $invitee) {
                 $inviteesData1[] = [

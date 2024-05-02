@@ -152,7 +152,7 @@ class InviteeController extends Controller
                     'name' => $invitee->name,
                 ];
             }
-            dd($inviteesData1, $message, $image);
+            return $image;
             $this->sendWhatsAppMessages($inviteesData1, $message, ($image));
             DB::commit();
 

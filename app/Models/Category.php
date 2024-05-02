@@ -20,7 +20,7 @@ class Category extends Model
 
         static::creating(function ($category) {
             if (! self::$isSeederRunning) {
-                $latestCategory = static::withTrashed()->latest()->first();
+                $latestCategory = static::withTrashed()->latest('id')->first();
                 if ($latestCategory) {
                     $category->category_code = str_pad((int) $latestCategory->category_code + 1, 2, '0', STR_PAD_LEFT);
                 } else {
@@ -46,7 +46,7 @@ class Category extends Model
         if ($photo instanceof \Illuminate\Http\UploadedFile) {
             $newImageName = uniqid().'_'.'categories_image'.'.'.$photo->extension();
             $photo->move(public_path('categories_image'), $newImageName);
-            $this->attributes['image'] = '/'.'categories_image'.'/'.$newImageName;
+            $this->attributes['photo'] = '/'.'categories_image'.'/'.$newImageName;
         } elseif (is_string($photo)) {
             $this->attributes['photo'] = $photo;
         }

@@ -13,13 +13,9 @@ class Invitation extends Model
 
     public function setImageAttribute($image)
     {
-        if ($image instanceof \Illuminate\Http\UploadedFile) {
-            $newImageName = uniqid().'_'.'invitations_image'.'.'.$image->extension();
-            $image->move(public_path('invitations_image'), $newImageName);
-            $this->attributes['image'] = '/'.'invitations_image'.'/'.$newImageName;
-        } elseif (is_string($image)) {
-            $this->attributes['image'] = $image;
-        }
+        $newImageName = uniqid().'_'.'invitations_image'.'.'.$image->extension();
+        $image->move(public_path('invitations_image'), $newImageName);
+        $this->attributes['image'] = '/'.'invitations_image'.'/'.$newImageName;
     }
 
     public function category()

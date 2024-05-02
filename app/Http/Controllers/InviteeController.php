@@ -30,14 +30,14 @@ class InviteeController extends Controller
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function sendWhatsAppMessages(array $invitees, $message)
+    public function sendWhatsAppMessages(array $invitees, $message, $image)
     {
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => $invitee['template_photo']],
+                    ['name' => 'product_image_url', 'value' => url($image)],
                     ['name' => 'messagebody', 'value' => $message],
                     ['name' => 'any_name', 'value' => $invitee['name']],
                     ['name' => 'button_url', 'value' => $invitee['link']],
@@ -149,12 +149,10 @@ class InviteeController extends Controller
                 $inviteesData1[] = [
                     'phone' => $invitee->phone,
                     'link' => $invitee->link,
-                    'template_photo' => url($image),
                     'name' => $invitee->name,
                 ];
             }
-            dd($inviteesData1);
-            $this->sendWhatsAppMessages($inviteesData1, $message);
+            $this->sendWhatsAppMessages($inviteesData1, $message, $image);
             DB::commit();
 
             return InviteeResource::collection($invitees);

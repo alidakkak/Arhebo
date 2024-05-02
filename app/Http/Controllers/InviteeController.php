@@ -44,7 +44,6 @@ class InviteeController extends Controller
                 ],
             ];
         }
-        dd($receivers->json());
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
@@ -54,6 +53,7 @@ class InviteeController extends Controller
             'broadcast_name' => 'ar7ebo_1',
             'receivers' => $receivers,
         ]);
+        dd($response->json());
         return $response->json();
     }
 

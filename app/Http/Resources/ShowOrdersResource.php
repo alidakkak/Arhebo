@@ -36,7 +36,7 @@ class ShowOrdersResource extends JsonResource
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
                 'QRCode' => $this->qr,
-                'template' => asset($this->invitation->template->image),
+                'template' => asset($this->invitation->image),
             ];
         }
 

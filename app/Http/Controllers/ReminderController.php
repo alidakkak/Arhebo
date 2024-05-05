@@ -58,7 +58,6 @@ class ReminderController extends Controller
                 ],
             ];
         }
-        dd($receivers);
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->token,

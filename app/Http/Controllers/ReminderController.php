@@ -73,8 +73,10 @@ class ReminderController extends Controller
 
         if ($result) {
             if ($invitation->reminder) {
-                $invitation->reminder->delete();
-            }
+                collect($invitation->reminder)->map(fn($remnid) =>
+                    $remnid->delete()
+               );
+           }
             return response()->json(['message' => 'Reminder sent and deleted successfully'], 200);
         } else {
             $errors = $responseData['errors'] ?? [];

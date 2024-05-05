@@ -41,16 +41,18 @@ class ReminderController extends Controller
         }
     }
 
-    public function sendWhatsAppReminder($invitationID) {
-        $invitation = Invitation::where('id' , $invitationID)->first();
-        $invitees = $invitation->invitee()->get(['phone','name','link']);
+    public function sendWhatsAppReminder($invitationID)
+    {
+        $invitation = Invitation::where('id', $invitationID)->first();
+        $invitees = $invitation->invitee()->get(['phone', 'name', 'link']);
+        $image = $invitation->image;
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [
-                'whatsappNumber' => $invitee['phone'],
+                'whatsappNumber' => $invitee->phone,
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'],
-                    ['name' => 'messagebody', 'value' => \request('message')],
+                    ['name' => 'product_image_url', 'value' => url($image)],
+                    ['name' => 'messagebody', 'value' => request('message')],
                     ['name' => 'any_name', 'value' => $invitee->name],
                     ['name' => 'button_url', 'value' => $invitee->link],
                 ],
@@ -58,7 +60,7 @@ class ReminderController extends Controller
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->token,
+            'Authorization' => 'Bearer ' . $this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
             'template_name' => 'ar7ebo_1',
@@ -68,13 +70,18 @@ class ReminderController extends Controller
 
         $responseData = json_decode($response->body(), true);
         $result = $responseData['result'] ?? false;
-        if ($result){
-            $invitation->reminder->delete();
-        }else
-            return response([
-                'message' => "sent successfully"
-            ] , 200);
+
+        if ($result) {
+            if ($invitation->reminder) {
+                $invitation->reminder->delete();
+            }
+            return response()->json(['message' => 'Reminder sent and deleted successfully'], 200);
+        } else {
+            $errors = $responseData['errors'] ?? [];
+            return response()->json(['message' => 'Failed to send reminder', 'errors' => $errors], 500);
+        }
     }
+
 }
 ///'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'
 /// /invitations_image/6633f8bfc2f11_invitations_image.png

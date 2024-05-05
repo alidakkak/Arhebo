@@ -23,6 +23,7 @@ class InvitationSupportResource extends JsonResource
             'qrcode' => $this->is_with_qr,
             'status' => $this->status,
             'action' => $this->user->phone,
+            'withReminder'=> !collect($this->reminder)->isEmpty(),
         ];
     }
 }

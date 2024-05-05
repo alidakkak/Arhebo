@@ -34,7 +34,6 @@ class InvitationResource extends JsonResource
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
                 'template' => $this->invitation->template->image,
-                'withReminder'=> boolval($this->reminder)
             ];
         }
 

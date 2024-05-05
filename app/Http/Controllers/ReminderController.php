@@ -44,9 +44,14 @@ class ReminderController extends Controller
     public function sendWhatsAppReminder($invitationID)
     {
         $invitation = Invitation::where('id', $invitationID)->first();
+        if (!$invitation) {
+            return response()->json(['message' => 'Invitation not found'], 404);
+        }
+
         $invitees = $invitation->invitee()->get(['phone', 'name', 'link']);
-        if (!$invitees) {
-            return response()->json(['message' => 'This Invitation Dont have invitees'],404);
+
+        if ($invitees->isEmpty()) {
+            return response()->json(['message' => 'This Invitation does not have invitees'], 404);
         }
         $image = $invitation->image;
         $receivers = [];

@@ -34,6 +34,7 @@ Send a reminder before the occasion.',
 خاصية مسح أكواد الدخول من التطبيق.
 إرسال تذكير قبل المناسبة بــ يوم.',
             'color' => '#CD7F32',
+            'discount' => '10',
         ]);
 
         Package::create([
@@ -62,6 +63,7 @@ Follow up on the invitees on the waiting list
 متابعة المدعوين على قائمة الإنتظار
 (واتس اب).',
             'color' => '#C0C0C0',
+            'discount' => '25',
         ]);
 
         Package::create([
@@ -96,45 +98,46 @@ Review the file of names of invitees before sending.',
 الرد على استفسارات المدعوين.
 مراجعة ملف أسماء المدعوين قبل الأرسال.',
             'color' => '#FFD700',
+            'discount' => '50',
         ]);
 
-        Package::create([
-            'name' => 'Diamond package services:',
-            'name_ar' => 'خدمات الباقة الماسية :',
-            'description' => 'Design the invitation according to the theme of the occasion
-Or customer request (picture).
-3 additional designs (themes for dinner card, table card, and water card.).
-Send invitations from the app or the Welcome Team.
-Confirm attendance or apologize to invitees.
-Knowing the acceptance or apology by name.
-A special access code for each invitee.
-The feature of scanning access codes from the application.
-Send a reminder one day before the event.
-Compensatory calls for apology and disruption
-(100% of total invitations).
-Follow up on the invitees on the waiting list
-(WhatsApp and phone).
-Responding to invitees’ inquiries.
-Review the file of invitees’ names before sending.
-Prepare a file of the names of the invitees.',
-            'description_ar' => 'تصميم الدعوة حسب ثيم المناسبة
-أو طلب العميل (صورة ).
-3 تصاميم إضافية (ثيمات لـ كرت العشاء وكرت الطاولة وكرت الماء.).
-إرسال الدعوات من التطبيق أو فريق  آرحبوا.
-تأكيد الحضور أو الإعتذار للمدعوين.
-معرفة القبول أو الإعتذار بالأسم.
-كود دخول خاص لكل مدعو.
-خاصية مسح أكواد الدخول من التطبيق.
-إرسال تذكير قبل المناسبة بــ يوم.
-دعوات تعويضية عن الإعتذار و التعطيل
-(100% من إجمالي الدعوات).
-متابعة المدعوين على قائمة الأنتظار
-(واتس اب و هاتفي).
-الرد على استفسارات المدعوين.
-مراجعة ملف أسماء المدعوين قبل الارسال.
-إعداد ملف أسماء المدعوين.',
-            'color' => '#B9F2FF',
-        ]);
-
+//        Package::create([
+//            'name' => 'Diamond package services:',
+//            'name_ar' => 'خدمات الباقة الماسية :',
+//            'description' => 'Design the invitation according to the theme of the occasion
+//Or customer request (picture).
+//3 additional designs (themes for dinner card, table card, and water card.).
+//Send invitations from the app or the Welcome Team.
+//Confirm attendance or apologize to invitees.
+//Knowing the acceptance or apology by name.
+//A special access code for each invitee.
+//The feature of scanning access codes from the application.
+//Send a reminder one day before the event.
+//Compensatory calls for apology and disruption
+//(100% of total invitations).
+//Follow up on the invitees on the waiting list
+//(WhatsApp and phone).
+//Responding to invitees’ inquiries.
+//Review the file of invitees’ names before sending.
+//Prepare a file of the names of the invitees.',
+//            'description_ar' => 'تصميم الدعوة حسب ثيم المناسبة
+//أو طلب العميل (صورة ).
+//3 تصاميم إضافية (ثيمات لـ كرت العشاء وكرت الطاولة وكرت الماء.).
+//إرسال الدعوات من التطبيق أو فريق  آرحبوا.
+//تأكيد الحضور أو الإعتذار للمدعوين.
+//معرفة القبول أو الإعتذار بالأسم.
+//كود دخول خاص لكل مدعو.
+//خاصية مسح أكواد الدخول من التطبيق.
+//إرسال تذكير قبل المناسبة بــ يوم.
+//دعوات تعويضية عن الإعتذار و التعطيل
+//(100% من إجمالي الدعوات).
+//متابعة المدعوين على قائمة الأنتظار
+//(واتس اب و هاتفي).
+//الرد على استفسارات المدعوين.
+//مراجعة ملف أسماء المدعوين قبل الارسال.
+//إعداد ملف أسماء المدعوين.',
+//            'color' => '#B9F2FF',
+//        ]);
+//
     }
 }

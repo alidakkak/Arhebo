@@ -27,6 +27,7 @@ class StorePackageRequest extends FormRequest
             'description' => 'required|string',
             'description_ar' => 'required|string',
             'color' => 'required|string',
+            'discount' => 'required|numeric|between:1,100',
         ];
     }
 }

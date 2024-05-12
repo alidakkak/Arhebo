@@ -15,232 +15,232 @@ class PackageDetailsSeeder extends Seeder
         PackageDetail::create([
             'package_id' => '1',
             'price' => '135',
-            'price_qr' => '160',
+        //    'price_qr' => '160',
             'number_of_invitees' => '25',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '255',
-            'price_qr' => '300',
+      //      'price_qr' => '300',
             'number_of_invitees' => '50',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '455',
-            'price_qr' => '500',
+         //   'price_qr' => '500',
             'number_of_invitees' => '100',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '685',
-            'price_qr' => '720',
+        //   'price_qr' => '720',
             'number_of_invitees' => '150',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '895',
-            'price_qr' => '930',
+          //  'price_qr' => '930',
             'number_of_invitees' => '200',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1125',
-            'price_qr' => '1200',
+         //   'price_qr' => '1200',
             'number_of_invitees' => '250',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1345',
-            'price_qr' => '1450',
+         //   'price_qr' => '1450',
             'number_of_invitees' => '300',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1695',
-            'price_qr' => '1800',
+          //  'price_qr' => '1800',
             'number_of_invitees' => '400',
         ]);
 
         PackageDetail::create([
             'package_id' => '1',
             'price' => '1985',
-            'price_qr' => '2200',
+         //   'price_qr' => '2200',
             'number_of_invitees' => '500',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '195',
-            'price_qr' => '235',
+         //   'price_qr' => '235',
             'number_of_invitees' => '25',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '335',
-            'price_qr' => '375',
+          //  'price_qr' => '375',
             'number_of_invitees' => '50',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '625',
-            'price_qr' => '675',
+          //  'price_qr' => '675',
             'number_of_invitees' => '100',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '895',
-            'price_qr' => '945',
+          //  'price_qr' => '945',
             'number_of_invitees' => '150',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '1185',
-            'price_qr' => '1265',
+        //    'price_qr' => '1265',
             'number_of_invitees' => '200',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '1495',
-            'price_qr' => '1535',
+        //    'price_qr' => '1535',
             'number_of_invitees' => '250',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '1785',
-            'price_qr' => '1845',
+        //    'price_qr' => '1845',
             'number_of_invitees' => '300',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '2295',
-            'price_qr' => '2375',
+        //    'price_qr' => '2375',
             'number_of_invitees' => '400',
         ]);
 
         PackageDetail::create([
             'package_id' => '2',
             'price' => '2785',
-            'price_qr' => '2845',
+          //  'price_qr' => '2845',
             'number_of_invitees' => '500',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '695',
-            'price_qr' => '750',
+         //   'price_qr' => '750',
             'number_of_invitees' => '50',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '1295',
-            'price_qr' => '1400',
+        //    'price_qr' => '1400',
             'number_of_invitees' => '100',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '1885',
-            'price_qr' => '1995',
+         //   'price_qr' => '1995',
             'number_of_invitees' => '150',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '2395',
-            'price_qr' => '2485',
+         //   'price_qr' => '2485',
             'number_of_invitees' => '200',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '2985',
-            'price_qr' => '3045',
+           // 'price_qr' => '3045',
             'number_of_invitees' => '250',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '3595',
-            'price_qr' => '3785',
+         //   'price_qr' => '3785',
             'number_of_invitees' => '300',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '4585',
-            'price_qr' => '4865',
+         //   'price_qr' => '4865',
             'number_of_invitees' => '400',
         ]);
 
         PackageDetail::create([
             'package_id' => '3',
             'price' => '5595',
-            'price_qr' => '5835',
+         //   'price_qr' => '5835',
             'number_of_invitees' => '500',
         ]);
 
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '2595',
-            'price_qr' => '3865',
-            'number_of_invitees' => '100',
-        ]);
-
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '3285',
-            'price_qr' => '3445',
-            'number_of_invitees' => '150',
-        ]);
-
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '3895',
-            'price_qr' => '4065',
-            'number_of_invitees' => '200',
-        ]);
-
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '4585',
-            'price_qr' => '4665',
-            'number_of_invitees' => '250',
-        ]);
-
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '5395',
-            'price_qr' => '5445',
-            'number_of_invitees' => '300',
-        ]);
-
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '7185',
-            'price_qr' => '7445',
-            'number_of_invitees' => '400',
-        ]);
-
-        PackageDetail::create([
-            'package_id' => '4',
-            'price' => '8495',
-            'price_qr' => '8555',
-            'number_of_invitees' => '500',
-        ]);
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '2595',
+//         //   'price_qr' => '3865',
+//            'number_of_invitees' => '100',
+//        ]);
+//
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '3285',
+//         //   'price_qr' => '3445',
+//            'number_of_invitees' => '150',
+//        ]);
+//
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '3895',
+//        //    'price_qr' => '4065',
+//            'number_of_invitees' => '200',
+//        ]);
+//
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '4585',
+//        //    'price_qr' => '4665',
+//            'number_of_invitees' => '250',
+//        ]);
+//
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '5395',
+//         //   'price_qr' => '5445',
+//            'number_of_invitees' => '300',
+//        ]);
+//
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '7185',
+//          //  'price_qr' => '7445',
+//            'number_of_invitees' => '400',
+//        ]);
+//
+//        PackageDetail::create([
+//            'package_id' => '4',
+//            'price' => '8495',
+//         //   'price_qr' => '8555',
+//            'number_of_invitees' => '500',
+//        ]);
     }
 }

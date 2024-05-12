@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PackageResource extends JsonResource
+class FeatureResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,11 +20,13 @@ class PackageResource extends JsonResource
             'name_ar' => $this->name_ar,
             'description' => $this->description,
             'description_ar' => $this->description_ar,
-            'color' => $this->color,
-            'discount' => $this->discount,
-            'attribute' => AttributeResource::collection($this->attribute),
-            'packageDetails' => $this->packageDetail,
-            'extraFeature' => FeatureResource::collection($this->features),
+            'is_active' => $this->is_active,
+            'price' => $this->price,
+            'type' => $this->type,
+            'quantity' => $this->quantity,
+            'value' => $this->whenPivotLoaded('invitation_features', function () {
+                return $this->pivot->value;
+            })
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Http\Resources\ShowOrdersResource;
 use App\Models\Invitation;
+use App\Models\InvitationFeature;
 use App\Models\InvitationInput;
 use App\Models\InvitationProhibited;
 use App\Models\Invitee;
@@ -65,40 +66,30 @@ class InvitationController extends Controller
 
         return InvitationResource::collection($invitation);
     }
-
     public function store(StoreInvitationRequest $request)
     {
         $user = auth()->user();
         try {
             DB::beginTransaction();
-            $invitation = Invitation::create(array_merge(['user_id' => $user->id], $request->all()));
-            if ($request->answers) {
-                foreach ($request->answers as $answer) {
-                    InvitationInput::create([
-                        'invitation_id' => $invitation->id,
-                        'input_id' => $answer['input_id'],
-                        'answer' => $answer['answer'],
-                    ]);
-                }
-            }
-            if ($request->prohibited) {
-                foreach ($request->prohibited as $prohibite) {
-                    InvitationProhibited::create([
-                        'invitation_id' => $invitation->id,
-                        'prohibited_thing_id' => $prohibite['prohibited_thing_id'],
-                    ]);
+            $invitation = $user->invitation()->create($request->validated());
+
+            $invitation->invitationInput()->createMany($request->answers ?? []);
+            $invitation->InvitationProhibited()->createMany($request->prohibited ?? []);
+            if (!empty($request->features)) {
+                foreach ($request->features as $feature) {
+                    $invitation->features()->attach($feature['feature_id'], ['value' => $feature['value'] , 'quantity' => $feature['quantity']]);
                 }
             }
 
             DB::commit();
 
-            return InvitationResource::make($invitation);
+            return new InvitationResource($invitation);
         } catch (\Exception $e) {
             DB::rollBack();
-
-            return response(['message' => 'An error occurred while creating the invitation'], 500);
+            return response()->json(['message' => 'An error occurred while creating the invitation'], 500);
         }
     }
+
     /*
         public function update(UpdateInvitationRequest $request, $invitationId)
         {

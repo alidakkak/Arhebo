@@ -77,4 +77,9 @@ class Invitation extends Model
     {
         return $this->hasMany(InvitationAdditionalPackage::class);
     }
+
+    public function features() {
+        return $this->belongsToMany(Feature::class, 'invitation_features', 'invitation_id', 'feature_id')
+            ->withPivot('value');
+    }
 }

@@ -12,5 +12,7 @@ class InviteeTypes
 
     public const invited = 4;
 
-    public static array $statuses = [self::confirmed, self::waiting, self::rejected, self::invited];
+    public const Replaced = 5;
+
+    public static array $statuses = [self::confirmed, self::waiting, self::rejected, self::invited, self::Replaced];
 }

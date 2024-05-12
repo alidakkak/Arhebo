@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('packages', function (Blueprint $table) {
+        Schema::create('package_features', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->text('name_ar');
-            $table->longText('description');
-            $table->longText('description_ar');
-            $table->string('color');
-            $table->double('discount');
-            $table->softDeletes();
+            $table->foreignId('package_id')->references('id')
+                ->on('packages')->onDelete('cascade');
+            $table->foreignId('feature_id')->references('id')
+                ->on('features')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('packages');
+        Schema::dropIfExists('package_features');
     }
 };

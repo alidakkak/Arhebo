@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('inviter');
             $table->text('invitation_text')->nullable();
             $table->string('status')->default(InvitationTypes::active);
-            $table->boolean('is_with_qr');
+            $table->boolean('is_with_qr')->default(true);
             $table->string('image')->nullable();
             $table->timestamps();
         });

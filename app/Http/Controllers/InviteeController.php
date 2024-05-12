@@ -10,6 +10,7 @@ use App\Mail\EmailService;
 use App\Models\AdditionalPackage;
 use App\Models\Invitation;
 use App\Models\Invitee;
+use App\Models\Package;
 use App\Models\QR;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
@@ -105,20 +106,30 @@ class InviteeController extends Controller
     {
         DB::beginTransaction();
         try {
+            $invitation = Invitation::find($request->invitation_id);
             ////  The total number of people invited to the invitation
-            $number_of_people = invitee::where('invitation_id', $request->invitation_id)->sum('number_of_people');
+            $number_of_people = $invitation->invitee()->sum('number_of_people');
             ////  The number of people in package detail
-            $package_detail = Invitation::find($request->invitation_id)->packageDetail()->select('number_of_invitees')->first();
+            $package_detail = $invitation->packageDetail()->select('number_of_invitees')->first();
             $package_detail_number = $package_detail->number_of_invitees;
             ////  Sum Of Additional Package
             $additional = AdditionalPackage::join('invitation_additional_packages', 'additional_packages.id', '=',
                 'invitation_additional_packages.additional_package_id')
                 ->where('invitation_additional_packages.invitation_id', $request->invitation_id)
                 ->sum('additional_packages.number_of_invitees');
+            ////
+            $rejected = $invitation->invitee()->where('status', InviteeTypes::rejected)->count();
+            /// An alternative for people who rejected the invitation
+            $replaced = $invitation->invitee()->where('status', InviteeTypes::Replaced)->count();
+            $packageId = $invitation->package_id;
+            $package = Package::find($packageId);
+            $discount = $package->discount;
+            $compensation = max(0, ($rejected - $replaced) * ($discount / 100));
+            $compensation = floor($compensation);
             $inviteesData = $request->input('invitees', []);
             $invitees = [];
             foreach ($inviteesData as $invitee) {
-                if ($number_of_people + $invitee['count'] > $package_detail_number + $additional) {
+                if ($number_of_people + $invitee['count'] > $package_detail_number + $additional + $compensation) {
                     return response()->json(['message' => 'You have reached the maximum number of invitees'.
                         ', The number of invitees you have added '.$number_of_people,
                     ]);
@@ -139,7 +150,6 @@ class InviteeController extends Controller
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $message = $request->input('message');
-            $invitation = Invitation::find($request->invitation_id);
             $invitation->update([
                 'image' => $request->image
             ]);

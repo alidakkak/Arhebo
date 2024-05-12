@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdatePackageRequest extends FormRequest
+class StoreFeatureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +23,14 @@ class UpdatePackageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'string',
-            'name_ar' => 'string',
-            'description' => 'string',
-            'description_ar' => 'string',
-            'color' => 'string',
-            'discount' => 'numeric|between:1,100',
+            'name' => 'required|string',
+            'name_ar' => 'required|string',
+            'price' => 'required|numeric',
+            'type' => 'required',
+            'quantity' => 'required|numeric',
+           // 'description' => 'required|string',
+           // 'description_ar' => 'required|string',
+            'package_id' => ['required', Rule::exists('packages', 'id')],
         ];
     }
 }

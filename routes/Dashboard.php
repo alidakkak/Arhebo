@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\OffersController;
@@ -131,4 +133,15 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::get('coupon/{couponId}', [CouponController::class, 'show']);
     Route::delete('coupons/{couponId}', [CouponController::class, 'delete']);
 
+    //// Features
+    Route::get('features', [FeatureController::class, 'index']);
+    Route::post('features', [FeatureController::class, 'store']);
+    Route::patch('features/{featureId}', [FeatureController::class, 'update']);
+    Route::get('features/{featureId}', [FeatureController::class, 'show']);
+    Route::delete('features/{featureId}', [FeatureController::class, 'delete']);
+    Route::post('switchFeature/{featureId}', [FeatureController::class, 'switchFeature']);
+
+    //// Attribute
+    Route::get('attributes', [AttributeController::class, 'index']);
+    Route::post('attributes', [AttributeController::class, 'store']);
 });

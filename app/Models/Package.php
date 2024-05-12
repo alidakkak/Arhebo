@@ -26,4 +26,13 @@ class Package extends Model
     {
         return $this->belongsToMany(Coupon::class, 'coupon_packages', 'package_id', 'coupon_id');
     }
+
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class, 'package_features','package_id', 'feature_id');
+    }
+
+    public function attribute() {
+        return $this->hasMany(Attribute::class);
+    }
 }

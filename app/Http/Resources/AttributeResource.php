@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PackageDetalisResource extends JsonResource
+class AttributeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,7 @@ class PackageDetalisResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'price' => $this->price,
-         //   'price_qr' => $this->price_qr,
-            'number_of_invitees' => $this->number_of_invitees,
+            'key' => $this->key,
         ];
     }
 }

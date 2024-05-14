@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class TestInvitationController extends Controller
 {
@@ -22,7 +22,7 @@ class TestInvitationController extends Controller
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
-        ])->post($this->url . $request->input('phone'), [
+        ])->post($this->url.$request->input('phone'), [
             'template_name' => 'ar7ebo_1',
             'broadcast_name' => 'ar7ebo_1',
             'parameters' => [
@@ -41,7 +41,7 @@ class TestInvitationController extends Controller
                 [
                     'name' => 'button_url',
                     'value' => 'invitaion-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
-                ]
+                ],
             ],
         ]);
 

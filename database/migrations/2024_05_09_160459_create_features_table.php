@@ -18,7 +18,7 @@ return new class extends Migration
             $table->double('price');
             $table->text('description')->nullable();
             $table->text('description_ar')->nullable();
-            $table->enum('type',['withoutValue', 'withValue']);
+            $table->enum('type', ['withoutValue', 'withValue']);
             $table->integer('quantity')->default(1);
             $table->boolean('is_active')->default(true);
             $table->timestamps();

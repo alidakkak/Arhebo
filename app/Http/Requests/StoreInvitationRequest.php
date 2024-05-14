@@ -37,7 +37,7 @@ class StoreInvitationRequest extends FormRequest
             //            'region' => 'string',
             'location_link' => 'required|string',
             'inviter' => 'required|string',
-//            'is_with_qr' => 'required|boolean',
+            //            'is_with_qr' => 'required|boolean',
             'answers.*.answer' => 'required',
             'answers.*.input_id' => ['required', Rule::exists('inputs', 'id')],
             'features.*.value' => 'required',

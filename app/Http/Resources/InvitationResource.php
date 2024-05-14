@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use App\Models\Invitation;
 use App\Models\Invitee;
-use App\Models\Package;
 use App\Models\ProhibitedThing;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
@@ -30,7 +29,7 @@ class InvitationResource extends JsonResource
                 'from' => $this->invitation->from,
                 'to' => $this->invitation->to,
                 'location_link' => $this->invitation->location_link,
-               // 'invitation_text' => $this->invitation->invitation_text,
+                // 'invitation_text' => $this->invitation->invitation_text,
                 'is_with_qr' => $this->invitation->is_with_qr,
                 'status' => $this->status,
                 'city' => $this->invitation->city,
@@ -38,16 +37,9 @@ class InvitationResource extends JsonResource
                 'template' => $this->invitation->template->image,
             ];
         }
-        $rejected = Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count();
-        /// An alternative for people who rejected the invitation
-        $replaced = Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::Replaced)->count();
         $invitation = Invitation::find($this->id);
-        $packageId = $invitation->package_id;
-        $package = Package::find($packageId);
-        $discount = $package->discount;
-        $compensation = max(0, ($rejected - $replaced) * ($discount / 100));
-        $compensation = floor($compensation);
-
+        $number_of_compensation = floor($invitation->number_of_compensation);
+        $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,
@@ -63,11 +55,11 @@ class InvitationResource extends JsonResource
             'city' => $this->city,
             'region' => $this->region,
             'invited' => Invitee::where('invitation_id', $this->id)->count(),
-            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count() + $replaced,
+            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count(),
             'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->count(),
             'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count(),
-            'compensation' => $compensation,
-            'replaced' => $replaced,
+            'remaining' => $remaining,
+            'compensation' => $number_of_compensation,
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),

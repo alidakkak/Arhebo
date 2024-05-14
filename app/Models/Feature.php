@@ -16,7 +16,8 @@ class Feature extends Model
         return $this->belongsToMany(Package::class, 'package_features', 'feature_id', 'package_id');
     }
 
-    public function invitations() {
+    public function invitations()
+    {
         return $this->belongsToMany(Invitation::class, 'invitation_features', 'feature_id', 'invitation_id')
             ->withPivot('value');
     }

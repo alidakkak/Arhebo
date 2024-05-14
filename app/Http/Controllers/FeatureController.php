@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateFeatureRequest;
 use App\Http\Resources\FeatureResource;
 use App\Models\Feature;
 use App\Models\PackageFeature;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FeatureController extends Controller
@@ -30,12 +29,14 @@ class FeatureController extends Controller
                 'package_id' => $request->package_id,
             ]);
             DB::commit();
+
             return response()->json([
                 'message' => 'Created SuccessFully',
                 'data' => FeatureResource::make($feature),
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json([
                 'message' => 'An error occurred',
                 'error' => $e->getMessage(),
@@ -95,15 +96,17 @@ class FeatureController extends Controller
         }
     }
 
-    public function switchFeature($featureId) {
+    public function switchFeature($featureId)
+    {
         $feature = Feature::find($featureId);
         if (! $feature) {
             return response()->json(['message' => 'Not Found'], 404);
         }
 
         $feature->update([
-           'is_active' =>! boolval($feature->is_active)
+            'is_active' => ! boolval($feature->is_active),
         ]);
+
         return response()->json(['message' => 'SuccessFully']);
     }
 }

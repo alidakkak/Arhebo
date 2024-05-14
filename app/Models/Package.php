@@ -29,10 +29,11 @@ class Package extends Model
 
     public function features()
     {
-        return $this->belongsToMany(Feature::class, 'package_features','package_id', 'feature_id');
+        return $this->belongsToMany(Feature::class, 'package_features', 'package_id', 'feature_id');
     }
 
-    public function attribute() {
+    public function attribute()
+    {
         return $this->hasMany(Attribute::class);
     }
 }

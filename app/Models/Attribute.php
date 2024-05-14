@@ -11,7 +11,8 @@ class Attribute extends Model
 
     protected $guarded = ['id'];
 
-    public function package() {
+    public function package()
+    {
         return $this->belongsTo(Package::class);
     }
 }

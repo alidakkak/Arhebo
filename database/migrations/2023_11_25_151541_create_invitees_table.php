@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('number_of_people');
             $table->longText('link')->nullable();
             $table->text('apology_message')->nullable();
+            $table->text('accept_message')->nullable();
+            $table->boolean('is_benefit')->default(false);
             $table->string('status')->default(InviteeTypes::waiting);
             $table->timestamps();
         });

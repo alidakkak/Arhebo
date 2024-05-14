@@ -144,4 +144,5 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     //// Attribute
     Route::get('attributes', [AttributeController::class, 'index']);
     Route::post('attributes', [AttributeController::class, 'store']);
+    Route::delete('attributes/{attribute}', [AttributeController::class, 'delete']);
 });

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreAttributeRequest;
 use App\Http\Requests\UpdateAttributeRequest;
 use App\Http\Resources\AttributeResource;
 use App\Models\Attribute;
-use Illuminate\Http\Request;
 
 class AttributeController extends Controller
 {

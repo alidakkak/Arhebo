@@ -6,9 +6,7 @@ use App\Http\Requests\StoreReminderRequest;
 use App\Http\Resources\ReminderResource;
 use App\Models\Invitation;
 use App\Models\Reminder;
-use App\Statuses\InviteeTypes;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Request;
 
 class ReminderController extends Controller
 {
@@ -37,14 +35,14 @@ class ReminderController extends Controller
 
             return ReminderResource::make($reminder);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'error'],500);
+            return response()->json(['message' => 'error'], 500);
         }
     }
 
     public function sendWhatsAppReminder($invitationID)
     {
         $invitation = Invitation::where('id', $invitationID)->first();
-        if (!$invitation) {
+        if (! $invitation) {
             return response()->json(['message' => 'Invitation not found'], 404);
         }
 
@@ -68,7 +66,7 @@ class ReminderController extends Controller
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
+            'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
             'template_name' => 'ar7ebo_1',
@@ -81,17 +79,17 @@ class ReminderController extends Controller
 
         if ($result) {
             if ($invitation->reminder) {
-                collect($invitation->reminder)->map(fn($remnid) =>
-                    $remnid->delete()
-               );
-           }
+                collect($invitation->reminder)->map(fn ($remnid) => $remnid->delete()
+                );
+            }
+
             return response()->json(['message' => 'Reminder sent and deleted successfully'], 200);
         } else {
             $errors = $responseData['errors'] ?? [];
+
             return response()->json(['message' => 'Failed to send reminder', 'errors' => $errors], 500);
         }
     }
-
 }
 ///'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'
 /// /invitations_image/6633f8bfc2f11_invitations_image.png

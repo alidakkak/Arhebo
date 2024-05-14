@@ -17,7 +17,7 @@ class PackageDetalisResource extends JsonResource
         return [
             'id' => $this->id,
             'price' => $this->price,
-         //   'price_qr' => $this->price_qr,
+            //   'price_qr' => $this->price_qr,
             'number_of_invitees' => $this->number_of_invitees,
         ];
     }

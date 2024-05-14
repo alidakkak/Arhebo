@@ -9,11 +9,10 @@ use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Http\Resources\ShowOrdersResource;
 use App\Models\Invitation;
-use App\Models\InvitationFeature;
 use App\Models\InvitationInput;
-use App\Models\InvitationProhibited;
 use App\Models\Invitee;
 use App\Models\Message;
+use App\Models\PackageDetail;
 use App\Models\User;
 use App\Statuses\InvitationTypes;
 use App\Statuses\MessageTypes;
@@ -66,18 +65,25 @@ class InvitationController extends Controller
 
         return InvitationResource::collection($invitation);
     }
+
     public function store(StoreInvitationRequest $request)
     {
         $user = auth()->user();
         try {
             DB::beginTransaction();
-            $invitation = $user->invitation()->create($request->validated());
+            $packageDetail = PackageDetail::where('id', $request->package_detail_id)->first();
+            $number_of_invitees = $packageDetail->number_of_invitees;
 
+            $invitation = $user->invitation()->create(
+                array_merge($request->validated(), [
+                    'number_of_invitees' => $number_of_invitees,
+                    'number_of_compensation' => 0,
+                ]));
             $invitation->invitationInput()->createMany($request->answers ?? []);
             $invitation->InvitationProhibited()->createMany($request->prohibited ?? []);
-            if (!empty($request->features)) {
+            if (! empty($request->features)) {
                 foreach ($request->features as $feature) {
-                    $invitation->features()->attach($feature['feature_id'], ['value' => $feature['value'] , 'quantity' => $feature['quantity']]);
+                    $invitation->features()->attach($feature['feature_id'], ['value' => $feature['value'], 'quantity' => $feature['quantity']]);
                 }
             }
 
@@ -86,52 +92,10 @@ class InvitationController extends Controller
             return new InvitationResource($invitation);
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['message' => 'An error occurred while creating the invitation'], 500);
         }
     }
-
-    /*
-        public function update(UpdateInvitationRequest $request, $invitationId)
-        {
-            $user = auth()->user();
-            $invitation = Invitation::where('user_id', $user->id)->find($invitationId);
-
-            if (! $invitation) {
-                return response()->json(['message' => 'Invitation not found'], 404);
-            }
-
-            try {
-                DB::beginTransaction();
-                //            $message = Message::create([
-                //                'user_id' => $user->id,
-                //                'invitation_id' =>$invitation->id,
-                //                'title' => $request->title
-                //            ]);
-                $invitation->update($request->all());
-                foreach ($request->answers as $answer) {
-                    $invitationInput = InvitationInput::where('invitation_id', $invitation->id)
-                        ->where('input_id', $answer['input_id'])
-                        ->first();
-                    if ($invitationInput) {
-                        $invitationInput->update(['answer' => $answer['answer']]);
-                    } else {
-                        InvitationInput::create([
-                            'invitation_id' => $invitation->id,
-                            'input_id' => $answer['input_id'],
-                            'answer' => $answer['answer'],
-                        ]);
-                    }
-                }
-                DB::commit();
-
-                return InvitationResource::make($invitation);
-            } catch (\Exception $e) {
-                DB::rollBack();
-
-                return response()->json(['message' => 'An error occurred while updating the invitation: '.$e->getMessage()], 500);
-            }
-        }
-    */
 
     public function update(StoreApologyRequest $request, $invitationId)
     {

@@ -26,7 +26,7 @@ class FeatureResource extends JsonResource
             'quantity' => $this->quantity,
             'value' => $this->whenPivotLoaded('invitation_features', function () {
                 return $this->pivot->value;
-            })
+            }),
         ];
     }
 }

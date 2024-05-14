@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Http;
 class SendWhatsAppReminder extends Command
 {
     protected $signature = 'send:whatsapp-reminder';
+
     protected $description = 'Send a reminder for events happening tomorrow.';
 
     private $url;
+
     private $token;
 
     public function __construct()
@@ -30,9 +32,9 @@ class SendWhatsAppReminder extends Command
         foreach ($invitations as $invitation) {
             $result = $this->sendWhatsAppReminder($invitation);
             if ($result['status']) {
-                $this->info('Reminder sent successfully for invitation ID: ' . $invitation->id);
+                $this->info('Reminder sent successfully for invitation ID: '.$invitation->id);
             } else {
-                $this->error('Failed to send reminder for invitation ID: ' . $invitation->id . ' with error: ' . $result['message']);
+                $this->error('Failed to send reminder for invitation ID: '.$invitation->id.' with error: '.$result['message']);
             }
         }
     }
@@ -49,7 +51,7 @@ class SendWhatsAppReminder extends Command
             $receivers[] = [
                 'whatsappNumber' => $invitee->phone,
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'],
+                    ['name' => 'product_image_url', 'value' => url($invitation->image)],
                     ['name' => 'messagebody', 'value' => 'لا تنسوا حضور الحفلة'],
                     ['name' => 'any_name', 'value' => $invitee->name],
                     ['name' => 'button_url', 'value' => $invitee->link],
@@ -58,7 +60,7 @@ class SendWhatsAppReminder extends Command
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
+            'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
             'template_name' => 'ar7ebo_1',
@@ -73,7 +75,9 @@ class SendWhatsAppReminder extends Command
             return ['status' => true, 'message' => 'Reminder sent successfully'];
         } else {
             $errors = $responseData['errors'] ?? [];
+
             return ['status' => false, 'message' => 'Failed to send reminder', 'errors' => $errors];
         }
     }
 }
+//'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'

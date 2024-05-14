@@ -54,6 +54,7 @@ class InviteeController extends Controller
             'broadcast_name' => 'ar7ebo_1',
             'receivers' => $receivers,
         ]);
+
         return $response->json();
     }
 
@@ -107,33 +108,34 @@ class InviteeController extends Controller
         DB::beginTransaction();
         try {
             $invitation = Invitation::find($request->invitation_id);
-            ////  The total number of people invited to the invitation
             $number_of_people = $invitation->invitee()->sum('number_of_people');
-            ////  The number of people in package detail
-            $package_detail = $invitation->packageDetail()->select('number_of_invitees')->first();
-            $package_detail_number = $package_detail->number_of_invitees;
-            ////  Sum Of Additional Package
-            $additional = AdditionalPackage::join('invitation_additional_packages', 'additional_packages.id', '=',
-                'invitation_additional_packages.additional_package_id')
-                ->where('invitation_additional_packages.invitation_id', $request->invitation_id)
-                ->sum('additional_packages.number_of_invitees');
-            ////
-            $rejected = $invitation->invitee()->where('status', InviteeTypes::rejected)->count();
-            /// An alternative for people who rejected the invitation
-            $replaced = $invitation->invitee()->where('status', InviteeTypes::Replaced)->count();
-            $packageId = $invitation->package_id;
-            $package = Package::find($packageId);
-            $discount = $package->discount;
-            $compensation = max(0, ($rejected - $replaced) * ($discount / 100));
-            $compensation = floor($compensation);
             $inviteesData = $request->input('invitees', []);
             $invitees = [];
+            $totalCount = array_reduce($inviteesData, function ($carry, $item) {
+                return $carry + $item['count'];
+            }, 0);
+            $number_of_additional_package = $invitation->additional_package;
+            $number_can_invitee_new = $invitation->number_of_invitees;
+            $number_of_compensation = floor($invitation->number_of_compensation);
+            if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
+                DB::rollBack();
+                return response()->json([
+                    'message' => 'You have reached the maximum number of invitees allowed, including compensations.',
+                    'number_of_people' => $number_of_people,
+                ]);
+            }
+
             foreach ($inviteesData as $invitee) {
-                if ($number_of_people + $invitee['count'] > $package_detail_number + $additional + $compensation) {
-                    return response()->json(['message' => 'You have reached the maximum number of invitees'.
-                        ', The number of invitees you have added '.$number_of_people,
-                    ]);
+                for($i = 0 ; $i < $invitee['count'] ; $i++){
+                    if ($invitation->number_of_invitees > 0){
+                        $invitation->number_of_invitees -= 1;
+                    }else if ($invitation->additional_package > 0){
+                        $invitation->additional_package -= 1;
+                    }else if ($invitation->number_of_compensation > 0){
+                        $invitation->number_of_compensation -= 1;
+                    }
                 }
+
                 $uuid = Str::uuid();
                 $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
@@ -143,16 +145,14 @@ class InviteeController extends Controller
                     'uuid' => $uuid,
                 ]);
                 $newInvitee->update([
-                    'link' => 'invitaion-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $invitees[] = $newInvitee;
-                $number_of_people += $invitee['count'];
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $message = $request->input('message');
-            $invitation->update([
-                'image' => $request->image
-            ]);
+            $invitation->image = $request->image;
+            $invitation->save();
+
             $image = $invitation->image;
             $inviteesData1 = [];
             foreach ($invitees as $invitee) {
@@ -162,15 +162,16 @@ class InviteeController extends Controller
                     'name' => $invitee->name,
                 ];
             }
-            $this->sendWhatsAppMessages($inviteesData1, $message, url($image));
+
+            $message = $request->input('message');
+              $this->sendWhatsAppMessages($inviteesData1, $message, url($image));
             DB::commit();
 
             return InviteeResource::collection($invitees);
-            //  return response()->json(['message' => 'Added SuccessFully']);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['message' => 'An error occurred while processing your request.'.$e->getMessage()], 500);
+            return response()->json(['message' => 'An error occurred while processing your request.'], 500);
         }
     }
 
@@ -178,24 +179,29 @@ class InviteeController extends Controller
     public function update(UpdateInviteeRequest $request, Invitee $invitee)
     {
         if ($request->uuid !== $invitee->uuid) {
-            return Response()->json(['message' => 'false'], 403);
+            return Response()->json(['message' => 'Access denied. Invalid identifier.'], 403);
         }
-        $status = $request->status;
-        if ($status == InviteeTypes::rejected) {
-            $this->validate($request, [
-                'apology_message' => 'required',
-            ]);
-            $invitee->update([
-                'status' => $status,
-                'apology_message' => $request->apology_message,
-            ]);
-        } else {
-            $invitee->update([
-                'status' => $status,
-            ]);
-        }
+            $invitee->update($request->validated());
 
-        return response()->json(['message' => $status == 1 ? 'تم قبول الدعوة بنجاح' : 'تم رفض الدعوة بنجاح']);
+        $rejectedInviteeIds = Invitee::where('invitation_id', $invitee->invitation_id)
+            ->where('status', InviteeTypes::rejected)
+            ->where('is_benefit', false)
+            ->pluck('id');
+        if ($rejectedInviteeIds->isNotEmpty()) {
+            Invitee::whereIn('id', $rejectedInviteeIds)->update(['is_benefit' => true]);
+            $totalRejectedCount = $rejectedInviteeIds->count();
+        } else {
+            $totalRejectedCount = 0;
+        }
+        $discount = $invitee->invitation->package->discount;
+        $compensation = ($totalRejectedCount * $discount) / 100;
+        $number_of_compensation = $invitee->invitation->number_of_compensation;
+        $total = $compensation + $number_of_compensation;
+        $invitee->invitation->update([
+            'number_of_compensation' => $total
+        ]);
+
+        return response()->json(['message' => $request->status == 1 ? 'تم قبول الدعوة بنجاح' : 'تم رفض الدعوة بنجاح']);
     }
 
     public function showInvitationInfo(Request $request, Invitee $invitee)
@@ -206,9 +212,4 @@ class InviteeController extends Controller
 
         return ShowOrdersResource::make($invitee);
     }
-
-    // $userEmail = 'lulumhmd762@gmail.com';
-    // $link = $newInvitee->link;
-    // EmailService::sendHtmlEmail($userEmail, $link);
-
 }

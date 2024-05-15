@@ -102,7 +102,80 @@ class InviteeController extends Controller
             }
         }
     }
+    /// Api For Support
+    public function addInvitees(StoreInviteeRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $invitation = Invitation::find($request->invitation_id);
+            $number_of_people = $invitation->invitee()->sum('number_of_people');
+            $inviteesData = $request->input('invitees', []);
+            $invitees = [];
+            $totalCount = array_reduce($inviteesData, function ($carry, $item) {
+                return $carry + $item['count'];
+            }, 0);
+            $number_of_additional_package = $invitation->additional_package;
+            $number_can_invitee_new = $invitation->number_of_invitees;
+            $number_of_compensation = floor($invitation->number_of_compensation);
+            if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
+                DB::rollBack();
+                return response()->json([
+                    'message' => 'You have reached the maximum number of invitees allowed, including compensations.',
+                    'number_of_people' => $number_of_people,
+                ]);
+            }
 
+            $inviteesForWhatsapp = collect();
+
+            foreach ($inviteesData as $invitee) {
+                for($i = 0 ; $i < $invitee['count'] ; $i++){
+                    if ($invitation->number_of_invitees > 0){
+                        $invitation->number_of_invitees -= 1;
+                    }else if ($invitation->additional_package > 0){
+                        $invitation->additional_package -= 1;
+                    }else if ($invitation->number_of_compensation > 0){
+                        $invitation->number_of_compensation -= 1;
+                    }
+                }
+
+                $uuid = Str::uuid();
+                $newInvitee = Invitee::create([
+                    'name' => $invitee['name'],
+                    'phone' => $invitee['number'],
+                    'number_of_people' => $invitee['count'],
+                    'invitation_id' => $request->input('invitation_id'),
+                    'uuid' => $uuid,
+                ]);
+                $newInvitee->update([
+                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                ]);
+                $inviteesForWhatsapp->push([
+                    'phone' => $newInvitee->phone,
+                    'link' => $newInvitee->link,
+                    'name' => $newInvitee->name,
+                ]);
+                $this->generateQRCodeForInvitee($newInvitee->id);
+            }
+            $invitation->image = $request->image;
+            $invitation->save();
+            $image = $invitation->image;
+
+            $message = $request->input('message');
+              $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
+            DB::commit();
+
+//            return InviteeResource::collection($invitees);
+            return response()->json([
+                "message" => 'invitees successfully'
+            ] );
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['message' => 'An error occurred while processing your request.'], 500);
+        }
+    }
+
+    //// Api For Flutter
     public function store(StoreInviteeRequest $request)
     {
         DB::beginTransaction();
@@ -160,20 +233,11 @@ class InviteeController extends Controller
             $invitation->image = $request->image;
             $invitation->save();
             $image = $invitation->image;
-//            $inviteesData1 = [];
-//            foreach ($invitees as $invitee) {
-//                $inviteesData1[] = [
-//                    'phone' => $invitee->phone,
-//                    'link' => $invitee->link,
-//                    'name' => $invitee->name,
-//                ];
-//            }
 
             $message = $request->input('message');
-              $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();
 
-//            return InviteeResource::collection($invitees);
             return response()->json([
                 "message" => 'invitees successfully'
             ] );

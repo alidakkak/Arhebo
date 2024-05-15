@@ -23,7 +23,9 @@ class FeatureController extends Controller
         DB::beginTransaction();
         try {
             $feature = Feature::create($request->all());
-            $feature->packages->sync($request->package_ids);
+            if ($request->has('package_ids')) {
+                $feature->packages()->sync($request->package_ids);
+            }
             DB::commit();
 
             return response()->json([

@@ -125,6 +125,8 @@ class InviteeController extends Controller
                 ]);
             }
 
+            $inviteesForWhatsapp = collect();
+
             foreach ($inviteesData as $invitee) {
                 for($i = 0 ; $i < $invitee['count'] ; $i++){
                     if ($invitation->number_of_invitees > 0){
@@ -147,27 +149,34 @@ class InviteeController extends Controller
                 $newInvitee->update([
                     'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
-                $invitees[] = $newInvitee;
+                $inviteesForWhatsapp->push([
+                    'phone' => $newInvitee->phone,
+                    'link' => $newInvitee->link,
+                    'name' => $newInvitee->name,
+                ]);
+//                $invitees[] = $newInvitee;
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->image = $request->image;
             $invitation->save();
-
             $image = $invitation->image;
-            $inviteesData1 = [];
-            foreach ($invitees as $invitee) {
-                $inviteesData1[] = [
-                    'phone' => $invitee->phone,
-                    'link' => $invitee->link,
-                    'name' => $invitee->name,
-                ];
-            }
+//            $inviteesData1 = [];
+//            foreach ($invitees as $invitee) {
+//                $inviteesData1[] = [
+//                    'phone' => $invitee->phone,
+//                    'link' => $invitee->link,
+//                    'name' => $invitee->name,
+//                ];
+//            }
 
             $message = $request->input('message');
-              $this->sendWhatsAppMessages($inviteesData1, $message, url($image));
+              $this->sendWhatsAppMessages($inviteesForWhatsapp, $message, url($image));
             DB::commit();
 
-            return InviteeResource::collection($invitees);
+//            return InviteeResource::collection($invitees);
+            return response()->json([
+                "message" => 'invitees successfully'
+            ] );
         } catch (\Exception $e) {
             DB::rollBack();
 

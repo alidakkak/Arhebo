@@ -77,7 +77,6 @@ class InvitationController extends Controller
             $invitation = $user->invitation()->create(
                 array_merge($request->validated(), [
                     'number_of_invitees' => $number_of_invitees,
-                    'number_of_compensation' => 0,
                 ]));
             $invitation->invitationInput()->createMany($request->answers ?? []);
             $invitation->InvitationProhibited()->createMany($request->prohibited ?? []);

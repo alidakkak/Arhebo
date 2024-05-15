@@ -23,11 +23,7 @@ class FeatureController extends Controller
         DB::beginTransaction();
         try {
             $feature = Feature::create($request->all());
-
-            PackageFeature::create([
-                'feature_id' => $feature->id,
-                'package_id' => $request->package_id,
-            ]);
+            $feature->packages->sync($request->package_ids);
             DB::commit();
 
             return response()->json([

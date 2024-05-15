@@ -170,7 +170,7 @@ class InviteeController extends Controller
 //            }
 
             $message = $request->input('message');
-              $this->sendWhatsAppMessages($inviteesForWhatsapp, $message, url($image));
+              $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();
 
 //            return InviteeResource::collection($invitees);

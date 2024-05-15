@@ -23,7 +23,7 @@ class FeatureResource extends JsonResource
             'is_active' => $this->is_active,
             'price' => $this->price,
             'type' => $this->type,
-            'packages' => $this->packages->pluck('package_id'),
+            'packages' => $this->packages,
             'quantity' => $this->quantity,
             'value' => $this->whenPivotLoaded('invitation_features', function () {
                 return $this->pivot->value;

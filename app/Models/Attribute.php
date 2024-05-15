@@ -15,4 +15,10 @@ class Attribute extends Model
     {
         return $this->belongsTo(Package::class);
     }
+
+    public function invitations()
+    {
+        return $this->belongsToMany(Invitation::class, 'attribute_invitations', 'attribute_id', 'invitation_id')
+            ->withPivot('value');
+    }
 }

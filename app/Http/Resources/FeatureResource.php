@@ -14,6 +14,23 @@ class FeatureResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($request->route()->uri() === 'api/features') {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'name_ar' => $this->name_ar,
+                'description' => $this->description,
+                'description_ar' => $this->description_ar,
+                'is_active' => $this->is_active,
+                'price' => $this->price,
+                'type' => $this->type,
+                'quantity' => $this->quantity,
+                'packages' => $this->packages,
+                'value' => $this->whenPivotLoaded('invitation_features', function () {
+                    return $this->pivot->value;
+                }),
+            ];
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -23,7 +40,6 @@ class FeatureResource extends JsonResource
             'is_active' => $this->is_active,
             'price' => $this->price,
             'type' => $this->type,
-            'packages' => $this->packages,
             'quantity' => $this->quantity,
             'value' => $this->whenPivotLoaded('invitation_features', function () {
                 return $this->pivot->value;

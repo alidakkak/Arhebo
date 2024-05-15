@@ -24,7 +24,7 @@ class StoreInviteeRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (\request()->route()->uri === 'api/event') {
+        if (\request()->route()->uri === 'api/addInvitees') {
             return [
                 'invitation_id' => ['required', Rule::exists('invitations', 'id')],
                 'invitees.*.name' => 'required',
@@ -36,9 +36,21 @@ class StoreInviteeRequest extends FormRequest
                     }),
                 ],
                 'invitees.*.count' => 'required|integer|min:1',
-                'message' => 'required|string',
-                'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
             ];
         }
-    }
+        return [
+            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
+            'invitees.*.name' => 'required',
+            'invitees.*.number' => [
+                'required',
+                new UniquePhoneNumberWithinRequest(request()->input('invitees'), 'number'),
+                Rule::unique('invitees', 'phone')->where(function ($query) {
+                    return $query->where('invitation_id', request()->invitation_id);
+                }),
+            ],
+            'invitees.*.count' => 'required|integer|min:1',
+            'message' => 'required|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+        ];
+     }
 }

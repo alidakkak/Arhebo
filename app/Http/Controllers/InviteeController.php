@@ -102,7 +102,7 @@ class InviteeController extends Controller
             }
         }
     }
-    /// Api For Support
+    /// Api For Flutter
     public function addInvitees(StoreInviteeRequest $request)
     {
         DB::beginTransaction();
@@ -124,9 +124,7 @@ class InviteeController extends Controller
                     'number_of_people' => $number_of_people,
                 ]);
             }
-
             $inviteesForWhatsapp = collect();
-
             foreach ($inviteesData as $invitee) {
                 for($i = 0 ; $i < $invitee['count'] ; $i++){
                     if ($invitation->number_of_invitees > 0){
@@ -137,7 +135,6 @@ class InviteeController extends Controller
                         $invitation->number_of_compensation -= 1;
                     }
                 }
-
                 $uuid = Str::uuid();
                 $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
@@ -156,17 +153,14 @@ class InviteeController extends Controller
                 ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $invitation->image = $request->image;
             $invitation->save();
-            $image = $invitation->image;
-
-            $message = $request->input('message');
+            $image = $invitation->Template->image;
+            $message = 'نتشرف بدعوتك لحضور حفل زفاف  ليان محمد وسالم أحمد';
               $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();
 
-//            return InviteeResource::collection($invitees);
             return response()->json([
-                "message" => 'invitees successfully'
+                "message" => 'Invitees Added Successfully'
             ] );
         } catch (\Exception $e) {
             DB::rollBack();
@@ -175,7 +169,7 @@ class InviteeController extends Controller
         }
     }
 
-    //// Api For Flutter
+    //// Api For Support
     public function store(StoreInviteeRequest $request)
     {
         DB::beginTransaction();
@@ -239,7 +233,7 @@ class InviteeController extends Controller
             DB::commit();
 
             return response()->json([
-                "message" => 'invitees successfully'
+                "message" => 'Invitees Added Successfully'
             ] );
         } catch (\Exception $e) {
             DB::rollBack();

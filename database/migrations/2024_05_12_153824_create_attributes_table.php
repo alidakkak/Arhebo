@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('package_id')->references('id')
                 ->on('packages')->onDelete('cascade');
             $table->string('key');
-            //  $table->string('value');
             $table->timestamps();
         });
     }

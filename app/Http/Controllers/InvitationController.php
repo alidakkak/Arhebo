@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateInvitationRequest;
 use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Http\Resources\ShowOrdersResource;
+use App\Models\AttributeInvitation;
 use App\Models\Invitation;
 use App\Models\InvitationInput;
 use App\Models\Invitee;
@@ -80,9 +81,21 @@ class InvitationController extends Controller
                 ]));
             $invitation->invitationInput()->createMany($request->answers ?? []);
             $invitation->InvitationProhibited()->createMany($request->prohibited ?? []);
-            if (! empty($request->features)) {
+            if (!empty($request->features)) {
                 foreach ($request->features as $feature) {
-                    $invitation->features()->attach($feature['feature_id'], ['value' => $feature['value'], 'quantity' => $feature['quantity']]);
+                    $invitation->features()->attach($feature['feature_id'], [
+                        'value' => $feature['value'],
+                        'quantity' => $feature['quantity']
+                    ]);
+                }
+            }
+            if (!empty($request->attributes)) {
+                dd('ali');
+                foreach ($request->attributes as $attribute) {
+                    dd('ali');
+                    $invitation->attributes()->attach($attribute['attribute_id'], [
+                        'value' => $attribute['value']
+                    ]);
                 }
             }
 

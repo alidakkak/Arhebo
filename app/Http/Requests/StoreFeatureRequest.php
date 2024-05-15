@@ -30,7 +30,8 @@ class StoreFeatureRequest extends FormRequest
             'quantity' => 'required|numeric',
             // 'description' => 'required|string',
             // 'description_ar' => 'required|string',
-            'package_id' => ['required', Rule::exists('packages', 'id')],
+            'package_ids' => 'array|required',
+            'package_ids.*' => ['required', Rule::exists('packages', 'id')],
         ];
     }
 }

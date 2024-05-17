@@ -43,9 +43,9 @@ class StoreInvitationRequest extends FormRequest
             'features.*.value' => 'required',
             'features.*.quantity' => 'required',
             'features.*.feature_id' => ['required', Rule::exists('features', 'id')],
-            'attributes' => 'array',
-            'attributes.*.attribute_id' => 'required|exists:attributes,id',
-            'attributes.*.value' => 'required',
+            'Attributes' => 'array',
+            'Attributes.*.attribute_id' => 'required|exists:attributes,id',
+            'Attributes.*.value' => 'required',
         ];
     }
 }

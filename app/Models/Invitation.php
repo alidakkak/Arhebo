@@ -53,7 +53,7 @@ class Invitation extends Model
         return $this->hasMany(Reminder::class);
     }
 
-    public function reception()
+    public function receptions()
     {
         return $this->hasMany(Reception::class);
     }

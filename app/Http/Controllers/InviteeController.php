@@ -6,11 +6,8 @@ use App\Http\Requests\StoreInviteeRequest;
 use App\Http\Requests\UpdateInviteeRequest;
 use App\Http\Resources\InviteeResource;
 use App\Http\Resources\ShowOrdersResource;
-use App\Mail\EmailService;
-use App\Models\AdditionalPackage;
 use App\Models\Invitation;
 use App\Models\Invitee;
-use App\Models\Package;
 use App\Models\QR;
 use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
@@ -102,6 +99,7 @@ class InviteeController extends Controller
             }
         }
     }
+
     /// Api For Flutter
     public function addInvitees(StoreInviteeRequest $request)
     {
@@ -119,6 +117,7 @@ class InviteeController extends Controller
             $number_of_compensation = floor($invitation->number_of_compensation);
             if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
                 DB::rollBack();
+
                 return response()->json([
                     'message' => 'You have reached the maximum number of invitees allowed, including compensations.',
                     'number_of_people' => $number_of_people,
@@ -126,12 +125,12 @@ class InviteeController extends Controller
             }
             $inviteesForWhatsapp = collect();
             foreach ($inviteesData as $invitee) {
-                for($i = 0 ; $i < $invitee['count'] ; $i++){
-                    if ($invitation->number_of_invitees > 0){
+                for ($i = 0; $i < $invitee['count']; $i++) {
+                    if ($invitation->number_of_invitees > 0) {
                         $invitation->number_of_invitees -= 1;
-                    }else if ($invitation->additional_package > 0){
+                    } elseif ($invitation->additional_package > 0) {
                         $invitation->additional_package -= 1;
-                    }else if ($invitation->number_of_compensation > 0){
+                    } elseif ($invitation->number_of_compensation > 0) {
                         $invitation->number_of_compensation -= 1;
                     }
                 }
@@ -156,12 +155,12 @@ class InviteeController extends Controller
             $invitation->save();
             $image = $invitation->Template->image;
             $message = 'نتشرف بدعوتك لحضور حفل زفاف  ليان محمد وسالم أحمد';
-              $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
+            //   $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();
 
             return response()->json([
-                "message" => 'Invitees Added Successfully'
-            ] );
+                'message' => 'Invitees Added Successfully',
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -186,6 +185,7 @@ class InviteeController extends Controller
             $number_of_compensation = floor($invitation->number_of_compensation);
             if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
                 DB::rollBack();
+
                 return response()->json([
                     'message' => 'You have reached the maximum number of invitees allowed, including compensations.',
                     'number_of_people' => $number_of_people,
@@ -195,12 +195,12 @@ class InviteeController extends Controller
             $inviteesForWhatsapp = collect();
 
             foreach ($inviteesData as $invitee) {
-                for($i = 0 ; $i < $invitee['count'] ; $i++){
-                    if ($invitation->number_of_invitees > 0){
+                for ($i = 0; $i < $invitee['count']; $i++) {
+                    if ($invitation->number_of_invitees > 0) {
                         $invitation->number_of_invitees -= 1;
-                    }else if ($invitation->additional_package > 0){
+                    } elseif ($invitation->additional_package > 0) {
                         $invitation->additional_package -= 1;
-                    }else if ($invitation->number_of_compensation > 0){
+                    } elseif ($invitation->number_of_compensation > 0) {
                         $invitation->number_of_compensation -= 1;
                     }
                 }
@@ -221,7 +221,7 @@ class InviteeController extends Controller
                     'link' => $newInvitee->link,
                     'name' => $newInvitee->name,
                 ]);
-//                $invitees[] = $newInvitee;
+                //                $invitees[] = $newInvitee;
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->image = $request->image;
@@ -233,8 +233,8 @@ class InviteeController extends Controller
             DB::commit();
 
             return response()->json([
-                "message" => 'Invitees Added Successfully'
-            ] );
+                'message' => 'Invitees Added Successfully',
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -248,7 +248,7 @@ class InviteeController extends Controller
         if ($request->uuid !== $invitee->uuid) {
             return Response()->json(['message' => 'Access denied. Invalid identifier.'], 403);
         }
-            $invitee->update($request->validated());
+        $invitee->update($request->validated());
 
         $rejectedInviteeIds = Invitee::where('invitation_id', $invitee->invitation_id)
             ->where('status', InviteeTypes::rejected)
@@ -265,7 +265,7 @@ class InviteeController extends Controller
         $number_of_compensation = $invitee->invitation->number_of_compensation;
         $total = $compensation + $number_of_compensation;
         $invitee->invitation->update([
-            'number_of_compensation' => $total
+            'number_of_compensation' => $total,
         ]);
 
         return response()->json(['message' => $request->status == 1 ? 'تم قبول الدعوة بنجاح' : 'تم رفض الدعوة بنجاح']);

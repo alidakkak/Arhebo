@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Invitee;
 use App\Models\QR;
+use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,30 +17,33 @@ class ReceptionEventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $invitationId = $this->invitation->id;
+        $invitation = $this->invitation;
 
-        $attendees = QR::whereHas('invitee', function ($query) use ($invitationId) {
-            $query->where('invitation_id', $invitationId);
+        $attendees = QR::whereHas('invitee', function ($query) use ($invitation) {
+            $query->where('invitation_id', $invitation->id);
         })->where('status', 1)->count();
 
         return [
             'id' => $this->id,
-            'category' => $this->invitation->category->name,
-            'event_name' => $this->invitation->event_name,
-            'inviter' => $this->invitation->inviter,
-            'hijri_date' => $this->invitation->hijri_date,
-            'miladi_date' => $this->invitation->miladi_date,
-            'from' => $this->invitation->from,
-            'to' => $this->invitation->to,
-            'location_name' => $this->invitation->location_name,
-            'location_link' => $this->invitation->location_link,
-            'invitation_text' => $this->invitation->invitation_text,
-            'is_with_qr' => $this->invitation->is_with_qr,
-            'status' => $this->status,
-            'city' => $this->invitation->city,
-            'region' => $this->invitation->region,
-            'template' => $this->invitation->template->image,
-            'invitees' => Invitee::where('invitation_id', $this->invitation->id)->sum('number_of_people'),
+            'category' => $invitation->category->name,
+            'event_name' => $invitation->event_name,
+            'inviter' => $invitation->inviter,
+            'hijri_date' => $invitation->hijri_date,
+            'miladi_date' => $invitation->miladi_date,
+            'from' => $invitation->from,
+            'to' => $invitation->to,
+            'location_name' => $invitation->location_name,
+            'location_link' => $invitation->location_link,
+            'is_with_qr' => $invitation->is_with_qr,
+            'status' => $invitation->status,
+            'city' => $invitation->city,
+            'region' => $invitation->region,
+            'template' => $invitation->template->image,
+            'invited' => Invitee::where('invitation_id', $invitation->id)->count(),
+            'waiting' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::waiting)->count(),
+            'confirmed' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::confirmed)->count(),
+            'rejected' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::rejected)->count(),
+            'invitees' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
             'attendees' => $attendees,
         ];
     }

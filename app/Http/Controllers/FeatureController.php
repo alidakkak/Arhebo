@@ -6,7 +6,6 @@ use App\Http\Requests\StoreFeatureRequest;
 use App\Http\Requests\UpdateFeatureRequest;
 use App\Http\Resources\FeatureResource;
 use App\Models\Feature;
-use App\Models\PackageFeature;
 use Illuminate\Support\Facades\DB;
 
 class FeatureController extends Controller
@@ -51,6 +50,7 @@ class FeatureController extends Controller
             }
             $feature->update($request->all());
             $feature->packages()->sync($request->package_ids);
+
             return response()->json([
                 'message' => 'Updated SuccessFully',
                 'data' => FeatureResource::make($feature),

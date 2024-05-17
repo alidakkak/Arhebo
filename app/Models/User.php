@@ -41,7 +41,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Reminder::class);
     }
 
-    public function reception()
+    public function receptions()
     {
         return $this->hasMany(Reception::class);
     }

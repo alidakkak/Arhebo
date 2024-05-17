@@ -19,16 +19,20 @@ class ReceptionController extends Controller
         $validatedData = $request->validate([
             'invitation_id' => ['required', Rule::exists('invitations', 'id')],
         ]);
-        $receptionList = Reception::where('invitation_id', $validatedData['invitation_id'])->get();
+        $receptionList = Reception::where('invitation_id', $validatedData['invitation_id'])
+            ->where('type', $request->type)
+            ->get();
 
         return ReceptionResource::collection($receptionList);
     }
 
     ///Reception Event
-    public function myEvent()
+    public function myEvent(Request $request)
     {
         $user = auth()->user();
-        $reception = Reception::where('user_id', $user->id)->get();
+        $reception = Reception::where('user_id', $user->id)
+            ->where('type', $request->type)
+            ->get();
 
         return ReceptionEventResource::collection($reception);
     }
@@ -51,6 +55,7 @@ class ReceptionController extends Controller
         foreach ($receptionData as $reception) {
             $isExist = Reception::where('user_id', $reception['user_id'])
                 ->where('invitation_id', $reception['invitation_id'])
+                ->where('type', $reception['type'])
                 ->exists();
             if ($isExist) {
                 continue;
@@ -58,6 +63,7 @@ class ReceptionController extends Controller
             $newReception = Reception::create([
                 'user_id' => $reception['user_id'],
                 'invitation_id' => $reception['invitation_id'],
+                'type' => $reception['type'],
             ]);
             $receptions[] = $newReception;
         }

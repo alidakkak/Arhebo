@@ -4,8 +4,8 @@ namespace App\Http\Requests;
 
 use App\Rules\UniquePhoneNumberWithinRequest;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class StoreInviteeRequest extends FormRequest
 {
@@ -38,6 +38,7 @@ class StoreInviteeRequest extends FormRequest
                 'invitees.*.count' => 'required|integer|min:1',
             ];
         }
+
         return [
             'invitation_id' => ['required', Rule::exists('invitations', 'id')],
             'invitees.*.name' => 'required',
@@ -52,5 +53,5 @@ class StoreInviteeRequest extends FormRequest
             'message' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ];
-     }
+    }
 }

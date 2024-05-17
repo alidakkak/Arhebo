@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\QR;
 use Illuminate\Console\Command;
 
 class messageThanksToAttendees extends Command

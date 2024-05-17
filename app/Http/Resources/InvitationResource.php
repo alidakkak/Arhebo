@@ -40,6 +40,7 @@ class InvitationResource extends JsonResource
         $invitation = Invitation::find($this->id);
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
+
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,

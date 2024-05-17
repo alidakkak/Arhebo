@@ -17,6 +17,7 @@ return new class extends Migration
                 ->on('users')->onDelete('cascade');
             $table->foreignId('invitation_id')->nullable()->references('id')
                 ->on('invitations')->onDelete('cascade');
+            $table->enum('type', ['1', '2']);  /// 1 => reception , 2 => co-host
             $table->timestamps();
         });
     }

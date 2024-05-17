@@ -23,6 +23,9 @@ class ReceptionEventResource extends JsonResource
             $query->where('invitation_id', $invitation->id);
         })->where('status', 1)->count();
 
+        $number_of_compensation = floor($invitation->number_of_compensation);
+        $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
+
         return [
             'id' => $this->id,
             'category' => $invitation->category->name,
@@ -43,6 +46,7 @@ class ReceptionEventResource extends JsonResource
             'waiting' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::waiting)->count(),
             'confirmed' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::confirmed)->count(),
             'rejected' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::rejected)->count(),
+            'remaining' => $remaining,
             'invitees' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
             'attendees' => $attendees,
         ];

@@ -11,6 +11,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InputController;
+use App\Http\Controllers\NicknameController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PackageDetalisController;
@@ -145,4 +146,11 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::get('attributes', [AttributeController::class, 'index']);
     Route::post('attributes', [AttributeController::class, 'store']);
     Route::delete('attributes/{attribute}', [AttributeController::class, 'delete']);
+
+    ////  Nickname
+    Route::get('nicknames', [NicknameController::class, 'index']);
+    Route::post('nicknames', [NicknameController::class, 'store']);
+    Route::patch('nicknames/{nicknameId}', [NicknameController::class, 'update']);
+    Route::get('nicknames/{nicknameId}', [NicknameController::class, 'show']);
+    Route::delete('nicknames/{nicknameId}', [NicknameController::class, 'delete']);
 });

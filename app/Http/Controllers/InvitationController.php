@@ -38,10 +38,16 @@ class InvitationController extends Controller
 
     public function myEvent()
     {
-        $user = auth()->user();
-        $invitation = Invitation::where('user_id', $user->id)->get();
+        $userId = auth()->id();
 
-        return InvitationResource::collection($invitation);
+        $invitations = Invitation::where('user_id', $userId)
+            ->orwhereHas('receptions', function ($query) use ($userId) {
+                $query->where('type', 2)
+                    ->where('user_id', $userId);
+            })
+            ->get();
+
+        return InvitationResource::collection($invitations);
     }
 
     public function showEvent($invitation)

@@ -40,6 +40,7 @@ class InvitationResource extends JsonResource
         $invitation = Invitation::find($this->id);
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
+        $isAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->isNotEmpty();
 
         return [
             'id' => $this->id,
@@ -55,6 +56,7 @@ class InvitationResource extends JsonResource
             'status' => $this->status,
             'city' => $this->city,
             'region' => $this->region,
+            'isAdditionalInvitee' => $isAdditionalInvitee,
             'invited' => Invitee::where('invitation_id', $this->id)->count(),
             'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count(),
             'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->count(),

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('photo');
             $table->longText('description');
             $table->longText('description_ar');
+            $table->longText('message')->nullable();
+            $table->longText('message_ar')->nullable();
             $table->string('category_code', 2)->unique();
             $table->softDeletes();
             $table->timestamps();

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreNicknameRequest;
 use App\Http\Requests\UpdateNicknameRequest;
 use App\Http\Resources\NicknameResource;
 use App\Models\Nickname;
-use Illuminate\Http\Request;
 
 class NicknameController extends Controller
 {

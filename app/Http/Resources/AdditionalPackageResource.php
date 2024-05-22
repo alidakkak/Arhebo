@@ -18,6 +18,7 @@ class AdditionalPackageResource extends JsonResource
             'id' => $this->id,
             'price' => $this->price,
             'number_of_invitees' => $this->number_of_invitees,
+            'created_at' => $this->created_at->format('Y-m-d'),
         ];
     }
 }

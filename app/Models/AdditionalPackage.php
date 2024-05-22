@@ -15,4 +15,9 @@ class AdditionalPackage extends Model
     {
         return $this->hasMany(InvitationAdditionalPackage::class);
     }
+
+    public function invitations()
+    {
+        return $this->belongsToMany(Invitation::class, 'invitation_additional_packages', 'additional_package_id', 'invitation_id');
+    }
 }

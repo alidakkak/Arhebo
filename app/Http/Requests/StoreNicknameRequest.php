@@ -22,7 +22,7 @@ class StoreNicknameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nickname' => 'required|string'
+            'nickname' => 'required|string',
         ];
     }
 }

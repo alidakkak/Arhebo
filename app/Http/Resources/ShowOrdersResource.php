@@ -3,8 +3,11 @@
 namespace App\Http\Resources;
 
 use App\Models\Input;
+use App\Models\Invitation;
+use App\Models\Invitee;
 use App\Models\Message;
 use App\Models\ProhibitedThing;
+use App\Statuses\InviteeTypes;
 use App\Statuses\MessageTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -46,13 +49,17 @@ class ShowOrdersResource extends JsonResource
         ]
         );
 
-        $message_delete = Message::where('invitation_id', $this->id)
-            ->where('type', MessageTypes::deleted)->value('title');
-
-        $message_update = Message::where('invitation_id', $this->id)
-            ->where('type', MessageTypes::updated)
-            ->select('id', 'title')
+        $message = Message::where('invitation_id', $this->id)
+            ->orderBy('created_at', 'desc')
             ->get();
+
+        //        $message_update = Message::where('invitation_id', $this->id)
+        //            ->where('type', MessageTypes::updated)
+        //            ->select('id', 'title')
+        //            ->get();
+        $invitation = Invitation::find($this->id);
+        $number_of_compensation = floor($invitation->number_of_compensation);
+        $remaining = $invitation->number_of_invitees + $invitation->additional_package;
 
         return [
             'id' => $this->id,
@@ -63,18 +70,29 @@ class ShowOrdersResource extends JsonResource
             'from' => $this->from,
             'to' => $this->to,
             'location_link' => $this->location_link,
-            'invitation_text' => $this->invitation_text,
             'is_with_qr' => $this->is_with_qr,
             'status' => $this->status,
             'city' => $this->city,
             'region' => $this->region,
-            'message_when_delete_invitation' => $message_delete,
-            'message_when_update_invitation' => $message_update,
+            'message' => $message,
+            'packageName' => $this->package->name,
+            'packageDescription' => $this->package->description,
+            'packageDescription_ar' => $this->package->description_ar,
+            'discount' => $this->package->discount,
+            'invited' => Invitee::where('invitation_id', $this->id)->count(),
+            'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->count(),
+            'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->count(),
+            'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->count(),
+            'remaining' => $remaining,
+            'compensation' => $number_of_compensation,
+            //'message_when_update_invitation' => $message_update,
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),
             'invitationInput' => $invitaionInput,
             'template' => asset($this->template->image),
+            'extraFeature' => FeatureResource::collection($this->features),
+            'additionalPackage' => AdditionalPackageResource::collection($this->additionalPackges),
         ];
     }
 }

@@ -24,6 +24,8 @@ class CategoryResource extends JsonResource
             'description' => $this->description,
             'description_ar' => $this->description_ar,
             'category_code' => $this->category_code,
+            'message' => $this->message,
+            'message_ar' => $this->message_ar,
             'template' => TemplateResource::collection($this->Template),
         ];
     }

@@ -45,6 +45,7 @@ class ShowOrdersResource extends JsonResource
 
         $invitaionInput = $this->invitationInput->map(fn ($input) => [
             'name' => Input::where('id', $input->input_id)->first()->input_name,
+            'name_ar' => Input::where('id', $input->input_id)->first()->input_name_ar,
             'value' => $input->answer,
         ]
         );

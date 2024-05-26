@@ -54,13 +54,10 @@ class ShowOrdersResource extends JsonResource
             ->orderBy('created_at', 'desc')
             ->get();
 
-        //        $message_update = Message::where('invitation_id', $this->id)
-        //            ->where('type', MessageTypes::updated)
-        //            ->select('id', 'title')
-        //            ->get();
         $invitation = Invitation::find($this->id);
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package;
+        $additionalPackages = $this->additionalPackages->sum('number_of_invitees');
 
         return [
             'id' => $this->id,
@@ -79,7 +76,7 @@ class ShowOrdersResource extends JsonResource
             'packageName' => $this->package->name,
             'packageDescription' => $this->package->description,
             'packageDescription_ar' => $this->package->description_ar,
-            'packageDetail' => $this->packageDetail->number_of_invitees,
+            'maximumNumberCanInvitee' => $this->packageDetail->number_of_invitees + $additionalPackages,
             'discount' => $this->package->discount,
             'invited' => Invitee::where('invitation_id', $this->id)->sum('number_of_people'),
             'waiting' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::waiting)->sum('number_of_people'),
@@ -94,7 +91,7 @@ class ShowOrdersResource extends JsonResource
             'invitationInput' => $invitaionInput,
             'template' => asset($this->template->image),
             'extraFeature' => FeatureResource::collection($this->features),
-            'additionalPackage' => AdditionalPackageResource::collection($this->additionalPackges),
+            'additionalPackage' => AdditionalPackageResource::collection($this->additionalPackages),
         ];
     }
 }

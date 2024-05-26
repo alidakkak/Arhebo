@@ -242,6 +242,16 @@ class InviteeController extends Controller
         }
     }
 
+    /// API For Support To Get Image
+    public function getImage($invitationID)
+    {
+        $invitation = Invitation::find($invitationID);
+        if (!$invitation) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        return response(['image' => url($invitation->image)]);
+    }
+
     /// API For conformed Or Rejected Invitation
     public function update(UpdateInviteeRequest $request, Invitee $invitee)
     {

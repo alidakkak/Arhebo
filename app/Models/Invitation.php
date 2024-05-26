@@ -13,6 +13,10 @@ class Invitation extends Model
 
     public function setImageAttribute($image)
     {
+        if (!$image) {
+            $this->attributes['image'] = null;
+            return;
+        }
         $newImageName = uniqid().'_'.'invitations_image'.'.'.$image->extension();
         $image->move(public_path('invitations_image'), $newImageName);
         $this->attributes['image'] = '/'.'invitations_image'.'/'.$newImageName;
@@ -78,7 +82,7 @@ class Invitation extends Model
         return $this->hasMany(InvitationAdditionalPackage::class);
     }
 
-    public function additionalPackges()
+    public function additionalPackages()
     {
         return $this->belongsToMany(AdditionalPackage::class, 'invitation_additional_packages', 'invitation_id', 'additional_package_id');
     }

@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('status')->default(InvitationTypes::active);
             $table->boolean('is_with_qr')->default(true);
             $table->string('image')->nullable();
+            $table->string('message')->nullable();
             $table->double('number_of_invitees');
             $table->double('number_of_compensation')->default(0);
             $table->double('additional_package')->default(0);

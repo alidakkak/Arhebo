@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('package_id')->constrained('packages')->cascadeOnDelete();
             $table->foreignId('package_detail_id')->constrained('package_details')->cascadeOnDelete();
-            $table->foreignId('template_id')->constrained('templates')->cascadeOnDelete();
+            $table->foreignId('template_id')->nullable()->constrained('templates')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('hijri_date');
             $table->string('miladi_date');
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('status')->default(InvitationTypes::active);
             $table->boolean('is_with_qr')->default(true);
             $table->string('image')->nullable();
-            $table->string('message')->nullable();
+            $table->string('text_message')->nullable();
             $table->double('number_of_invitees');
             $table->double('number_of_compensation')->default(0);
             $table->double('additional_package')->default(0);

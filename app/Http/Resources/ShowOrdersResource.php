@@ -72,7 +72,6 @@ class ShowOrdersResource extends JsonResource
             'status' => $this->status,
             'city' => $this->city,
             'region' => $this->region,
-            'message' => $message,
             'packageName' => $this->package->name,
             'packageDescription' => $this->package->description,
             'packageDescription_ar' => $this->package->description_ar,
@@ -84,12 +83,15 @@ class ShowOrdersResource extends JsonResource
             'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->sum('number_of_people'),
             'remaining' => $remaining,
             'compensation' => $number_of_compensation,
+            'textMessage' => $this->text_message,
+            'image' => asset($this->image),
+            'template' => asset($this->template->image),
+            'message' => $message,
             'allInvited' => InviteeResource::collection(Invitee::where('invitation_id', $this->id)->get()) ,
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),
             'invitationInput' => $invitaionInput,
-            'template' => asset($this->template->image),
             'extraFeature' => FeatureResource::collection($this->features),
             'additionalPackage' => AdditionalPackageResource::collection($this->additionalPackages),
         ];

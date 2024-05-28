@@ -69,6 +69,7 @@ class InvitationResource extends JsonResource
             'invitationInput' => InvitationInputResource::collection($this->invitationInput),
             'InvitationFeature' => FeatureResource::collection($this->features),
             'template' => TemplateResource::make($this->template),
+            'attribute' => AttributeResource::collection($this->package->attribute),
             //            'message' => $this->message
         ];
     }

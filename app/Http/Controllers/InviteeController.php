@@ -224,11 +224,14 @@ class InviteeController extends Controller
                 //                $invitees[] = $newInvitee;
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $invitation->image = $request->image;
             $invitation->save();
             $image = $invitation->image;
+            $message = $invitation->message;
+            if ($image == null|| $message == null) {
+                DB::rollBack();
+                return response()->json(['message' => 'You must add a picture and a message']);
+            }
 
-            $message = $request->input('message');
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();
 
@@ -242,14 +245,31 @@ class InviteeController extends Controller
         }
     }
 
-    /// API For Support To Get Image
+    /// API For Support To Get Image And Message
     public function getImage($invitationID)
     {
         $invitation = Invitation::find($invitationID);
         if (!$invitation) {
             return response()->json(['message' => 'Not Found'], 404);
         }
-        return response(['image' => url($invitation->image)]);
+        return response()->json([
+            'image' => url($invitation->image),
+            'message' => $invitation->message,
+        ]);
+    }
+
+    /// API To Store Image And Message
+    public function storeImage(Request $request)
+    {
+        $invitation = Invitation::find($request->invitation_id);
+        if (!$invitation) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        $invitation->update([
+            'image' => $request->file('image'),
+            'text_message' => $request->input('message'),
+        ]);
+        return response()->json(['message' => 'Added Successfully']);
     }
 
     /// API For conformed Or Rejected Invitation

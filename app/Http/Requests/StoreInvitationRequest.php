@@ -24,7 +24,7 @@ class StoreInvitationRequest extends FormRequest
     {
         return [
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
-            'template_id' => ['required', Rule::exists('templates', 'id')->whereNull('deleted_at')],
+            'template_id' => ['nullable', Rule::exists('templates', 'id')->whereNull('deleted_at')],
             'package_id' => ['required', Rule::exists('packages', 'id')->whereNull('deleted_at')],
             'package_detail_id' => ['required', Rule::exists('package_details', 'id')->whereNull('deleted_at')],
             'prohibited.*.prohibited_thing_id' => ['required', Rule::exists('prohibited_things', 'id')],

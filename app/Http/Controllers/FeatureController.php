@@ -49,8 +49,9 @@ class FeatureController extends Controller
                 return response()->json(['message' => 'Not Found'], 404);
             }
             $feature->update($request->all());
-            $feature->packages()->sync($request->package_ids);
-
+            if ($request->package_ids){
+                $feature->packages()->sync($request->package_ids);
+            }
             return response()->json([
                 'message' => 'Updated SuccessFully',
                 'data' => FeatureResource::make($feature),

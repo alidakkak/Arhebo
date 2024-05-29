@@ -94,6 +94,7 @@ class ShowOrdersResource extends JsonResource
             'invitationInput' => $invitaionInput,
             'extraFeature' => FeatureResource::collection($this->features),
             'additionalPackage' => AdditionalPackageResource::collection($this->additionalPackages),
+            'attribute' => AttributeResource::collection($this->attributes)
         ];
     }
 }

@@ -24,6 +24,7 @@ class InvitationSupportResource extends JsonResource
             'status' => $this->status,
             'action' => $this->user->phone,
             'withReminder' => ! collect($this->reminder)->isEmpty(),
+            'attribute' => AttributeResource::collection($this->attributes),
         ];
     }
 }

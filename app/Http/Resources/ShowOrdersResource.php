@@ -40,7 +40,6 @@ class ShowOrdersResource extends JsonResource
                 'region' => $this->invitation->region,
                 'QRCode' => $this->qr,
                 'template' => asset($this->invitation->image),
-                'attribute' => AttributeResource::collection($this->attributes),
             ];
         }
 

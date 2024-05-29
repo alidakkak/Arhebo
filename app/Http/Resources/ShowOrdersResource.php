@@ -85,7 +85,7 @@ class ShowOrdersResource extends JsonResource
             'compensation' => $number_of_compensation,
             'textMessage' => $this->text_message,
             'image' => $this->image ? asset($this->image) : null,
-            'template' => $this->template->image ? asset($this->template->image) : null,
+            'template' => $this->template ? asset($this->template->image) : null,
             'message' => $message,
             'allInvited' => InviteeResource::collection(Invitee::where('invitation_id', $this->id)->get()) ,
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {

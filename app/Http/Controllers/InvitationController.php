@@ -22,6 +22,7 @@ class InvitationController extends Controller
     public function index()
     {
         $invitation = Invitation::all();
+        $invitation->orderBy('created_at', 'desc');
 
         return InvitationSupportResource::collection($invitation);
     }

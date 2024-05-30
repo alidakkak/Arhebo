@@ -27,7 +27,8 @@ class CustomUniquePhoneNumber implements Rule
             ->where($this->column, $value);
 
         if ($this->exceptId) {
-            $query->where('id', '!=', $this->exceptId);
+            $query->where('id', '!=', $this->exceptId)
+                ->where('invitation_id', $this->invitationId);
         }
 
         $exists = $query->first();

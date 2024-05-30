@@ -14,11 +14,11 @@ class CustomUniquePhoneNumber implements Rule
     private $invitationId;
     private $duplicateNumber = null;
 
-    public function __construct($table, $column, $invitationId)
+    public function __construct($table, $column, $invitationId = null)
     {
         $this->table = $table;
         $this->column = $column;
-        $this->$invitationId = $invitationId;
+        $this->invitationId = $invitationId;
     }
 
     public function passes($attribute, $value)
@@ -39,6 +39,6 @@ class CustomUniquePhoneNumber implements Rule
 
     public function message()
     {
-        return "The phone number {$this->duplicateNumber} has already been taken.";
+        return "The phone number {$this->duplicateNumber} is already used for this invitation.";
     }
 }

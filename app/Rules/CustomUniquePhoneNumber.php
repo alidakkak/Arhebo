@@ -14,7 +14,7 @@ class CustomUniquePhoneNumber implements Rule
     private $invitationId;
     private $duplicateNumber = null;
 
-    public function __construct($table, $column, $invitationId = null)
+    public function __construct($table, $column, $invitationId)
     {
         $this->table = $table;
         $this->column = $column;
@@ -28,9 +28,6 @@ class CustomUniquePhoneNumber implements Rule
             ->where('invitation_id', $this->invitationId);
 
         $exists = $query->exists();
-
-
-//        $exists = $query->first();
 
         if ($exists) {
             $this->duplicateNumber = $value;

@@ -32,9 +32,26 @@ class UniquePhoneNumberWithinRequest implements Rule
     public function passes($attribute, $value)
     {
         $numbers = Arr::pluck($this->data, $this->attribute);
-
-        return count($numbers) === count(array_unique($numbers));
+        $uniqueNumbers = array_unique($numbers);
+        if (count($numbers) !== count($uniqueNumbers)) {
+            // Find the first duplicate number
+            $this->duplicateNumber = $this->findFirstDuplicate($numbers);
+            return false;
+        }
+        return true;
     }
+
+    private function findFirstDuplicate($numbers)
+    {
+        $counted = array_count_values($numbers);
+        foreach ($counted as $number => $count) {
+            if ($count > 1) {
+                return $number;
+            }
+        }
+        return null; // No duplicates found (shouldn't happen in this context)
+    }
+
 
     /**
      * Get the validation error message.
@@ -43,6 +60,7 @@ class UniquePhoneNumberWithinRequest implements Rule
      */
     public function message()
     {
-        return 'Each phone number must be unique within the request.';
+        return 'The phone number ' . $this->duplicateNumber . ' must be unique within the request.';
     }
+
 }

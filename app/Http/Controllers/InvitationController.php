@@ -161,7 +161,7 @@ class InvitationController extends Controller
             } catch (\Exception $e) {
                 DB::rollBack();
 
-                return response(['message' => 'An error occurred while deleting the invitation and creating the apology message'.'  '.$e->getMessage()], 500);
+                return response(['message' => 'An error occurred while deleting the invitation and creating the apology message'], 500);
             }
         }
 

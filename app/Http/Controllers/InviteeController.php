@@ -153,7 +153,7 @@ class InviteeController extends Controller
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->save();
-            $image = $invitation->Template->image;
+            $image = $invitation->Template ? $invitation->Template->image : null;
             $message = 'نتشرف بدعوتك لحضور حفل زفاف  ليان محمد وسالم أحمد';
             //   $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();

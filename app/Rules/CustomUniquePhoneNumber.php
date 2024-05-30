@@ -29,12 +29,8 @@ class CustomUniquePhoneNumber implements Rule
 
         $exists = $query->exists();
 
-        if ($this->exceptId) {
-            $query->where('id', '!=', $this->exceptId)
-                ->where('invitation_id', $this->invitationId);
-        }
 
-        $exists = $query->first();
+//        $exists = $query->first();
 
         if ($exists) {
             $this->duplicateNumber = $value;

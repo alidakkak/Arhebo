@@ -17,7 +17,6 @@ return [
 
     'paths' => [
         'api/*', 'sanctum/csrf-cookie',
-        public_path('/templates_image/*')
     ],
 
     'allowed_methods' => ['*'],

@@ -11,20 +11,23 @@ class CustomUniquePhoneNumber implements Rule
 {
     private $table;
     private $column;
-    private $exceptId;
+    private $invitationId;
     private $duplicateNumber = null;
 
-    public function __construct($table, $column, $exceptId = null)
+    public function __construct($table, $column, $invitationId = null)
     {
         $this->table = $table;
         $this->column = $column;
-        $this->exceptId = $exceptId;
+        $this->$invitationId = $invitationId;
     }
 
     public function passes($attribute, $value)
     {
         $query = DB::table($this->table)
-            ->where($this->column, $value);
+            ->where($this->column, $value)
+            ->where('invitation_id', $this->invitationId);
+
+        $exists = $query->exists();
 
         if ($this->exceptId) {
             $query->where('id', '!=', $this->exceptId)

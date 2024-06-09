@@ -12,6 +12,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\InviteeController;
+use App\Http\Controllers\NicknameController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PrivacyPolicyController;
@@ -125,6 +126,9 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     ////  Additional Package
     Route::get('additionalPackage', [AdditionalPackageController::class, 'index']);
     Route::post('additionalInvitee', [AdditionalPackageController::class, 'additionalInvitee']);
+
+    ////  Nickname
+    Route::get('nicknames', [NicknameController::class, 'index']);
 
 });
 

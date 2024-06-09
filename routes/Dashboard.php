@@ -148,7 +148,6 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::delete('attributes/{attribute}', [AttributeController::class, 'delete']);
 
     ////  Nickname
-    Route::get('nicknames', [NicknameController::class, 'index']);
     Route::post('nicknames', [NicknameController::class, 'store']);
     Route::patch('nicknames/{nicknameId}', [NicknameController::class, 'update']);
     Route::get('nicknames/{nicknameId}', [NicknameController::class, 'show']);

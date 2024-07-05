@@ -165,7 +165,7 @@ class InviteeController extends Controller
             DB::rollBack();
 
             return response()->json(['message' => 'An error occurred while processing your request.',
-            'err' => $e->getMessage(),
+                'err' => $e->getMessage(),
             ], 500);
         }
     }
@@ -229,8 +229,9 @@ class InviteeController extends Controller
             $invitation->save();
             $image = $invitation->image;
             $message = $invitation->message;
-            if ($image == null|| $message == null) {
+            if ($image == null || $message == null) {
                 DB::rollBack();
+
                 return response()->json(['message' => 'You must add a picture and a message']);
             }
 
@@ -251,9 +252,10 @@ class InviteeController extends Controller
     public function getImage($invitationID)
     {
         $invitation = Invitation::find($invitationID);
-        if (!$invitation) {
+        if (! $invitation) {
             return response()->json(['message' => 'Not Found'], 404);
         }
+
         return response()->json([
             'image' => url($invitation->image),
             'message' => $invitation->message,
@@ -264,13 +266,14 @@ class InviteeController extends Controller
     public function storeImage(Request $request)
     {
         $invitation = Invitation::find($request->invitation_id);
-        if (!$invitation) {
+        if (! $invitation) {
             return response()->json(['message' => 'Not Found'], 404);
         }
         $invitation->update([
             'image' => $request->file('image'),
             'text_message' => $request->input('message'),
         ]);
+
         return response()->json(['message' => 'Added Successfully']);
     }
 

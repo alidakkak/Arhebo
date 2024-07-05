@@ -25,7 +25,7 @@ class StoreApologyRequest extends FormRequest
         return [
             'user_id' => [Rule::exists('user', 'id')],
             'invitation_id' => [Rule::exists('invitations', 'id')],
-//            'title' => 'required|string',
+            //            'title' => 'required|string',
         ];
     }
 }

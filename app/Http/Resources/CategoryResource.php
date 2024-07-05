@@ -15,6 +15,8 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $templates = $this->Template()->paginate(10);
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -26,7 +28,17 @@ class CategoryResource extends JsonResource
             'category_code' => $this->category_code,
             'message' => $this->message,
             'message_ar' => $this->message_ar,
-            'template' => TemplateResource::collection($this->Template),
+            'template' => TemplateResource::collection($templates),
+            'pagination' => [
+                'total' => $templates->total(),
+                'per_page' => $templates->perPage(),
+                'current_page' => $templates->currentPage(),
+                'last_page' => $templates->lastPage(),
+                'next_page_url' => $templates->nextPageUrl(),
+                'prev_page_url' => $templates->previousPageUrl(),
+                'first_page_url' => $templates->url(1),
+                'last_page_url' => $templates->url($templates->lastPage()),
+            ],
         ];
     }
 }

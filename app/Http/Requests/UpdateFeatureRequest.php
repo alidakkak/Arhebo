@@ -26,7 +26,7 @@ class UpdateFeatureRequest extends FormRequest
             'name' => 'string',
             'name_ar' => 'string',
             'price' => 'numeric',
-//            'type' => 'required',
+            //            'type' => 'required',
             'quantity' => 'numeric',
             // 'description' => 'required|string',
             // 'description_ar' => 'required|string',

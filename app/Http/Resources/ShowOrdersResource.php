@@ -8,7 +8,6 @@ use App\Models\Invitee;
 use App\Models\Message;
 use App\Models\ProhibitedThing;
 use App\Statuses\InviteeTypes;
-use App\Statuses\MessageTypes;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -87,7 +86,7 @@ class ShowOrdersResource extends JsonResource
             'image' => $this->image ? asset($this->image) : null,
             'template' => $this->template ? asset($this->template->image) : null,
             'message' => $message,
-            'allInvited' => InviteeResource::collection(Invitee::where('invitation_id', $this->id)->get()) ,
+            'allInvited' => InviteeResource::collection(Invitee::where('invitation_id', $this->id)->get()),
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),

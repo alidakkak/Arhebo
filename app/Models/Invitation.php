@@ -13,8 +13,9 @@ class Invitation extends Model
 
     public function setImageAttribute($image)
     {
-        if (!$image) {
+        if (! $image) {
             $this->attributes['image'] = null;
+
             return;
         }
         $newImageName = uniqid().'_'.'invitations_image'.'.'.$image->extension();

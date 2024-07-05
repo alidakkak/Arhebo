@@ -36,8 +36,10 @@ class UniquePhoneNumberWithinRequest implements Rule
         if (count($numbers) !== count($uniqueNumbers)) {
             // Find the first duplicate number
             $this->duplicateNumber = $this->findFirstDuplicate($numbers);
+
             return false;
         }
+
         return true;
     }
 
@@ -49,9 +51,9 @@ class UniquePhoneNumberWithinRequest implements Rule
                 return $number;
             }
         }
+
         return null; // No duplicates found (shouldn't happen in this context)
     }
-
 
     /**
      * Get the validation error message.
@@ -60,7 +62,6 @@ class UniquePhoneNumberWithinRequest implements Rule
      */
     public function message()
     {
-        return 'The phone number ' . $this->duplicateNumber . ' must be unique within the request.';
+        return 'The phone number '.$this->duplicateNumber.' must be unique within the request.';
     }
-
 }

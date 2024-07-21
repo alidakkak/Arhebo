@@ -22,7 +22,7 @@ class InviteeResource extends JsonResource
             'number_of_people' => $this->number_of_people,
             'message' => $this->apology_message ?: $this->accept_message,
             'status' => $this->status,
-            'template_photo' => $this->invitation->Template->image,
+            'template_photo' => $this->invitation->Template ? $this->invitation->Template->image : null,
             'link' => $this->link,
             'uuid' => $this->uuid,
             'QRCode' => $this->qr,

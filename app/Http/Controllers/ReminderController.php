@@ -31,6 +31,18 @@ class ReminderController extends Controller
     {
         try {
             $user = auth()->user();
+            $invitationId = $request->input('invitation_id');
+
+            $existingRemindersCount = Reminder::where('user_id', $user->id)
+                ->where('invitation_id', $invitationId)
+                ->count();
+
+            $maxReminders = 1;
+
+            if ($existingRemindersCount >= $maxReminders) {
+                return response()->json(['message' => 'You have reached the maximum number of reminders allowed for this invitation.'], 403);
+            }
+
             $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->all()));
 
             return ReminderResource::make($reminder);
@@ -38,6 +50,8 @@ class ReminderController extends Controller
             return response()->json(['message' => 'error'], 500);
         }
     }
+
+
 
     public function sendWhatsAppReminder($invitationID)
     {

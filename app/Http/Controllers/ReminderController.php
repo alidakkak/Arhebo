@@ -35,12 +35,10 @@ class ReminderController extends Controller
 
             $existingRemindersCount = Reminder::where('user_id', $user->id)
                 ->where('invitation_id', $invitationId)
-                ->count();
+                ->first();
 
-            $maxReminders = 1;
-
-            if ($existingRemindersCount >= $maxReminders) {
-                return response()->json(['message' => 'You have reached the maximum number of reminders allowed for this invitation.'], 403);
+            if ($existingRemindersCount) {
+                return response()->json(['message' => trans('message.reminder')], 400);
             }
 
             $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->all()));

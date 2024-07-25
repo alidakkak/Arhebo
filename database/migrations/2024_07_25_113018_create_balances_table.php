@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reminders', function (Blueprint $table) {
+        Schema::create('balances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invitation_id')->references('id')
-                ->on('invitations')->onDelete('cascade');
-            $table->foreignId('user_id')->references('id')
-                ->on('users')->onDelete('cascade');
-            //            $table->text('title');
+            $table->double('balance');
+            $table->double('history');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reminders');
+        Schema::dropIfExists('balances');
     }
 };

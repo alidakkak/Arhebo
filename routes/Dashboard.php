@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CouponController;
@@ -152,4 +153,7 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::patch('nicknames/{nicknameId}', [NicknameController::class, 'update']);
     Route::get('nicknames/{nicknameId}', [NicknameController::class, 'show']);
     Route::delete('nicknames/{nicknameId}', [NicknameController::class, 'delete']);
+
+    ////  Balance
+    Route::post('balances', [BalanceController::class, 'store']);
 });

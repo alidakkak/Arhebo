@@ -96,7 +96,32 @@ class AuthController extends Controller
      */
     public function userProfile()
     {
-        return response()->json(auth()->user());
+        $user = auth()->user();
+
+        if ($user) {
+            return response()->json([
+                'data' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'phone' => $user->phone,
+                    'location' => $user->location,
+                    'image' => $user->image,
+                    'type' => $user->type,
+                    'balance' => $user->balances->sum('balance'),
+                ],
+                'history' => $user->balances->map(function ($balance) {
+                    return [
+                        'id' => $balance->id,
+                        'history' => $balance->history,
+                    ];
+                }),
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'User not authenticated',
+            ], 401);
+        }
     }
 
     public function update(UpdateProfileRequest $request, User $user)

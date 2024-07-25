@@ -51,6 +51,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Message::class);
     }
 
+    public function balances()
+    {
+        return $this->hasMany(Balance::class);
+    }
+
     public function setImageAttribute($image)
     {
         $newImageName = uniqid().'_'.'user_image'.'.'.$image->extension();

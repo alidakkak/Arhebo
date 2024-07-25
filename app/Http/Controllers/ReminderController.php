@@ -33,11 +33,11 @@ class ReminderController extends Controller
             $user = auth()->user();
             $invitationId = $request->input('invitation_id');
 
-            $existingRemindersCount = Reminder::where('user_id', $user->id)
+            $existingReminders = Reminder::where('user_id', $user->id)
                 ->where('invitation_id', $invitationId)
                 ->first();
 
-            if ($existingRemindersCount) {
+            if ($existingReminders) {
                 return response()->json(['message' => trans('message.reminder')], 400);
             }
 
@@ -48,8 +48,6 @@ class ReminderController extends Controller
             return response()->json(['message' => 'error'], 500);
         }
     }
-
-
 
     public function sendWhatsAppReminder($invitationID)
     {

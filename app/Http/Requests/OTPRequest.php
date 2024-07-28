@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBalanceRequest extends FormRequest
+class OTPRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class StoreBalanceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'balance' => 'required|numeric|min:0',
-            'user_id' => 'required|exists:users,id',
+            'email' => 'required|email',
+            'otp' => 'required|integer',
         ];
     }
 }

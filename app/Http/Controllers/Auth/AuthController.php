@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OTPRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Mail\EmailService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -65,9 +67,9 @@ class AuthController extends Controller
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
-        //          $user->generate_code();
-        //          EmailService::sendHtmlEmail($user->email,$user->code);
-        //           $user->reset_code();
+        $otp = $user->generate_code();
+        EmailService::sendHtmlEmail($user->email, $otp);
+
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
@@ -75,6 +77,21 @@ class AuthController extends Controller
             'access_token' => $token,
             'user' => $user,
         ], 201);
+    }
+
+    public function emailVerification(OTPRequest $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        if ($user->verifyOtp($request->otp)) {
+            return response()->json(['message' => 'OTP verified successfully.'], 200);
+        } else {
+            return response()->json(['message' => 'Invalid or expired OTP.'], 400);
+        }
     }
 
     /**
@@ -98,30 +115,7 @@ class AuthController extends Controller
     {
         $user = auth()->user();
 
-        if ($user) {
-            return response()->json([
-                'data' => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'phone' => $user->phone,
-                    'location' => $user->location,
-                    'image' => $user->image,
-                    'type' => $user->type,
-                    'balance' => $user->balances->sum('balance'),
-                ],
-                'history' => $user->balances->map(function ($balance) {
-                    return [
-                        'id' => $balance->id,
-                        'history' => $balance->history,
-                    ];
-                }),
-            ]);
-        } else {
-            return response()->json([
-                'error' => 'User not authenticated',
-            ], 401);
-        }
+        return $user;
     }
 
     public function update(UpdateProfileRequest $request, User $user)

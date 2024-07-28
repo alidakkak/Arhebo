@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('image')->nullable();
             $table->integer('type')->default(UserTypes::USER);
+            $table->integer('code')->nullable();
+            $table->dateTime('expired_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

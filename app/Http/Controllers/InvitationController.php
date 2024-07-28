@@ -7,7 +7,6 @@ use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Http\Resources\ShowOrdersResource;
-use App\Models\Feature;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\Message;
@@ -77,32 +76,6 @@ class InvitationController extends Controller
         try {
             DB::beginTransaction();
             $packageDetail = PackageDetail::where('id', $request->package_detail_id)->first();
-            $totalBalance = $user->balances->sum('balance');
-            $totalPrice = 0;
-            if (! empty($request->features)) {
-                foreach ($request->features as $feature) {
-                    $featureId = $feature['feature_id'];
-                    $featureDetail = Feature::find($featureId);
-                    if ($featureDetail) {
-                        $totalPrice += $featureDetail->price;
-                    }
-                }
-            }
-            $totalCost = $packageDetail->price + $totalPrice;
-            if ($totalCost > $totalBalance) {
-                return response()->json(['message' => 'الباقة غير كافية']);
-            }
-            $requiredDeduction = $totalCost;
-
-            foreach ($user->balances as $balance) {
-                if ($requiredDeduction <= 0) {
-                    break;
-                }
-                $deduction = min($balance->balance, $requiredDeduction);
-                $balance->balance -= $deduction;
-                $balance->save();
-                $requiredDeduction -= $deduction;
-            }
             $number_of_invitees = $packageDetail->number_of_invitees;
 
             $invitation = $user->invitation()->create(

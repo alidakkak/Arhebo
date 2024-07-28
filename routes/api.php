@@ -45,12 +45,13 @@ Route::get('contactUs', [ContactUsController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
+
 Route::group(['middleware' => 'lang'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('emailVerification', [EmailVerifyController::class, 'emailVerification']);
-    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
-    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+    Route::post('/emailVerifications', [AuthController::class, 'emailVerification']);
+//    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
+//    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 });
 

@@ -51,11 +51,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Message::class);
     }
 
-    public function balances()
-    {
-        return $this->hasMany(Balance::class);
-    }
-
     public function setImageAttribute($image)
     {
         $newImageName = uniqid().'_'.'user_image'.'.'.$image->extension();
@@ -132,9 +127,12 @@ class User extends Authenticatable implements JWTSubject
     public function generate_code()
     {
         $this->timestamps = false;
-        $this->code = rand(1000, 9999);
-        $this->expired_at = now()->addMinute(10);
+        $otp = rand(1000, 9999);
+        $this->code = $otp;
+        $this->expired_at = now()->addMinutes(10);
         $this->save();
+
+        return $otp;
     }
 
     public function reset_code()
@@ -143,5 +141,16 @@ class User extends Authenticatable implements JWTSubject
         $this->code = null;
         $this->expired_at = null;
         $this->save();
+    }
+
+    public function verifyOtp($inputOtp)
+    {
+        if ($this->code === $inputOtp && $this->expired_at && $this->expired_at->isFuture()) {
+            $this->reset_code();
+
+            return true;
+        }
+
+        return false;
     }
 }

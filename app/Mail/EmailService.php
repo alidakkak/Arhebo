@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Http;
 
 class EmailService
 {
-    public static function sendHtmlEmail($userEmail, $link)
+    public static function sendHtmlEmail($userEmail, $otp)
     {
         $subject = 'Welcome to '.htmlspecialchars('Arhebo');
         $body = '
@@ -30,22 +30,13 @@ class EmailService
                 <body>
                     <div class="container">
                         <h1>Welcome to Our Company</h1>
-                        <ul>
-                            <li><strong>Email:</strong> '.htmlspecialchars($userEmail).'</li>
-                            <li><strong>Link:</strong> '.htmlspecialchars($link).'</li>
-                        </ul>
+                        <p>Your OTP for registration is: <strong>'.htmlspecialchars($otp).'</strong></p>
                     </div>
                 </body>
                 </html>
          ';
-        // $apiUrl = 'https://emailnotification.time.gomaplus.tech:7217/api/sender/';
-        // $apiKey = 'rm1GEVrZlW3HEgjR/CJjQRUYp3m7xoocfHlgW5SuNf2kyb1+1wPYQZUlycrkfZTMq0fuO5T1o+Tl0G0aWdhGp+f1Yd/JPmgGSi7UPCnzbMfqHOpt7H1WggMzq7lAP9Z9VAfQpdwkDD2HBY1F38n5qkex4V3jGCHq/YnNJC5mxt0=';
-
-        $apiUrl = 'https://live-mt-server.wati.io/206676/api/sender/';
-        $apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1MzI4YzY3Yi03Nzc0LTQyZmQtYTg5ZS0xNGYxOTgyMWNkYTAiLCJ1bmlxdWVfbmFtZSI6ImdjY0B3YXRpLmlvIiwibmFtZWlkIjoiZ2NjQHdhdGkuaW8iLCJlbWFpbCI6ImdjY0B3YXRpLmlvIiwiYXV0aF90aW1lIjoiMDQvMjcvMjAyNCAwMDoyMDozMiIsImRiX25hbWUiOiJtdC1wcm9kLVRlbmFudHMiLCJ0ZW5hbnRfaWQiOiIyMDY2NzYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOlsiVEVNUExBVEVfTUFOQUdFUiIsIkNPTlRBQ1RfTUFOQUdFUiIsIk9QRVJBVE9SIiwiREVWRUxPUEVSIiwiREFTSEJPQVJEX1ZJRVdFUiIsIkFVVE9NQVRJT05fTUFOQUdFUiJdLCJleHAiOjI1MzQwMjMwMDgwMCwiaXNzIjoiQ2xhcmVfQUkiLCJhdWQiOiJDbGFyZV9BSSJ9.JmZmuKBPy6HS2aoojgh6auKKwOvl92amx6eguABpJqk';
-
-        $endpoint = 'htmlsend';
-        $url = $apiUrl.$endpoint;
+        $apiUrl = 'Http://ar7ebo.emailservice.serviceinhand.com:3332/api/Email/send-html';
+        $apiKey = 'qncE+h/hdPXfI66aFev+lxDC289hqs81FTYcOagq/czMvtFvjDyOCOZ9My1krPA+tArbaFTOuryD+XQdL8xshg==';
 
         $data = [
             'RecipientEmail' => $userEmail,
@@ -58,7 +49,7 @@ class EmailService
             'Content-Type' => 'application/json',
         ])->withOptions([
             'verify' => false,
-        ])->post($url, $data);
+        ])->post($apiUrl, $data);
 
         return $response->json();
     }

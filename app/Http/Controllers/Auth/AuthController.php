@@ -70,12 +70,8 @@ class AuthController extends Controller
         $otp = $user->generate_code();
         EmailService::sendHtmlEmail($user->email, $otp);
 
-        $token = JWTAuth::fromUser($user);
-
         return response()->json([
-            'message' => 'User successfully registered',
-            'access_token' => $token,
-            'user' => $user,
+            'message' => 'Verify Your Email',
         ], 201);
     }
 
@@ -88,7 +84,12 @@ class AuthController extends Controller
         }
 
         if ($user->verifyOtp($request->otp)) {
-            return response()->json(['message' => 'OTP verified successfully.'], 200);
+            $token = JWTAuth::fromUser($user);
+            return response()->json([
+                'message' => 'OTP verified successfully.',
+                            'access_token' => $token,
+            'user' => $user,
+            ]);
         } else {
             return response()->json(['message' => 'Invalid or expired OTP.'], 400);
         }

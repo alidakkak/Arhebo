@@ -85,10 +85,11 @@ class AuthController extends Controller
 
         if ($user->verifyOtp($request->otp)) {
             $token = JWTAuth::fromUser($user);
+
             return response()->json([
                 'message' => 'OTP verified successfully.',
-                            'access_token' => $token,
-            'user' => $user,
+                'access_token' => $token,
+                'user' => $user,
             ]);
         } else {
             return response()->json(['message' => 'Invalid or expired OTP.'], 400);

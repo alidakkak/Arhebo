@@ -30,7 +30,8 @@ class EmailService
                 <body>
                     <div class="container">
                         <h1>Welcome to Our Company</h1>
-                        <p>Your OTP for registration is: <strong>'.htmlspecialchars($otp).'</strong></p>
+                        <h4>Ar7ebo, Digital Events Cards</h4>
+                        <p>Your OTP for Code is: <strong>'.htmlspecialchars($otp).'</strong></p>
                     </div>
                 </body>
                 </html>

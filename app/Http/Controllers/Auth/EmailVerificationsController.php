@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\OTPRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class ResetPasswordController extends Controller
+class EmailVerificationsController extends Controller
 {
-    public function resetPassword(ResetPasswordRequest $request)
+    public function emailVerification(OTPRequest $request)
     {
         $user = User::where('email', $request->email)->first();
 
@@ -19,13 +18,10 @@ class ResetPasswordController extends Controller
         }
 
         if ($user->verifyOtp($request->otp)) {
-            $user->password = Hash::make($request->password);
-            $user->save();
-
             $token = JWTAuth::fromUser($user);
 
             return response()->json([
-                'message' => 'OTP verified and password updated successfully.',
+                'message' => 'OTP verified successfully.',
                 'access_token' => $token,
                 'user' => $user,
             ]);

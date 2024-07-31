@@ -42,6 +42,10 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => trans('auth.failed')], 403);
         }
+        $user = auth()->user();
+        if ($user->email_verified_at === null) {
+            return response()->json(['error' => 'Your account is not verified.'], 403);
+        }
 
         return $this->createNewToken($token);
     }
@@ -73,27 +77,6 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Verify Your Email',
         ], 201);
-    }
-
-    public function emailVerification(OTPRequest $request)
-    {
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user) {
-            return response()->json(['message' => 'User not found.'], 404);
-        }
-
-        if ($user->verifyOtp($request->otp)) {
-            $token = JWTAuth::fromUser($user);
-
-            return response()->json([
-                'message' => 'OTP verified successfully.',
-                'access_token' => $token,
-                'user' => $user,
-            ]);
-        } else {
-            return response()->json(['message' => 'Invalid or expired OTP.'], 400);
-        }
     }
 
     /**

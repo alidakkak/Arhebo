@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\EmailVerificationsController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\NicknameController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ProhibitedThingController;
 use App\Http\Controllers\RatingController;
@@ -44,16 +46,14 @@ Route::get('contactUs', [ContactUsController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
 
 Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
-
 Route::group(['middleware' => 'lang'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/emailVerifications', [AuthController::class, 'emailVerification']);
-    //    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
-    //    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+    Route::post('/emailVerifications', [EmailVerificationsController::class, 'emailVerification']);;
+        Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
+        Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 });
-
 Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
@@ -103,6 +103,10 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('invitations', [InvitationController::class, 'store']);
     Route::post('invitations/{invitationId}', [InvitationController::class, 'delete']);
     Route::post('invitationUpdate/{invitationId}', [InvitationController::class, 'update']);
+    Route::get('/history', [InvitationController::class, 'history']);
+
+    //// Payment
+    Route::post('/payments', [PaymentController::class, 'handlePayment']);
 
     ////  Invitee
     Route::get('invitees', [InviteeController::class, 'index']);

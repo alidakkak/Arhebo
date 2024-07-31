@@ -91,6 +91,11 @@ class CategoryController extends Controller
         return CategoryResource::make($category);
     }
 
+    public function ali()
+    {
+        return response()->json(['ali']);
+    }
+
     public function delete($categoryId)
     {
         try {

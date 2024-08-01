@@ -171,11 +171,11 @@ class InvitationController extends Controller
         $user = auth()->user();
         $invitations = $user->invitation;
 
-        if (!$invitations) {
+        if (! $invitations) {
             return response()->json(['message' => 'No invitations found for this user.'], 404);
         }
 
-        $historyData = $invitations->map(function($invitation) {
+        $historyData = $invitations->map(function ($invitation) {
             $package = $invitation->package;
             $packageDetail = $invitation->packageDetail;
             $invitationAdditionalPackage = $invitation->invitationAdditionalPackage;
@@ -196,8 +196,9 @@ class InvitationController extends Controller
                     'id' => $packageDetail->id,
                     'price' => $packageDetail->price,
                 ] : null,
-                'invitationAdditionalPackages' => $invitationAdditionalPackage->map(function($invitationAdditionalPackage) {
+                'invitationAdditionalPackages' => $invitationAdditionalPackage->map(function ($invitationAdditionalPackage) {
                     $additionalPackage = $invitationAdditionalPackage->additionalPackage;
+
                     return [
                         'id' => $invitationAdditionalPackage->id,
                         'additional_package' => $additionalPackage ? [
@@ -206,7 +207,7 @@ class InvitationController extends Controller
                         ] : null,
                     ];
                 }),
-                'features' => $features->map(function($feature) {
+                'features' => $features->map(function ($feature) {
                     return [
                         'id' => $feature->id,
                         'name' => $feature->name,

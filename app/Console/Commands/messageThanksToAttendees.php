@@ -21,8 +21,5 @@ class messageThanksToAttendees extends Command
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function handle()
-    {
-
-    }
+    public function handle() {}
 }

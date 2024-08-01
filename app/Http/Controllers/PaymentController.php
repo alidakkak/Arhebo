@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HistoryPayment;
 use Illuminate\Http\Request;
 use Stripe\Charge;
 use Stripe\Stripe;
@@ -14,11 +13,11 @@ class PaymentController extends Controller
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         try {
-            Charge::create ([
-                "amount" => $request->amount * 100,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Stripe Test Payment",
+            Charge::create([
+                'amount' => $request->amount * 100,
+                'currency' => 'usd',
+                'source' => $request->stripeToken,
+                'description' => 'Stripe Test Payment',
             ]);
 
             return response()->json(['success' => 'Payment successful']);

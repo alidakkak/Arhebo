@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\EmailService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgetPasswordRequest;
+use App\Mail\EmailService;
 use App\Models\User;
 
 class ForgetPasswordController extends Controller

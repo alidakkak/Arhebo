@@ -49,9 +49,10 @@ Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvi
 Route::group(['middleware' => 'lang'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/emailVerifications', [EmailVerificationsController::class, 'emailVerification']);;
-        Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
-        Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+    Route::post('/emailVerifications', [EmailVerificationsController::class, 'emailVerification']);
+    Route::post('/Verifications', [ResetPasswordController::class, 'emailVerification']);
+    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
+    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
 
 });
 Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {

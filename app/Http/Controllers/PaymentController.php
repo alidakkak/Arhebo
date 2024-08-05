@@ -11,7 +11,7 @@ class PaymentController extends Controller
 {
     public function handlePayment(Request $request)
     {
-//        Log::info('Stripe Token: ' . $request->stripeToken);
+        Log::info('Stripe Token: ' . $request->stripeToken);
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         try {

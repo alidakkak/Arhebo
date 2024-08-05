@@ -16,7 +16,7 @@ class PaymentController extends Controller
         try {
             Charge::create([
                 'amount' => $request->amount * 100,
-                'currency' => 'usd',
+                'currency' => 'sar',
                 'source' => $request->stripeToken,
                 'description' => 'Stripe Test Payment',
             ]);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Stripe\Charge;
 use Stripe\Stripe;
 
@@ -10,6 +11,7 @@ class PaymentController extends Controller
 {
     public function handlePayment(Request $request)
     {
+//        Log::info('Stripe Token: ' . $request->stripeToken);
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         try {

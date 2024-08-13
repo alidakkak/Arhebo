@@ -20,6 +20,7 @@ class CouponResource extends JsonResource
             'offer' => $this->offer,
             'coupon_status' => $this->coupon_status,
             'number_of_used' => $this->number_of_used,
+            'expiry_date' => $this->expiry_date,
             'categories' => $this->categories->map(function ($category) {
                 return [
                     'id' => $category->id,

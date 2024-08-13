@@ -25,6 +25,8 @@ class StoreCouponRequest extends FormRequest
         return [
             'coupon_code' => 'string|required',
             'offer' => 'required|numeric|min:1|max:100',
+            'number_of_used' => 'required|numeric|min:1',
+            'expiry_date' => 'required|date',
             'categories' => 'required|array',
             'categories.*' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'packages' => 'required|array',

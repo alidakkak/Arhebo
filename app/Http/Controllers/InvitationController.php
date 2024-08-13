@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApologyRequest;
 use App\Http\Requests\StoreInvitationRequest;
+use App\Http\Resources\HistoryResource;
 use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Http\Resources\ShowOrdersResource;
@@ -174,50 +175,6 @@ class InvitationController extends Controller
         if (! $invitations) {
             return response()->json(['message' => 'No invitations found for this user.'], 404);
         }
-
-        $historyData = $invitations->map(function ($invitation) {
-            $package = $invitation->package;
-            $packageDetail = $invitation->packageDetail;
-            $invitationAdditionalPackage = $invitation->invitationAdditionalPackage;
-            $features = $invitation->features;
-
-            return [
-                'invitation' => [
-                    'id' => $invitation->id,
-                    'event_name' => $invitation->event_name,
-                    'created_at' => $invitation->created_at->format('Y-m-d H:i:s'),
-                ],
-                'package' => $package ? [
-                    'id' => $package->id,
-                    'name' => $package->name,
-                    'name_ar' => $package->name_ar,
-                ] : null,
-                'packageDetail' => $packageDetail ? [
-                    'id' => $packageDetail->id,
-                    'price' => $packageDetail->price,
-                ] : null,
-                'invitationAdditionalPackages' => $invitationAdditionalPackage->map(function ($invitationAdditionalPackage) {
-                    $additionalPackage = $invitationAdditionalPackage->additionalPackage;
-
-                    return [
-                        'id' => $invitationAdditionalPackage->id,
-                        'additional_package' => $additionalPackage ? [
-                            'price' => $additionalPackage->price ?? null,
-                            'number_of_invitees' => $additionalPackage->number_of_invitees ?? null,
-                        ] : null,
-                    ];
-                }),
-                'features' => $features->map(function ($feature) {
-                    return [
-                        'id' => $feature->id,
-                        'name' => $feature->name,
-                        'price' => $feature->price,
-                        'pivot_value' => $feature->pivot->value,
-                    ];
-                }),
-            ];
-        });
-
-        return response()->json($historyData);
+        return HistoryResource::collection($invitations);
     }
 }

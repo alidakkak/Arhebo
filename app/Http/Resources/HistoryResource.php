@@ -15,7 +15,7 @@ class HistoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         $calculateTax = function ($price) {
-            return $price * 0.15;
+            return $price * 1.15;
         };
 
         $packageDetailPrice = $this->packageDetail->price;

@@ -23,7 +23,7 @@ class HistoryResource extends JsonResource
         $extraFeaturesTotal = $this->features->sum('price');
 
         $subtotal = $packageDetailPrice + $additionalPackagesTotal + $extraFeaturesTotal;
-        $total = $calculateTax($subtotal);
+        $totalWithTax = $calculateTax($subtotal);
 
         return [
             'id' => $this->id,
@@ -32,13 +32,13 @@ class HistoryResource extends JsonResource
             'package' => $this->package->only('id', 'name', 'name_ar'),
             'packageDetail' => [
                 'id' => $this->packageDetail->id,
-                'price' => $packageDetailPrice,
+                'price' => round($packageDetailPrice, 2),
                 'price_with_tax' => round($calculateTax($packageDetailPrice), 2),
             ],
             'additionalPackages' => $this->additionalPackages->map(function ($package) use ($calculateTax) {
                 return [
                     'id' => $package->id,
-                    'price' => $package->price,
+                    'price' => round($package->price, 2),
                     'price_with_tax' => round($calculateTax($package->price), 2),
                 ];
             }),
@@ -47,12 +47,12 @@ class HistoryResource extends JsonResource
                     'id' => $feature->id,
                     'name' => $feature->name,
                     'name_ar' => $feature->name_ar,
-                    'price' => $feature->price,
+                    'price' => round($feature->price, 2),
                     'price_with_tax' => round($calculateTax($feature->price), 2),
                 ];
             }),
-            'subtotal' => $subtotal,
-            'total_with_tax' => round($total, 2),
+            'subtotal' => round($subtotal, 2),
+            'total_with_tax' => round($totalWithTax, 2),
         ];
     }
 }

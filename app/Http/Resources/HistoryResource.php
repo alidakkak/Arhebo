@@ -33,13 +33,13 @@ class HistoryResource extends JsonResource
             'packageDetail' => [
                 'id' => $this->packageDetail->id,
                 'price' => $packageDetailPrice,
-                'price_with_tax' => $calculateTax($packageDetailPrice),
+                'price_with_tax' => round($calculateTax($packageDetailPrice), 2),
             ],
             'additionalPackages' => $this->additionalPackages->map(function ($package) use ($calculateTax) {
                 return [
                     'id' => $package->id,
                     'price' => $package->price,
-                    'price_with_tax' => $calculateTax($package->price),
+                    'price_with_tax' => round($calculateTax($package->price), 2),
                 ];
             }),
             'extraFeatures' => $this->features->map(function ($feature) use ($calculateTax) {
@@ -48,11 +48,11 @@ class HistoryResource extends JsonResource
                     'name' => $feature->name,
                     'name_ar' => $feature->name_ar,
                     'price' => $feature->price,
-                    'price_with_tax' => $calculateTax($feature->price),
+                    'price_with_tax' => round($calculateTax($feature->price), 2),
                 ];
             }),
             'subtotal' => $subtotal,
-            'total_with_tax' => $total,
+            'total_with_tax' => round($total, 2),
         ];
     }
 }

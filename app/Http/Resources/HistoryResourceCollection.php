@@ -34,4 +34,5 @@ class HistoryResourceCollection extends ResourceCollection
                 'totals' => $totals,
             ];
         }
+    }
 }

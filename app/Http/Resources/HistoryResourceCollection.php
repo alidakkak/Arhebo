@@ -14,9 +14,17 @@ class HistoryResourceCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
+        $totalSubtotal = $this->collection->sum(function ($resource) {
+            return $resource->subtotal;
+        });
+
+        $totalWithTax = $this->collection->sum(function ($resource) {
+            return $resource->total_with_tax;
+        });
+
         $totals = [
-            'subtotal' => $this->collection->sum('subtotal'),
-            'total_with_tax' => $this->collection->sum('total_with_tax'),
+            'subtotal' => round($totalSubtotal, 2),
+            'total_with_tax' => round($totalWithTax, 2),
         ];
 
         return [

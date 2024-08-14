@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Stripe\Charge;
 use Stripe\Stripe;
 
@@ -24,7 +23,7 @@ class PaymentController extends Controller
                     ->where('number', '<=', 0)
                     ->first();
 
-                if (!$coupon) {
+                if (! $coupon) {
                     return response()->json(['error' => 'Invalid or expired coupon'], 400);
                 }
 
@@ -50,7 +49,6 @@ class PaymentController extends Controller
                 $finalAmount = $request->amount * 100;
             }
 
-            // إنشاء الشحنة
             Charge::create([
                 'amount' => $finalAmount,
                 'currency' => 'sar',
@@ -63,5 +61,4 @@ class PaymentController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
 }

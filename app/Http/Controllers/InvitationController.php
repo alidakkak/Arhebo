@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreApologyRequest;
 use App\Http\Requests\StoreInvitationRequest;
 use App\Http\Resources\HistoryResource;
+use App\Http\Resources\HistoryResourceCollection;
 use App\Http\Resources\InvitationResource;
 use App\Http\Resources\InvitationSupportResource;
 use App\Http\Resources\ShowOrdersResource;
@@ -175,6 +176,7 @@ class InvitationController extends Controller
         if (! $invitations) {
             return response()->json(['message' => 'No invitations found for this user.'], 404);
         }
-        return HistoryResource::collection($invitations);
+
+        return new HistoryResourceCollection(HistoryResource::collection($invitations));
     }
 }

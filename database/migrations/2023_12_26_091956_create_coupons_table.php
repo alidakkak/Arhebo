@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('coupon_code');
             $table->double('offer');
-            $table->integer('number');/// عدد المرات المسموح بها
+            $table->integer('number'); /// عدد المرات المسموح بها
             $table->date('expiry_date');
             $table->timestamps();
         });

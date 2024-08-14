@@ -25,9 +25,6 @@ class HistoryResource extends JsonResource
         $subtotal = $packageDetailPrice + $additionalPackagesTotal + $extraFeaturesTotal;
         $totalWithTax = $calculateTax($subtotal);
 
-        $totalSubtotal = array_sum(array_column($this, 'subtotal'));
-        $totalWithTax = array_sum(array_column($this, 'total_with_tax'));
-
         return [
             'id' => $this->id,
             'event_name' => $this->event_name,

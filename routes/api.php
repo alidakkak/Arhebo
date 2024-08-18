@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InvitationController;
@@ -108,6 +109,9 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 
     //// Payment
     Route::post('/payments', [PaymentController::class, 'handlePayment']);
+
+    //// Coupon
+    Route::post('checkCoupon', [CouponController::class, 'checkCoupon']);
 
     ////  Invitee
     Route::get('invitees', [InviteeController::class, 'index']);

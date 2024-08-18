@@ -22,10 +22,18 @@ class StoreCouponRequest extends FormRequest
      */
     public function rules(): array
     {
+        if (request()->route()->uri() === 'api/checkCoupon') {
+            return [
+                'coupon_code' => 'string|required',
+                'category_id' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],
+                'package_id' => ['required', 'numeric', Rule::exists('packages', 'id')->whereNull('deleted_at')],
+            ];
+        }
+
         return [
-            'coupon_code' => 'string|required',
+            'coupon_code' => 'string|required|unique:coupons,coupon_code',
             'offer' => 'required|numeric|min:1|max:100',
-            'number_of_used' => 'required|numeric|min:1',
+            'number' => 'required|numeric|min:1',
             'expiry_date' => 'required|date',
             'categories' => 'required|array',
             'categories.*' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],

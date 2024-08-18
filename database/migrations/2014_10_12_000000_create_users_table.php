@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('type')->default(UserTypes::USER);
             $table->integer('code')->nullable();
             $table->dateTime('expired_at')->nullable();
+            $table->boolean('is_verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

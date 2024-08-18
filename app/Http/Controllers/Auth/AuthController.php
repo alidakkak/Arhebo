@@ -65,6 +65,14 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+
+        $existingUser = User::where('email', $request->email)
+            ->where('is_verified', false)
+            ->first();
+        if ($existingUser) {
+            $existingUser->delete();
+        }
+
         $user = User::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)]

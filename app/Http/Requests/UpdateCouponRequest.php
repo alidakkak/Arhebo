@@ -25,6 +25,8 @@ class UpdateCouponRequest extends FormRequest
         return [
             'coupon_code' => 'string',
             'offer' => 'numeric|min:1|max:100',
+            'number' => 'numeric|min:1',
+            'expiry_date' => 'date',
             'categories' => 'required|array',
             'categories.*' => ['required', 'numeric', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'packages' => 'required|array',

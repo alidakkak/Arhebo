@@ -18,6 +18,8 @@ class EmailVerificationsController extends Controller
         }
 
         if ($user->verifyOtp($request->otp)) {
+            $user->is_verified = true;
+            $user->save();
             $token = JWTAuth::fromUser($user);
 
             return response()->json([

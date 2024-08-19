@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
+use App\Models\CouponUser;
 use Illuminate\Http\Request;
 use Stripe\Charge;
 use Stripe\Stripe;
@@ -18,6 +20,18 @@ class PaymentController extends Controller
                 'source' => $request->stripeToken,
                 'description' => 'Stripe Test Payment',
             ]);
+
+            if ($request->has('coupon_id')) {
+                $coupon = Coupon::find($request->coupon_id);
+                if ($coupon && $coupon->number > 0) {
+                    $coupon->decrement('number');
+
+                    CouponUser::create([
+                        'user_id' => auth()->id(),
+                        'coupon_id' => $coupon->id,
+                    ]);
+                }
+            }
 
             return response()->json(['success' => 'Payment successful']);
         } catch (\Exception $e) {

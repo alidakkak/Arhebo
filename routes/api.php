@@ -3,9 +3,10 @@
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\EmailVerificationsController;
-use App\Http\Controllers\Auth\ForgetPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\EmailOTP\EmailVerificationsController;
+use App\Http\Controllers\Auth\EmailOTP\ForgetPasswordController;
+use App\Http\Controllers\Auth\EmailOTP\ResetPasswordController;
+use App\Http\Controllers\Auth\WhatsAppOTP\WhatsAppVerificationsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\CouponController;
@@ -50,7 +51,12 @@ Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvi
 Route::group(['middleware' => 'lang'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/emailVerifications', [EmailVerificationsController::class, 'emailVerification']);
+//    Route::post('/emailVerifications', [EmailVerificationsController::class, 'emailVerification']);
+//    Route::post('/Verifications', [ResetPasswordController::class, 'emailVerification']);
+//    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
+//    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+
+    Route::post('/whatsAppVerification', [WhatsAppVerificationsController::class, 'whatsAppVerification']);
     Route::post('/Verifications', [ResetPasswordController::class, 'emailVerification']);
     Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
     Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\WhatsAppOTP;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OTPRequest;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class EmailVerificationsController extends Controller
+class WhatsAppVerificationsController extends Controller
 {
-    public function emailVerification(OTPRequest $request)
+    public function whatsAppVerification(OTPRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (! $user) {
             return response()->json(['message' => 'User not found.'], 404);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Mail\EmailService;
+use App\Mail\WhatsAppService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -66,8 +67,10 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $existingUser = User::where('email', $request->email)
-            ->where('is_verified', false)
+        $existingUser = User::where(function ($query) use ($request) {
+            $query->where('email', $request->email)
+                ->orWhere('phone', $request->phone);
+        })->where('email_verified_at', false)
             ->first();
         if ($existingUser) {
             $existingUser->delete();
@@ -78,7 +81,9 @@ class AuthController extends Controller
             ['password' => bcrypt($request->password)]
         ));
         $otp = $user->generate_code();
-        EmailService::sendHtmlEmail($user->email, $otp);
+        $message = "Your OTP code is: " . $otp;
+        $whatsApp = new WhatsAppService();
+        $whatsApp->sendWhatsAppMessage($user->phone, $message);
 
         return response()->json([
             'message' => 'Verify Your Email',

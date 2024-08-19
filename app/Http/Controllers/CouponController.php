@@ -154,16 +154,7 @@ class CouponController extends Controller
                 return response()->json(['error' => 'You have already used this coupon'], 400);
             }
 
-            // Decrease the number of available coupons
-            $coupon->decrement('number');
-
-            // Log the coupon usage for the user
-            CouponUser::create([
-                'user_id' => $user->id,
-                'coupon_id' => $coupon->id,
-            ]);
-
-            return response()->json(['offer' => $coupon->offer], 200);
+            return response()->json(['coupon_id' => $coupon->id, 'offer' => $coupon->offer], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while processing the coupon'], 500);
         }

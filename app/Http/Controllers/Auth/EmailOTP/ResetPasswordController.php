@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\EmailOTP;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OTPRequest;
@@ -30,7 +30,7 @@ class ResetPasswordController extends Controller
 
     public function resetPassword(ResetPasswordRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (! $user) {
             return response()->json(['message' => 'User not found.'], 404);

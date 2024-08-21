@@ -57,9 +57,9 @@ Route::group(['middleware' => 'lang'], function () {
 //    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
 
     Route::post('/whatsAppVerification', [WhatsAppVerificationsController::class, 'whatsAppVerification']);
-    Route::post('/Verifications', [ResetPasswordController::class, 'emailVerification']);
-    Route::post('forget-password', [ForgetPasswordController::class, 'forgetPassword']);
-    Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+    Route::post('forget-password', [\App\Http\Controllers\Auth\WhatsAppOTP\ForgetPasswordController::class, 'forgetPassword']);
+    Route::post('/Verifications', [\App\Http\Controllers\Auth\WhatsAppOTP\ResetPasswordController::class, 'Verification']);
+    Route::post('reset-password', [\App\Http\Controllers\Auth\WhatsAppOTP\ResetPasswordController::class, 'resetPassword']);
 
 });
 Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {

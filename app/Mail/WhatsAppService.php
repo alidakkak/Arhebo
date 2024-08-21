@@ -15,26 +15,39 @@ class WhatsAppService
         $this->apiToken = env('WHATSAPP_API_TOKEN');
     }
 
-    public function sendWhatsAppMessage($to, $message)
+    public function sendWhatsAppMessage($to, $otp)
     {
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->apiToken,
-            'Content-Type' => 'application/json',
-        ])->post($this->apiUrl, [
-            'template_name' => 'ar7ebo_otp_en_190820241318',
-            'broadcast_name' => 'ar7ebo_otp_en',
-            'parameters' => [
-                [
-                    'name' => '1',
-                    'value' => $to
-                ],
-                [
-                    'name' => 'message',
-                    'value' => $message
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer '.$this->apiToken,
+                'Content-Type' => 'application/json',
+            ])->post($this->apiUrl.$to, [
+                'template_name' => 'ar7ebo_otp_ar',
+                'broadcast_name' => 'ar7ebo_otp_en_190820241318',
+                'parameters' => [
+                    [
+                        'name' => "1",
+                        'value' => $otp
+                    ]
                 ]
-            ]
-        ]);
+            ]);
 
-        return $response->json();
+            if ($response->successful()) {
+                return $response->json();
+            } else {
+                return [
+                    'status' => 'error',
+                    'message' => 'Failed to send message',
+                    'details' => $response->json()
+                ];
+            }
+        } catch (\Exception $e) {
+            return [
+                'status' => 'error',
+                'message' => 'An error occurred while sending the message',
+                'details' => $e->getMessage()
+            ];
+        }
     }
+
 }

@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    public function emailVerification(OTPRequest $request)
+    public function Verification(OTPRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (! $user) {
             return response()->json(['message' => 'User not found.'], 404);
@@ -30,7 +30,7 @@ class ResetPasswordController extends Controller
 
     public function resetPassword(ResetPasswordRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('phone', $request->phone)->first();
 
         if (! $user) {
             return response()->json(['message' => 'User not found.'], 404);

@@ -56,6 +56,15 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        $existingUser = User::where(function ($query) use ($request) {
+            $query->where('email', $request->email)
+                ->orWhere('phone', $request->phone);
+        })->where('is_verified', 0)
+            ->first();
+        if ($existingUser) {
+            $existingUser->delete();
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
@@ -67,23 +76,13 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $existingUser = User::where(function ($query) use ($request) {
-            $query->where('email', $request->email)
-                ->orWhere('phone', $request->phone);
-        })->where('email_verified_at', false)
-            ->first();
-        if ($existingUser) {
-            $existingUser->delete();
-        }
-
         $user = User::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)]
         ));
         $otp = $user->generate_code();
-        $message = "Your OTP code is: " . $otp;
         $whatsApp = new WhatsAppService();
-        $whatsApp->sendWhatsAppMessage($user->phone, $message);
+        $whatsApp->sendWhatsAppMessage($user->phone, $otp);
 
         return response()->json([
             'message' => 'Verify Your Email',

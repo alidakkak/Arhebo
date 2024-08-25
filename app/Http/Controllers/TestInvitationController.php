@@ -13,7 +13,7 @@ class TestInvitationController extends Controller
 
     public function __construct()
     {
-        $this->url = env('WHATSAPP_API_URL1');
+        $this->url = env('WHATSAPP_API_URL');
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
@@ -23,24 +23,20 @@ class TestInvitationController extends Controller
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url.$request->input('phone'), [
-            'template_name' => 'ar7ebo_1',
-            'broadcast_name' => 'ar7ebo_1',
+            'template_name' => 'trial_invitation_ar',
+            'broadcast_name' => 'trial_invitation_ar',
             'parameters' => [
                 [
                     'name' => 'product_image_url',
                     'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png',
                 ],
                 [
-                    'name' => 'any_name',
+                    'name' => 'name',
                     'value' => $request->input('username'),
                 ],
                 [
-                    'name' => 'messagebody',
-                    'value' => 'تتشرف غيداء بنت محمد وعائشة بنت بندر بدعوتك لحضور حفل زفاف ليان محمد وسالم أحمد.',
-                ],
-                [
-                    'name' => 'button_url',
-                    'value' => 'invitaion-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
+                    'name' => 'abandoned_checkout_url',
+                    'value' => 'https://api.dev1.gomaplus.tech/invitaion-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
                 ],
             ],
         ]);

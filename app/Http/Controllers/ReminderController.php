@@ -6,6 +6,7 @@ use App\Http\Requests\StoreReminderRequest;
 use App\Http\Resources\ReminderResource;
 use App\Models\Invitation;
 use App\Models\Reminder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class ReminderController extends Controller
@@ -16,7 +17,7 @@ class ReminderController extends Controller
 
     public function __construct()
     {
-        $this->url = env('WHATSAPP_API_URL');
+        $this->url = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
@@ -29,6 +30,8 @@ class ReminderController extends Controller
 
     public function store(StoreReminderRequest $request)
     {
+        DB::beginTransaction();
+
         try {
             $user = auth()->user();
             $invitationId = $request->input('invitation_id');
@@ -38,17 +41,67 @@ class ReminderController extends Controller
                 ->first();
 
             if ($existingReminders) {
+                DB::rollBack();
                 return response()->json(['message' => trans('message.reminder')], 400);
             }
 
             $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->all()));
 
-            return ReminderResource::make($reminder);
+            $invitation = Invitation::find($invitationId);
+
+            if (!$invitation) {
+                DB::rollBack();
+                return response()->json(['message' => 'Invalid invitation ID'], 404);
+            }
+
+            $invitees = $invitation->invitees()->get(['phone']);
+
+            if ($invitees->isEmpty()) {
+                DB::rollBack();
+                return response()->json(['message' => 'This Invitation does not have invitees'], 404);
+            }
+
+            $event_name = $invitation->event_name;
+            $event_time = $invitation->created_at->format('Y-m-d H:i:s');
+            $receivers = [];
+            foreach ($invitees as $invitee) {
+                $receivers[] = [
+                    'whatsappNumber' => $invitee->phone,
+                    'customParams' => [
+                        ['name' => 'name', 'value' => $invitee->name],
+                        ['name' => 'event_name', 'value' => $event_name],
+                        ['name' => 'event_time', 'value' => $event_time],
+                    ],
+                ];
+            }
+
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $this->token,
+                'Content-Type' => 'application/json',
+            ])->post($this->url, [
+                'template_name' => 'reminder_24_ar',
+                'broadcast_name' => 'reminder_24_ar',
+                'receivers' => $receivers,
+            ]);
+
+            $responseData = json_decode($response->body(), true);
+            $result = $responseData['result'] ?? false;
+
+            if ($result) {
+                DB::commit();
+                return response()->json(['status' => true, 'message' => 'Reminder sent successfully']);
+            } else {
+                DB::rollBack();
+                $errors = $responseData['errors'] ?? [];
+                return response()->json(['status' => false, 'message' => 'Failed to send reminder', 'errors' => $errors]);
+            }
         } catch (\Exception $e) {
-            return response()->json(['message' => 'error'], 500);
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
-
+}
+/*
     public function sendWhatsAppReminder($invitationID)
     {
         $invitation = Invitation::where('id', $invitationID)->first();
@@ -100,6 +153,4 @@ class ReminderController extends Controller
             return response()->json(['message' => 'Failed to send reminder', 'errors' => $errors], 500);
         }
     }
-}
-///'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'
-/// /invitations_image/6633f8bfc2f11_invitations_image.png
+}*/

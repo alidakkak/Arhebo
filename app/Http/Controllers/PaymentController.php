@@ -15,7 +15,7 @@ class PaymentController extends Controller
         Stripe::setApiKey(env('STRIPE_KEY'));
         try {
             Charge::create([
-                'amount' => $request->amount,
+                'amount' => $request->amount * 100,
                 'currency' => 'sar',
                 'source' => $request->stripeToken,
                 'description' => 'Stripe Test Payment',

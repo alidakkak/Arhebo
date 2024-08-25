@@ -20,7 +20,7 @@ class SendWhatsAppReminder extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->url = env('WHATSAPP_API_URL');
+        $this->url = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
@@ -46,15 +46,16 @@ class SendWhatsAppReminder extends Command
             return ['status' => false, 'message' => 'This Invitation does not have invitees'];
         }
 
+        $event_name = $invitation->event_name;
+        $event_time = $invitation->created_at->format('H:i');
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [
                 'whatsappNumber' => $invitee->phone,
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => url($invitation->image)],
-                    ['name' => 'messagebody', 'value' => 'لا تنسوا حضور الحفلة'],
-                    ['name' => 'any_name', 'value' => $invitee->name],
-                    ['name' => 'button_url', 'value' => $invitee->link],
+                    ['name' => 'name', 'value' => $invitee->name],
+                    ['name' => 'event_name', 'value' => $event_name],
+                    ['name' => 'event_time', 'value' => $event_time],
                 ],
             ];
         }
@@ -63,8 +64,8 @@ class SendWhatsAppReminder extends Command
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
-            'template_name' => 'ar7ebo_1',
-            'broadcast_name' => 'ar7ebo_1',
+            'template_name' => 'reminder_24_ar',
+            'broadcast_name' => 'reminder_24_ar',
             'receivers' => $receivers,
         ]);
 
@@ -80,4 +81,3 @@ class SendWhatsAppReminder extends Command
         }
     }
 }
-//'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'

@@ -26,6 +26,7 @@ class UpdateFilterRequest extends FormRequest
             'category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'name' => 'string',
             'name_ar' => 'string',
+            'whatsApp_template' => 'string',
         ];
     }
 }

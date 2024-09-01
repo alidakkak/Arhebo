@@ -11,6 +11,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\FilterController;
 use App\Http\Controllers\InputController;
+use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\NicknameController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\PackageController;
@@ -24,7 +25,7 @@ use App\Http\Controllers\ValidateController;
 use App\Models\Package;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['check_user:1', 'lang']], function () {
+// Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     //// Admin&Support
     Route::post('addAdminSupport', [AdminController::class, 'addAdminSupport']);
 
@@ -35,6 +36,8 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::post('categories', [CategoryController::class, 'store']);
     Route::post('categories/{categoryId}', [CategoryController::class, 'update']);
     Route::delete('categories/{categoryId}', [CategoryController::class, 'delete']);
+    Route::get('getInformation', [CategoryController::class, 'getInformation']);
+    Route::get('whatsApp_template', [InviteeController::class, 'whatsApp_template']);
 
     ////// Filter
     Route::get('filters', [FilterController::class, 'index']);
@@ -152,4 +155,4 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::patch('nicknames/{nicknameId}', [NicknameController::class, 'update']);
     Route::get('nicknames/{nicknameId}', [NicknameController::class, 'show']);
     Route::delete('nicknames/{nicknameId}', [NicknameController::class, 'delete']);
-});
+// });

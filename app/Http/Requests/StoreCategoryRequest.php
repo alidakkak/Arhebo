@@ -28,8 +28,7 @@ class StoreCategoryRequest extends FormRequest
             'photo' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
             'description' => 'required|string',
             'description_ar' => 'required|string',
-            'message' => 'required|string',
-            'message_ar' => 'required|string',
+            'whatsApp_template' => 'nullable|string',
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreReminderRequest;
 use App\Http\Resources\ReminderResource;
 use App\Models\Invitation;
 use App\Models\Reminder;
+use App\Statuses\InviteeTypes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -49,12 +50,10 @@ class ReminderController extends Controller
 
             $invitation = Invitation::find($invitationId);
 
-            if (!$invitation) {
-                DB::rollBack();
-                return response()->json(['message' => 'Invalid invitation ID'], 404);
-            }
-
-            $invitees = $invitation->invitees()->get(['phone']);
+            $invitees = $invitation->invitee()
+                ->where('status', InviteeTypes::confirmed)
+                ->orwhere('status', InviteeTypes::waiting)
+                ->get();
 
             if ($invitees->isEmpty()) {
                 DB::rollBack();
@@ -79,8 +78,8 @@ class ReminderController extends Controller
                 'Authorization' => 'Bearer ' . $this->token,
                 'Content-Type' => 'application/json',
             ])->post($this->url, [
-                'template_name' => 'reminder_24_ar',
-                'broadcast_name' => 'reminder_24_ar',
+                'template_name' => 'reminder_ar',
+                'broadcast_name' => 'reminder_ar',
                 'receivers' => $receivers,
             ]);
 

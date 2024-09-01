@@ -26,6 +26,7 @@ class StoreFilterRequest extends FormRequest
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'name' => 'required|string',
             'name_ar' => 'required|string',
+            'whatsApp_template' => 'nullable|string',
         ];
     }
 }

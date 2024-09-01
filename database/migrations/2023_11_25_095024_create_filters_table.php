@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->string('name');
             $table->string('name_ar');
+            $table->longText('whatsApp_template')->nullable();
             $table->timestamps();
         });
     }

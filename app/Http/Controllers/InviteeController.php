@@ -24,11 +24,11 @@ class InviteeController extends Controller
 
     public function __construct()
     {
-        $this->url = env('WHATSAPP_API_URL');
+        $this->url = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function sendWhatsAppMessages(array $invitees, $message, $image)
+    public function sendWhatsAppMessages(array $invitees, $nice_sentence, $image, $event_time)
     {
         $receivers = [];
         foreach ($invitees as $invitee) {
@@ -36,9 +36,11 @@ class InviteeController extends Controller
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
                     ['name' => 'product_image_url', 'value' => $image],
-                    ['name' => 'messagebody', 'value' => $message],
-                    ['name' => 'any_name', 'value' => $invitee['name']],
-                    ['name' => 'button_url', 'value' => $invitee['link']],
+                    ['name' => 'nice_sentence', 'value' => $nice_sentence],
+                    ['name' => 'event_time', 'value' => $event_time],
+                    ['name' => 'name', 'value' => 'Ali'],
+                    ['name' => 'invitation_details', 'value' => 'Ali'],
+                    ['name' => '1', 'value' => $invitee['link']],
                 ],
             ];
         }
@@ -47,8 +49,8 @@ class InviteeController extends Controller
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
-            'template_name' => 'ar7ebo_1',
-            'broadcast_name' => 'ar7ebo_1',
+            'template_name' => 'ar7ebo_invitation_ar_fir',
+            'broadcast_name' => 'ar7ebo_invitation_ar_fir',
             'receivers' => $receivers,
         ]);
 
@@ -154,8 +156,9 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
-            $message = 'نتشرف بدعوتك لحضور حفل زفاف  ليان محمد وسالم أحمد';
-            //   $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
+            $nice_sentence = $invitation->category->nice_sentence;
+            $event_time = $invitation->created_at->format('Y-m-d H:i:s');
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $nice_sentence, url($image), $event_time);
             DB::commit();
 
             return response()->json([
@@ -178,7 +181,6 @@ class InviteeController extends Controller
             $invitation = Invitation::find($request->invitation_id);
             $number_of_people = $invitation->invitee()->sum('number_of_people');
             $inviteesData = $request->input('invitees', []);
-            $invitees = [];
             $totalCount = array_reduce($inviteesData, function ($carry, $item) {
                 return $carry + $item['count'];
             }, 0);
@@ -215,6 +217,7 @@ class InviteeController extends Controller
                     'invitation_id' => $request->input('invitation_id'),
                     'uuid' => $uuid,
                 ]);
+
                 $newInvitee->update([
                     'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
@@ -223,7 +226,6 @@ class InviteeController extends Controller
                     'link' => $newInvitee->link,
                     'name' => $newInvitee->name,
                 ]);
-                //                $invitees[] = $newInvitee;
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->save();
@@ -234,7 +236,7 @@ class InviteeController extends Controller
 
                 return response()->json(['message' => 'You must add a picture and a message']);
             }
-
+            $whatsApp_template = $this->whatsApp_template($invitation->id);
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
             DB::commit();
 
@@ -247,6 +249,40 @@ class InviteeController extends Controller
             return response()->json(['message' => 'An error occurred while processing your request.'], 500);
         }
     }
+
+    public function whatsApp_template($InvitationID) {
+        $invitation = Invitation::find($InvitationID);
+
+        if (!$invitation) {
+            return response()->json(['error' => 'Invitation not found'], 404);
+        }
+
+        $category = $invitation->category;
+        $whatsAppTemplate = $category->whatsApp_template;
+
+        $templateData = [
+            'event_name' => $invitation->event_name,
+            'from' => $invitation->from,
+            'to' => $invitation->to,
+            'miladi_date' => $invitation->miladi_date,
+            'hijri_date' => $invitation->hijri_date,
+        ];
+
+        $invitationInputs = $invitation->invitationInput()->with('input')->get();
+
+        foreach ($invitationInputs as $invitationInput) {
+            $inputName = $invitationInput->input->input_name;
+            $templateData[$inputName] = $invitationInput->answer;
+        }
+
+        foreach ($templateData as $key => $value) {
+            $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplate);
+        }
+
+        return response()->json(['whatsApp_template' => $whatsAppTemplate]);
+    }
+
+
 
     /// API For Support To Get Image And Message
     public function getImage($invitationID)

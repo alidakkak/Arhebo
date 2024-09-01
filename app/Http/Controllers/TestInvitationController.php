@@ -36,7 +36,7 @@ class TestInvitationController extends Controller
                 ],
                 [
                     'name' => 'abandoned_checkout_url',
-                    'value' => 'https://api.dev1.gomaplus.tech/invitaion-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
+                    'value' => 'https://booking.ar7ebo.com/invitaion-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
                 ],
             ],
         ]);

@@ -28,6 +28,7 @@ class UpdateCategoryRequest extends FormRequest
             'photo' => 'image|mimes:jpeg,png,jpg,svg|max:2048',
             'description' => 'string',
             'description_ar' => 'string',
+            'whatsApp_template' => 'string',
         ];
     }
 }

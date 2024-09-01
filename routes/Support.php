@@ -7,7 +7,7 @@ use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
 
 Route::patch('invitees/{invitee}', [InviteeController::class, 'update']);
-Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
+// Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
     ////  Invitee
     Route::post('invitees', [InviteeController::class, 'store']);
     Route::get('getImage/{invitationID}', [InviteeController::class, 'getImage']);
@@ -23,4 +23,4 @@ Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
 
     ////  Template By Code
     Route::get('templateByCode', [TemplateController::class, 'templateByCode']);
-});
+// });

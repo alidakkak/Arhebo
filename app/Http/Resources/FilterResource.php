@@ -21,6 +21,7 @@ class FilterResource extends JsonResource
             'name' => $this->name,
             'name_ar' => $this->name_ar,
             'category_id' => $this->category_id,
+            'whatsApp_template' => $this->whatsApp_template,
             'template' => TemplateResource::collection($templates),
             'pagination' => [
                 'total' => $templates->total(),

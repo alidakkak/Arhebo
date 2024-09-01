@@ -8,6 +8,7 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryWithFilterResource;
 use App\Models\Category;
 use App\Models\Coupon;
+use App\Models\Input;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\Template;
@@ -144,5 +145,25 @@ class CategoryController extends Controller
             'number_of_coupons' => $number_of_coupons,
             'number_of_in_used_coupons' => $number_of_in_used_coupons,
         ];
+    }
+
+    //// API To Get Attributes For WhatsApp Templates
+    public function getInformation() {
+
+        $event_name = 'event_name';
+        $from = 'from';
+        $to = 'to';
+        $miladi_date = 'miladi_date';
+        $hijri_date = 'hijri_date';
+        $inputs = Input::select('input_name', 'input_name_ar')->get();
+
+        return response()->json([
+            'event_name' => $event_name,
+            'from' => $from,
+            'to' => $to,
+            'miladi_date' => $miladi_date,
+            'hijri_date' => $hijri_date,
+            'inputs' => $inputs
+        ]);
     }
 }

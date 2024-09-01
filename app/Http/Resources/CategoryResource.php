@@ -26,8 +26,7 @@ class CategoryResource extends JsonResource
             'description' => $this->description,
             'description_ar' => $this->description_ar,
             'category_code' => $this->category_code,
-            'message' => $this->message,
-            'message_ar' => $this->message_ar,
+            'whatsApp_template' => $this->whatsApp_template,
             'template' => TemplateResource::collection($templates),
             'pagination' => [
                 'total' => $templates->total(),

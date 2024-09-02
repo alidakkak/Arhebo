@@ -228,6 +228,7 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $image = $invitation->image;
+            return $image;
             $message = $invitation->text_message;
             if ($image == null || $message == null) {
                 DB::rollBack();

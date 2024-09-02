@@ -13,6 +13,7 @@ use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -28,33 +29,44 @@ class InviteeController extends Controller
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function sendWhatsAppMessages(array $invitees, $nice_sentence, $image, $event_time)
+    public function sendWhatsAppMessages(array $invitees, $whatsApp_template, $image)
     {
         $receivers = [];
+
         foreach ($invitees as $invitee) {
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
                     ['name' => 'product_image_url', 'value' => $image],
-                    ['name' => 'nice_sentence', 'value' => $nice_sentence],
-                    ['name' => 'event_time', 'value' => $event_time],
-                    ['name' => 'name', 'value' => 'Ali'],
-                    ['name' => 'invitation_details', 'value' => 'Ali'],
+                    ['name' => 'nice_sentence', 'value' => $whatsApp_template],
+                    ['name' => 'name', 'value' => $invitee['name']],
                     ['name' => '1', 'value' => $invitee['link']],
                 ],
             ];
         }
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->token,
-            'Content-Type' => 'application/json',
-        ])->post($this->url, [
-            'template_name' => 'ar7ebo_invitation_ar_fir',
-            'broadcast_name' => 'ar7ebo_invitation_ar_fir',
-            'receivers' => $receivers,
-        ]);
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer '.$this->token,
+                'Content-Type' => 'application/json',
+            ])->post($this->url, [
+                'template_name' => 'ar7ebo_invitation_ar_customized',
+                'broadcast_name' => 'ar7ebo_invitation_ar_customized',
+                'receivers' => $receivers,
+            ]);
 
-        return $response->json();
+            // التحقق مما إذا كانت الاستجابة صالحة أم لا
+            if ($response->successful()) {
+                return $response->json();
+            } elseif ($response->failed()) {
+                // في حالة فشل الاستجابة
+                Log::error('Failed to send WhatsApp messages', ['response' => $response->body()]);
+                return null;
+            }
+        } catch (\Exception $e) {
+            Log::error('Error while sending WhatsApp messages', ['error' => $e->getMessage()]);
+            return null;
+        }
     }
 
     public function index(Request $request)
@@ -110,7 +122,6 @@ class InviteeController extends Controller
             $invitation = Invitation::find($request->invitation_id);
             $number_of_people = $invitation->invitee()->sum('number_of_people');
             $inviteesData = $request->input('invitees', []);
-            $invitees = [];
             $totalCount = array_reduce($inviteesData, function ($carry, $item) {
                 return $carry + $item['count'];
             }, 0);
@@ -145,7 +156,7 @@ class InviteeController extends Controller
                     'uuid' => $uuid,
                 ]);
                 $newInvitee->update([
-                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => url('invitation-card/'.$newInvitee->id.'?uuid='.$uuid),
                 ]);
                 $inviteesForWhatsapp->push([
                     'phone' => $newInvitee->phone,
@@ -154,19 +165,24 @@ class InviteeController extends Controller
                 ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
+
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
-            $nice_sentence = $invitation->category->nice_sentence;
-            $event_time = $invitation->created_at->format('Y-m-d H:i:s');
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $nice_sentence, url($image), $event_time);
+            $whatsApp_template = $this->whatsApp_template($invitation->id);
+            $response = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $whatsApp_template, url($image));
+            if ($response === null) {
+                DB::rollBack();
+                return response()->json(['message' => 'Failed to send WhatsApp messages.'], 500);
+            }
+
             DB::commit();
 
             return response()->json([
-                'message' => 'Invitees Added Successfully',
+                'message' => 'Invitees Added and Messages Sent Successfully',
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-
+            Log::error('Error while adding invitees', ['error' => $e->getMessage()]);
             return response()->json(['message' => 'An error occurred while processing your request.',
                 'err' => $e->getMessage(),
             ], 500);
@@ -230,14 +246,14 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $image = $invitation->image;
-            $message = $invitation->message;
+            $message = $invitation->text_message;
             if ($image == null || $message == null) {
                 DB::rollBack();
 
                 return response()->json(['message' => 'You must add a picture and a message']);
             }
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $message, url($image));
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $whatsApp_template, url($image));
             DB::commit();
 
             return response()->json([

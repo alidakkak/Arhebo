@@ -148,7 +148,8 @@ class CategoryController extends Controller
     }
 
     //// API To Get Attributes For WhatsApp Templates
-    public function getInformation() {
+    public function getInformation()
+    {
 
         $event_name = 'event_name';
         $from = 'from';
@@ -163,7 +164,7 @@ class CategoryController extends Controller
             'to' => $to,
             'miladi_date' => $miladi_date,
             'hijri_date' => $hijri_date,
-            'inputs' => $inputs
+            'inputs' => $inputs,
         ]);
     }
 }

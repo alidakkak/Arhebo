@@ -13,7 +13,6 @@ use App\Statuses\InviteeTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -29,7 +28,7 @@ class InviteeController extends Controller
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function sendWhatsAppMessages(array $invitees, $whatsApp_template, $image)
+    public function sendWhatsAppMessages(array $invitees, $image, $whatsApp_template)
     {
         $receivers = [];
 
@@ -45,28 +44,16 @@ class InviteeController extends Controller
             ];
         }
 
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer '.$this->token,
-                'Content-Type' => 'application/json',
-            ])->post($this->url, [
-                'template_name' => 'ar7ebo_invitation_ar_customized',
-                'broadcast_name' => 'ar7ebo_invitation_ar_customized',
-                'receivers' => $receivers,
-            ]);
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.$this->token,
+            'Content-Type' => 'application/json',
+        ])->post($this->url, [
+            'template_name' => 'ar7ebo_invitation_ar_customized',
+            'broadcast_name' => 'ar7ebo_invitation_ar_customized',
+            'receivers' => $receivers,
+        ]);
 
-            // التحقق مما إذا كانت الاستجابة صالحة أم لا
-            if ($response->successful()) {
-                return $response->json();
-            } elseif ($response->failed()) {
-                // في حالة فشل الاستجابة
-                Log::error('Failed to send WhatsApp messages', ['response' => $response->body()]);
-                return null;
-            }
-        } catch (\Exception $e) {
-            Log::error('Error while sending WhatsApp messages', ['error' => $e->getMessage()]);
-            return null;
-        }
+        return $response->json();
     }
 
     public function index(Request $request)
@@ -165,15 +152,10 @@ class InviteeController extends Controller
                 ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $response = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $whatsApp_template, url($image));
-            if ($response === null) {
-                DB::rollBack();
-                return response()->json(['message' => 'Failed to send WhatsApp messages.'], 500);
-            }
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $image, $whatsApp_template);
 
             DB::commit();
 
@@ -182,7 +164,7 @@ class InviteeController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Error while adding invitees', ['error' => $e->getMessage()]);
+
             return response()->json(['message' => 'An error occurred while processing your request.',
                 'err' => $e->getMessage(),
             ], 500);
@@ -235,7 +217,7 @@ class InviteeController extends Controller
                 ]);
 
                 $newInvitee->update([
-                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => url('invitation-card/'.$newInvitee->id.'?uuid='.$uuid),
                 ]);
                 $inviteesForWhatsapp->push([
                     'phone' => $newInvitee->phone,
@@ -266,10 +248,11 @@ class InviteeController extends Controller
         }
     }
 
-    public function whatsApp_template($InvitationID) {
+    public function whatsApp_template($InvitationID)
+    {
         $invitation = Invitation::find($InvitationID);
 
-        if (!$invitation) {
+        if (! $invitation) {
             return response()->json(['error' => 'Invitation not found'], 404);
         }
 
@@ -295,10 +278,8 @@ class InviteeController extends Controller
             $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplate);
         }
 
-        return response()->json(['whatsApp_template' => $whatsAppTemplate]);
+        return $whatsAppTemplate;
     }
-
-
 
     /// API For Support To Get Image And Message
     public function getImage($invitationID)

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth\EmailOTP;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgetPasswordRequest;
-use App\Mail\EmailService;
 use App\Models\User;
+use App\Services\EmailService;
 
 class ForgetPasswordController extends Controller
 {

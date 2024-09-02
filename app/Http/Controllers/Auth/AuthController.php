@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateProfileRequest;
-use App\Mail\EmailService;
-use App\Mail\WhatsAppService;
+use App\Models\DeviceToken;
 use App\Models\User;
+use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -46,6 +46,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Your account is not verified.'], 403);
         }
 
+        DeviceToken::updateOrCreate(
+            ['user_id' => $user->id, 'device_token' => $request->device_token],
+            ['user_id' => $user->id, 'device_token' => $request->device_token]
+        );
+
         return $this->createNewToken($token);
     }
 
@@ -81,8 +86,13 @@ class AuthController extends Controller
             ['password' => bcrypt($request->password)]
         ));
         $otp = $user->generate_code();
-        $whatsApp = new WhatsAppService();
+        $whatsApp = new WhatsAppService;
         $whatsApp->sendWhatsAppMessage($user->phone, $otp);
+
+        DeviceToken::updateOrCreate(
+            ['user_id' => $user->id, 'device_token' => $request->device_token],
+            ['user_id' => $user->id, 'device_token' => $request->device_token]
+        );
 
         return response()->json([
             'message' => 'Verify Your Email',

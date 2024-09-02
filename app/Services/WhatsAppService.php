@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Mail;
+namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
 class WhatsAppService
 {
     protected $apiUrl;
+
     protected $apiToken;
 
     public function __construct()
@@ -26,10 +27,10 @@ class WhatsAppService
                 'broadcast_name' => 'ar7ebo_otp_en_190820241318',
                 'parameters' => [
                     [
-                        'name' => "1",
-                        'value' => $otp
-                    ]
-                ]
+                        'name' => '1',
+                        'value' => $otp,
+                    ],
+                ],
             ]);
 
             if ($response->successful()) {
@@ -38,16 +39,15 @@ class WhatsAppService
                 return [
                     'status' => 'error',
                     'message' => 'Failed to send message',
-                    'details' => $response->json()
+                    'details' => $response->json(),
                 ];
             }
         } catch (\Exception $e) {
             return [
                 'status' => 'error',
                 'message' => 'An error occurred while sending the message',
-                'details' => $e->getMessage()
+                'details' => $e->getMessage(),
             ];
         }
     }
-
 }

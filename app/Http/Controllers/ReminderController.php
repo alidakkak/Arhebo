@@ -43,6 +43,7 @@ class ReminderController extends Controller
 
             if ($existingReminders) {
                 DB::rollBack();
+
                 return response()->json(['message' => trans('message.reminder')], 400);
             }
 
@@ -57,6 +58,7 @@ class ReminderController extends Controller
 
             if ($invitees->isEmpty()) {
                 DB::rollBack();
+
                 return response()->json(['message' => 'This Invitation does not have invitees'], 404);
             }
 
@@ -75,7 +77,7 @@ class ReminderController extends Controller
             }
 
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $this->token,
+                'Authorization' => 'Bearer '.$this->token,
                 'Content-Type' => 'application/json',
             ])->post($this->url, [
                 'template_name' => 'reminder_ar',
@@ -88,14 +90,17 @@ class ReminderController extends Controller
 
             if ($result) {
                 DB::commit();
+
                 return response()->json(['status' => true, 'message' => 'Reminder sent successfully']);
             } else {
                 DB::rollBack();
                 $errors = $responseData['errors'] ?? [];
+
                 return response()->json(['status' => false, 'message' => 'Failed to send reminder', 'errors' => $errors]);
             }
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['status' => false, 'message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }

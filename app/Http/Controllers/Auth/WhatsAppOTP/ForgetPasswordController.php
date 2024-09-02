@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Auth\WhatsAppOTP;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgetPasswordRequest;
-use App\Mail\EmailService;
-use App\Mail\WhatsAppService;
 use App\Models\User;
+use App\Services\WhatsAppService;
 
 class ForgetPasswordController extends Controller
 {
@@ -15,7 +14,7 @@ class ForgetPasswordController extends Controller
         $input = $request->only('phone');
         $user = User::where('phone', $input)->first();
         $otp = $user->generate_code();
-        $whatsApp = new WhatsAppService();
+        $whatsApp = new WhatsAppService;
         $whatsApp->sendWhatsAppMessage($user->phone, $otp);
         $success['success'] = true;
 

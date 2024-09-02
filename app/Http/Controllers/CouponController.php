@@ -8,7 +8,6 @@ use App\Http\Resources\CouponResource;
 use App\Models\Coupon;
 use App\Models\CouponCategory;
 use App\Models\CouponPackage;
-use App\Models\CouponUser;
 use Illuminate\Support\Facades\DB;
 
 class CouponController extends Controller

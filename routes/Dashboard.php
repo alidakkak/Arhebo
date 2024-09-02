@@ -18,6 +18,7 @@ use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PackageDetalisController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\ProhibitedThingController;
+use App\Http\Controllers\PushNotificationsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TermController;
@@ -25,7 +26,7 @@ use App\Http\Controllers\ValidateController;
 use App\Models\Package;
 use Illuminate\Support\Facades\Route;
 
-// Route::group(['middleware' => ['check_user:1', 'lang']], function () {
+Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     //// Admin&Support
     Route::post('addAdminSupport', [AdminController::class, 'addAdminSupport']);
 
@@ -155,4 +156,7 @@ use Illuminate\Support\Facades\Route;
     Route::patch('nicknames/{nicknameId}', [NicknameController::class, 'update']);
     Route::get('nicknames/{nicknameId}', [NicknameController::class, 'show']);
     Route::delete('nicknames/{nicknameId}', [NicknameController::class, 'delete']);
-// });
+
+    /// PushNotifications
+    Route::post('sendNotificationToAllUsers', [PushNotificationsController::class, 'sendNotificationToAllUsers']);
+});

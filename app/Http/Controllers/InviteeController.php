@@ -226,9 +226,9 @@ class InviteeController extends Controller
                 ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
+            return $inviteesForWhatsapp;
             $invitation->save();
             $image = $invitation->image;
-            return $image;
             $message = $invitation->text_message;
             if ($image == null || $message == null) {
                 DB::rollBack();

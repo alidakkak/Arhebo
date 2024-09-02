@@ -236,7 +236,7 @@ class InviteeController extends Controller
                 return response()->json(['message' => 'You must add a picture and a message']);
             }
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $whatsApp_template, url($image));
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
             DB::commit();
 
             return response()->json([

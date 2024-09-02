@@ -228,13 +228,14 @@ class InviteeController extends Controller
             }
 
             $invitation->save();
-            $image = $invitation->image;
-            $message = $invitation->text_message;
-            if ($image == null || $message == null) {
-                DB::rollBack();
-
-                return response()->json(['message' => 'You must add a picture and a message']);
-            }
+//            $image = $invitation->image;
+            $image = $invitation->Template ? $invitation->Template->image : null;
+//            $message = $invitation->text_message;
+//            if ($image == null || $message == null) {
+//                DB::rollBack();
+//
+//                return response()->json(['message' => 'You must add a picture and a message']);
+//            }
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $whatsApp_template, url($image));
             DB::commit();

@@ -277,7 +277,7 @@ class InviteeController extends Controller
         }
 
         foreach ($templateData as $key => $value) {
-            $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplate);
+            $whatsAppTemplate = str_replace("{{" . trim($key) . "}}", $value, $whatsAppTemplate);
         }
 
         return $whatsAppTemplate;

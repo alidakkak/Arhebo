@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequestJawad;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\DeviceToken;
 use App\Models\User;
@@ -28,19 +29,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(LoginRequestJawad $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required_without:phone|email',
-            'phone' => 'required_without:email|numeric',
-            'password' => 'required|string|min:6',
-//            'notification_token' => 'required_if:client,and|string',
-            'client' => 'string'
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-        if (! $token = auth()->attempt($validator->validated())) {
+        if (! $token = auth()->attempt($request->only(['email' , 'password']))) {
             return response()->json(['error' => trans('auth.failed')], 403);
         }
         $user = auth()->user();

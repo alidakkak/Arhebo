@@ -34,7 +34,7 @@ class AuthController extends Controller
             'email' => 'required_without:phone|email',
             'phone' => 'required_without:email|numeric',
             'password' => 'required|string|min:6',
-            'notification_token' => 'required_if:client,and|string',
+//            'notification_token' => 'required_if:client,and|string',
             'client' => 'string'
         ]);
         if ($validator->fails()) {

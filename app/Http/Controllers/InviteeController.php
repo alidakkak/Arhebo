@@ -142,7 +142,6 @@ class InviteeController extends Controller
                     'invitation_id' => $request->input('invitation_id'),
                     'uuid' => $uuid,
                 ]);
-                return $newInvitee;
                 $newInvitee->update([
                     'link' =>'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);

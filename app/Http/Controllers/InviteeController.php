@@ -142,6 +142,7 @@ class InviteeController extends Controller
                     'invitation_id' => $request->input('invitation_id'),
                     'uuid' => $uuid,
                 ]);
+                return $newInvitee;
                 $newInvitee->update([
                     'link' =>'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
@@ -152,7 +153,6 @@ class InviteeController extends Controller
                 ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            return $inviteesData;
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
             $whatsApp_template = $this->whatsApp_template($invitation->id);

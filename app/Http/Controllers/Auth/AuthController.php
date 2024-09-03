@@ -49,34 +49,11 @@ class AuthController extends Controller
         }
 
         if ($request->device_token){
-            DeviceToken::updateOrCreate(
-                ['user_id' => $user->id, 'device_token' => $request->device_token],
-                ['user_id' => $user->id, 'device_token' => $request->device_token]
-            );
+//            DeviceToken::updateOrCreate(
+//                ['user_id' => $user->id, 'device_token' => $request->device_token],
+//                ['user_id' => $user->id, 'device_token' => $request->device_token]
+//            );
         }
-
-
-        return $this->createNewToken($token);
-    }
-    // Support And Admin
-    public function loginAdmin(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required_without:phone|email',
-            'phone' => 'required_without:email|numeric',
-            'password' => 'required|string|min:6',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-        if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => trans('auth.failed')], 403);
-        }
-        $user = auth()->user();
-        if ($user->email_verified_at === null) {
-            return response()->json(['error' => 'Your account is not verified.'], 403);
-        }
-
         return $this->createNewToken($token);
     }
 

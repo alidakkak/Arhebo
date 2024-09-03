@@ -133,7 +133,6 @@ class CategoryController extends Controller
         $inviteesCount = Invitee::count();
         $number_of_people_invited_by_app = Invitee::select(DB::raw('count(distinct(phone)) as total'))->value('total');
         $number_of_coupons = Coupon::count();
-        $number_of_in_used_coupons = Coupon::where('number_of_used', '!=', '0')->count(); // Number of coupons used
 
         return [
             'categories' => $categoriesCount,
@@ -143,7 +142,6 @@ class CategoryController extends Controller
             'invitees' => $inviteesCount,
             'number_of_people_invited_by_app' => $number_of_people_invited_by_app,
             'number_of_coupons' => $number_of_coupons,
-            'number_of_in_used_coupons' => $number_of_in_used_coupons,
         ];
     }
 

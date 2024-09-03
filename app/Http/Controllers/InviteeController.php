@@ -258,7 +258,7 @@ class InviteeController extends Controller
             return response()->json(['error' => 'Invitation not found'], 404);
         }
         $whatsAppTemplateCategory = $invitation->category->whatsApp_template;
-        $whatsAppTemplateFilter = $invitation->filter->whatsApp_template;
+        $whatsAppTemplateFilter = $invitation->filter ? $invitation->filter->whatsApp_template : null;
 
         $whatsAppTemplate = $whatsAppTemplateFilter ?? $whatsAppTemplateCategory;
 

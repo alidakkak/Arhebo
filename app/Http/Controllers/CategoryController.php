@@ -164,7 +164,7 @@ class CategoryController extends Controller
             return response($arra , 200);
         }else if (\request('q') === 'edit'){
             $input = Input::where('category_id' , \request('category_id'))->pluck('input_name');
-            return response(array_merge($arra , $input) , 200);
+            return response(array_merge($arra , $input->toArray()) , 200);
         }else{
             return response([
                 'message' => 'unknown q param'

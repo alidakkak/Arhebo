@@ -72,6 +72,13 @@ class TemplateResource extends JsonResource
             'is_favorite' => $isFavorite,
             'inputs' => InputResource::collection($template->inputs),
             'prohibitedThing' => ProhibitedThingResource::collection($prohibitedThing),
+            'filters' => $this->filters->map(function ($filter) {
+                return [
+                    'id' => $filter->id,
+                    'name' => $filter->name,
+                    'name_ar' => $filter->name_ar,
+                ];
+            }),
         ];
     }
 }

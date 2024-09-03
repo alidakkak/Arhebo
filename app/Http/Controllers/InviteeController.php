@@ -259,7 +259,8 @@ class InviteeController extends Controller
         $whatsAppTemplateCategory = $invitation->category->whatsApp_template;
         $whatsAppTemplateFilter = $invitation->filter->whatsApp_template;
 
-        $whatsAppTemplate = $whatsAppTemplateCategory;
+        $whatsAppTemplate = $whatsAppTemplateFilter ?? $whatsAppTemplateCategory;
+        return $whatsAppTemplate;
 
         $templateData = [
             'event_name' => $invitation->event_name,

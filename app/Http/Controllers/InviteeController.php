@@ -155,7 +155,6 @@ class InviteeController extends Controller
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            return $whatsApp_template;
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
 
             DB::commit();

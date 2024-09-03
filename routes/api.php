@@ -50,6 +50,7 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::get('/showInvitationInfo/{invitee}', [InviteeController::class, 'showInvitationInfo']);
 Route::group(['middleware' => 'lang'], function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('loginAdmin', [AuthController::class, 'loginAdmin']);
     Route::post('/register', [AuthController::class, 'register']);
     //    Route::post('/emailVerifications', [EmailVerificationsController::class, 'emailVerification']);
     //    Route::post('/Verifications', [ResetPasswordController::class, 'emailVerification']);

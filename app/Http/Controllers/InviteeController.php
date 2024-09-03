@@ -259,6 +259,8 @@ class InviteeController extends Controller
         $whatsAppTemplateCategory = $invitation->category->whatsApp_template;
         $whatsAppTemplateFilter = $invitation->filter->whatsApp_template;
 
+        $whatsAppTemplate = $whatsAppTemplateFilter ?? $whatsAppTemplateCategory;
+
         $templateData = [
             'event_name' => $invitation->event_name,
             'from' => $invitation->from,
@@ -275,7 +277,7 @@ class InviteeController extends Controller
         }
 
         foreach ($templateData as $key => $value) {
-            $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplateCategory);
+            $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplate);
         }
 
         return $whatsAppTemplate;

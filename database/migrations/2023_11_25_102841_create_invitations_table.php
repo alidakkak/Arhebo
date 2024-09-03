@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('package_detail_id')->constrained('package_details')->cascadeOnDelete();
             $table->foreignId('template_id')->nullable()->constrained('templates')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('filter_id')->nullable()->constrained('filters')->cascadeOnDelete();
             $table->string('hijri_date');
             $table->string('miladi_date');
             $table->string('from');

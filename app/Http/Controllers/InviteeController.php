@@ -256,9 +256,8 @@ class InviteeController extends Controller
         if (! $invitation) {
             return response()->json(['error' => 'Invitation not found'], 404);
         }
-
-        $category = $invitation->category;
-        $whatsAppTemplate = $category->whatsApp_template;
+        $whatsAppTemplateCategory = $invitation->category->whatsApp_template;
+        $whatsAppTemplateFilter = $invitation->filter->whatsApp_template;
 
         $templateData = [
             'event_name' => $invitation->event_name,
@@ -276,7 +275,7 @@ class InviteeController extends Controller
         }
 
         foreach ($templateData as $key => $value) {
-            $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplate);
+            $whatsAppTemplate = str_replace("{{{$key}}}", $value, $whatsAppTemplateCategory);
         }
 
         return $whatsAppTemplate;

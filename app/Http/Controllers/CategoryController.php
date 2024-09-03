@@ -151,20 +151,33 @@ class CategoryController extends Controller
     public function getInformation()
     {
 
-        $event_name = 'event_name';
-        $from = 'from';
-        $to = 'to';
-        $miladi_date = 'miladi_date';
-        $hijri_date = 'hijri_date';
-        $inputs = Input::select('input_name', 'input_name_ar')->get();
+//        $event_name = 'event_name';
+//        $from = 'from';
+//        $to = 'to';
+//        $miladi_date = 'miladi_date';
+//        $hijri_date = 'hijri_date';
+//        $inputs = Input::select('input_name', 'input_name_ar')->get();
 
-        return response()->json([
-            'event_name' => $event_name,
-            'from' => $from,
-            'to' => $to,
-            'miladi_date' => $miladi_date,
-            'hijri_date' => $hijri_date,
-            'inputs' => $inputs,
-        ]);
+        $arra = ['event_name' , 'from' , 'to' , 'miladi_date' , 'hijri_date'];
+
+        if (\request('q') === 'create'){
+            return response($arra , 200);
+        }else if (\request('q') === 'edit'){
+            $input = Input::where('category_id' , \request('category_id'))->pluck('input_name');
+            return response(array_merge($arra , $input) , 200);
+        }else{
+            return response([
+                'message' => 'unknown q param'
+            ] , 422);
+        }
+
+//        return response()->json([
+//            'event_name' => $event_name,
+//            'from' => $from,
+//            'to' => $to,
+//            'miladi_date' => $miladi_date,
+//            'hijri_date' => $hijri_date,
+//            'inputs' => $inputs,
+//        ]);
     }
 }

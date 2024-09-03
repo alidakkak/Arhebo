@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequestJawad extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class LoginRequestJawad extends FormRequest
             'email' => 'required_without:phone|email',
             'phone' => 'required_without:email|numeric',
             'password' => 'required|string|min:6',
-            'notification_token' => 'required_if:client,and|string',
+            'device_token' => 'required_if:client,and|string',
             'client' => 'string'
         ];
     }

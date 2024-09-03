@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequestJawad;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\DeviceToken;
 use App\Models\User;
@@ -29,7 +29,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(LoginRequestJawad $request)
+    public function login(LoginRequest $request)
     {
         if (! $token = auth()->attempt($request->only(['email' , 'password']))) {
             return response()->json(['error' => trans('auth.failed')], 403);
@@ -39,10 +39,10 @@ class AuthController extends Controller
             return response()->json(['error' => 'Your account is not verified.'], 403);
         }
 
-        if ($request->notification_token){
+        if ($request->device_token){
             DeviceToken::updateOrCreate(
-                ['user_id' => $user->id, 'device_token' => $request->notification_token],
-                ['user_id' => $user->id, 'device_token' => $request->notification_token]
+                ['user_id' => $user->id, 'device_token' => $request->device_token],
+                ['user_id' => $user->id, 'device_token' => $request->device_token]
             );
         }
         return $this->createNewToken($token);

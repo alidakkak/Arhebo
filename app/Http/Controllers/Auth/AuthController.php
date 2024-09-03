@@ -34,7 +34,7 @@ class AuthController extends Controller
             'email' => 'required_without:phone|email',
             'phone' => 'required_without:email|numeric',
             'password' => 'required|string|min:6',
-            'device_token' => 'required_if:client,and|string',
+            'notification_token' => 'required_if:client,and|string',
             'client' => 'string'
         ]);
         if ($validator->fails()) {
@@ -48,11 +48,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Your account is not verified.'], 403);
         }
 
-        if ($request->device_token){
-//            DeviceToken::updateOrCreate(
-//                ['user_id' => $user->id, 'device_token' => $request->device_token],
-//                ['user_id' => $user->id, 'device_token' => $request->device_token]
-//            );
+        if ($request->notification_token){
+            DeviceToken::updateOrCreate(
+                ['user_id' => $user->id, 'device_token' => $request->notification_token],
+                ['user_id' => $user->id, 'device_token' => $request->notification_token]
+            );
         }
         return $this->createNewToken($token);
     }

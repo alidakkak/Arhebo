@@ -1,5 +1,6 @@
 <?php
 
+use App\Console\Commands\messageThanksToAttendees;
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
 use App\Http\Controllers\AttributeController;

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Invitation;
+use App\Statuses\InviteeTypes;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -41,7 +42,9 @@ class SendWhatsAppReminder extends Command
 
     private function sendWhatsAppReminder($invitation)
     {
-        $invitees = $invitation->invitee()->get(['phone', 'name', 'link']);
+        $invitees = $invitation->invitee()->where('status', InviteeTypes::confirmed)
+        ->orwhere('status', InviteeTypes::waiting)
+        ->get(['phone', 'name', 'link']);
         if ($invitees->isEmpty()) {
             return ['status' => false, 'message' => 'This Invitation does not have invitees'];
         }

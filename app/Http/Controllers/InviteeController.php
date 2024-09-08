@@ -257,9 +257,11 @@ class InviteeController extends Controller
             return response()->json(['error' => 'Invitation not found'], 404);
         }
         $whatsAppTemplateCategory = $invitation->category->whatsApp_template;
+
         $whatsAppTemplateFilter = $invitation->filter ? $invitation->filter->whatsApp_template : null;
 
         $whatsAppTemplate = $whatsAppTemplateFilter ?? $whatsAppTemplateCategory;
+
 
         $templateData = [
             'event_name' => $invitation->event_name,
@@ -276,11 +278,13 @@ class InviteeController extends Controller
             $templateData[$inputName] = $invitationInput->answer;
         }
 
-        foreach ($templateData as $key => $value) {
-            $whatsAppTemplate = str_replace("{{" . trim($key) . "}}", $value, $whatsAppTemplate);
-        }
+        $output = preg_replace_callback('/{{\s*([^"]+)\s*}}/', function ($matches) use ($templateData) {
+            $key = trim($matches[1]);
+            return $templateData[$key] ?? $matches[0];
+        }, $whatsAppTemplate);
+        dd($output);
 
-        return $whatsAppTemplate;
+        return $output;
     }
 
     /// API For Support To Get Image And Message

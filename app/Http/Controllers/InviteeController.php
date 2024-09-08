@@ -282,7 +282,6 @@ class InviteeController extends Controller
             $key = trim($matches[1]);
             return $templateData[$key] ?? $matches[0];
         }, $whatsAppTemplate);
-        dd($output);
 
         return $output;
     }

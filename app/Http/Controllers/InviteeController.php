@@ -273,12 +273,13 @@ class InviteeController extends Controller
 
         $invitationInputs = $invitation->invitationInput()->with('input')->get();
 
+
         foreach ($invitationInputs as $invitationInput) {
             $inputName = $invitationInput->input->input_name;
             $templateData[$inputName] = $invitationInput->answer;
         }
 
-        $output = preg_replace_callback('/{{\s*([^"]+)\s*}}/', function ($matches) use ($templateData) {
+        $output = preg_replace_callback('/{{\s*([a-zA-Z0-9_\']+)\s*}}/', function ($matches) use ($templateData) {
             $key = trim($matches[1]);
             return $templateData[$key] ?? $matches[0];
         }, $whatsAppTemplate);

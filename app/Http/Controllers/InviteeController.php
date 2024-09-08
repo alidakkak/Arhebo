@@ -279,7 +279,7 @@ class InviteeController extends Controller
             $templateData[$inputName] = $invitationInput->answer;
         }
 
-        $output = preg_replace_callback('/{{\s*([a-zA-Z0-9_\']+)\s*}}/', function ($matches) use ($templateData) {
+        $output = preg_replace_callback('/{{\s*([a-zA-Z0-9_\'\\s]+)\s*}}/', function ($matches) use ($templateData) {
             $key = trim($matches[1]);
             return $templateData[$key] ?? $matches[0];
         }, $whatsAppTemplate);

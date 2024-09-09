@@ -31,11 +31,12 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if (! $token = auth()->attempt($request->only(['email' , 'password']))) {
-            return response()->json(['error' => trans('auth.failed')], 403);
-        }
-        if (! $token = auth()->attempt($request->only(['phone' , 'password']))) {
-            return response()->json(['error' => trans('auth.failedPhone')], 403);
+        $credentials = $request->only(['email', 'password']);
+        if (! $token = auth()->attempt($credentials)) {
+            $credentials = $request->only(['phone', 'password']);
+            if (! $token = auth()->attempt($credentials)) {
+                return response()->json(['error' => trans('auth.failed')], 403);
+            }
         }
         $user = auth()->user();
         if ($user->email_verified_at === null) {

@@ -35,7 +35,7 @@ class InviteeController extends Controller
 
         foreach ($invitees as $invitee) {
             $inviteName = $invitee['name'];
-            $line = "${$inviteName}\n";
+            $line = "{$inviteName}\n";
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [

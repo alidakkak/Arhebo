@@ -44,10 +44,14 @@ class AuthController extends Controller
         }
 
         if ($request->device_token){
-            DeviceToken::updateOrCreate(
-                ['user_id' => $user->id, 'device_token' => $request->device_token],
-                ['user_id' => $user->id, 'device_token' => $request->device_token]
-            );
+            $device_token = DeviceToken::where('device_token' , $request->device_token)->first();
+            if ($device_token){
+                $device_token->update([
+                    "device_token" => $request->device_token
+                ]);
+            }else{
+                DeviceToken::create($request->only(['device_token']));
+            }
         }
         return $this->createNewToken($token);
     }

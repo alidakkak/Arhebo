@@ -38,7 +38,7 @@ class InviteeController extends Controller
                 'customParams' => [
                     ['name' => 'product_image_url', 'value' => $image],
                     ['name' => 'nice_sentence', 'value' => $whatsApp_template],
-                    ['name' => 'name', 'value' => $invitee['name']],
+                    ['name' => 'name', 'value' => $invitee['name'] + "\n"],
                     ['name' => '1', 'value' => $invitee['link']],
                 ],
             ];

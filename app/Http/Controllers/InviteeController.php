@@ -48,8 +48,8 @@ class InviteeController extends Controller
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
-            'template_name' => 'ar7ebo_invitation_ar_customized',
-            'broadcast_name' => 'ar7ebo_invitation_ar_customized',
+            'template_name' => 'ar7ebo_invitation_ar_of',
+            'broadcast_name' => 'ar7ebo_invitation_ar_of',
             'receivers' => $receivers,
         ]);
 

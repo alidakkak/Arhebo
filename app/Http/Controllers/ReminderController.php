@@ -80,8 +80,8 @@ class ReminderController extends Controller
                 'Authorization' => 'Bearer '.$this->token,
                 'Content-Type' => 'application/json',
             ])->post($this->url, [
-                'template_name' => 'reminder_ar',
-                'broadcast_name' => 'reminder_ar',
+                'template_name' => 'reminder_ar_of',
+                'broadcast_name' => 'reminder_ar_of',
                 'receivers' => $receivers,
             ]);
 

@@ -43,12 +43,12 @@ class AuthController extends Controller
             return response()->json(['error' => 'Your account is not verified.'], 403);
         }
 
-//        if ($request->device_token){
+        if ($request->device_token){
             DeviceToken::updateOrCreate(
                 ['user_id' => $user->id, 'device_token' => $request->device_token],
                 ['user_id' => $user->id, 'device_token' => $request->device_token]
             );
-//        }
+        }
         return $this->createNewToken($token);
     }
 

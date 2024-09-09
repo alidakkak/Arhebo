@@ -32,13 +32,15 @@ class InviteeController extends Controller
     {
         $receivers = [];
 
+
         foreach ($invitees as $invitee) {
+            $inviteName = $invitee['name'] + "\n";
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
                     ['name' => 'product_image_url', 'value' => $image],
                     ['name' => 'nice_sentence', 'value' => $whatsApp_template],
-                    ['name' => 'name', 'value' => $invitee['name'] + "\n"],
+                    ['name' => 'name', 'value' => $inviteName],
                     ['name' => '1', 'value' => $invitee['link']],
                 ],
             ];

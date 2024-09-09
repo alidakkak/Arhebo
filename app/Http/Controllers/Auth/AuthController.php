@@ -50,7 +50,7 @@ class AuthController extends Controller
                     "device_token" => $request->device_token
                 ]);
             }else{
-                DeviceToken::create(array_merge($request->only(['device_token'] , $user->id)));
+                DeviceToken::create(array_merge($request->only(['device_token'] , ['user_id' => $user->id])));
             }
         }
         return $this->createNewToken($token);

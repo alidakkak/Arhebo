@@ -34,6 +34,9 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($request->only(['email' , 'password']))) {
             return response()->json(['error' => trans('auth.failed')], 403);
         }
+        if (! $token = auth()->attempt($request->only(['phone' , 'password']))) {
+            return response()->json(['error' => trans('auth.failedPhone')], 403);
+        }
         $user = auth()->user();
         if ($user->email_verified_at === null) {
             return response()->json(['error' => 'Your account is not verified.'], 403);
@@ -119,7 +122,6 @@ class AuthController extends Controller
 
     public function update(UpdateProfileRequest $request, User $user)
     {
-        $request->validated($request->all());
         $user->update($request->all());
 
         return response([

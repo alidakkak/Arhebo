@@ -14,6 +14,7 @@ return [
     */
 
     'failed' => 'The email or password you entered is incorrect.',
+    'failedPhone' => 'Phone number or password you entered is incorrect.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 

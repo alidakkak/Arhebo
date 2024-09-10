@@ -65,7 +65,7 @@ class ReminderController extends Controller
             }
 
             $event_name = $invitation->event_name;
-            $event_time = $invitation->created_at->format('Y-m-d H:i:s');
+            $event_time = $invitation->created_at->format('Y/m/d H:i');
             $receivers = [];
             foreach ($invitees as $invitee) {
                 $receivers[] = [
@@ -82,8 +82,8 @@ class ReminderController extends Controller
                 'Authorization' => 'Bearer '.$this->token,
                 'Content-Type' => 'application/json',
             ])->post($this->url, [
-                'template_name' => 'reminder_ar_of',
-                'broadcast_name' => 'reminder_ar_of',
+                'template_name' => 'reminder_ar_bz',
+                'broadcast_name' => 'reminder_ar_bz',
                 'receivers' => $receivers,
             ]);
 

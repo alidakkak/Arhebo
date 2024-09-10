@@ -23,8 +23,8 @@ class TestInvitationController extends Controller
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url.$request->input('phone'), [
-            'template_name' => 'trial_invitation_ar',
-            'broadcast_name' => 'trial_invitation_ar',
+            'template_name' => 'trial_invitation_ar_bz',
+            'broadcast_name' => 'trial_invitation_ar_bz',
             'parameters' => [
                 [
                     'name' => 'product_image_url',
@@ -35,8 +35,8 @@ class TestInvitationController extends Controller
                     'value' => $request->input('username'),
                 ],
                 [
-                    'name' => 'abandoned_checkout_url',
-                    'value' => 'https://booking.ar7ebo.com/invitaion-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
+                    'name' => '1',
+                    'value' => 'invitation-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa',
                 ],
             ],
         ]);

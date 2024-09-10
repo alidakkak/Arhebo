@@ -67,8 +67,8 @@ class SendWhatsAppReminder extends Command
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
-            'template_name' => 'reminder_24_ar',
-            'broadcast_name' => 'reminder_24_ar',
+            'template_name' => 'reminder_24_ar_bz',
+            'broadcast_name' => 'reminder_24_ar_bz',
             'receivers' => $receivers,
         ]);
 

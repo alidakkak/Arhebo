@@ -23,8 +23,8 @@ class WhatsAppService
                 'Authorization' => 'Bearer '.$this->apiToken,
                 'Content-Type' => 'application/json',
             ])->post($this->apiUrl.$to, [
-                'template_name' => 'ar7ebo_otp_ar',
-                'broadcast_name' => 'ar7ebo_otp_en_190820241318',
+                'template_name' => 'ar7ebo_otp_ar_bz',
+                'broadcast_name' => 'ar7ebo_otp_ar_bz',
                 'parameters' => [
                     [
                         'name' => '1',

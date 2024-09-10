@@ -68,8 +68,8 @@ class messageThanksToAttendees extends Command
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
-            'template_name' => 'thanks_inv_ar',
-            'broadcast_name' => 'thanks_inv_ar',
+            'template_name' => 'thanks_inv_bz',
+            'broadcast_name' => 'thanks_inv_bz',
             'receivers' => $receivers,
         ]);
 

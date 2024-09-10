@@ -10,7 +10,6 @@ use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
 use App\Statuses\InviteeTypes;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -156,7 +155,6 @@ class InviteeController extends Controller
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            dd($whatsApp_template);
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
 
             DB::commit();
@@ -267,10 +265,10 @@ class InviteeController extends Controller
 
         $templateData = [
             'event_name' => $invitation->event_name,
-            'from' => Carbon::parse($invitation->from)->locale('ar'),
-            'to' => Carbon::parse($invitation->to)->locale('ar'),
-            'miladi_date' => Carbon::parse($invitation->miladi_date)->locale('ar'),
-            'hijri_date' => Carbon::parse($invitation->hijri_date)->locale('ar'),
+            'from' => $invitation->from,
+            'to' => $invitation->to,
+            'miladi_date' => $invitation->miladi_date,
+            'hijri_date' => $invitation->hijri_date,
         ];
 
         $invitationInputs = $invitation->invitationInput()->with('input')->get();

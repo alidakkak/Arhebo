@@ -47,13 +47,15 @@ class ReminderController extends Controller
                 return response()->json(['message' => trans('message.reminder')], 400);
             }
 
-            $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->all()));
+            $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->only('invitation_id')));
 
             $invitation = Invitation::find($invitationId);
 
             $invitees = $invitation->invitee()
-                ->where('status', InviteeTypes::confirmed)
-                ->orwhere('status', InviteeTypes::waiting)
+                ->where(function($query) {
+                    $query->where('status', InviteeTypes::confirmed)
+                        ->orWhere('status', InviteeTypes::waiting);
+                })
                 ->get();
 
             if ($invitees->isEmpty()) {

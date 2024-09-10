@@ -36,8 +36,8 @@ class InviteeController extends Controller
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => $image],
-                    ['name' => 'nice_sentence', 'value' => $whatsApp_template],
+                    ['name' => 'product_image_url', 'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'],
+                    ['name' => 'nice_sentence', 'value' => '$whatsApp_template'],
                     ['name' => 'name', 'value' => $invitee['name']],
                     ['name' => '1', 'value' => '/invitation-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa'],
                 ],

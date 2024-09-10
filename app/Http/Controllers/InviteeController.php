@@ -39,7 +39,7 @@ class InviteeController extends Controller
                     ['name' => 'product_image_url', 'value' => $image],
                     ['name' => 'nice_sentence', 'value' => $whatsApp_template],
                     ['name' => 'name', 'value' => $invitee['name']],
-                    ['name' => '1', 'value' => $invitee['link']],
+                    ['name' => '1', 'value' => '/invitation-card/1?uuid=1ed8bf6c-7f2f-4c92-bf96-528bcaf318aa'],
                 ],
             ];
         }
@@ -154,8 +154,7 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
-//            $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $whatsApp_template = 'gyjgjtyt';
+            $whatsApp_template = $this->whatsApp_template($invitation->id);
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
 
             DB::commit();

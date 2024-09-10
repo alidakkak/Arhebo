@@ -7,6 +7,7 @@ use App\Http\Resources\ReminderResource;
 use App\Models\Invitation;
 use App\Models\Reminder;
 use App\Statuses\InviteeTypes;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
@@ -65,7 +66,9 @@ class ReminderController extends Controller
             }
 
             $event_name = $invitation->event_name;
-            $event_time = $invitation->created_at->format('Y/m/d H:i');
+            $miladi_date  = Carbon::parse($invitation->miladi_date)->locale('ar');
+            $to  = Carbon::parse($invitation->to)->locale('ar');
+            $event_time = $miladi_date->translatedFormat('Y/m/d') . ' في الساعة ' . $to->translatedFormat('h:i A');
             $receivers = [];
             foreach ($invitees as $invitee) {
                 $receivers[] = [

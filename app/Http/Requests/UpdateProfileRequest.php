@@ -26,7 +26,7 @@ class UpdateProfileRequest extends FormRequest
             'name' => 'string',
             'email' => 'email|unique:users,email,'.Auth::user()->id,
             'phone' => 'unique:users,phone,' . Auth::user()->id,
-            'location' => 'string',
+            'location' => 'nullable|string',
             'image' => 'image|mimes:jpeg,png,jpg,svg|max:2048'
         ];
     }

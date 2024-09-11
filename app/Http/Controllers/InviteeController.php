@@ -144,7 +144,7 @@ class InviteeController extends Controller
                     'uuid' => $uuid,
                 ]);
                 $newInvitee->update([
-                    'link' =>'/invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' =>'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $inviteesForWhatsapp->push([
                     'phone' => $newInvitee->phone,
@@ -218,7 +218,7 @@ class InviteeController extends Controller
                 ]);
 
                 $newInvitee->update([
-                    'link' => '/invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $inviteesForWhatsapp->push([
                     'phone' => $newInvitee->phone,

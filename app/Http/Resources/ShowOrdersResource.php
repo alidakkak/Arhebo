@@ -22,6 +22,11 @@ class ShowOrdersResource extends JsonResource
     {
 
         if ($request->route()->uri === 'api/showInvitationInfo/{invitee}') {
+             if($this->invitation->Template) {
+                 $template =  $this->invitation->Template->image;
+            } elseif ($this->invitation->image) {
+                 $template = $this->invitation->image;
+             } else $template = null;
             return [
                 'id' => $this->id,
                 'category' => $this->invitation->category->name,
@@ -38,7 +43,7 @@ class ShowOrdersResource extends JsonResource
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
                 'QRCode' => $this->qr,
-                'template' => asset($this->invitation->image),
+                'template' => asset($template),
             ];
         }
 

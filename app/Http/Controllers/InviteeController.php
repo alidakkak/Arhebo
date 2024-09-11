@@ -266,10 +266,10 @@ class InviteeController extends Controller
 
         $templateData = [
             'event_name' => $invitation->event_name,
-            'from' => Carbon::parse($invitation->from)->locale('ar'),
-            'to' => Carbon::parse($invitation->to)->locale('ar'),
-            'miladi_date' => Carbon::parse($invitation->miladi_date)->locale('ar'),
-            'hijri_date' => Carbon::parse($invitation->hijri_date)->locale('ar'),
+            'from' => Carbon::parse($invitation->from)->locale('ar')->translatedFormat('h:i A'),
+            'to' => Carbon::parse($invitation->to)->locale('ar')->translatedFormat('h:i A'),
+            'miladi_date' => Carbon::parse($invitation->miladi_date)->locale('ar')->translatedFormat('Y/m/d'),
+            'hijri_date' => Carbon::parse($invitation->hijri_date)->locale('ar')->translatedFormat('Y/m/d'),
         ];
 
         $invitationInputs = $invitation->invitationInput()->with('input')->get();

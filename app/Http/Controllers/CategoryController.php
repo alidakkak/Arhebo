@@ -13,7 +13,6 @@ use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\Template;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -85,20 +84,12 @@ class CategoryController extends Controller
 
     public function show($category)
     {
-//        $category = Category::find($category);
-//        if (! $category) {
-//            return response()->json(['message' => 'Category not found'], 404);
-//        }
-//
-//        return CategoryResource::make($category);
-        // Calculate the exact time 24 hours from now
-        $now = Carbon::now();
-        $tomorrowAtThisTime = $now->copy()->addDay()->format('Y-m-d H:i');
+        $category = Category::find($category);
+        if (! $category) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
 
-        // Get invitations where event time is 24 hours from now
-        $invitations = Invitation::whereRaw("CONCAT(miladi_date, ' ', `to`) = ?", [$tomorrowAtThisTime])
-            ->get();
-        return $invitations;
+        return CategoryResource::make($category);
     }
 
     public function ali()

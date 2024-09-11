@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('send:whatsapp-reminder')->everyMinute();
-        $schedule->command('app:message-thanks-to-attendees')->everyMinute();
+        $schedule->command('app:message-thanks-to-attendees')->everyFiveMinutes();
     }
 
     /**

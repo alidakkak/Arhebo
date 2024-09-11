@@ -27,8 +27,13 @@ class SendWhatsAppReminder extends Command
 
     public function handle()
     {
-        $tomorrow = Carbon::now()->addDay()->format('Y-m-d');
-        $invitations = Invitation::where('miladi_date', $tomorrow)->get();
+        // Calculate the exact time 24 hours from now
+        $now = Carbon::now();
+        $tomorrowAtThisTime = $now->copy()->addDay()->format('Y-m-d H:i');
+
+        // Get invitations where event time is 24 hours from now
+        $invitations = Invitation::whereRaw("CONCAT(miladi_date, ' ', `to`) = ?", [$tomorrowAtThisTime])
+            ->get();
 
         foreach ($invitations as $invitation) {
             $result = $this->sendWhatsAppReminder($invitation);
@@ -42,9 +47,12 @@ class SendWhatsAppReminder extends Command
 
     private function sendWhatsAppReminder($invitation)
     {
-        $invitees = $invitation->invitee()->where('status', InviteeTypes::confirmed)
-        ->orwhere('status', InviteeTypes::waiting)
-        ->get(['phone', 'name', 'link']);
+        $invitees = $invitation->invitee()
+            ->where(function($query) {
+                $query->where('status', InviteeTypes::confirmed)
+                    ->orWhere('status', InviteeTypes::waiting);
+            })
+            ->get();
         if ($invitees->isEmpty()) {
             return ['status' => false, 'message' => 'This Invitation does not have invitees'];
         }

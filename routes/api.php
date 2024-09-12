@@ -66,6 +66,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
     Route::post('updateProfile/{user}', [AuthController::class, 'update']);
+    Route::post('verificationToUpdatePhone', [AuthController::class, 'verificationToUpdatePhone']);
     Route::post('deleteProfile', [AuthController::class, 'delete']);
 
     //////// Category

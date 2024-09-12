@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\OTPRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\DeviceToken;
 use App\Models\User;
@@ -133,24 +134,17 @@ class AuthController extends Controller
 
     public function update(UpdateProfileRequest $request, User $user)
     {
-        $data = $request->except('phone');
+        $data = $request->all();
 
-        // التحقق من إذا ما كان هناك رقم هاتف جديد
         if ($request->has('phone') && $request->phone != $user->phone) {
-            if ($user->is_phone_verified) {
-                // إذا تم التحقق من الرقم الحالي، يمكن السماح بالتحديث
-                $data['phone'] = $request->phone;
+            $otp = $user->generate_code();
+            $whatsApp = new WhatsAppService;
+            $whatsApp->sendWhatsAppMessage($request->phone, $otp);
 
-                // إعادة تعيين التحقق إلى false حتى يتم التحقق من الرقم الجديد
-                $user->is_phone_verified = false;
-
-                // يمكنك هنا إرسال رسالة تحقق إلى الرقم الجديد
-            } else {
-                // إذا لم يتم التحقق من الرقم القديم
-                return response()->json([
-                    'message' => 'You cannot change the phone number without verification.',
-                ], 400);
-            }
+            return response()->json([
+                'message' => 'OTP has been sent. Please verify your phone number.',
+                'data' => $data
+            ], 400);
         }
 
         $user->update($data);
@@ -159,6 +153,32 @@ class AuthController extends Controller
             'message' => 'User updated successfully',
             'user' => $user,
         ]);
+    }
+
+    public function verificationToUpdatePhone(Request $request)
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return response()->json(['message' => 'User not found.'], 404);
+        }
+
+        if ($user->verifyOtpReset($request->otp)) {
+            $data = $request->input('data');
+
+            if ($data) {
+                $user->update($data);
+
+                return response()->json([
+                    'message' => 'Phone number verified and user data updated successfully.',
+                    'user' => $user,
+                ]);
+            } else {
+                return response()->json(['message' => 'No data to update.'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'Invalid or expired OTP.'], 400);
+        }
     }
 
 

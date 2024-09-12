@@ -32,7 +32,7 @@ class SendWhatsAppReminder extends Command
         $tomorrowAtThisTime = $now->copy()->addDay()->format('Y-m-d H:i');
 
         // Get invitations where event time is 24 hours from now
-        $invitations = Invitation::whereRaw("CONCAT(miladi_date, ' ', `to`) = ?", [$tomorrowAtThisTime])
+        $invitations = Invitation::whereRaw("CONCAT(miladi_date, ' ', `from`) = ?", [$tomorrowAtThisTime])
             ->get();
 
         foreach ($invitations as $invitation) {

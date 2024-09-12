@@ -161,4 +161,15 @@ class User extends Authenticatable implements JWTSubject
 
         return false;
     }
+
+    public function verifyOtpReset($inputOtp)
+    {
+        if ($this->code == $inputOtp && $this->expired_at && $this->expired_at->isFuture()) {
+            $this->reset_code();
+
+            return true;
+        }
+
+        return false;
+    }
 }

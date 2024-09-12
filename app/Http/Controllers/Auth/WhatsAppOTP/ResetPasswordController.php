@@ -18,7 +18,7 @@ class ResetPasswordController extends Controller
             return response()->json(['message' => 'User not found.'], 404);
         }
 
-        if ($user->verifyOtp($request->otp)) {
+        if ($user->verifyOtpReset($request->otp)) {
 
             return response()->json([
                 'message' => 'OTP verified successfully.',

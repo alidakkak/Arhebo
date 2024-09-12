@@ -43,7 +43,7 @@ class AuthController extends Controller
             $otp = $user->generate_code();
             $whatsApp = new WhatsAppService;
             $whatsApp->sendWhatsAppMessage($user->phone, $otp);
-            return response()->json(['error' => 'Your account is not verified.', 'is_verified' => $user->is_verified], 403);
+            return response()->json(['error' => 'Your account is not verified.', 'is_verified' => $user->is_verified], 200);
         }
 
         if ($request->device_token){
@@ -133,13 +133,34 @@ class AuthController extends Controller
 
     public function update(UpdateProfileRequest $request, User $user)
     {
-        $user->update($request->all());
+        $data = $request->except('phone');
 
-        return response([
-            'Message' => 'User Updated SuccessFully',
-            'User' => $user,
+        // التحقق من إذا ما كان هناك رقم هاتف جديد
+        if ($request->has('phone') && $request->phone != $user->phone) {
+            if ($user->is_phone_verified) {
+                // إذا تم التحقق من الرقم الحالي، يمكن السماح بالتحديث
+                $data['phone'] = $request->phone;
+
+                // إعادة تعيين التحقق إلى false حتى يتم التحقق من الرقم الجديد
+                $user->is_phone_verified = false;
+
+                // يمكنك هنا إرسال رسالة تحقق إلى الرقم الجديد
+            } else {
+                // إذا لم يتم التحقق من الرقم القديم
+                return response()->json([
+                    'message' => 'You cannot change the phone number without verification.',
+                ], 400);
+            }
+        }
+
+        $user->update($data);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user,
         ]);
     }
+
 
     public function delete(Request $request)
     {

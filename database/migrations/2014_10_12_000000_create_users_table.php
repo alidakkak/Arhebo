@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('code')->nullable();
             $table->dateTime('expired_at')->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->boolean('is_phone_verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

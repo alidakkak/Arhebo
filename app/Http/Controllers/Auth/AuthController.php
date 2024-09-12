@@ -43,7 +43,7 @@ class AuthController extends Controller
             $otp = $user->generate_code();
             $whatsApp = new WhatsAppService;
             $whatsApp->sendWhatsAppMessage($user->phone, $otp);
-            return response()->json(['error' => 'Your account is not verified.', 'is_verified' => $user->is_verified], 200);
+            return response()->json(['error' => 'Your account is not verified.', 'is_verified' => $user->is_verified, 'phone' => $user->phone], 200);
         }
 
         if ($request->device_token){

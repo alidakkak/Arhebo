@@ -144,7 +144,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'OTP has been sent. Please verify your phone number.',
                 'data' => $data
-            ], 400);
+            ], 200);
         }
 
         $user->update($data);
@@ -155,7 +155,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function verificationToUpdatePhone(Request $request)
+    public function verificationToUpdatePhone(UpdateProfileRequest  $request)
     {
         $user = auth()->user();
 

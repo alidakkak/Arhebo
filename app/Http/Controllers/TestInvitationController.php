@@ -23,8 +23,8 @@ class TestInvitationController extends Controller
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url.$request->input('phone'), [
-            'template_name' => 'trial_invitation_ar_bz',
-            'broadcast_name' => 'trial_invitation_ar_bz',
+            'template_name' => 'trial_invitation_ar_ph',
+            'broadcast_name' => 'trial_invitation_ar_ph',
             'parameters' => [
                 [
                     'name' => 'product_image_url',
@@ -36,7 +36,7 @@ class TestInvitationController extends Controller
                 ],
                 [
                     'name' => '1',
-                    'value' => 'invitation-card/26?uuid=0aea3a0c-513a-4d52-ac94-51aeed82fe11',
+                    'value' => 'invitation-card/6?uuid=859db51a-0580-46d6-bd59-3bd01453c15c',
                 ],
             ],
         ]);

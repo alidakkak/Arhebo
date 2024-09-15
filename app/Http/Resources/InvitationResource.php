@@ -79,9 +79,6 @@ class InvitationResource extends JsonResource
 
 لأي استفسارات يمكنكم التواصل مع الداعي أو مع منصتنا للحصول على الدعم الفني.
 '
-
-
-
         ];
     }
 }

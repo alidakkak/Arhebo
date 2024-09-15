@@ -119,7 +119,7 @@ class ReceptionController extends Controller
 
         $qrCode = QR::where('invitee_id', $validatedData['invitee_id'])->first();
 
-        if (!$qrCode) {
+        if (! $qrCode) {
             return response()->json(['message' => 'Invalid QR Code'], 400);
         }
 
@@ -128,7 +128,7 @@ class ReceptionController extends Controller
             ->where('type', '1')
             ->first();
 
-        if (!$reception) {
+        if (! $reception) {
             return response()->json(['message' => 'Unauthorized. You are not assigned to scan this QR Code.'], 403);
         }
 
@@ -140,6 +140,4 @@ class ReceptionController extends Controller
 
         return response()->json(['message' => 'QR Code scanned successfully']);
     }
-
-
 }

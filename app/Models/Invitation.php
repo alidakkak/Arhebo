@@ -28,7 +28,8 @@ class Invitation extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function filter() {
+    public function filter()
+    {
         return $this->belongsTo(Filter::class);
     }
 

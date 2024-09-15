@@ -71,6 +71,15 @@ class InvitationResource extends JsonResource
             'template' => TemplateResource::make($this->template),
             'attribute' => AttributeResource::collection($this->package->attribute),
             //            'message' => $this->message
+            'message' => '
+اسم المدعو
+
+نود تذكيركم بموعد '.$this->event_name.'
+وذلك في '.$this->miladi_date.' في الساعة '.$this->from.'.
+
+لأي استفسارات يمكنكم التواصل مع الداعي أو مع منصتنا للحصول على الدعم الفني.
+',
+
         ];
     }
 }

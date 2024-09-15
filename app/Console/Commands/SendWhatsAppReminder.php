@@ -48,7 +48,7 @@ class SendWhatsAppReminder extends Command
     private function sendWhatsAppReminder($invitation)
     {
         $invitees = $invitation->invitee()
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->where('status', InviteeTypes::confirmed)
                     ->orWhere('status', InviteeTypes::waiting);
             })
@@ -58,9 +58,9 @@ class SendWhatsAppReminder extends Command
         }
 
         $event_name = $invitation->event_name;
-        $miladi_date  = Carbon::parse($invitation->miladi_date)->locale('ar');
-        $to  = Carbon::parse($invitation->to)->locale('ar');
-        $event_time = $miladi_date->translatedFormat('Y/m/d') . ' في الساعة ' . $to->translatedFormat('h:i A');
+        $miladi_date = Carbon::parse($invitation->miladi_date)->locale('ar');
+        $to = Carbon::parse($invitation->to)->locale('ar');
+        $event_time = $miladi_date->translatedFormat('Y/m/d').' في الساعة '.$to->translatedFormat('h:i A');
         $receivers = [];
         foreach ($invitees as $invitee) {
             $receivers[] = [

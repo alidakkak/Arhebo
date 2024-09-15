@@ -72,35 +72,35 @@ class InviteeController extends Controller
         }
     }
 
-   /* public function generateQRCodeForInvitee($inviteeId)
-    {
-        $invitee = Invitee::find($inviteeId);
-        $invitation = $invitee->invitation()->where('is_with_qr', 1)->first();
-        if ($invitation) {
-            $numberOfPeople = $invitee->number_of_people;
-            for ($i = 0; $i < $numberOfPeople; $i++) {
-                $qrCodeData = json_encode([
-                    'InviteeNumber' => $i + 1,
-                    'InviteeName' => $invitee->name,
-                    'InviteeID' => $invitee->id,
-                ]);
-                $qrCode = QrCode::format('svg')
-                    ->size(300)
-                    ->generate($qrCodeData);
-                $fileName = '/qr-codes/'.$invitee->id.'_'.($i + 1).'.svg';
-                $path = storage_path('app/public/'.$fileName);
-                if (! file_exists(dirname($path))) {
-                    mkdir(dirname($path), 0755, true);
-                }
-                file_put_contents($path, $qrCode);
-                QR::create([
-                    'invitee_id' => $invitee->id,
-                    'qr_code' => '/storage'.$fileName,
-                    'InviteeNumber' => $i + 1,
-                ]);
-            }
-        }
-    }*/
+    /* public function generateQRCodeForInvitee($inviteeId)
+     {
+         $invitee = Invitee::find($inviteeId);
+         $invitation = $invitee->invitation()->where('is_with_qr', 1)->first();
+         if ($invitation) {
+             $numberOfPeople = $invitee->number_of_people;
+             for ($i = 0; $i < $numberOfPeople; $i++) {
+                 $qrCodeData = json_encode([
+                     'InviteeNumber' => $i + 1,
+                     'InviteeName' => $invitee->name,
+                     'InviteeID' => $invitee->id,
+                 ]);
+                 $qrCode = QrCode::format('svg')
+                     ->size(300)
+                     ->generate($qrCodeData);
+                 $fileName = '/qr-codes/'.$invitee->id.'_'.($i + 1).'.svg';
+                 $path = storage_path('app/public/'.$fileName);
+                 if (! file_exists(dirname($path))) {
+                     mkdir(dirname($path), 0755, true);
+                 }
+                 file_put_contents($path, $qrCode);
+                 QR::create([
+                     'invitee_id' => $invitee->id,
+                     'qr_code' => '/storage'.$fileName,
+                     'InviteeNumber' => $i + 1,
+                 ]);
+             }
+         }
+     }*/
 
     public function generateQRCodeForInvitee($inviteeId)
     {
@@ -108,24 +108,24 @@ class InviteeController extends Controller
         $invitation = $invitee->invitation()->where('is_with_qr', 1)->first();
         if ($invitation) {
             $numberOfPeople = $invitee->number_of_people;
-                $qrCodeData = json_encode([
-                    'InviteeName' => $invitee->name,
-                    'InviteeID' => $invitee->id,
-                ]);
-                $qrCode = QrCode::format('svg')
-                    ->size(300)
-                    ->generate($qrCodeData);
-                $fileName = '/qr-codes/'.$invitee->id . '.svg';
-                $path = storage_path('app/public/'.$fileName);
-                if (! file_exists(dirname($path))) {
-                    mkdir(dirname($path), 0755, true);
-                }
-                file_put_contents($path, $qrCode);
-                QR::create([
-                    'invitee_id' => $invitee->id,
-                    'qr_code' => '/storage'.$fileName,
-                    'number_of_people_without_decrease' => $numberOfPeople
-                ]);
+            $qrCodeData = json_encode([
+                'InviteeName' => $invitee->name,
+                'InviteeID' => $invitee->id,
+            ]);
+            $qrCode = QrCode::format('svg')
+                ->size(300)
+                ->generate($qrCodeData);
+            $fileName = '/qr-codes/'.$invitee->id.'.svg';
+            $path = storage_path('app/public/'.$fileName);
+            if (! file_exists(dirname($path))) {
+                mkdir(dirname($path), 0755, true);
+            }
+            file_put_contents($path, $qrCode);
+            QR::create([
+                'invitee_id' => $invitee->id,
+                'qr_code' => '/storage'.$fileName,
+                'number_of_people_without_decrease' => $numberOfPeople,
+            ]);
         }
     }
 
@@ -171,7 +171,7 @@ class InviteeController extends Controller
                     'uuid' => $uuid,
                 ]);
                 $newInvitee->update([
-                    'link' =>'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $inviteesForWhatsapp->push([
                     'phone' => $newInvitee->phone,
@@ -290,7 +290,6 @@ class InviteeController extends Controller
 
         $whatsAppTemplate = $whatsAppTemplateFilter ?? $whatsAppTemplateCategory;
 
-
         $templateData = [
             'event_name' => $invitation->event_name,
             'from' => Carbon::parse($invitation->from)->locale('ar')->translatedFormat('h:i A'),
@@ -301,7 +300,6 @@ class InviteeController extends Controller
 
         $invitationInputs = $invitation->invitationInput()->with('input')->get();
 
-
         foreach ($invitationInputs as $invitationInput) {
             $inputName = $invitationInput->input->input_name;
             $templateData[$inputName] = $invitationInput->answer;
@@ -309,6 +307,7 @@ class InviteeController extends Controller
 
         $output = preg_replace_callback('/{{\s*([a-zA-Z0-9_\'\\s]+)\s*}}/', function ($matches) use ($templateData) {
             $key = trim($matches[1]);
+
             return $templateData[$key] ?? $matches[0];
         }, $whatsAppTemplate);
 

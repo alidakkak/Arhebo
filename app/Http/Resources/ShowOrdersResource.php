@@ -22,11 +22,14 @@ class ShowOrdersResource extends JsonResource
     {
 
         if ($request->route()->uri === 'api/showInvitationInfo/{invitee}') {
-             if($this->invitation->Template) {
-                 $template =  $this->invitation->Template->image;
+            if ($this->invitation->Template) {
+                $template = $this->invitation->Template->image;
             } elseif ($this->invitation->image) {
-                 $template = $this->invitation->image;
-             } else $template = null;
+                $template = $this->invitation->image;
+            } else {
+                $template = null;
+            }
+
             return [
                 'id' => $this->id,
                 'category' => $this->invitation->category->name,

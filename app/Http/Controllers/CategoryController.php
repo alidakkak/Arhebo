@@ -143,17 +143,18 @@ class CategoryController extends Controller
     //// API To Get Attributes For WhatsApp Templates
     public function getInformation()
     {
-        $array = ['event_name' , 'from' , 'to' , 'miladi_date' , 'hijri_date'];
+        $array = ['event_name', 'from', 'to', 'miladi_date', 'hijri_date'];
 
-        if (\request('q') === 'create'){
-            return response($array , 200);
-        }else if (\request('q') === 'edit'){
-            $input = Input::where('category_id' , \request('category_id'))->pluck('input_name');
-            return response(array_merge($array , $input->toArray()) , 200);
-        }else{
+        if (\request('q') === 'create') {
+            return response($array, 200);
+        } elseif (\request('q') === 'edit') {
+            $input = Input::where('category_id', \request('category_id'))->pluck('input_name');
+
+            return response(array_merge($array, $input->toArray()), 200);
+        } else {
             return response([
-                'message' => 'unknown q param'
-            ] , 422);
+                'message' => 'unknown q param',
+            ], 422);
         }
     }
 }

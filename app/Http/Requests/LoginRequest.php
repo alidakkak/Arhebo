@@ -26,7 +26,7 @@ class LoginRequest extends FormRequest
             'phone' => 'required_without:email|numeric',
             'password' => 'required|string|min:6',
             'device_token' => 'required_if:client,and|string',
-            'client' => 'string'
+            'client' => 'string',
         ];
     }
 }

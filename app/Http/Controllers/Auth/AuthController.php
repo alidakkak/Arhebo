@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\OTPRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\DeviceToken;
 use App\Models\User;
@@ -44,22 +43,24 @@ class AuthController extends Controller
             $otp = $user->generate_code();
             $whatsApp = new WhatsAppService;
             $whatsApp->sendWhatsAppMessage($user->phone, $otp);
+
             return response()->json(['error' => 'Your account is not verified.', 'is_verified' => $user->is_verified, 'phone' => $user->phone], 200);
         }
 
-        if ($request->device_token){
-            $device_token = DeviceToken::where('device_token' , $request->device_token)->first();
-            if ($device_token){
+        if ($request->device_token) {
+            $device_token = DeviceToken::where('device_token', $request->device_token)->first();
+            if ($device_token) {
                 $device_token->update([
-                    "device_token" => $request->device_token
+                    'device_token' => $request->device_token,
                 ]);
-            }else{
+            } else {
                 DeviceToken::create([
                     'user_id' => $user->id,
-                    'device_token' => $request->device_token
+                    'device_token' => $request->device_token,
                 ]);
             }
         }
+
         return $this->createNewToken($token);
     }
 
@@ -143,7 +144,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'OTP has been sent. Please verify your phone number.',
-                'data' => $data
+                'data' => $data,
             ], 200);
         }
 
@@ -155,7 +156,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function verificationToUpdatePhone(UpdateProfileRequest  $request)
+    public function verificationToUpdatePhone(UpdateProfileRequest $request)
     {
         $user = auth()->user();
 
@@ -180,7 +181,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid or expired OTP.'], 400);
         }
     }
-
 
     public function delete(Request $request)
     {

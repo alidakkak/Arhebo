@@ -16,8 +16,10 @@ return new class extends Migration
             $table->foreignId('invitee_id')->references('id')
                 ->on('invitees')->onDelete('cascade');
             $table->text('qr_code');
-            $table->boolean('status')->default(0);
-            $table->integer('InviteeNumber');
+            $table->integer('number_of_people_without_decrease'); // Number Of Invitees
+            $table->integer('number_of_people')->default(0); // Number Of Invitees
+//            $table->boolean('status')->default(0);
+//            $table->integer('InviteeNumber');
             $table->timestamps();
         });
     }

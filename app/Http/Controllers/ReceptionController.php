@@ -113,22 +113,33 @@ class ReceptionController extends Controller
     {
         $validatedData = $request->validate([
             'invitee_id' => ['required', Rule::exists('invitees', 'id')],
-            'InviteeNumber' => 'required|numeric',
+            'user_id' => ['required', Rule::exists('users', 'id')],
+            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
         ]);
-        $qrCode = QR::where('invitee_id', $validatedData['invitee_id'])
-            ->where('InviteeNumber', $validatedData['InviteeNumber'])
-            ->first();
-        if (! $qrCode) {
+
+        $qrCode = QR::where('invitee_id', $validatedData['invitee_id'])->first();
+
+        if (!$qrCode) {
             return response()->json(['message' => 'Invalid QR Code'], 400);
         }
 
-        if ($qrCode->status == 1) {
-            return response()->json(['message' => 'QR Code has been scanned before'], 400);
+        $reception = Reception::where('user_id', $validatedData['user_id'])
+            ->where('invitation_id', $validatedData['invitation_id'])
+            ->where('type', '1')
+            ->first();
+
+        if (!$reception) {
+            return response()->json(['message' => 'Unauthorized. You are not assigned to scan this QR Code.'], 403);
         }
-        $qrCode->update([
-            'status' => 1,
-        ]);
+
+        if ($qrCode->number_of_people == $qrCode->number_of_people_without_decrease) {
+            return response()->json(['message' => 'The allowed number of people for this QR Code has been reached.'], 400);
+        }
+
+        $qrCode->increment('number_of_people');
 
         return response()->json(['message' => 'QR Code scanned successfully']);
     }
+
+
 }

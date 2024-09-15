@@ -72,7 +72,7 @@ class InviteeController extends Controller
         }
     }
 
-    public function generateQRCodeForInvitee($inviteeId)
+   /* public function generateQRCodeForInvitee($inviteeId)
     {
         $invitee = Invitee::find($inviteeId);
         $invitation = $invitee->invitation()->where('is_with_qr', 1)->first();
@@ -99,6 +99,33 @@ class InviteeController extends Controller
                     'InviteeNumber' => $i + 1,
                 ]);
             }
+        }
+    }*/
+
+    public function generateQRCodeForInvitee($inviteeId)
+    {
+        $invitee = Invitee::find($inviteeId);
+        $invitation = $invitee->invitation()->where('is_with_qr', 1)->first();
+        if ($invitation) {
+            $numberOfPeople = $invitee->number_of_people;
+                $qrCodeData = json_encode([
+                    'InviteeName' => $invitee->name,
+                    'InviteeID' => $invitee->id,
+                ]);
+                $qrCode = QrCode::format('svg')
+                    ->size(300)
+                    ->generate($qrCodeData);
+                $fileName = '/qr-codes/'.$invitee->id . '.svg';
+                $path = storage_path('app/public/'.$fileName);
+                if (! file_exists(dirname($path))) {
+                    mkdir(dirname($path), 0755, true);
+                }
+                file_put_contents($path, $qrCode);
+                QR::create([
+                    'invitee_id' => $invitee->id,
+                    'qr_code' => '/storage'.$fileName,
+                    'number_of_people_without_decrease' => $numberOfPeople
+                ]);
         }
     }
 

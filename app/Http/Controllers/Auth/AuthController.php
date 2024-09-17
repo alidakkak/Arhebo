@@ -86,6 +86,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:100|unique:users',
             'phone' => 'required|max:20|unique:users',
             'country_code' => 'required|string',
+            'country_name' => 'required|string',
             'password' => 'required|string|confirmed|min:6',
             'type' => 'prohibited',
         ]);

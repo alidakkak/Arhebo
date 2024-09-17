@@ -39,12 +39,15 @@ class PassKitController extends Controller
                     'groupingIdentifier' => 'string',
                     'tierId' => 'base',
                     'programId' => '2QcLEwcjfbS2OAFwR38MFB',
-                    'points' => $qr->number_of_people,
+                    'points' => $invitee->name,
                     'metaData' => [
                         'Name' => $invitee->name,
                     ],
                     'person' => [
-                        'forename' => $qrCodeData,
+                        'forename' => $qr->number_of_people_without_decrease,
+                        'surname' => $qr->number_of_people,
+                        'emailAddress' => $qrCodeData,
+                        "mobileNumber" => $invitee->name
                     ],
                 ],
             ]);

@@ -35,19 +35,17 @@ class PassKitController extends Controller
                 ],
                 'json' => [
                     'id' => 's2',
-                    'externalId' => 's779',
+                    'externalId' => 's711',
                     'groupingIdentifier' => 'string',
-                    'tierId' => 'base',
-                    'programId' => '2QcLEwcjfbS2OAFwR38MFB',
-                    'points' => $invitee->name,
-                    'metaData' => [
-                        'Name' => $invitee->name,
-                    ],
+                    'tierId' => 'purple_power',
+                    'programId' => '2F7XGtvJIwWOERvK5S5NCA',
                     'person' => [
-                        'forename' => $qr->number_of_people_without_decrease,
-                        'surname' => $qr->number_of_people,
-                        'emailAddress' => $qrCodeData,
-                        "mobileNumber" => $invitee->name
+                        'forename' => (string) $qr->number_of_people_without_decrease,
+                        'surname' => (string) $qr->number_of_people,
+                        'emailAddress' => 'alidakak21@gmail.com',
+                        'displayName' => $qrCodeData,
+                        "suffix" => $invitee->name,
+                        "gender" => $invitee->name,
                     ],
                 ],
             ]);
@@ -88,7 +86,7 @@ class PassKitController extends Controller
                     'id' => '2Y93sYbmdXZGwn6gKccOeZ',
                     'externalId' => 's779',
                     'groupingIdentifier' => 'string',
-                    'tierId' => 'base',
+                    'tierId' => 'purple_power',
                     'programId' => '2QcLEwcjfbS2OAFwR38MFB',
                     'points' => $qr->number_of_people - 1,
                     'metaData' => [

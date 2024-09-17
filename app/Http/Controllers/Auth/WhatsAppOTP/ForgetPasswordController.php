@@ -20,4 +20,16 @@ class ForgetPasswordController extends Controller
 
         return response()->json($success, 200);
     }
+
+    public function resendCode(ForgetPasswordRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $input = $request->only('phone');
+        $user = User::where('phone', $input)->first();
+        $otp = $user->generate_code();
+        $whatsApp = new WhatsAppService;
+        $whatsApp->sendWhatsAppMessage($user->phone, $otp);
+        $success['success'] = true;
+
+        return response()->json($success, 200);
+    }
 }

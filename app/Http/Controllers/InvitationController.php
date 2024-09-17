@@ -16,6 +16,7 @@ use App\Models\PackageDetail;
 use App\Models\User;
 use App\Statuses\InvitationTypes;
 use App\Statuses\MessageTypes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InvitationController extends Controller
@@ -178,5 +179,67 @@ class InvitationController extends Controller
         }
 
         return new HistoryResourceCollection(HistoryResource::collection($invitations));
+    }
+
+    public function searchCountries(Request $request)
+    {
+        $searchQuery = $request->input('query');
+
+        $countries = json_decode(file_get_contents(public_path('countries&cities/countries.json')), true);
+
+        $results = [
+            'countries' => $this->searchByLabel($countries, $searchQuery),
+        ];
+
+        return response()->json($results);
+    }
+
+    private function searchByLabel($data, $searchQuery)
+    {
+        $results = [];
+        foreach ($data as $entry) {
+            // Use 'like' search, which means check if the label starts with the search query
+            if (stripos($entry['label'], $searchQuery) === 0 || stripos($entry['label_ar'], $searchQuery) === 0) {
+                $results[] = $entry;
+            }
+        }
+
+        return $results;
+    }
+
+    public function getCitiesByCountry(Request $request)
+    {
+        $countryQuery = $request->input('country');
+
+        $countries = json_decode(file_get_contents(public_path('countries&cities/countries.json')), true);
+        $cities = json_decode(file_get_contents(public_path('countries&cities/cities.json')), true);
+
+        // البحث عن البلد في قائمة البلدان
+        $country = null;
+        foreach ($countries as $entry) {
+            if (stripos($entry['label'], $countryQuery) !== false || stripos($entry['label_ar'], $countryQuery) !== false) {
+                $country = $entry;
+                break;
+            }
+        }
+
+        // إذا لم يتم العثور على البلد
+        if (! $country) {
+            return response()->json(['error' => 'Country not found'], 404);
+        }
+
+        // البحث عن المدن المرتبطة بهذا البلد
+        $countryCities = [];
+        foreach ($cities as $cityGroup) {
+            if (stripos($cityGroup['country'], $country['label']) !== false || stripos($cityGroup['country'], $country['label_ar']) !== false) {
+                $countryCities = $cityGroup['cities'];
+                break;
+            }
+        }
+
+        return response()->json([
+            'country' => $country,
+            'cities' => $countryCities,
+        ]);
     }
 }

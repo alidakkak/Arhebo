@@ -26,7 +26,7 @@ class ForgetPasswordController extends Controller
         $input = $request->only('phone');
         $user = auth()->user();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['error' => 'User not found'], 404);
         }
 
@@ -37,5 +37,4 @@ class ForgetPasswordController extends Controller
 
         return response()->json(['success' => true], 200);
     }
-
 }

@@ -114,6 +114,8 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('invitations/{invitationId}', [InvitationController::class, 'delete']);
     Route::post('invitationUpdate/{invitationId}', [InvitationController::class, 'update']);
     Route::get('/history', [InvitationController::class, 'history']);
+    Route::get('/searchCountries', [InvitationController::class, 'searchCountries']);
+    Route::get('/getCitiesByCountry', [InvitationController::class, 'getCitiesByCountry']);
 
     //// Payment
     Route::post('/payments', [PaymentController::class, 'handlePayment']);

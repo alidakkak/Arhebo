@@ -46,8 +46,8 @@ class PassKitController extends Controller
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
                         'displayName' => $qrCodeData,
-                        "suffix" => $invitation->name,
-                        "gender" => $invitee->name,
+                        'suffix' => $invitation->name,
+                        'gender' => $invitee->name,
                     ],
                 ],
             ]);

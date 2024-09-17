@@ -25,9 +25,10 @@ class ForgetPasswordRequest extends FormRequest
     {
         if (request()->route()->uri === 'api/resendCode') {
             return [
-                'phone' => 'required'
+                'phone' => 'required',
             ];
         }
+
         return [
             'phone' => ['required', 'exists:users'],
         ];

@@ -132,11 +132,11 @@ class ReceptionController extends Controller
             return response()->json(['message' => 'Unauthorized. You are not assigned to scan this QR Code.'], 403);
         }
 
-        if ($qrCode->number_of_people == $qrCode->number_of_people_without_decrease) {
+        if ($qrCode->number_of_people == 0) {
             return response()->json(['message' => 'The allowed number of people for this QR Code has been reached.'], 400);
         }
 
-        $qrCode->increment('number_of_people');
+        $qrCode->decrement('number_of_people');
 
         return response()->json(['message' => 'QR Code scanned successfully']);
     }

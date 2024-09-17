@@ -13,8 +13,8 @@ class PassKitController extends Controller
     public function createMember(Request $request)
     {
         $invitee = Invitee::find($request->invitee_id);
-        $invitation = Invitation::find($request->invitation_id);
         $qr = QR::where('invitee_id', $invitee->id)->first();
+        $invitation = Invitation::find($request->invitation_id);
 
         $qrCodeData = json_encode([
             'InviteeName' => $invitee->name,
@@ -37,7 +37,7 @@ class PassKitController extends Controller
                 ],
                 'json' => [
                     'id' => 's2',
-                    'externalId' => 's712',
+                    'externalId' => 's71323',
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',
@@ -46,8 +46,8 @@ class PassKitController extends Controller
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
                         'displayName' => $qrCodeData,
-                        'suffix' => $invitation->name,
-                        'gender' => $invitee->name,
+                        'suffix' => $invitation->event_name,
+                        'salutation' => $invitee->name,
                     ],
                 ],
             ]);
@@ -65,6 +65,7 @@ class PassKitController extends Controller
     {
         $invitee = Invitee::find($request->invitee_id);
         $qr = QR::where('invitee_id', $invitee->id)->first();
+        $invitation = Invitation::find($request->invitation_id);
 
         $qrCodeData = json_encode([
             'InviteeName' => $invitee->name,
@@ -78,6 +79,8 @@ class PassKitController extends Controller
         $Token = env('PASSKIT_TOKEN');
 
         $client = new Client;
+
+        $qr->decrement('number_of_people');
         try {
             $response = $client->put('https://api.pub2.passkit.io/members/member', [
                 'headers' => [
@@ -85,17 +88,18 @@ class PassKitController extends Controller
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
-                    'id' => '2Y93sYbmdXZGwn6gKccOeZ',
-                    'externalId' => 's779',
+                    'id' => '6lS156C7VFf47rk7NWjOjA',
+                    'externalId' => 's71323',
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
-                    'programId' => '2QcLEwcjfbS2OAFwR38MFB',
-                    'points' => $qr->number_of_people - 1,
-                    'metaData' => [
-                        'Name' => $invitee->name,
-                    ],
+                    'programId' => '2F7XGtvJIwWOERvK5S5NCA',
                     'person' => [
-                        'forename' => $qrCodeData,
+                        'forename' => (string) $qr->number_of_people_without_decrease,
+                        'surname' => (string) $qr->number_of_people,
+                        'emailAddress' => 'alidakak21@gmail.com',
+                        'displayName' => $qrCodeData,
+                        'suffix' => $invitation->event_name,
+                        'salutation' => $invitee->name,
                     ],
                 ],
             ]);

@@ -125,6 +125,7 @@ class InviteeController extends Controller
                 'invitee_id' => $invitee->id,
                 'qr_code' => '/storage'.$fileName,
                 'number_of_people_without_decrease' => $numberOfPeople,
+                'number_of_people' => $numberOfPeople,
             ]);
         }
     }

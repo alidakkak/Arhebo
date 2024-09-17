@@ -19,6 +19,7 @@ class PackageDetalisResource extends JsonResource
             'price' => $this->price,
             //   'price_qr' => $this->price_qr,
             'number_of_invitees' => $this->number_of_invitees,
+            'price_reminder_per_person' => $this->price_reminder_per_person,
         ];
     }
 }

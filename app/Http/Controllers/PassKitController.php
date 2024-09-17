@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
 use GuzzleHttp\Client;
@@ -12,6 +13,7 @@ class PassKitController extends Controller
     public function createMember(Request $request)
     {
         $invitee = Invitee::find($request->invitee_id);
+        $invitation = Invitation::find($request->invitation_id);
         $qr = QR::where('invitee_id', $invitee->id)->first();
 
         $qrCodeData = json_encode([
@@ -35,7 +37,7 @@ class PassKitController extends Controller
                 ],
                 'json' => [
                     'id' => 's2',
-                    'externalId' => 's711',
+                    'externalId' => 's712',
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',
@@ -44,7 +46,7 @@ class PassKitController extends Controller
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
                         'displayName' => $qrCodeData,
-                        "suffix" => $invitee->name,
+                        "suffix" => $invitation->name,
                         "gender" => $invitee->name,
                     ],
                 ],

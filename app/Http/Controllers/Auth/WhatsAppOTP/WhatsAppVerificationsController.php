@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\WhatsAppOTP;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OTPRequest;
+use App\Http\Resources\UserProfileResource;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -25,7 +26,7 @@ class WhatsAppVerificationsController extends Controller
             return response()->json([
                 'message' => 'OTP verified successfully.',
                 'access_token' => $token,
-                'user' => $user,
+                'user' => UserProfileResource::make($user),
             ]);
         } else {
             return response()->json(['message' => 'Invalid or expired OTP.'], 400);

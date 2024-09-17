@@ -23,10 +23,9 @@ class TemplateController extends Controller
         return TemplateResource::collection($template);
     }
 
-
     public function searchTemplate(Request $request)
     {
-        $search = '%' . $request->input('search') . '%';
+        $search = '%'.$request->input('search').'%';
         $template = Template::where('title', 'LIKE', $search)
             ->orWhere('title_ar', 'LIKE', $search)
             ->orWhere('description', 'LIKE', $search)
@@ -37,6 +36,7 @@ class TemplateController extends Controller
 
         return TemplateResource::collection($template);
     }
+
     public function trending()
     {
         $mostUsedTemplate = Template::withCount('invitation')

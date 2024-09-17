@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\InviteeController;
+use App\Http\Controllers\PassKitController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,9 @@ Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
 
     ////  Template By Code
     Route::get('templateByCode', [TemplateController::class, 'templateByCode']);
+
 });
+
+/// PassKit
+Route::post('createMember', [PassKitController::class, 'createMember']);
+Route::put('updateMember', [PassKitController::class, 'updateMember']);

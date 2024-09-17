@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\UserProfileResource;
 use App\Models\DeviceToken;
 use App\Models\User;
 use App\Services\WhatsAppService;
@@ -84,6 +85,7 @@ class AuthController extends Controller
             'name' => 'required|string|between:2,100',
             'email' => 'required|string|email|max:100|unique:users',
             'phone' => 'required|max:20|unique:users',
+            'country_code' => 'required|string',
             'password' => 'required|string|confirmed|min:6',
             'type' => 'prohibited',
         ]);
@@ -121,16 +123,11 @@ class AuthController extends Controller
         return response()->json(['message' => 'User successfully signed out']);
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function userProfile()
     {
         $user = auth()->user();
 
-        return $user;
+        return UserProfileResource::make($user);
     }
 
     public function update(UpdateProfileRequest $request, User $user)

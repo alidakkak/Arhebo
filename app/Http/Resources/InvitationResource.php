@@ -72,13 +72,13 @@ class InvitationResource extends JsonResource
             'attribute' => AttributeResource::collection($this->package->attribute),
             //            'message' => $this->message
             'message' => '
-' . $invitation->invitee()->first()->name . '،
+'.$invitation->invitee()->first()->name.'،
 
-نود تذكيركم بموعد ' . $this->event_name . '
-وذلك في ' . $this->miladi_date . ' في الساعة ' . $this->from . '.
+نود تذكيركم بموعد '.$this->event_name.'
+وذلك في '.$this->miladi_date.' في الساعة '.$this->from.'.
 
 لأي استفسارات يمكنكم التواصل مع الداعي أو مع منصتنا للحصول على الدعم الفني.
-'
+',
         ];
     }
 }

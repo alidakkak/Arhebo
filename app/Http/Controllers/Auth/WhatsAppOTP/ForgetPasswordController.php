@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ForgetPasswordRequest;
 use App\Models\User;
 use App\Services\WhatsAppService;
-use Illuminate\Support\Facades\Request;
 
 class ForgetPasswordController extends Controller
 {
@@ -22,7 +21,7 @@ class ForgetPasswordController extends Controller
         return response()->json($success, 200);
     }
 
-    public function resendCode(Request $request)
+    public function resendCode(ForgetPasswordRequest $request)
     {
         $input = $request->only('phone');
         $user = auth()->user();

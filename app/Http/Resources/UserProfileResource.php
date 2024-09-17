@@ -24,6 +24,7 @@ class UserProfileResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'country_code' => $countryCode,
+            'country_name' => $this->country_name,
             'phone' => $this->phone,
             'phoneWithoutCountryCode' => $phoneWithoutCountryCode,
             'email_verified_at' => $this->email_verified_at,

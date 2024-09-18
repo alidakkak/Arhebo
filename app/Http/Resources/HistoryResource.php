@@ -18,11 +18,17 @@ class HistoryResource extends JsonResource
             return $price * 1.15;
         };
 
+        $price_reminder_per_person = $this->packageDetail->price_reminder_per_person;
+        $number_of_invitees = $this->packageDetail->number_of_invitees;
+        $total_price_for_reminder = $price_reminder_per_person * $number_of_invitees;
+        $totalReminderPrice = $this->reminder->sum(function ($reminder) use ($price_reminder_per_person, $number_of_invitees) {
+            return $price_reminder_per_person * $number_of_invitees;
+        });
         $packageDetailPrice = $this->packageDetail->price;
         $additionalPackagesTotal = $this->additionalPackages->sum('price');
         $extraFeaturesTotal = $this->features->sum('price');
 
-        $subtotal = $packageDetailPrice + $additionalPackagesTotal + $extraFeaturesTotal;
+        $subtotal = $packageDetailPrice + $additionalPackagesTotal + $extraFeaturesTotal + $totalReminderPrice;
         $totalWithTax = $calculateTax($subtotal);
 
         return [
@@ -49,6 +55,13 @@ class HistoryResource extends JsonResource
                     'name_ar' => $feature->name_ar,
                     'price' => round($feature->price, 2),
                     'price_with_tax' => round($calculateTax($feature->price), 2),
+                ];
+            }),
+            'reminder' => $this->reminder->map(function ($reminder) use ($calculateTax, $total_price_for_reminder) {
+                return [
+                    'id' => $reminder->id,
+                    'price' => round($total_price_for_reminder, 2),
+                    'price_with_tax' => round($calculateTax($total_price_for_reminder), 2),
                 ];
             }),
             'subtotal' => round($subtotal, 2),

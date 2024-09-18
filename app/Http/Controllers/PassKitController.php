@@ -12,18 +12,19 @@ class PassKitController extends Controller
 {
     public function createMember(Request $request)
     {
+        // Find Invitee and QR, and handle if they are missing
         $invitee = Invitee::find($request->invitee_id);
-        $qr = QR::where('invitee_id', $invitee->id)->first();
+        $qr = QR::where('invitee_id', $invitee?->id)->first();
         $invitation = Invitation::find($request->invitation_id);
+
+        if (! $invitee || ! $qr) {
+            return response()->json(['error' => 'Invitee or QR not found'], 404);
+        }
 
         $qrCodeData = json_encode([
             'InviteeName' => $invitee->name,
             'InviteeID' => $invitee->id,
         ]);
-
-        if (! $invitee || ! $qr) {
-            return response()->json(['error' => 'Invitee or QR not found'], 404);
-        }
 
         $Token = env('PASSKIT_TOKEN');
 
@@ -32,12 +33,12 @@ class PassKitController extends Controller
         try {
             $response = $client->post('https://api.pub2.passkit.io/members/member', [
                 'headers' => [
-                    'Authorization' => 'Bearer '.$Token,
+                    'Authorization' => 'Bearer ' . $Token,
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
-                    'id' => 's2',
-                    'externalId' => 's71323',
+                    'id' => '$invitee->id',
+                    'externalId' => $invitee->uuid,
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',
@@ -52,14 +53,23 @@ class PassKitController extends Controller
                 ],
             ]);
 
+            if ($response->getStatusCode() !== 200) {
+                return response()->json(['error' => 'Failed to create member, API returned error'], $response->getStatusCode());
+            }
+
             $responseBody = json_decode($response->getBody(), true);
+
+            $invitee->update([
+                'externalId' => $responseBody['id']
+            ]);
 
             return response()->json($responseBody);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => 'An internal server error occurred: ' . $e->getMessage()], 500);
         }
     }
+
 
     public function updateMember(Request $request)
     {
@@ -88,8 +98,8 @@ class PassKitController extends Controller
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
-                    'id' => '6lS156C7VFf47rk7NWjOjA',
-                    'externalId' => 's71323',
+                    'id' => $invitee->externalId,
+                    'externalId' => $invitee->externalId,
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',

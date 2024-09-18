@@ -45,6 +45,8 @@ class ShowOrdersResource extends JsonResource
                 'status' => $this->status,
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
+                'invitation_id' => $this->invitation->id,
+                'invitee_id' => $this->id,
                 'QRCode' => $this->qr->map(function ($qr) {
                     return [
                         'invitee_id' => $qr->invitee_id,

@@ -23,11 +23,11 @@ class TestInvitationSeeder extends Seeder
             'miladi_date' => '2024-01-26',
             'from' => '8:30',
             'to' => '10:30',
-            'city' => 'سوريا',
-            'region' => 'دمشق',
+            'city' => 'سعودية',
+            'region' => 'جدة',
             'event_name' => 'زفاف',
             'location_link' => 'https://',
-            'inviter' => 'علي الدكاك',
+            'inviter' => 'عبدالرحمن سعد',
             'number_of_invitees' => '25',
         ]);
 

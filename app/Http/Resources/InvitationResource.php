@@ -70,6 +70,7 @@ class InvitationResource extends JsonResource
             'InvitationFeature' => FeatureResource::collection($this->features),
             'template' => TemplateResource::make($this->template),
             'attribute' => AttributeResource::collection($this->package->attribute),
+            'price_reminder_per_person' => $invitation->packageDetail->price_reminder_per_person,
             //            'message' => $this->message
             'message' => '
 '.($invitation->invitee()->first() ? $invitation->invitee()->first()->name : 'null').'،

@@ -147,11 +147,12 @@ class ReceptionController extends Controller
                 return response()->json(['message' => 'The allowed number of people for this QR Code has been reached.'], 400);
             }
 
+            $qrCode->decrement('number_of_people');
+
             if ($invitee->externalId) {
                 $this->updateMember($invitee->id, $validatedData['invitation_id']);
             }
 
-            $qrCode->decrement('number_of_people');
 
             DB::commit();
 

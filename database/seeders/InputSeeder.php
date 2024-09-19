@@ -13,11 +13,20 @@ class InputSeeder extends Seeder
     public function run(): void
     {
         Input::create([
-            'input_name' => 'The child name',
-            'input_name_ar' => 'اسم الطفل',
+            'input_name' => 'Grooms name',
+            'input_name_ar' => 'اسم العريس',
             'placeholder' => 'Ali',
             'placeholder_ar' => 'علي',
-            'category_id' => '',
+            'category_id' => '1',
+        ]);
+
+
+        Input::create([
+            'input_name' => 'Brides name',
+            'input_name_ar' => 'اسم العروس',
+            'placeholder' => 'Rama',
+            'placeholder_ar' => 'راما',
+            'category_id' => '1',
         ]);
     }
 }

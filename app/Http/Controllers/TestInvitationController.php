@@ -28,7 +28,7 @@ class TestInvitationController extends Controller
             'parameters' => [
                 [
                     'name' => 'product_image_url',
-                    'value' => 'https://api.dev1.gomaplus.tech/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png',
+                    'value' => 'https://api.dev1.gomaplus.tech/test_invitation/test.png"',
                 ],
                 [
                     'name' => 'name',
@@ -36,7 +36,7 @@ class TestInvitationController extends Controller
                 ],
                 [
                     'name' => '1',
-                    'value' => 'invitation-card/6?uuid=859db51a-0580-46d6-bd59-3bd01453c15c',
+                    'value' => 'invitation-card/1?uuid=859db51a-0580-46d6-bd59-3bd01453c15c',
                 ],
             ],
         ]);

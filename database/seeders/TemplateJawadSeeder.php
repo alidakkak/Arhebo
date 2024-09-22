@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Filter;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TemplateJawadSeeder extends Seeder
 {
@@ -4310,7 +4311,7 @@ class TemplateJawadSeeder extends Seeder
                 'category_id' => $categories->where('name', 'Wedding')->first()?->id,
                 'filter_id' => $filters->where('name', 'Wedding Women')->first()?->id,
             ], ];
-        DB::table('templates')->insert($templateData);
+            DB::table('templates')->insert($templateData);
 
     }
 }

@@ -18,7 +18,7 @@ class PassKitController extends Controller
         $invitation = Invitation::find($request->invitation_id);
 
         if ($invitee->externalId) {
-            return response()->json(['externalId' => $invitee->externalId]);
+            return response()->json(['id' => $invitee->externalId]);
         }
 
         if (! $invitee || ! $qr) {

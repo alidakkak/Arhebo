@@ -17,6 +17,10 @@ class PassKitController extends Controller
         $qr = QR::where('invitee_id', $invitee?->id)->first();
         $invitation = Invitation::find($request->invitation_id);
 
+        if ($invitee->externalId) {
+            return response()->json(['externalId' => $invitee->externalId]);
+        }
+
         if (! $invitee || ! $qr) {
             return response()->json(['error' => 'Invitee or QR not found'], 404);
         }

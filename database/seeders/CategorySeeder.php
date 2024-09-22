@@ -99,7 +99,7 @@ our timeless Save the date invitations.',
         ]);
 
         Category::create([
-            'name' => 'Entertaining',
+            'name' => 'Entertainment',
             'name_ar' => 'الترفيه',
             'description' => 'Be inspired and fall in love with
 our timeless Save the date invitations.',

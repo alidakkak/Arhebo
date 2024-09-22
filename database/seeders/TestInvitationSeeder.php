@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Invitation;
 use App\Models\Invitee;
-
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TestInvitationSeeder extends Seeder

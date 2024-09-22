@@ -6,9 +6,6 @@ use App\Models\Coupon;
 use App\Models\CouponUser;
 use Illuminate\Http\Request;
 use Stripe\Charge;
-use Stripe\Customer;
-use Stripe\EphemeralKey;
-use Stripe\PaymentIntent;
 use Stripe\Stripe;
 
 class PaymentController extends Controller

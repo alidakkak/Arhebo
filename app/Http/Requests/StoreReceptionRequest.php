@@ -23,8 +23,10 @@ class StoreReceptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'receptions.*.user_id' => ['required', Rule::exists('users', 'id')],
-            'receptions.*.invitation_id' => ['required', Rule::exists('invitations', 'id')],
+            //            'receptions.*.user_id' => ['required', Rule::exists('users', 'id')],
+            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
+            'type' => 'required',
+            'phone' => 'required',
         ];
     }
 }

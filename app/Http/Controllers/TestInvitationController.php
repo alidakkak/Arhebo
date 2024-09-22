@@ -36,7 +36,7 @@ class TestInvitationController extends Controller
                 ],
                 [
                     'name' => '1',
-                    'value' => 'invitation-card/1?uuid=859db51a-0580-46d6-bd59-3bd01453c15c',
+                    'value' => 'invitation-card/1?uuid=test_invitation',
                 ],
             ],
         ]);

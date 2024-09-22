@@ -24,6 +24,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Wedding.jpg',
             'photo' => '/categories_image/Background - Wedding.png',
             'category_code' => '01',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -36,6 +37,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Business.jpg',
             'photo' => '/categories_image/Background - Business.png',
             'category_code' => '02',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -48,6 +50,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Birthday.jpg',
             'photo' => '/categories_image/Background - Graduation.png',
             'category_code' => '03',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -60,6 +63,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Save The Date.jpg',
             'photo' => '/categories_image/Background - Save The Date.png',
             'category_code' => '04',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -72,6 +76,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/baby.jpg',
             'photo' => '/categories_image/Background - Baby.png',
             'category_code' => '05',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -84,6 +89,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Bridal Shower.jpg',
             'photo' => '/categories_image/Background - Bridal Shower.png',
             'category_code' => '06',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -96,6 +102,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Graduation.jpg',
             'photo' => '/categories_image/Background - Graduation.png',
             'category_code' => '07',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
 
         Category::create([
@@ -108,6 +115,7 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Entertaining.jpg',
             'photo' => '/categories_image/Background - Birthday.png',
             'category_code' => '08',
+            'whatsApp_template' => 'يشرفنا حضوركم حفل {{event_name}}',
         ]);
     }
 }

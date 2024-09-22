@@ -164,7 +164,7 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '8',
-            'name' => 'Mothers Day',
+            'name' => 'Mother\'s Day',
             'name_ar' => 'عيد الأم',
         ]);
 
@@ -188,7 +188,7 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '8',
-            'name' => 'Teachers Day',
+            'name' => 'Teacher\'s Day',
             'name_ar' => 'عيد المعلم',
         ]);
 

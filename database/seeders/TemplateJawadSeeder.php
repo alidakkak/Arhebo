@@ -15,7 +15,6 @@ class TemplateJawadSeeder extends Seeder
     public function run()
     {
         $categories = Category::all();
-        $filters = Filter::all();
 
         $templateData = [
 [
@@ -3452,6 +3451,6 @@ class TemplateJawadSeeder extends Seeder
         "category_id" => $categories->where("name" , "Wedding")->first()?->id,
     ],];
             DB::table('templates')->insert($templateData);
-        
+
     }
 }

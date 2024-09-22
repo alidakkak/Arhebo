@@ -16,6 +16,7 @@ use App\Models\PackageDetail;
 use App\Models\User;
 use App\Statuses\InvitationTypes;
 use App\Statuses\MessageTypes;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -58,6 +59,14 @@ class InvitationController extends Controller
         $show = Invitation::find($invitation);
         if (! $show) {
             return response()->json(['message' => 'Not Found'], 403);
+        }
+        $now = Carbon::now()->format('Y-m-d H:i');
+        $miladi_date = Carbon::parse($show->miladi_date . ' ' . $show->to)->format('Y-m-d H:i');
+
+        if ($now > $miladi_date) {
+            $show->update([
+                'status' => InvitationTypes::done
+            ]);
         }
 
         return InvitationResource::make($show);

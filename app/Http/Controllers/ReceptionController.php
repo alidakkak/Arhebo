@@ -80,7 +80,7 @@ class ReceptionController extends Controller
     {
         $user = User::where('phone', $request->phone)->first();
         if (! $user) {
-            return Response()->json(['message' => 'User Not Found'], 422);
+            return Response()->json(['message' => 'رقم المدخل غير موجود في التطبيق '], 422);
         }
         $isExist = Reception::where('user_id', $user->id)
             ->where('invitation_id', $request->invitation_id)

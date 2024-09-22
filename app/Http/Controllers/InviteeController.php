@@ -369,6 +369,9 @@ class InviteeController extends Controller
         $invitee->invitation->update([
             'number_of_compensation' => $total,
         ]);
+        if (!$request->status) {
+            return response()->json(['message' => 'تم التحديث بنجاح']);
+        }
 
         return response()->json(['message' => $request->status == 1 ? 'تم قبول الدعوة بنجاح' : 'تم رفض الدعوة بنجاح']);
     }

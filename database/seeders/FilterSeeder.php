@@ -26,7 +26,7 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '1',
-            'name' => 'Engagement woman',
+            'name' => 'Engagement Women',
             'name_ar' => 'عقد قران النساء',
         ]);
 
@@ -38,7 +38,7 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '1',
-            'name' => 'Henna',
+            'name' => 'Hennah',
             'name_ar' => 'الحناء',
         ]);
 
@@ -50,7 +50,7 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '2',
-            'name' => 'Lamour',
+            'name' => 'L\'amour',
             'name_ar' => 'لاموغ',
         ]);
 

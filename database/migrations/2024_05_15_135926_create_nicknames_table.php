@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('nicknames', function (Blueprint $table) {
             $table->id();
             $table->string('nickname');
+            $table->string('nickname_ar');
             $table->timestamps();
         });
     }

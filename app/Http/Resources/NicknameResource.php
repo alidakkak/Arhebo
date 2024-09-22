@@ -17,6 +17,7 @@ class NicknameResource extends JsonResource
         return [
             'id' => $this->id,
             'nickname' => $this->nickname,
+            'nickname_ar' => $this->nickname_ar,
         ];
     }
 }

@@ -23,6 +23,7 @@ class StoreNicknameRequest extends FormRequest
     {
         return [
             'nickname' => 'required|string',
+            'nickname_ar' => 'required|string',
         ];
     }
 }

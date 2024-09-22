@@ -22,7 +22,8 @@ class UpdateNicknameRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nickname' => 'required|string',
+            'nickname' => 'string',
+            'nickname_ar' => 'string',
         ];
     }
 }

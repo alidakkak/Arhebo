@@ -52,7 +52,15 @@ class InvitationController extends Controller
             ->get();
 
         $now = Carbon::now()->format('Y-m-d H:i');
-        $miladi_date = Carbon::parse($invitations->miladi_date . ' ' . $invitations->to)->format('Y-m-d H:i');
+        foreach ($invitations as $invitation) {
+            $miladi_date = Carbon::parse($invitation->miladi_date . ' ' . $invitation->to)->format('Y-m-d H:i');
+
+            if ($now > $miladi_date && $invitation->status == InvitationTypes::active) {
+                $invitation->update([
+                    'status' => InvitationTypes::done
+                ]);
+            }
+        }
 
         if ($now > $miladi_date && InvitationTypes::active) {
             $invitations->update([

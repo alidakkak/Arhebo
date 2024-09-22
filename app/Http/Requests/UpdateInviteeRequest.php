@@ -28,6 +28,7 @@ class UpdateInviteeRequest extends FormRequest
                 'invitee_id' => ['required', Rule::exists('invitees', 'id')],
             ];
         }
+
         return [
             'status' => 'required_without_all:apology_message,accept_message|numeric',
             'uuid' => 'required|uuid',

@@ -50,7 +50,6 @@ our timeless Save the date invitations.',
             'category_code' => '03',
         ]);
 
-
         Category::create([
             'name' => 'Save the Date',
             'name_ar' => 'احفظ التاريخ',

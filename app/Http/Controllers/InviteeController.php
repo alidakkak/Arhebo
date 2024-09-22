@@ -102,7 +102,8 @@ class InviteeController extends Controller
          }
      }*/
 
-    public function getInviteeToUpdate($invitationID) {
+    public function getInviteeToUpdate($invitationID)
+    {
         $invitation = Invitation::find($invitationID);
         $invitees = $invitation->invitee()
             ->where(function ($query) {
@@ -110,10 +111,12 @@ class InviteeController extends Controller
                     ->orWhere('status', InviteeTypes::waiting);
             })
             ->get();
+
         return InviteeResource::collection($invitees);
     }
 
-    public function updateInvitee(UpdateInviteeRequest $request) {
+    public function updateInvitee(UpdateInviteeRequest $request)
+    {
         DB::beginTransaction();
 
         try {
@@ -121,7 +124,7 @@ class InviteeController extends Controller
             $old_number_of_people = $invitee->number_of_people;
             $new_number_of_people = $request->number_of_people - $old_number_of_people;
 
-            if (!$invitee) {
+            if (! $invitee) {
                 return response()->json(['message' => 'Invitee not found'], 404);
             }
 
@@ -133,7 +136,7 @@ class InviteeController extends Controller
 
             $qr = QR::where('invitee_id', $invitee->id)->first();
 
-            if (!$qr) {
+            if (! $qr) {
                 return response()->json(['message' => 'QR code not found'], 404);
             }
 
@@ -144,6 +147,7 @@ class InviteeController extends Controller
 
             if ($request->number_of_people > $invitation->number_of_invitees + $invitation->additional_package + $invitation->number_of_compensation) {
                 DB::rollBack();
+
                 return response()->json(['message' => 'You have reached the maximum number of invitees allowed']);
             }
 
@@ -166,12 +170,9 @@ class InviteeController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['message' => 'Update failed: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Update failed: '.$e->getMessage()], 500);
         }
     }
-
-
-
 
     public function generateQRCodeForInvitee($inviteeId)
     {
@@ -440,7 +441,7 @@ class InviteeController extends Controller
         $invitee->invitation->update([
             'number_of_compensation' => $total,
         ]);
-        if (!$request->status) {
+        if (! $request->status) {
             return response()->json(['message' => 'تم التحديث بنجاح']);
         }
 

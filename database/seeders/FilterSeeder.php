@@ -30,11 +30,11 @@ class FilterSeeder extends Seeder
             'name_ar' => 'عقد قران النساء',
         ]);
 
-//        Filter::create([
-//            'category_id' => '1',
-//            'name' => 'Engagement Men',
-//            'name_ar' => 'رجال الخطوبة',
-//        ]);
+        //        Filter::create([
+        //            'category_id' => '1',
+        //            'name' => 'Engagement Men',
+        //            'name_ar' => 'رجال الخطوبة',
+        //        ]);
 
         Filter::create([
             'category_id' => '1',
@@ -191,7 +191,6 @@ class FilterSeeder extends Seeder
             'name' => 'Teachers Day',
             'name_ar' => 'عيد المعلم',
         ]);
-
 
     }
 }

@@ -39,6 +39,19 @@ our timeless Save the date invitations.',
         ]);
 
         Category::create([
+            'name' => 'Birthday',
+            'name_ar' => 'أعياد الميلاد',
+            'description' => 'Be inspired and fall in love with
+our timeless Save the date invitations.',
+            'description_ar' => 'كن مصدر إلهام وتقع في الحب
+لدينا الخالدة حفظ دعوات التاريخ.',
+            'image' => '/categories_image/Birthday.jpg',
+            'photo' => '/categories_image/Background - Graduation.png',
+            'category_code' => '03',
+        ]);
+
+
+        Category::create([
             'name' => 'Save the Date',
             'name_ar' => 'احفظ التاريخ',
             'description' => 'Be inspired and fall in love with
@@ -47,24 +60,12 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Save the Date.jpg',
             'photo' => '/categories_image/Background - Save The Date.png',
-            'category_code' => '03',
-        ]);
-
-        Category::create([
-            'name' => 'Social Events',
-            'name_ar' => 'الأحداث الاجتماعية',
-            'description' => 'Be inspired and fall in love with
-our timeless Save the date invitations.',
-            'description_ar' => 'كن مصدر إلهام وتقع في الحب
-لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Social Events.jpg',
-            'photo' => '/categories_image/Background - Social Events.png',
             'category_code' => '04',
         ]);
 
         Category::create([
-            'name' => 'baby',
-            'name_ar' => 'بيبي',
+            'name' => 'Baby',
+            'name_ar' => 'مولود ',
             'description' => 'Be inspired and fall in love with
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
@@ -76,7 +77,7 @@ our timeless Save the date invitations.',
 
         Category::create([
             'name' => 'Bridal Shower',
-            'name_ar' => 'بريدل شوير',
+            'name_ar' => 'توديع العزوبية',
             'description' => 'Be inspired and fall in love with
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
@@ -84,18 +85,6 @@ our timeless Save the date invitations.',
             'image' => '/categories_image/Bridal Shower.jpg',
             'photo' => '/categories_image/Background - Bridal Shower.png',
             'category_code' => '06',
-        ]);
-
-        Category::create([
-            'name' => 'Entertaining',
-            'name_ar' => 'مسلية',
-            'description' => 'Be inspired and fall in love with
-our timeless Save the date invitations.',
-            'description_ar' => 'كن مصدر إلهام وتقع في الحب
-لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Entertaining.jpg',
-            'photo' => '/categories_image/Background - Birthday.png',
-            'category_code' => '07',
         ]);
 
         Category::create([
@@ -107,19 +96,19 @@ our timeless Save the date invitations.',
 لدينا الخالدة حفظ دعوات التاريخ.',
             'image' => '/categories_image/Graduation.jpg',
             'photo' => '/categories_image/Background - Graduation.png',
-            'category_code' => '08',
+            'category_code' => '07',
         ]);
 
         Category::create([
-            'name' => 'Birthday',
-            'name_ar' => 'عيد ميلاد',
+            'name' => 'Entertaining',
+            'name_ar' => 'الترفيه',
             'description' => 'Be inspired and fall in love with
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Birthday.jpg',
-            'photo' => '/categories_image/Background - Graduation.png',
-            'category_code' => '09',
+            'image' => '/categories_image/Entertaining.jpg',
+            'photo' => '/categories_image/Background - Birthday.png',
+            'category_code' => '08',
         ]);
     }
 }

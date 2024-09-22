@@ -60,7 +60,7 @@ class ShowOrdersResource extends JsonResource
                 }),
                 'template' => asset($template),
                 'passkit' => $this->externalId ? 1 : 0,
-                'test_invitation' => $this->test_invitation == 'test_invitation' ? 1 : 0,
+                'test_invitation' => $this->uuid == 'test_invitation' ? 1 : 0,
             ];
         }
 

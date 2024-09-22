@@ -22,10 +22,10 @@ class UpdateInviteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required',
-            'uuid' => 'required',
-            'apology_message' => 'required_without:accept_message|string',
-            'accept_message' => 'required_without:apology_message|string',
+            'status' => 'required_without_all:apology_message,accept_message|string',
+            'uuid' => 'required|uuid',
+            'apology_message' => 'required_without:status|string',
+            'accept_message' => 'required_without:status|string',
         ];
     }
 }

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Category;
-use IlluminateSupportFacadesDB; 
+use Illuminate\Support\Facades\DB; 
 
 class TemplateJawadSeeder extends Seeder
 {

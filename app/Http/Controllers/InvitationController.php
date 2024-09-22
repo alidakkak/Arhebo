@@ -62,12 +62,6 @@ class InvitationController extends Controller
             }
         }
 
-        if ($now > $miladi_date && InvitationTypes::active) {
-            $invitations->update([
-                'status' => InvitationTypes::done
-            ]);
-        }
-
         return InvitationResource::collection($invitations);
     }
 

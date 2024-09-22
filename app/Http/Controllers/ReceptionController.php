@@ -78,7 +78,7 @@ class ReceptionController extends Controller
 
     public function store(StoreReceptionRequest $request)
     {
-        $user = User::where('phone', $request->phone)->get();
+        $user = User::where('phone', $request->phone)->first();
         if (! $user) {
             return Response()->json(['message' => 'User Not Found'], 422);
         }
@@ -90,13 +90,13 @@ class ReceptionController extends Controller
         if ($isExist) {
             return Response()->json(['message' => 'User Already Exist'], 422);
         }
-        $receptions = Reception::create([
+        $reception = Reception::create([
             'user_id' => $user->id,
             'invitation_id' => $request->invitation_id,
             'type' => $request->type,
         ]);
 
-        return ReceptionResource::collection($receptions);
+        return ReceptionResource::make($reception);
     }
 
     public function search(Request $request)

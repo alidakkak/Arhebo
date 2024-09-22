@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->longText('description_ar')->nullable();
             $table->string('image');
-            $table->string('template_code', 5);
+            $table->string('template_code');
             $table->foreignId('category_id')->references('id')
                 ->on('categories')->onDelete('cascade');
             $table->softDeletes();

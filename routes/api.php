@@ -125,7 +125,9 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 
     ////  Invitee
     Route::get('invitees', [InviteeController::class, 'index']);
+    Route::get('getInviteeToUpdate/{invitationID}', [InviteeController::class, 'getInviteeToUpdate']);
     Route::post('addInvitees', [InviteeController::class, 'addInvitees']);
+    Route::patch('updateInvitee', [InviteeController::class, 'updateInvitee']);
 
     ////  Reminder
     Route::post('reminders', [ReminderController::class, 'store']);

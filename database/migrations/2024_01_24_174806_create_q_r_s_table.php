@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('qr_code');
             $table->integer('number_of_people_without_decrease'); // Number Of Invitees
             $table->integer('number_of_people');
-            $table->integer('number_of_people'); // Number Of Invitees
             //            $table->boolean('status')->default(0);
             //            $table->integer('InviteeNumber');
             $table->timestamps();

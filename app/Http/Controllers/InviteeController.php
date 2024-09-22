@@ -102,6 +102,43 @@ class InviteeController extends Controller
          }
      }*/
 
+    public function getInviteeToUpdate($invitationID) {
+        $invitation = Invitation::find($invitationID);
+        $invitees = $invitation->invitee()
+            ->where(function ($query) {
+                $query->where('status', InviteeTypes::confirmed)
+                    ->orWhere('status', InviteeTypes::waiting);
+            })
+            ->get();
+        return InviteeResource::collection($invitees);
+    }
+
+    public function updateInvitee(UpdateInviteeRequest $request) {
+        $invitee = Invitee::find($request->invitee_id);
+
+        if (!$invitee) {
+            return response()->json(['message' => 'Invitee not found'], 404);
+        }
+
+        $invitee->update([
+            'number_of_people' => $request->number_of_people,
+        ]);
+
+        $qr = QR::where('invitee_id', $invitee->id)->first();
+
+        if (!$qr) {
+            return response()->json(['message' => 'QR code not found'], 404);
+        }
+
+        $qr->update([
+            'number_of_people_without_decrease' => $request->number_of_people,
+            'number_of_people' => $request->number_of_people,
+        ]);
+
+        return response()->json(['message' => 'Updated Successfully']);
+    }
+
+
     public function generateQRCodeForInvitee($inviteeId)
     {
         $invitee = Invitee::find($inviteeId);

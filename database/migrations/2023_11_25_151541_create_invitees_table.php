@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('accept_message')->nullable();
             $table->boolean('is_benefit')->default(false);
             $table->string('status')->default(InviteeTypes::waiting);
+            $table->text('externalId')->nullable();  ///  Passkit
             $table->timestamps();
         });
     }

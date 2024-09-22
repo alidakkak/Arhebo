@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('title_ar');
-            $table->string('emoji')->nullable();
-            $table->longText('description');
-            $table->longText('description_ar');
+            $table->string('title')->nullable();
+            $table->string('title_ar')->nullable();
+            $table->string('emoji')->nullable()->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('description_ar')->nullable();
             $table->string('image');
             $table->string('template_code', 4)->unique();
             $table->foreignId('category_id')->references('id')

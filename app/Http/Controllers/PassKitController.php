@@ -12,18 +12,19 @@ class PassKitController extends Controller
 {
     public function createMember(Request $request)
     {
+        // Find Invitee and QR, and handle if they are missing
         $invitee = Invitee::find($request->invitee_id);
+        $qr = QR::where('invitee_id', $invitee?->id)->first();
         $invitation = Invitation::find($request->invitation_id);
-        $qr = QR::where('invitee_id', $invitee->id)->first();
+
+        if (! $invitee || ! $qr) {
+            return response()->json(['error' => 'Invitee or QR not found'], 404);
+        }
 
         $qrCodeData = json_encode([
             'InviteeName' => $invitee->name,
             'InviteeID' => $invitee->id,
         ]);
-
-        if (! $invitee || ! $qr) {
-            return response()->json(['error' => 'Invitee or QR not found'], 404);
-        }
 
         $Token = env('PASSKIT_TOKEN');
 
@@ -36,8 +37,8 @@ class PassKitController extends Controller
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
-                    'id' => 's2',
-                    'externalId' => 's712',
+                    'id' => '$invitee->id',
+                    'externalId' => $invitee->uuid,
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',
@@ -45,19 +46,27 @@ class PassKitController extends Controller
                         'forename' => (string) $qr->number_of_people_without_decrease,
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
-                        'displayName' => $qrCodeData,
-                        "suffix" => $invitation->name,
-                        "gender" => $invitee->name,
+                        'displayName' => $invitation->event_name,
+                        'suffix' => $qrCodeData,
+                        'salutation' => $invitee->name,
                     ],
                 ],
             ]);
 
+            if ($response->getStatusCode() !== 200) {
+                return response()->json(['error' => 'Failed to create member, API returned error'], $response->getStatusCode());
+            }
+
             $responseBody = json_decode($response->getBody(), true);
+
+            $invitee->update([
+                'externalId' => $responseBody['id'],
+            ]);
 
             return response()->json($responseBody);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => 'An internal server error occurred: '.$e->getMessage()], 500);
         }
     }
 
@@ -65,6 +74,7 @@ class PassKitController extends Controller
     {
         $invitee = Invitee::find($request->invitee_id);
         $qr = QR::where('invitee_id', $invitee->id)->first();
+        $invitation = Invitation::find($request->invitation_id);
 
         $qrCodeData = json_encode([
             'InviteeName' => $invitee->name,
@@ -78,6 +88,8 @@ class PassKitController extends Controller
         $Token = env('PASSKIT_TOKEN');
 
         $client = new Client;
+
+        $qr->decrement('number_of_people');
         try {
             $response = $client->put('https://api.pub2.passkit.io/members/member', [
                 'headers' => [
@@ -85,17 +97,18 @@ class PassKitController extends Controller
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
-                    'id' => '2Y93sYbmdXZGwn6gKccOeZ',
-                    'externalId' => 's779',
+                    'id' => $invitee->externalId,
+                    'externalId' => $invitee->externalId,
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
-                    'programId' => '2QcLEwcjfbS2OAFwR38MFB',
-                    'points' => $qr->number_of_people - 1,
-                    'metaData' => [
-                        'Name' => $invitee->name,
-                    ],
+                    'programId' => '2F7XGtvJIwWOERvK5S5NCA',
                     'person' => [
-                        'forename' => $qrCodeData,
+                        'forename' => (string) $qr->number_of_people_without_decrease,
+                        'surname' => (string) $qr->number_of_people,
+                        'emailAddress' => 'alidakak21@gmail.com',
+                        'displayName' => $invitation->event_name,
+                        'suffix' => $qrCodeData,
+                        'salutation' => $invitee->name,
                     ],
                 ],
             ]);

@@ -21,7 +21,7 @@ class CategorySeeder extends Seeder
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Wedding.png',
+            'image' => '/categories_image/Wedding.jpg',
             'photo' => '/categories_image/Background - Wedding.png',
             'category_code' => '01',
         ]);
@@ -33,7 +33,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Business.png',
+            'image' => '/categories_image/Business.jpg',
             'photo' => '/categories_image/Background - Business.png',
             'category_code' => '02',
         ]);
@@ -45,7 +45,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Save the Date.png',
+            'image' => '/categories_image/Save the Date.jpg',
             'photo' => '/categories_image/Background - Save The Date.png',
             'category_code' => '03',
         ]);
@@ -57,7 +57,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Social Events.png',
+            'image' => '/categories_image/Social Events.jpg',
             'photo' => '/categories_image/Background - Social Events.png',
             'category_code' => '04',
         ]);
@@ -69,7 +69,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/baby.png',
+            'image' => '/categories_image/baby.jpg',
             'photo' => '/categories_image/Background - Baby.png',
             'category_code' => '05',
         ]);
@@ -81,7 +81,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Bridal Shower.png',
+            'image' => '/categories_image/Bridal Shower.jpg',
             'photo' => '/categories_image/Background - Bridal Shower.png',
             'category_code' => '06',
         ]);
@@ -93,7 +93,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Entertaining.png',
+            'image' => '/categories_image/Entertaining.jpg',
             'photo' => '/categories_image/Background - Birthday.png',
             'category_code' => '07',
         ]);
@@ -105,9 +105,21 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Graduation.png',
+            'image' => '/categories_image/Graduation.jpg',
             'photo' => '/categories_image/Background - Graduation.png',
             'category_code' => '08',
+        ]);
+
+        Category::create([
+            'name' => 'Birthday',
+            'name_ar' => 'عيد ميلاد',
+            'description' => 'Be inspired and fall in love with
+our timeless Save the date invitations.',
+            'description_ar' => 'كن مصدر إلهام وتقع في الحب
+لدينا الخالدة حفظ دعوات التاريخ.',
+            'image' => '/categories_image/Birthday.jpg',
+            'photo' => '/categories_image/Background - Graduation.png',
+            'category_code' => '09',
         ]);
     }
 }

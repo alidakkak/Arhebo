@@ -38,15 +38,15 @@ class ReminderController extends Controller
             $user = auth()->user();
             $invitationId = $request->input('invitation_id');
 
-            $existingReminders = Reminder::where('user_id', $user->id)
-                ->where('invitation_id', $invitationId)
-                ->first();
-
-            if ($existingReminders) {
-                DB::rollBack();
-
-                return response()->json(['message' => trans('message.reminder')], 400);
-            }
+            //            $existingReminders = Reminder::where('user_id', $user->id)
+            //                ->where('invitation_id', $invitationId)
+            //                ->first();
+            //
+            //            if ($existingReminders) {
+            //                DB::rollBack();
+            //
+            //                return response()->json(['message' => trans('message.reminder')], 400);
+            //            }
 
             $reminder = Reminder::create(array_merge(['user_id' => $user->id], $request->only('invitation_id')));
 

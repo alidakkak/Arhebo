@@ -27,6 +27,7 @@ class StorePackageDetalisRequest extends FormRequest
             'price' => 'required|numeric',
             // 'price_qr' => 'required|numeric',
             'number_of_invitees' => 'required|numeric',
+            'price_reminder_per_person' => 'required|numeric',
         ];
     }
 }

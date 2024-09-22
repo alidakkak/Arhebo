@@ -21,7 +21,11 @@ class ReceptionEventResource extends JsonResource
 
         $attendees = QR::whereHas('invitee', function ($query) use ($invitation) {
             $query->where('invitation_id', $invitation->id);
-        })->where('status', 1)->count();
+        })->get();
+
+        $totalAttendees = $attendees->sum('number_of_people_without_decrease');
+        $totalRemaining = $attendees->sum('number_of_people');
+        $totalPresent = $totalAttendees - $totalRemaining;
 
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
@@ -48,7 +52,7 @@ class ReceptionEventResource extends JsonResource
             'rejected' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::rejected)->count(),
             'remaining' => $remaining,
             'invitees' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
-            'attendees' => $attendees,
+            'attendees' => $totalPresent,
         ];
     }
 }

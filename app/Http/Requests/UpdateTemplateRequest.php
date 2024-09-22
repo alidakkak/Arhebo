@@ -28,6 +28,7 @@ class UpdateTemplateRequest extends FormRequest
             'emoji' => 'string',
             'description' => 'string',
             'description_ar' => 'string',
+            'template_code' => 'required|string',
             'category_id' => [Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'image' => 'image|mimes:jpeg,png,jpg,svg',
             'filter_id' => [

@@ -24,11 +24,12 @@ class StoreTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'title_ar' => 'required|string',
+            'title' => 'nullable|string',
+            'title_ar' => 'nullable|string',
             'emoji' => 'string|nullable',
-            'description' => 'required|string',
-            'description_ar' => 'required|string',
+            'description' => 'nullable|string',
+            'description_ar' => 'nullable|string',
+            'template_code' => 'required|string',
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'image' => 'required|image|mimes:jpeg,png,jpg,svg',
             'filter_id' => [

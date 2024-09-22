@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReceptionRequest;
 use App\Http\Resources\ReceptionEventResource;
 use App\Http\Resources\ReceptionResource;
+use App\Models\Invitation;
+use App\Models\Invitee;
 use App\Models\QR;
 use App\Models\Reception;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -111,33 +115,106 @@ class ReceptionController extends Controller
 
     public function scanQRCodeForInvitee(Request $request)
     {
-        $validatedData = $request->validate([
-            'invitee_id' => ['required', Rule::exists('invitees', 'id')],
-            'user_id' => ['required', Rule::exists('users', 'id')],
-            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
+        DB::beginTransaction();
+
+        try {
+            $validatedData = $request->validate([
+                'invitee_id' => ['required', Rule::exists('invitees', 'id')],
+                'user_id' => ['required', Rule::exists('users', 'id')],
+                'invitation_id' => ['required', Rule::exists('invitations', 'id')],
+            ]);
+
+            $invitee = Invitee::find($validatedData['invitee_id']);
+            $qrCode = QR::where('invitee_id', $invitee->id)->first();
+
+            if (! $qrCode) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'Invalid QR Code'], 400);
+            }
+
+            $reception = Reception::where('user_id', $validatedData['user_id'])
+                ->where('invitation_id', $validatedData['invitation_id'])
+                ->where('type', '1')
+                ->first();
+
+            if (! $reception) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'Unauthorized. You are not assigned to scan this QR Code.'], 403);
+            }
+
+            if ($qrCode->number_of_people == 0) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'The allowed number of people for this QR Code has been reached.'], 400);
+            }
+
+            $qrCode->decrement('number_of_people');
+
+            if ($invitee->externalId) {
+                $this->updateMember($invitee->id, $validatedData['invitation_id']);
+            }
+
+            DB::commit();
+
+            return response()->json(['message' => 'QR Code scanned successfully']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => 'An error occurred: '.$e->getMessage()], 500);
+        }
+    }
+
+    public function updateMember($inviteeID, $invitationID)
+    {
+        $invitee = Invitee::find($inviteeID);
+        $qr = QR::where('invitee_id', $invitee->id)->first();
+        $invitation = Invitation::find($invitationID);
+
+        if (! $invitee || ! $qr) {
+            return response()->json(['error' => 'Invitee or QR not found'], 404);
+        }
+
+        $qrCodeData = json_encode([
+            'InviteeName' => $invitee->name,
+            'InviteeID' => $invitee->id,
         ]);
 
-        $qrCode = QR::where('invitee_id', $validatedData['invitee_id'])->first();
+        $Token = env('PASSKIT_TOKEN');
 
-        if (! $qrCode) {
-            return response()->json(['message' => 'Invalid QR Code'], 400);
+        $client = new Client;
+
+        try {
+            $response = $client->put('https://api.pub2.passkit.io/members/member', [
+                'headers' => [
+                    'Authorization' => 'Bearer '.$Token,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => [
+                    'id' => $invitee->externalId,
+                    'externalId' => $invitee->externalId,
+                    'groupingIdentifier' => 'string',
+                    'tierId' => 'purple_power',
+                    'programId' => '2F7XGtvJIwWOERvK5S5NCA',
+                    'person' => [
+                        'forename' => (string) $qr->number_of_people_without_decrease,
+                        'surname' => (string) $qr->number_of_people,
+                        'emailAddress' => 'alidakak21@gmail.com',
+                        'displayName' => $invitation->event_name,
+                        'suffix' => $qrCodeData,
+                        'salutation' => $invitee->name,
+                    ],
+                ],
+            ]);
+
+            $responseBody = json_decode($response->getBody(), true);
+
+            return response()->json($responseBody);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        $reception = Reception::where('user_id', $validatedData['user_id'])
-            ->where('invitation_id', $validatedData['invitation_id'])
-            ->where('type', '1')
-            ->first();
-
-        if (! $reception) {
-            return response()->json(['message' => 'Unauthorized. You are not assigned to scan this QR Code.'], 403);
-        }
-
-        if ($qrCode->number_of_people == $qrCode->number_of_people_without_decrease) {
-            return response()->json(['message' => 'The allowed number of people for this QR Code has been reached.'], 400);
-        }
-
-        $qrCode->increment('number_of_people');
-
-        return response()->json(['message' => 'QR Code scanned successfully']);
     }
 }

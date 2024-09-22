@@ -24,21 +24,21 @@ class Template extends Model
 
     public static $isSeederRunning = false;
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($template) {
-            if (! self::$isSeederRunning) {
-                $lastTemplate = static::withTrashed()->latest('id')->first();
-                if ($lastTemplate) {
-                    $template->template_code =
-                        str_pad((int) $lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
-                } else {
-                    $template->template_code = '0001';
+        protected static function boot()
+        {
+            parent::boot();
+            static::creating(function ($template) {
+                if (! self::$isSeederRunning) {
+                    $lastTemplate = static::withTrashed()->latest('id')->first();
+                    if ($lastTemplate) {
+                        $template->template_code =
+                            str_pad((int) $lastTemplate->template_code + 1, 4, '0', STR_PAD_LEFT);
+                    } else {
+                        $template->template_code = '0001';
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 
     public function setImageAttribute($image)
     {

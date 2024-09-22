@@ -45,16 +45,19 @@ class ShowOrdersResource extends JsonResource
                 'status' => $this->status,
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
+                'invitation_id' => $this->invitation->id,
+                'invitee_id' => $this->id,
                 'QRCode' => $this->qr->map(function ($qr) {
                     return [
                         'invitee_id' => $qr->invitee_id,
                         'qr_code' => $qr->qr_code,
                         'number_of_people_without_decrease' => $qr->number_of_people_without_decrease,
                         'number_of_people' => $qr->number_of_people,
-                        'status' => $qr->number_of_people_without_decrease == $qr->number_of_people ? 1 : 0,
+                        'status' => $qr->number_of_people == 0 ? 1 : 0,
                     ];
                 }),
                 'template' => asset($template),
+                'passkit' => $this->externalId ? 1 : 0,
             ];
         }
 

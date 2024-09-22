@@ -51,6 +51,15 @@ class InvitationController extends Controller
             })
             ->get();
 
+        $now = Carbon::now()->format('Y-m-d H:i');
+        $miladi_date = Carbon::parse($invitations->miladi_date . ' ' . $invitations->to)->format('Y-m-d H:i');
+
+        if ($now > $miladi_date && InvitationTypes::active) {
+            $invitations->update([
+                'status' => InvitationTypes::done
+            ]);
+        }
+
         return InvitationResource::collection($invitations);
     }
 
@@ -59,14 +68,6 @@ class InvitationController extends Controller
         $show = Invitation::find($invitation);
         if (! $show) {
             return response()->json(['message' => 'Not Found'], 403);
-        }
-        $now = Carbon::now()->format('Y-m-d H:i');
-        $miladi_date = Carbon::parse($show->miladi_date . ' ' . $show->to)->format('Y-m-d H:i');
-
-        if ($now > $miladi_date) {
-            $show->update([
-                'status' => InvitationTypes::done
-            ]);
         }
 
         return InvitationResource::make($show);

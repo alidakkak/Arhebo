@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('packages', [PackageController::class, 'index']);
 ////  Contact us
 Route::get('contactUs', [ContactUsController::class, 'index']);
+Route::get('indexForSupport', [ContactUsController::class, 'indexForSupport']);
 /// Category
 Route::get('categories', [CategoryController::class, 'index']);
 

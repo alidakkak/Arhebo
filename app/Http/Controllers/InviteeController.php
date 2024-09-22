@@ -114,48 +114,62 @@ class InviteeController extends Controller
     }
 
     public function updateInvitee(UpdateInviteeRequest $request) {
-        $invitee = Invitee::find($request->invitee_id);
+        DB::beginTransaction();
 
-        if (!$invitee) {
-            return response()->json(['message' => 'Invitee not found'], 404);
-        }
+        try {
+            $invitee = Invitee::find($request->invitee_id);
+            $old_number_of_people = $invitee->number_of_people;
+            $new_number_of_people = $request->number_of_people - $old_number_of_people;
 
-        $invitation = $invitee->invitation;
-
-        $invitee->update([
-            'number_of_people' => $invitee->number_of_people + $request->number_of_people,
-        ]);
-
-        $qr = QR::where('invitee_id', $invitee->id)->first();
-
-        if (!$qr) {
-            return response()->json(['message' => 'QR code not found'], 404);
-        }
-
-        $qr->update([
-            'number_of_people_without_decrease' => $qr->number_of_people_without_decrease + $request->number_of_people,
-            'number_of_people' => $qr->number_of_people + $request->number_of_people,
-        ]);
-
-        if ($request->number_of_people > $invitation->number_of_invitees + $invitation->additional_package + $invitation->number_of_compensation)
-        {
-            return response()->json(['message' => 'You have reached the maximum number of invitees allowed']);
-        }
-
-        for ($i = 0; $i < $request->number_of_people; $i++) {
-            if ($invitation->number_of_invitees > 0) {
-                $invitation->number_of_invitees -= 1;
-            } elseif ($invitation->additional_package > 0) {
-                $invitation->additional_package -= 1;
-            } elseif ($invitation->number_of_compensation > 0) {
-                $invitation->number_of_compensation -= 1;
+            if (!$invitee) {
+                return response()->json(['message' => 'Invitee not found'], 404);
             }
+
+            $invitation = $invitee->invitation;
+
+            $invitee->update([
+                'number_of_people' => $request->number_of_people,
+            ]);
+
+            $qr = QR::where('invitee_id', $invitee->id)->first();
+
+            if (!$qr) {
+                return response()->json(['message' => 'QR code not found'], 404);
+            }
+
+            $qr->update([
+                'number_of_people_without_decrease' => $request->number_of_people,
+                'number_of_people' => $request->number_of_people,
+            ]);
+
+            if ($request->number_of_people > $invitation->number_of_invitees + $invitation->additional_package + $invitation->number_of_compensation) {
+                DB::rollBack();
+                return response()->json(['message' => 'You have reached the maximum number of invitees allowed']);
+            }
+
+            for ($i = 0; $i < $new_number_of_people; $i++) {
+                if ($invitation->number_of_invitees > 0) {
+                    $invitation->number_of_invitees -= 1;
+                } elseif ($invitation->additional_package > 0) {
+                    $invitation->additional_package -= 1;
+                } elseif ($invitation->number_of_compensation > 0) {
+                    $invitation->number_of_compensation -= 1;
+                }
+            }
+
+            $invitation->save();
+
+            DB::commit();
+
+            return response()->json(['message' => 'Updated Successfully']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['message' => 'Update failed: ' . $e->getMessage()], 500);
         }
-
-        $invitation->save();
-
-        return response()->json(['message' => 'Updated Successfully']);
     }
+
 
 
 

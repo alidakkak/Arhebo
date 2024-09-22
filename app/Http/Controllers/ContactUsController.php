@@ -20,6 +20,25 @@ class ContactUsController extends Controller
         return ContactUsResource::make($contact);
     }
 
+    public function indexForSupport()
+    {
+        $contact = ContactUs::first();
+
+        if (! $contact) {
+            return [
+                'id' => '',
+                'phone' => '',
+                'email' => '',
+                'facebook' => '',
+                'instagram' => '',
+                'whatsapp' => '',
+                'x' => '',
+            ];
+        }
+
+        return ContactUsResource::make($contact);
+    }
+
     public function store(StoreContactUsRequest $request)
     {
         try {

@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('title_ar')->nullable();
+<<<<<<< HEAD
             $table->string('emoji')->nullable()->nullable();
+=======
+            $table->string('emoji')->nullable();
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
             $table->longText('description')->nullable();
             $table->longText('description_ar')->nullable();
             $table->string('image');

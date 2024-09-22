@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Invitation;
 use App\Models\Invitee;
+<<<<<<< HEAD
+=======
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
 use Illuminate\Database\Seeder;
 
 class TestInvitationSeeder extends Seeder

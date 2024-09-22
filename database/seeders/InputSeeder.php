@@ -20,6 +20,10 @@ class InputSeeder extends Seeder
             'category_id' => '1',
         ]);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
         Input::create([
             'input_name' => 'Brides name',
             'input_name_ar' => 'اسم العروس',

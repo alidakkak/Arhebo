@@ -33,7 +33,7 @@ class PassKitController extends Controller
         try {
             $response = $client->post('https://api.pub2.passkit.io/members/member', [
                 'headers' => [
-                    'Authorization' => 'Bearer '.$Token,
+                    'Authorization' => 'Bearer ' . $Token,
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
@@ -46,8 +46,13 @@ class PassKitController extends Controller
                         'forename' => (string) $qr->number_of_people_without_decrease,
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
+<<<<<<< HEAD
                         'displayName' => $invitation->event_name,
                         'suffix' => $qrCodeData,
+=======
+                        'displayName' => $qrCodeData,
+                        'suffix' => $invitation->event_name,
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                         'salutation' => $invitee->name,
                     ],
                 ],
@@ -60,15 +65,24 @@ class PassKitController extends Controller
             $responseBody = json_decode($response->getBody(), true);
 
             $invitee->update([
+<<<<<<< HEAD
                 'externalId' => $responseBody['id'],
+=======
+                'externalId' => $responseBody['id']
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
             ]);
 
             return response()->json($responseBody);
 
         } catch (\Exception $e) {
+<<<<<<< HEAD
             return response()->json(['error' => 'An internal server error occurred: '.$e->getMessage()], 500);
+=======
+            return response()->json(['error' => 'An internal server error occurred: ' . $e->getMessage()], 500);
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
         }
     }
+
 
     public function updateMember(Request $request)
     {
@@ -106,8 +120,13 @@ class PassKitController extends Controller
                         'forename' => (string) $qr->number_of_people_without_decrease,
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
+<<<<<<< HEAD
                         'displayName' => $invitation->event_name,
                         'suffix' => $qrCodeData,
+=======
+                        'displayName' => $qrCodeData,
+                        'suffix' => $invitation->event_name,
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                         'salutation' => $invitee->name,
                     ],
                 ],

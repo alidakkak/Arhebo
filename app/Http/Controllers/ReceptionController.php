@@ -129,7 +129,10 @@ class ReceptionController extends Controller
 
             if (! $qrCode) {
                 DB::rollBack();
+<<<<<<< HEAD
 
+=======
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                 return response()->json(['message' => 'Invalid QR Code'], 400);
             }
 
@@ -140,13 +143,19 @@ class ReceptionController extends Controller
 
             if (! $reception) {
                 DB::rollBack();
+<<<<<<< HEAD
 
+=======
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                 return response()->json(['message' => 'Unauthorized. You are not assigned to scan this QR Code.'], 403);
             }
 
             if ($qrCode->number_of_people == 0) {
                 DB::rollBack();
+<<<<<<< HEAD
 
+=======
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                 return response()->json(['message' => 'The allowed number of people for this QR Code has been reached.'], 400);
             }
 
@@ -156,17 +165,30 @@ class ReceptionController extends Controller
                 $this->updateMember($invitee->id, $validatedData['invitation_id']);
             }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
             DB::commit();
 
             return response()->json(['message' => 'QR Code scanned successfully']);
 
         } catch (\Exception $e) {
             DB::rollBack();
+<<<<<<< HEAD
 
             return response()->json(['error' => 'An error occurred: '.$e->getMessage()], 500);
         }
     }
 
+=======
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+    }
+
+
+
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
     public function updateMember($inviteeID, $invitationID)
     {
         $invitee = Invitee::find($inviteeID);
@@ -189,7 +211,11 @@ class ReceptionController extends Controller
         try {
             $response = $client->put('https://api.pub2.passkit.io/members/member', [
                 'headers' => [
+<<<<<<< HEAD
                     'Authorization' => 'Bearer '.$Token,
+=======
+                    'Authorization' => 'Bearer ' . $Token,
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
@@ -202,8 +228,13 @@ class ReceptionController extends Controller
                         'forename' => (string) $qr->number_of_people_without_decrease,
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
+<<<<<<< HEAD
                         'displayName' => $invitation->event_name,
                         'suffix' => $qrCodeData,
+=======
+                        'displayName' => $qrCodeData,
+                        'suffix' => $invitation->event_name,
+>>>>>>> a5a9f5502020d7f839385627f28c0e4d99e971c5
                         'salutation' => $invitee->name,
                     ],
                 ],
@@ -217,4 +248,5 @@ class ReceptionController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 }

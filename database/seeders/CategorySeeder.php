@@ -57,7 +57,7 @@ our timeless Save the date invitations.',
 our timeless Save the date invitations.',
             'description_ar' => 'كن مصدر إلهام وتقع في الحب
 لدينا الخالدة حفظ دعوات التاريخ.',
-            'image' => '/categories_image/Save the Date.jpg',
+            'image' => '/categories_image/Save The Date.jpg',
             'photo' => '/categories_image/Background - Save The Date.png',
             'category_code' => '04',
         ]);

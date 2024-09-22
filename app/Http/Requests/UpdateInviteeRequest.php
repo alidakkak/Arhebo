@@ -24,8 +24,8 @@ class UpdateInviteeRequest extends FormRequest
         return [
             'status' => 'required_without_all:apology_message,accept_message|string',
             'uuid' => 'required|uuid',
-            'apology_message' => 'required_without:status|string',
-            'accept_message' => 'required_without:status|string',
+            'apology_message' => 'required_without_all:status,accept_message|string',
+            'accept_message' => 'required_without_all:status,apology_message|string',
         ];
     }
 }

@@ -13,6 +13,8 @@ class TestInvitationSeeder extends Seeder
      */
     public function run(): void
     {
+        Invitation::$isSeederRunning = true;
+
         Invitation::create([
             'category_id' => '1',
             'package_id' => '1',

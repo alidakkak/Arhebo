@@ -282,12 +282,14 @@ class InviteeController extends Controller
             }
             $invitation->save();
 //            $imagePath = $invitation->Template ? $invitation->Template->image : null;
+            $imagePath = '/test_invitation/test.png';
 
             // Process the image (convert from WEBP to PNG)
-            $tempPngPath = $this->processInvitationImage($invitation->Template->image ?? null);
-            $whatsApp_template = '$this->whatsApp_template($invitation->id)';
-            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url('/temp/temp_image.png'), $whatsApp_template);
-            File::delete($tempPngPath);
+//            $tempPngPath = $this->processInvitationImage($invitation->Template->image ?? null);
+//            $whatsApp_template = $this->whatsApp_template($invitation->id);
+            $whatsApp_template = 'يشرفنا حضوركم حفل';
+            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($imagePath), $whatsApp_template);
+//            File::delete($tempPngPath);
             DB::commit();
 
             return response()->json([

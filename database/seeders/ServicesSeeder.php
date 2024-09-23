@@ -15,9 +15,13 @@ class ServicesSeeder extends Seeder
         Services::create([
             'title' => '“Beautiful Invitations for Every Occasion”',
             'title_ar' => '“دعوات مميزة لكل مناسباتك”',
-            'body' => 'Our design team is here to create stunning invitations for all your special moments. We work quickly and with care, ensuring your invitations are elegant and unique, adding a personal touch to your important day ',
-            'body_ar' => 'فريقنا لتصميم الدعوات جاهز ليقدّم لك أجمل التصاميم لمختلف مناسباتك. نعمل بسرعة واهتمام لنضمن أن دعواتك تكون أنيقة وفريدة، لتُضفي طابعاً خاصاً على يومك المميز.',
-            'image' => '/services_image/serviceone.webp"',
+            'body' => 'Our design team is here to create stunning invitations for all your special moments.
+             We work quickly and with care, ensuring your invitations are elegant and unique,
+              adding a personal touch to your important day ',
+            'body_ar' => 'فريقنا لتصميم الدعوات جاهز ليقدّم لك أجمل التصاميم لمختلف مناسباتك.
+             نعمل بسرعة واهتمام لنضمن أن دعواتك تكون أنيقة وفريدة،
+              لتُضفي طابعاً خاصاً على يومك المميز.',
+            'image' => '/services_image/serviceone.webp',
         ]);
     }
 }

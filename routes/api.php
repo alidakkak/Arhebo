@@ -157,3 +157,6 @@ Route::get('terms', [TermController::class, 'index']);
 Route::post('testInvitation', [TestInvitationController::class, 'testInvitation']);
 ////  Nickname
 Route::get('nicknames', [NicknameController::class, 'index']);
+
+
+Route::get('processInvitationImage', [InviteeController::class, 'processInvitationImage']);

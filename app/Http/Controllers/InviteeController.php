@@ -9,7 +9,7 @@ use App\Http\Resources\ShowOrdersResource;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
-use Faker\Provider\Image;
+use Intervention\Image\Facades\Image;
 use App\Statuses\InviteeTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
+use Intervention\Image\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InviteeController extends Controller
@@ -257,10 +257,10 @@ class InviteeController extends Controller
             $invitation->save();
             $image = $invitation->Template ? $invitation->Template->image : null;
 //            $image = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
-            $image = Image::make($image)->encode('png');
+            $images = Image::make($image)->encode('png');
 
             // تحويل الصورة إلى base64 لإرسالها مباشرة
-            $base64Image = base64_encode($image);
+            $base64Image = base64_encode($images);
 
             // إنشاء رابط للصورة المحولة (اختياري، فقط لإظهار الصورة في مكان ما إذا لزم الأمر)
             $convertedImageUrl = 'data:image/png;base64,' . $base64Image;

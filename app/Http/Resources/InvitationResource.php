@@ -34,7 +34,7 @@ class InvitationResource extends JsonResource
                 'status' => $this->status,
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
-                'template' => $this->invitation->template->image,
+                'template' => $this->invitation->template ? $this->invitation->template->image : $this->invitation->image,
             ];
         }
         $invitation = Invitation::find($this->id);

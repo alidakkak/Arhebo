@@ -205,21 +205,26 @@ class InviteeController extends Controller
 
     private function processInvitationImage($imagePath)
     {
-        $fullImagePath = public_path($imagePath);
-        $tempPngPath = public_path('/temp/temp_image.png');
+        $publicDir = public_path();
+        $relativeImagePath = str_replace($publicDir, '', $imagePath);
+
+        // Correct the path to ensure it's relative
+        $fullImagePath = $publicDir . $relativeImagePath;
+        $tempPngPath = '/temp/temp_image.png';  // Generate relative temp path
 
         if (file_exists($fullImagePath)) {
             $imageExtension = strtolower(pathinfo($fullImagePath, PATHINFO_EXTENSION));
 
             if ($imageExtension === 'png') {
-                return $fullImagePath;
+                return $relativeImagePath;  // Return relative path for PNG
             } elseif ($imageExtension === 'webp') {
                 // If it's a WEBP image, convert it to PNG
                 $webpImage = imagecreatefromwebp($fullImagePath);
-                imagepng($webpImage, $tempPngPath);
+                $tempFullPngPath = $publicDir . $tempPngPath;
+                imagepng($webpImage, $tempFullPngPath);  // Save as PNG
                 imagedestroy($webpImage);
 
-                return $tempPngPath;
+                return $tempPngPath;  // Return the relative temp path for PNG
             } else {
                 throw new \Exception('Unsupported image format.');
             }
@@ -227,6 +232,7 @@ class InviteeController extends Controller
 
         throw new \Exception('Image file not found.');
     }
+
 
 
     /// Api For Flutter

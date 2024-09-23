@@ -14,17 +14,17 @@ class AdditionalPackageSeeder extends Seeder
     {
         AdditionalPackage::create([
             'price' => 50,
-            'number_of_invitees' => 5
+            'number_of_invitees' => 5,
         ]);
 
         AdditionalPackage::create([
             'price' => 100,
-            'number_of_invitees' => 10
+            'number_of_invitees' => 10,
         ]);
 
         AdditionalPackage::create([
             'price' => 150,
-            'number_of_invitees' => 15
+            'number_of_invitees' => 15,
         ]);
     }
 }

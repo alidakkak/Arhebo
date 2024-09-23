@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InviteeController extends Controller
@@ -257,13 +256,6 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $imagePath = $invitation->Template ? $invitation->Template->image : null;
-//            $images = Image::make($imagePath)->encode('png');
-//
-//            // Convert the image to base64
-//            $base64Image = (string) $images; // Convert the image to a string directly
-//
-//            // Create a base64 URL for the PNG image
-//            $convertedImageUrl = 'data:image/png;base64,' . base64_encode($base64Image);
 
             $fullImagePath = public_path($imagePath);
 
@@ -273,7 +265,7 @@ class InviteeController extends Controller
             imagepng($webpImage, $tempPngPath);
             imagedestroy($webpImage);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), asset('/temp/temp_image.png') , $whatsApp_template);
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), asset('/temp/temp_image.png'), $whatsApp_template);
             File::delete($tempPngPath);
             DB::commit();
 
@@ -346,15 +338,24 @@ class InviteeController extends Controller
             }
 
             $invitation->save();
-            $image = $invitation->image;
+            $imagePath = $invitation->image;
             $message = $invitation->text_message;
-            if ($image == null || $message == null) {
+            if ($imagePath == null || $message == null) {
                 DB::rollBack();
 
                 return response()->json(['message' => 'You must add a picture and a message']);
             }
+
+            $fullImagePath = public_path($imagePath);
+
+            // Create an image from the WEBP file
+            $webpImage = imagecreatefromwebp($fullImagePath);
+            $tempPngPath = public_path('/temp/temp_image.png');
+            imagepng($webpImage, $tempPngPath);
+            imagedestroy($webpImage);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), asset('/temp/temp_image.png'), $whatsApp_template);
+            File::delete($tempPngPath);
             DB::commit();
 
             return response()->json([

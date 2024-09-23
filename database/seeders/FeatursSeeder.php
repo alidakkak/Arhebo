@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Feature;
+use App\Models\PackageFeature;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -20,10 +21,17 @@ class FeatursSeeder extends Seeder
             'type' => 'withoutValue',
         ]);
 
-        DB::table('package_features')->insert([
-            ['package_id' => 1, 'feature_id' => $feature->id],
-            ['package_id' => 2, 'feature_id' => $feature->id],
-            ['package_id' => 3, 'feature_id' => $feature->id],
+        PackageFeature::create([
+            'package_id' => 1,
+            'feature_id' => $feature->id
+        ]);
+        PackageFeature::create([
+            'package_id' => 2,
+            'feature_id' => $feature->id
+        ]);
+        PackageFeature::create([
+            'package_id' => 3,
+            'feature_id' => $feature->id
         ]);
     }
 }

@@ -16,32 +16,29 @@ class WhatsAppDeleteInvitationService
         $this->apiToken = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
     }
 
-    public function sendWhatsAppMessages(array $invitees, string $eventName)
+    public function sendWhatsAppMessages(array $invitees, $event_name)
     {
-        // Prepare the receivers' data
-        $receivers = array_map(function ($invitee) use ($eventName) {
-            return [
-                'whatsappNumber' => $invitee['phone'], // Ensure phone number exists in the invitee
-                'customParams' => [
-                    [
-                        'name' => 'event_name',
-                        'value' => $eventName
-                    ]
-                ]
-            ];
-        }, $invitees);
+        $receivers = [];
 
-        // Send the HTTP POST request to the WhatsApp API
+        foreach ($invitees as $invitee) {
+            dd($invitee['phone']);
+            $receivers[] = [
+                'whatsappNumber' => $invitee['phone'],
+                'customParams' => [
+                    ['name' => 'event_name', 'value' => $event_name],
+                ],
+            ];
+        }
+
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiToken, // Authorization header
-            'Content-Type' => 'application/json', // Ensure JSON content-type
+            'Authorization' => 'Bearer '.$this->apiToken,
+            'Content-Type' => 'application/json',
         ])->post($this->apiUrl, [
-            'template_name' => 'cancel_invitation', // Name of the template
-            'broadcast_name' => 'cancel_invitation', // Broadcast name for the message
-            'receivers' => $receivers, // List of receivers with their custom params
+            'template_name' => 'cancel_invitation',
+            'broadcast_name' => 'cancel_invitation',
+            'receivers' => $receivers,
         ]);
 
-        // Return the response in JSON format
         return $response->json();
     }
 }

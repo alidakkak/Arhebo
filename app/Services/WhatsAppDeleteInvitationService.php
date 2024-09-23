@@ -22,9 +22,9 @@ class WhatsAppDeleteInvitationService
 
         foreach ($invitees as $invitee) {
             $receivers[] = [
-                'whatsappNumber' => $invitee['phone'],
+                'whatsappNumber' => '963937356470',
                 'customParams' => [
-                    ['name' => 'event_name', 'value' => $event_name],
+                    ['name' => 'event_name', 'value' => 'scs'],
                 ],
             ];
         }

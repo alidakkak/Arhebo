@@ -13,9 +13,10 @@ use App\Statuses\InviteeTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use Intervention\Image\Image;
+use Intervention\Image\Laravel\Facades\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InviteeController extends Controller
@@ -255,18 +256,25 @@ class InviteeController extends Controller
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->save();
-            $image = $invitation->Template ? $invitation->Template->image : null;
-//            $image = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
-            $images = Image::make($image)->encode('png');
+            $imagePath = $invitation->Template ? $invitation->Template->image : null;
+//            $images = Image::make($imagePath)->encode('png');
+//
+//            // Convert the image to base64
+//            $base64Image = (string) $images; // Convert the image to a string directly
+//
+//            // Create a base64 URL for the PNG image
+//            $convertedImageUrl = 'data:image/png;base64,' . base64_encode($base64Image);
 
-            // تحويل الصورة إلى base64 لإرسالها مباشرة
-            $base64Image = base64_encode($images);
+            $fullImagePath = public_path($imagePath);
 
-            // إنشاء رابط للصورة المحولة (اختياري، فقط لإظهار الصورة في مكان ما إذا لزم الأمر)
-            $convertedImageUrl = 'data:image/png;base64,' . $base64Image;
+            // Create an image from the WEBP file
+            $webpImage = imagecreatefromwebp($fullImagePath);
+            $tempPngPath = public_path('temp_image.png');
+            imagepng($webpImage, $tempPngPath);
+            imagedestroy($webpImage);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($convertedImageUrl), $whatsApp_template);
-
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), $tempPngPath , $whatsApp_template);
+            File::delete($tempPngPath);
             DB::commit();
 
             return response()->json([

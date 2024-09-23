@@ -38,7 +38,6 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     Route::post('categories/{categoryId}', [CategoryController::class, 'update']);
     Route::delete('categories/{categoryId}', [CategoryController::class, 'delete']);
     Route::get('getInformation', [CategoryController::class, 'getInformation']);
-    Route::get('whatsApp_template', [InviteeController::class, 'whatsApp_template']);
 
     ////// Filter
     Route::get('filters', [FilterController::class, 'index']);
@@ -160,3 +159,4 @@ Route::group(['middleware' => ['check_user:1', 'lang']], function () {
     /// PushNotifications
     Route::post('sendNotificationToAllUsers', [PushNotificationsController::class, 'sendNotificationToAllUsers']);
 });
+Route::get('whatsApp_template/{InvitationID}', [InviteeController::class, 'whatsApp_template']);

@@ -22,12 +22,13 @@ class WhatsAppDeleteInvitationService
 
         foreach ($invitees as $invitee) {
             $receivers[] = [
-                'whatsappNumber' => '963937356470',
+                'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
-                    ['name' => 'event_name', 'value' => 'scs'],
+                    ['name' => 'event_name', 'value' => $event_name],
                 ],
             ];
         }
+        dd($receivers);
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->apiToken,

@@ -254,8 +254,8 @@ class InviteeController extends Controller
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->save();
-            $image = $invitation->Template ? $invitation->Template->image : null;
-            return $image;
+//            $image = $invitation->Template ? $invitation->Template->image : null;
+            $image = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
 

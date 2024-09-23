@@ -13,6 +13,8 @@ Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
     Route::post('invitees', [InviteeController::class, 'store']);
     Route::get('getImage/{invitationID}', [InviteeController::class, 'getImage']);
     Route::post('storeImage', [InviteeController::class, 'storeImage']);
+    Route::get('getInviteeToUpdateSupport/{invitationID}', [InviteeController::class, 'getInviteeToUpdate']);
+    Route::patch('updateInviteeSupport', [InviteeController::class, 'updateInvitee']);
 
     ////  Reminder
     Route::get('reminders', [ReminderController::class, 'index']);

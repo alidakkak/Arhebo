@@ -25,7 +25,7 @@ class TestInvitationSeeder extends Seeder
             'to' => '10:30',
             'city' => 'سعودية',
             'region' => 'جدة',
-            'event_name' => 'زفاف',
+            'event_name' => 'حفل زفاف سالم أحمد وليان محمد',
             'location_link' => 'https://',
             'inviter' => 'عبدالرحمن سعد',
             'number_of_invitees' => '25',

@@ -269,7 +269,7 @@ class InviteeController extends Controller
 
             // Create an image from the WEBP file
             $webpImage = imagecreatefromwebp($fullImagePath);
-            $tempPngPath = public_path('temp_image.png');
+            $tempPngPath = public_path('/temp/temp_image.png');
             imagepng($webpImage, $tempPngPath);
             imagedestroy($webpImage);
             $whatsApp_template = $this->whatsApp_template($invitation->id);

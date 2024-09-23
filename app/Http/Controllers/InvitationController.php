@@ -102,7 +102,7 @@ class InvitationController extends Controller
             if (! empty($request->features)) {
                 foreach ($request->features as $feature) {
                     $invitation->features()->attach($feature['feature_id'], [
-                        'value' => $feature['value'],
+                        'value' => $feature['value'] ?: null,
                         'quantity' => $feature['quantity'],
                     ]);
                 }

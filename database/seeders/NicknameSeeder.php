@@ -12,12 +12,29 @@ class NicknameSeeder extends Seeder
      */
     public function run(): void
     {
-        Nickname::insert([
-            ['nickname' => 'Honorable Male', 'nickname_ar' => 'المكرم'],  // Honorable Male
-            ['nickname' => 'Honorable Female', 'nickname_ar' => 'المكرمة'],  // Honorable Female
-            ['nickname' => 'Professor', 'nickname_ar' => 'الأستاذ'],  // Professor
-            ['nickname' => 'Miss', 'nickname_ar' => 'الأنسة'],  // Professor
-            ['nickname' => 'Engineer', 'nickname_ar' => 'المهندس'],  // Engineer
+        Nickname::create([
+            'nickname' => 'Honorable Male',
+            'nickname_ar' => 'المكرم'
+        ]);
+
+        Nickname::create([
+            'nickname' => 'Honorable Female',
+            'nickname_ar' => 'المكرمة'
+        ]);
+
+        Nickname::create([
+            'nickname' => 'Professor',
+            'nickname_ar' => 'الأستاذ'
+        ]);
+
+        Nickname::create([
+            'nickname' => 'Miss',
+            'nickname_ar' => 'الأنسة'
+        ]);
+
+        Nickname::create([
+            'nickname' => 'Engineer',
+            'nickname_ar' => 'المهندس'
         ]);
 
     }

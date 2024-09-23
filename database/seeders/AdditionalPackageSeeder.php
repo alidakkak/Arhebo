@@ -12,11 +12,19 @@ class AdditionalPackageSeeder extends Seeder
      */
     public function run(): void
     {
-        AdditionalPackage::insert([
-            ['price' => 50, 'number_of_invitees' => 5],
-            ['price' => 100, 'number_of_invitees' => 10],
-            ['price' => 150, 'number_of_invitees' => 15],
-            ['price' => 200, 'number_of_invitees' => 20],
+        AdditionalPackage::create([
+            'price' => 50,
+            'number_of_invitees' => 5
+        ]);
+
+        AdditionalPackage::create([
+            'price' => 100,
+            'number_of_invitees' => 10
+        ]);
+
+        AdditionalPackage::create([
+            'price' => 150,
+            'number_of_invitees' => 15
         ]);
     }
 }

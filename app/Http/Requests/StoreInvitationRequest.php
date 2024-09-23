@@ -41,7 +41,7 @@ class StoreInvitationRequest extends FormRequest
             //            'is_with_qr' => 'required|boolean',
             'answers.*.answer' => 'required',
             'answers.*.input_id' => ['required', Rule::exists('inputs', 'id')],
-            'features.*.value' => 'required',
+            'features.*.value' => 'nullable',
             'features.*.quantity' => 'required',
             'features.*.feature_id' => ['required', Rule::exists('features', 'id')],
             'Attributes' => 'array',

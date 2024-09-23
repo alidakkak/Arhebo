@@ -264,8 +264,8 @@ class InviteeController extends Controller
             $tempPngPath = public_path('/temp/temp_image.png');
             imagepng($webpImage, $tempPngPath);
             imagedestroy($webpImage);
-            $whatsApp_template = $this->whatsApp_template($invitation->id);
-            return asset('/temp/temp_image.png');
+//            $whatsApp_template = $this->whatsApp_template($invitation->id);
+            $whatsApp_template = 'djhjhsd';
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), asset('/temp/temp_image.png'), $whatsApp_template);
             File::delete($tempPngPath);
             DB::commit();

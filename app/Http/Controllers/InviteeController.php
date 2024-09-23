@@ -32,12 +32,12 @@ class InviteeController extends Controller
     public function sendWhatsAppMessages(array $invitees, $image, $whatsApp_template)
     {
         $receivers = [];
-
+        $imageJpeg = $image->encode('jpg', 75);
         foreach ($invitees as $invitee) {
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
-                    ['name' => 'product_image_url', 'value' => $image],
+                    ['name' => 'product_image_url', 'value' => $imageJpeg],
                     ['name' => 'nice_sentence', 'value' => $whatsApp_template],
                     ['name' => 'name', 'value' => $invitee['name']],
                     ['name' => '1', 'value' => $invitee['link']],
@@ -254,8 +254,8 @@ class InviteeController extends Controller
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->save();
-//            $image = $invitation->Template ? $invitation->Template->image : null;
-            $image = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
+            $image = $invitation->Template ? $invitation->Template->image : null;
+//            $image = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($image), $whatsApp_template);
 

@@ -16,38 +16,28 @@ class WhatsAppDeleteInvitationService
         $this->apiToken = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
     }
 
-    public function sendWhatsAppMessage($to, $otp)
+    public function sendWhatsAppMessages(array $invitees, $event_name)
     {
-        try {
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer '.$this->apiToken,
-                'Content-Type' => 'application/json',
-            ])->post($this->apiUrl.$to, [
-                'template_name' => 'ar7ebo_otp_ar_bz',
-                'broadcast_name' => 'ar7ebo_otp_ar_bz',
-                'parameters' => [
-                    [
-                        'name' => '1',
-                        'value' => $otp,
-                    ],
-                ],
-            ]);
+        $receivers = [];
 
-            if ($response->successful()) {
-                return $response->json();
-            } else {
-                return [
-                    'status' => 'error',
-                    'message' => 'Failed to send message',
-                    'details' => $response->json(),
-                ];
-            }
-        } catch (\Exception $e) {
-            return [
-                'status' => 'error',
-                'message' => 'An error occurred while sending the message',
-                'details' => $e->getMessage(),
+        foreach ($invitees as $invitee) {
+            $receivers[] = [
+                'whatsappNumber' => $invitee['phone'],
+                'customParams' => [
+                    ['name' => 'event_name', 'value' => $event_name],
+                ],
             ];
         }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer '.$this->apiToken,
+            'Content-Type' => 'application/json',
+        ])->post($this->apiUrl, [
+            'template_name' => 'cancel_invitation',
+            'broadcast_name' => 'cancel_invitation',
+            'receivers' => $receivers,
+        ]);
+
+        return $response->json();
     }
 }

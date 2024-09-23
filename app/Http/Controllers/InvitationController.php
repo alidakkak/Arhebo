@@ -14,7 +14,9 @@ use App\Models\Invitee;
 use App\Models\Message;
 use App\Models\PackageDetail;
 use App\Models\User;
+use App\Services\WhatsAppDeleteInvitationService;
 use App\Statuses\InvitationTypes;
+use App\Statuses\InviteeTypes;
 use App\Statuses\MessageTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -170,9 +172,17 @@ class InvitationController extends Controller
                 $invitation->update([
                     'status' => InvitationTypes::deleted,
                 ]);
+                $invitees = $invitation->invitee()
+                    ->where(function ($query) {
+                        $query->where('status', InviteeTypes::confirmed)
+                            ->orWhere('status', InviteeTypes::waiting);
+                    })
+                    ->get();
+                $whatsAppDeleteInvitationService = new WhatsAppDeleteInvitationService();
+                $whatsAppResponse = $whatsAppDeleteInvitationService->sendWhatsAppMessages($invitees->toArray(), $invitation->event_name);
                 DB::commit();
 
-                return response()->json(['message' => 'Deleted Successfully']);
+                return response()->json(['message' => 'Deleted Successfully', 'whatsapp_response' => $whatsAppResponse]);
             } catch (\Exception $e) {
                 DB::rollBack();
 

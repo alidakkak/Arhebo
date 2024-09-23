@@ -203,6 +203,32 @@ class InviteeController extends Controller
         }
     }
 
+    private function processInvitationImage($imagePath)
+    {
+        $fullImagePath = public_path($imagePath);
+        $tempPngPath = public_path('/temp/temp_image.png');
+
+        if (file_exists($fullImagePath)) {
+            $imageExtension = strtolower(pathinfo($fullImagePath, PATHINFO_EXTENSION));
+
+            if ($imageExtension === 'png') {
+                return $fullImagePath;
+            } elseif ($imageExtension === 'webp') {
+                // If it's a WEBP image, convert it to PNG
+                $webpImage = imagecreatefromwebp($fullImagePath);
+                imagepng($webpImage, $tempPngPath);
+                imagedestroy($webpImage);
+
+                return $tempPngPath;
+            } else {
+                throw new \Exception('Unsupported image format.');
+            }
+        }
+
+        throw new \Exception('Image file not found.');
+    }
+
+
     /// Api For Flutter
     public function addInvitees(StoreInviteeRequest $request)
     {
@@ -255,23 +281,18 @@ class InviteeController extends Controller
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
             $invitation->save();
-            $imagePath = $invitation->Template ? $invitation->Template->image : null;
+//            $imagePath = $invitation->Template ? $invitation->Template->image : null;
 
-            $fullImagePath = public_path($imagePath);
-
-            // Create an image from the WEBP file
-            $webpImage = imagecreatefromwebp($fullImagePath);
-            $tempPngPath = public_path('/temp/temp_image.png');
-            imagepng($webpImage, $tempPngPath);
-            imagedestroy($webpImage);
-//            $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $whatsApp_template = 'djhjhsd';
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), asset('/temp/temp_image.png'), $whatsApp_template);
+            // Process the image (convert from WEBP to PNG)
+            $tempPngPath = $this->processInvitationImage($invitation->Template->image ?? null);
+            $whatsApp_template = $this->whatsApp_template($invitation->id);
+            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
             File::delete($tempPngPath);
             DB::commit();
 
             return response()->json([
                 'message' => 'Invitees Added and Messages Sent Successfully',
+                'whatsapp_response' => $whatsAppResponse
             ]);
         } catch (\Exception $e) {
             DB::rollBack();

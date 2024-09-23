@@ -43,6 +43,7 @@ class TrendingResource extends JsonResource
             'emoji' => $this->emoji,
             'category_id' => $this->category_id,
             'description' => $this->description,
+            'template_code' => $this->template_code,
             'description_ar' => $this->description_ar,
             'image' => $this->image,
             'is_favorite' => $isFavorite,

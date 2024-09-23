@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use Intervention\Image\Image;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Image;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InviteeController extends Controller

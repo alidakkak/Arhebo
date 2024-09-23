@@ -33,7 +33,7 @@ Send a reminder before the occasion.',
 كود دخول خاص لكل مدعو.
 خاصية مسح أكواد الدخول من التطبيق.
 إرسال تذكير قبل المناسبة بــ يوم.',
-            'color' => '#CD7F32',
+            'color' => '#91500f',
             'discount' => '10',
         ]);
 
@@ -62,7 +62,7 @@ Follow up on the invitees on the waiting list
 (%25 من إجمالي الدعوات).
 متابعة المدعوين على قائمة الإنتظار
 (واتس اب).',
-            'color' => '#C0C0C0',
+            'color' => '#616060',
             'discount' => '25',
         ]);
 
@@ -97,7 +97,7 @@ Review the file of names of invitees before sending.',
 (واتس اب و هاتفي).
 الرد على استفسارات المدعوين.
 مراجعة ملف أسماء المدعوين قبل الأرسال.',
-            'color' => '#FFD700',
+            'color' => '#b39704',
             'discount' => '50',
         ]);
 

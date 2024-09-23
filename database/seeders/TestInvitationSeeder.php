@@ -16,7 +16,7 @@ class TestInvitationSeeder extends Seeder
         Invitation::create([
             'category_id' => '1',
             'package_id' => '1',
-            'template_id' => '1',
+            'image' => '/test_invitation/test.png"',
             'package_detail_id' => '1',
             'user_id' => '1',
             'hijri_date' => '1446-08-01',

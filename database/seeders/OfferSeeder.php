@@ -13,7 +13,19 @@ class OfferSeeder extends Seeder
     public function run(): void
     {
         Offer::create([
-            'image' => '/offers_image/black-friday-offer.png',
+            'image' => '/offers_image/card 1 .png',
+        ]);
+
+        Offer::create([
+            'image' => '/offers_image/card 2.png',
+        ]);
+
+        Offer::create([
+            'image' => '/offers_image/card 3.png',
+        ]);
+
+        Offer::create([
+            'image' => '/offers_image/card.png',
         ]);
     }
 }

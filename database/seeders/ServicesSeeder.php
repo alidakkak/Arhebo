@@ -13,18 +13,11 @@ class ServicesSeeder extends Seeder
     public function run(): void
     {
         Services::create([
-            'title' => 'Headline 1',
-            'title_ar' => 'العنوان 1',
-            'body' => 'Lorem ipsum dolor sit amet
-consectetur. Nunc faucibustris
-tique amet amet pellentesque
-pellentesque. Duis risus et
-etiam gravida sagittis enim.
-Tincidunt vel sit eget tincidunt
-sed. Nullam ',
-            'body_ar' => 'لوريم إيبسوم هو نص العنصر النائب عادة
-       المستخدمة في الرسم.',
-            'image' => '/services_image/17-dedicated-service.png',
+            'title' => '“Beautiful Invitations for Every Occasion”',
+            'title_ar' => '“دعوات مميزة لكل مناسباتك”',
+            'body' => 'Our design team is here to create stunning invitations for all your special moments. We work quickly and with care, ensuring your invitations are elegant and unique, adding a personal touch to your important day ',
+            'body_ar' => 'فريقنا لتصميم الدعوات جاهز ليقدّم لك أجمل التصاميم لمختلف مناسباتك. نعمل بسرعة واهتمام لنضمن أن دعواتك تكون أنيقة وفريدة، لتُضفي طابعاً خاصاً على يومك المميز.',
+            'image' => '/services_image/serviceone.webp"',
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\AdditionalPackage;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,5 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(InputSeeder::class);
         $this->call(TemplateJawadSeeder::class);
         $this->call(TestInvitationSeeder::class);
+        $this->call(NicknameSeeder::class);
+        $this->call(AdditionalPackage::class);
     }
 }

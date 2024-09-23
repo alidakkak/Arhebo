@@ -6,14 +6,14 @@ use Illuminate\Support\Facades\Http;
 
 class WhatsAppDeleteInvitationService
 {
-    protected $apiUrl;
+    protected $url;
 
-    protected $apiToken;
+    protected $token;
 
     public function __construct()
     {
-        $this->apiUrl = env('WHATSAPP_API_URL');
-        $this->apiToken = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
+        $this->url = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
+        $this->token = env('WHATSAPP_API_TOKEN');
     }
 
     public function sendWhatsAppMessages(array $invitees, $event_name)
@@ -21,7 +21,6 @@ class WhatsAppDeleteInvitationService
         $receivers = [];
 
         foreach ($invitees as $invitee) {
-            dd($invitee['phone']);
             $receivers[] = [
                 'whatsappNumber' => $invitee['phone'],
                 'customParams' => [
@@ -31,9 +30,9 @@ class WhatsAppDeleteInvitationService
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->apiToken,
+            'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
-        ])->post($this->apiUrl, [
+        ])->post($this->url, [
             'template_name' => 'cancel_invitation',
             'broadcast_name' => 'cancel_invitation',
             'receivers' => $receivers,

@@ -32,6 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TemplateJawadSeeder::class);
         $this->call(TestInvitationSeeder::class);
         $this->call(NicknameSeeder::class);
-        $this->call(AdditionalPackage::class);
+        $this->call(AdditionalPackageSeeder::class);
     }
 }

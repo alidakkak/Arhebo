@@ -20,7 +20,12 @@ class ProhibitedThingSeeder extends Seeder
 
         ProhibitedThing::create([
             'name' => 'Mobile photography is not allowed',
-            'name_ar' => 'ممنوع تصوير',
+            'name_ar' => 'ممنوع التصوير',
+        ]);
+
+        ProhibitedThing::create([
+            'name' => 'The invitation is personal.',
+            'name_ar' => 'الدعوة شخصية',
         ]);
     }
 }

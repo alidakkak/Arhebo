@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Feature;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +13,7 @@ class FeatursSeeder extends Seeder
      */
     public function run(): void
     {
-        $feature =  Feature::create([
+        $feature = Feature::create([
             'name' => 'One-day entry organizer',
             'name_ar' => 'موظف لتنظيم الدخول ليوم واحد',
             'price' => '100',

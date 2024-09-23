@@ -32,5 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TestInvitationSeeder::class);
         $this->call(NicknameSeeder::class);
         $this->call(AdditionalPackageSeeder::class);
+        $this->call(FeatursSeeder::class);
     }
 }

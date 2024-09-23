@@ -286,7 +286,7 @@ class InviteeController extends Controller
             // Process the image (convert from WEBP to PNG)
             $tempPngPath = $this->processInvitationImage($invitation->Template->image ?? null);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url('/temp/temp_image.png'), $whatsApp_template);
+            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url('/templates_image/Wedding Men/Wedding Men - Gold leaf - 1.png'), $whatsApp_template);
 //            File::delete($tempPngPath);
             DB::commit();
 

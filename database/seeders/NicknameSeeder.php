@@ -13,12 +13,12 @@ class NicknameSeeder extends Seeder
     public function run(): void
     {
         Nickname::create([
-            'nickname' => 'Honorable Male',
+            'nickname' => 'Honorable',
             'nickname_ar' => 'المكرم',
         ]);
 
         Nickname::create([
-            'nickname' => 'Honorable Female',
+            'nickname' => 'Honorable',
             'nickname_ar' => 'المكرمة',
         ]);
 

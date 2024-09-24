@@ -378,7 +378,7 @@ class InviteeController extends Controller
             if ($imagePath == null || $message == null) {
                 DB::rollBack();
 
-                return response()->json(['message' => 'You must add a picture and a message']);
+                return response()->json(['message' => 'You must add a picture and a message'],422);
             }
 
             $tempPngPath = $this->processInvitationImage($imagePath);

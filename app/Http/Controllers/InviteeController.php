@@ -381,15 +381,9 @@ class InviteeController extends Controller
                 return response()->json(['message' => 'You must add a picture and a message']);
             }
 
-            $fullImagePath = public_path($imagePath);
-
-            // Create an image from the WEBP file
-            $webpImage = imagecreatefromwebp($fullImagePath);
-            $tempPngPath = public_path('/temp/temp_image.png');
-            imagepng($webpImage, $tempPngPath);
-            imagedestroy($webpImage);
+            $tempPngPath = $this->processInvitationImage($imagePath);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), asset('/temp/temp_image.png'), $whatsApp_template);
+            $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($imagePath), $whatsApp_template);
             File::delete($tempPngPath);
             DB::commit();
 

@@ -10,6 +10,8 @@ use App\Models\Invitee;
 use App\Models\QR;
 use App\Models\Reception;
 use App\Models\User;
+use App\Services\WhatsAppExtraInviterServices;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,40 +48,20 @@ class ReceptionController extends Controller
         $user = auth()->user();
         $reception = Reception::where('id', $Id)->where('user_id', $user->id)->first();
         if (! $reception) {
-            return response()->json(['message' => 'Reception event not found or access denied.'], 404);
+            return response()->json(['message' => 'Reception event not found'], 404);
         }
 
         return ReceptionEventResource::make($reception);
     }
 
-    /* public function store(StoreReceptionRequest $request)
-     {
-         $receptionData = $request->input('receptions', []);
-         $receptions = [];
-
-         foreach ($receptionData as $reception) {
-             $isExist = Reception::where('user_id', $reception['user_id'])
-                 ->where('invitation_id', $reception['invitation_id'])
-                 ->where('type', $reception['type'])
-                 ->exists();
-             if ($isExist) {
-                 continue;
-             }
-             $newReception = Reception::create([
-                 'user_id' => $reception['user_id'],
-                 'invitation_id' => $reception['invitation_id'],
-                 'type' => $reception['type'],
-             ]);
-             $receptions[] = $newReception;
-         }
-
-         return ReceptionResource::collection($receptions);
-     }*/
-
     public function store(StoreReceptionRequest $request)
     {
+        $invitation = Invitation::find($request->invitation_id);
+
         $user = User::where('phone', $request->phone)->first();
         if (! $user) {
+            $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices();
+            $whatsAppExtraInviterServices->extraInviterServices($request->phone, );
             return Response()->json(['message' => 'رقم المدخل غير موجود في التطبيق '], 422);
         }
         $isExist = Reception::where('user_id', $user->id)
@@ -196,6 +178,10 @@ class ReceptionController extends Controller
         $invitee = Invitee::find($inviteeID);
         $qr = QR::where('invitee_id', $invitee->id)->first();
         $invitation = Invitation::find($invitationID);
+        $expiryDate = Carbon::parse($invitation->miladi_date . $invitation->to)
+            ->addHour()
+            ->setTimezone('UTC')
+            ->format('Y-m-d\TH:i:s\Z');
 
         if (! $invitee || ! $qr) {
             return response()->json(['error' => 'Invitee or QR not found'], 404);
@@ -214,9 +200,6 @@ class ReceptionController extends Controller
             $response = $client->put('https://api.pub2.passkit.io/members/member', [
                 'headers' => [
                     'Authorization' => 'Bearer '.$Token,
-
-                    'Authorization' => 'Bearer '.$Token,
-
                     'Content-Type' => 'application/json',
                 ],
                 'json' => [
@@ -225,16 +208,13 @@ class ReceptionController extends Controller
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',
+                    'expiryDate' => $expiryDate,
                     'person' => [
                         'forename' => (string) $qr->number_of_people_without_decrease,
                         'surname' => (string) $qr->number_of_people,
                         'emailAddress' => 'alidakak21@gmail.com',
-
                         'displayName' => $invitation->event_name,
                         'suffix' => $qrCodeData,
-
-                        'displayName' => $qrCodeData,
-                        'suffix' => $invitation->event_name,
                         'salutation' => $invitee->name,
                     ],
                 ],

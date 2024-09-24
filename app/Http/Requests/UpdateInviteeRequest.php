@@ -22,7 +22,7 @@ class UpdateInviteeRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (request()->route()->uri() === 'api/updateInvitee') {
+        if (request()->route()->uri() === 'api/updateInvitee' || request()->route()->uri() === 'api/updateInviteeSupport') {
             return [
                 'number_of_people' => 'required',
                 'invitee_id' => ['required', Rule::exists('invitees', 'id')],

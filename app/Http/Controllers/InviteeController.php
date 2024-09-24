@@ -393,7 +393,7 @@ class InviteeController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['message' => 'An error occurred while processing your request.'], 500);
+            return response()->json(['message' => 'An error occurred while processing your request.', $e->getMessage()], 500);
         }
     }
 

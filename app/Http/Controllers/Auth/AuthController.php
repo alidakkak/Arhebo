@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserProfileResource;
 use App\Models\DeviceToken;
+use App\Models\Reception;
 use App\Models\User;
 use App\Services\WhatsAppService;
 use Illuminate\Http\Request;
@@ -106,6 +107,14 @@ class AuthController extends Controller
             ['user_id' => $user->id, 'device_token' => $request->device_token],
             ['user_id' => $user->id, 'device_token' => $request->device_token]
         );
+        $reception = Reception::where('phone', $request->phone)->first();
+
+        if ($reception) {
+            $reception->update([
+                'user_id' => $user->id,
+                'flag' => false,
+            ]);
+        }
 
         return response()->json([
             'message' => 'Verify Your Email',

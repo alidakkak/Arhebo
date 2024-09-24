@@ -210,23 +210,22 @@ class InviteeController extends Controller
         $relativeImagePath = str_replace($publicDir, '', $imagePath);
 
         // Correct the path to ensure it's relative
-        $fullImagePath = $publicDir . $relativeImagePath;
+        $fullImagePath = $publicDir.$relativeImagePath;
 
         if (file_exists($fullImagePath)) {
             $imageExtension = strtolower(pathinfo($fullImagePath, PATHINFO_EXTENSION));
 
             if ($imageExtension === 'png' || $imageExtension === 'jpg') {
                 return $relativeImagePath;  // Return relative path for PNG
-            }
-            elseif ($imageExtension === 'webp') {
+            } elseif ($imageExtension === 'webp') {
                 // Extract the file name without extension and prepare the PNG path
                 $fileName = pathinfo($relativeImagePath, PATHINFO_FILENAME);
-                $newPngFileName = $fileName . '.png';
-                $tempPngPath = '/temp/' . $newPngFileName;
+                $newPngFileName = $fileName.'.png';
+                $tempPngPath = '/temp/'.$newPngFileName;
 
                 // If it's a WEBP image, convert it to PNG
                 $webpImage = imagecreatefromwebp($fullImagePath);
-                $tempFullPngPath = $publicDir . $tempPngPath;
+                $tempFullPngPath = $publicDir.$tempPngPath;
                 imagepng($webpImage, $tempFullPngPath);  // Save as PNG
                 imagedestroy($webpImage);
 
@@ -238,9 +237,6 @@ class InviteeController extends Controller
 
         throw new \Exception('Image file not found.');
     }
-
-
-
 
     /// Api For Flutter
     public function addInvitees(StoreInviteeRequest $request)
@@ -295,7 +291,7 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $imagePath = $invitation->Template ? $invitation->Template->image : null;
-//            $imagePath = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
+            //            $imagePath = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
 
             // Process the image (convert from WEBP to PNG)
             $tempPngPath = $this->processInvitationImage($imagePath);
@@ -306,7 +302,7 @@ class InviteeController extends Controller
 
             return response()->json([
                 'message' => 'Invitees Added and Messages Sent Successfully',
-                'whatsapp_response' => $whatsAppResponse
+                'whatsapp_response' => $whatsAppResponse,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -379,7 +375,7 @@ class InviteeController extends Controller
             if ($imagePath == null || $message == null) {
                 DB::rollBack();
 
-                return response()->json(['message' => 'You must add a picture and a message'],422);
+                return response()->json(['message' => 'You must add a picture and a message'], 422);
             }
 
             $tempPngPath = $this->processInvitationImage($imagePath);

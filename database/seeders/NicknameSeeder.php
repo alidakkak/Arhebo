@@ -32,10 +32,10 @@ class NicknameSeeder extends Seeder
             'nickname_ar' => 'الأنسة',
         ]);
 
-//        Nickname::create([
-//            'nickname' => 'Engineer',
-//            'nickname_ar' => 'المهندس',
-//        ]);
+        //        Nickname::create([
+        //            'nickname' => 'Engineer',
+        //            'nickname_ar' => 'المهندس',
+        //        ]);
 
     }
 }

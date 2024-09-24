@@ -56,29 +56,50 @@ class ReceptionController extends Controller
 
     public function store(StoreReceptionRequest $request)
     {
-        $invitation = Invitation::find($request->invitation_id);
-        $event_name = $invitation->event_name;
-        $user = User::where('phone', $request->phone)->first();
-        if (! $user) {
-            $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices();
+        DB::beginTransaction();
+        try {
+            $invitation = Invitation::find($request->invitation_id);
+            $event_name = $invitation->event_name;
+            $user = User::where('phone', $request->phone)->first();
+
+            $isExist = Reception::where('user_id', optional($user)->id)
+                ->where('invitation_id', $request->invitation_id)
+                ->where('type', $request->type)
+                ->exists();
+
+            if ($isExist) {
+                return Response()->json(['message' => 'المدعو موجود بالفعل'], 422);
+            }
+
+            if (! $user) {
+                $reception = Reception::create([
+                    'phone' => $request->phone,
+                    'invitation_id' => $request->invitation_id,
+                    'type' => $request->type,
+                    'flag' => true, //flag for non-registered user
+                ]);
+            } else {
+                $reception = Reception::create([
+                    'user_id' => $user->id,
+                    'invitation_id' => $request->invitation_id,
+                    'type' => $request->type,
+                ]);
+            }
+
+            $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices;
             $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
-            return Response()->json(['message' => 'رقم المدخل غير موجود في التطبيق '], 422);
-        }
-        $isExist = Reception::where('user_id', $user->id)
-            ->where('invitation_id', $request->invitation_id)
-            ->where('type', $request->type)
-            ->exists();
 
-        if ($isExist) {
-            return Response()->json(['message' => 'User Already Exist'], 422);
-        }
-        $reception = Reception::create([
-            'user_id' => $user->id,
-            'invitation_id' => $request->invitation_id,
-            'type' => $request->type,
-        ]);
+            DB::commit();
 
-        return ReceptionResource::make($reception);
+            return Response()->json([
+                'message' => 'تم تسجيلك بنجاح! إذا لم تكن مسجلاً في التطبيق، يرجى تحميل التطبيق باستخدام نفس الرقم الذي تلقيت منه الرسالة.',
+                'data' => ReceptionResource::make($reception),
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return Response()->json(['message' => 'حدث خطأ أثناء المعالجة. يرجى المحاولة مرة أخرى.'], 500);
+        }
     }
 
     public function search(Request $request)
@@ -178,7 +199,7 @@ class ReceptionController extends Controller
         $invitee = Invitee::find($inviteeID);
         $qr = QR::where('invitee_id', $invitee->id)->first();
         $invitation = Invitation::find($invitationID);
-        $expiryDate = Carbon::parse($invitation->miladi_date . $invitation->to)
+        $expiryDate = Carbon::parse($invitation->miladi_date.$invitation->to)
             ->addHour()
             ->setTimezone('UTC')
             ->format('Y-m-d\TH:i:s\Z');

@@ -178,7 +178,7 @@ class InvitationController extends Controller
                             ->orWhere('status', InviteeTypes::waiting);
                     })
                     ->get();
-                $whatsAppDeleteInvitationService = new WhatsAppDeleteInvitationService();
+                $whatsAppDeleteInvitationService = new WhatsAppDeleteInvitationService;
                 $whatsAppResponse = $whatsAppDeleteInvitationService->sendWhatsAppMessages($invitees->toArray(), $invitation->event_name);
                 DB::commit();
 

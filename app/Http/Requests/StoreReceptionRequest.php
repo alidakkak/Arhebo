@@ -26,7 +26,7 @@ class StoreReceptionRequest extends FormRequest
             //            'receptions.*.user_id' => ['required', Rule::exists('users', 'id')],
             'invitation_id' => ['required', Rule::exists('invitations', 'id')],
             'type' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|max:20|unique:receptions',
         ];
     }
 }

@@ -288,11 +288,11 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $imagePath = $invitation->Template ? $invitation->Template->image : null;
-            return $imagePath;
 //            $imagePath = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
 
             // Process the image (convert from WEBP to PNG)
             $tempPngPath = $this->processInvitationImage($imagePath);
+            return $tempPngPath;
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
             File::delete($tempPngPath);

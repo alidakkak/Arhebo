@@ -215,9 +215,10 @@ class InviteeController extends Controller
         if (file_exists($fullImagePath)) {
             $imageExtension = strtolower(pathinfo($fullImagePath, PATHINFO_EXTENSION));
 
-            if ($imageExtension === 'png') {
+            if ($imageExtension === 'png' || $imageExtension === 'jpg') {
                 return $relativeImagePath;  // Return relative path for PNG
-            } elseif ($imageExtension === 'webp') {
+            }
+            elseif ($imageExtension === 'webp') {
                 // Extract the file name without extension and prepare the PNG path
                 $fileName = pathinfo($relativeImagePath, PATHINFO_FILENAME);
                 $newPngFileName = $fileName . '.png';

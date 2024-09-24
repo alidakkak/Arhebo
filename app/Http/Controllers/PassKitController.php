@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,8 @@ class PassKitController extends Controller
         $invitee = Invitee::find($request->invitee_id);
         $qr = QR::where('invitee_id', $invitee?->id)->first();
         $invitation = Invitation::find($request->invitation_id);
+        $expiryDate = Carbon::parse($invitation->hijri_date . $invitation->to)->addHour()->toDateTimeString();
+        return $expiryDate;
 
         if ($invitee->externalId) {
             return response()->json(['id' => $invitee->externalId]);
@@ -46,6 +49,7 @@ class PassKitController extends Controller
                     'groupingIdentifier' => 'string',
                     'tierId' => 'purple_power',
                     'programId' => '2F7XGtvJIwWOERvK5S5NCA',
+                    'expiryDate' => $expiryDate,
                     'person' => [
                         'forename' => (string) $qr->number_of_people_without_decrease,
                         'surname' => (string) $qr->number_of_people,

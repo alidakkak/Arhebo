@@ -27,7 +27,8 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('region')->nullable();
             $table->text('event_name');
-            $table->text('location_link');
+            $table->text('location_link')->nullable();
+            $table->text('location_name')->nullable();
             $table->string('inviter');
             $table->text('invitation_text')->nullable();
             $table->string('status')->default(InvitationTypes::active);

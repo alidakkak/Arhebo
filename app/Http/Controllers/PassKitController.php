@@ -18,7 +18,6 @@ class PassKitController extends Controller
         $qr = QR::where('invitee_id', $invitee?->id)->first();
         $invitation = Invitation::find($request->invitation_id);
         $expiryDate = Carbon::parse($invitation->miladi_date . $invitation->to)->addHour()->toDateTimeString();
-        return $expiryDate;
 
         if ($invitee->externalId) {
             return response()->json(['id' => $invitee->externalId]);

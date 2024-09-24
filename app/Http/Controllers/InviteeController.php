@@ -205,12 +205,12 @@ class InviteeController extends Controller
 
     private function processInvitationImage($imagePath)
     {
+        // Strip the /var/www/html/dev1/public/ part from the image path
         $publicDir = public_path();
         $relativeImagePath = str_replace($publicDir, '', $imagePath);
 
         // Correct the path to ensure it's relative
         $fullImagePath = $publicDir . $relativeImagePath;
-        $tempPngPath = '/temp/temp_image.png';  // Generate relative temp path
 
         if (file_exists($fullImagePath)) {
             $imageExtension = strtolower(pathinfo($fullImagePath, PATHINFO_EXTENSION));
@@ -218,13 +218,18 @@ class InviteeController extends Controller
             if ($imageExtension === 'png') {
                 return $relativeImagePath;  // Return relative path for PNG
             } elseif ($imageExtension === 'webp') {
+                // Extract the file name without extension and prepare the PNG path
+                $fileName = pathinfo($relativeImagePath, PATHINFO_FILENAME);
+                $newPngFileName = $fileName . '.png';
+                $tempPngPath = '/temp/' . $newPngFileName;
+
                 // If it's a WEBP image, convert it to PNG
                 $webpImage = imagecreatefromwebp($fullImagePath);
                 $tempFullPngPath = $publicDir . $tempPngPath;
                 imagepng($webpImage, $tempFullPngPath);  // Save as PNG
                 imagedestroy($webpImage);
 
-                return $tempPngPath;  // Return the relative temp path for PNG
+                return $tempPngPath;  // Return the relative temp path with the original name as PNG
             } else {
                 throw new \Exception('Unsupported image format.');
             }
@@ -232,6 +237,7 @@ class InviteeController extends Controller
 
         throw new \Exception('Image file not found.');
     }
+
 
 
 
@@ -292,7 +298,6 @@ class InviteeController extends Controller
 
             // Process the image (convert from WEBP to PNG)
             $tempPngPath = $this->processInvitationImage($imagePath);
-            return $tempPngPath;
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
             File::delete($tempPngPath);

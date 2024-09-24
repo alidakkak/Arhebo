@@ -28,7 +28,7 @@ class TestInvitationController extends Controller
             'parameters' => [
                 [
                     'name' => 'product_image_url',
-                    'value' => 'https://api.dev1.gomaplus.tech/test_invitation/test.png',
+                    'value' => 'https://api.dev1.gomaplus.tech/test_invitation/test1.jpg',
                 ],
                 [
                     'name' => 'name',

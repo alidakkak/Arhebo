@@ -17,18 +17,18 @@ class WhatsAppExtraInviterServices
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function extraInviterServices()
+    public function extraInviterServices($phone, $event_name)
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
-        ])->post($this->url.$request->input('phone'), [
+        ])->post($this->url.$phone, [
             'template_name' => 'extra_inviter_intation_request',
             'broadcast_name' => 'extra_inviter_intation_request',
             'parameters' => [
                 [
                     'name' => 'event_name',
-                    'value' => 'https://api.dev1.gomaplus.tech/test_invitation/test1.jpg',
+                    'value' => $event_name,
                 ],
             ],
         ]);

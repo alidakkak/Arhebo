@@ -21,6 +21,7 @@ class PassKitController extends Controller
             ->addHour()
             ->setTimezone('UTC')
             ->format('Y-m-d\TH:i:s\Z');
+        return $expiryDate;
 
         if ($invitee->externalId) {
             return response()->json(['id' => $invitee->externalId]);

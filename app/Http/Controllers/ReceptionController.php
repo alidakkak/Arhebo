@@ -57,11 +57,11 @@ class ReceptionController extends Controller
     public function store(StoreReceptionRequest $request)
     {
         $invitation = Invitation::find($request->invitation_id);
-
+        $event_name = $invitation->event_name;
         $user = User::where('phone', $request->phone)->first();
         if (! $user) {
             $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices();
-            $whatsAppExtraInviterServices->extraInviterServices($request->phone, );
+            $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
             return Response()->json(['message' => 'رقم المدخل غير موجود في التطبيق '], 422);
         }
         $isExist = Reception::where('user_id', $user->id)

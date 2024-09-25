@@ -149,11 +149,12 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::get('additionalPackage', [AdditionalPackageController::class, 'index']);
     Route::post('additionalInvitee', [AdditionalPackageController::class, 'additionalInvitee']);
 
+    //// Test Invitation
+    Route::post('testInvitation', [TestInvitationController::class, 'testInvitation']);
+
 });
 
 ///// Terms And Conditions
 Route::get('terms', [TermController::class, 'index']);
-//// Test Invitation
-Route::post('testInvitation', [TestInvitationController::class, 'testInvitation']);
 ////  Nickname
 Route::get('nicknames', [NicknameController::class, 'index']);

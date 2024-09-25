@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TestInvitation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -19,6 +21,14 @@ class TestInvitationController extends Controller
 
     public function testInvitation(Request $request)
     {
+        $user = auth()->user();
+        $lastInvitation = TestInvitation::where('user_id', $user->id)->orderBy('created_at', 'desc')->first();
+
+        if ($lastInvitation && $lastInvitation->created_at->gt(Carbon::now()->subDay())) {
+            return response()->json([
+                'message' => 'لا يمكنك إرسال دعوة جديدة. يرجى المحاولة بعد 24 ساعة.',
+            ], 422);
+        }
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
@@ -40,7 +50,13 @@ class TestInvitationController extends Controller
                 ],
             ],
         ]);
+        $TestInvitation = TestInvitation::create([
+            'user_id' => $user->id,
+        ]);
 
-        return $response->json();
+        return [
+            $response->json(),
+            'created_at' => $TestInvitation->created_at->format('Y-m-d H:i:s'),
+        ];
     }
 }

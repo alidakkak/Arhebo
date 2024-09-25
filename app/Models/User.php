@@ -78,6 +78,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(DeviceToken::class);
     }
 
+    public function testInvitation()
+    {
+        return $this->hasMany(TestInvitation::class);
+    }
+
     public function setImageAttribute($image)
     {
         $newImageName = uniqid().'_'.'user_image'.'.'.$image->extension();

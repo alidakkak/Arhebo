@@ -229,7 +229,7 @@ class InviteeController extends Controller
                 imagepng($webpImage, $tempFullPngPath);  // Save as PNG
                 imagedestroy($webpImage);
 
-                return $tempPngPath;  // Return the relative temp path with the original name as PNG
+                return $tempPngPath;
             } else {
                 throw new \Exception('Unsupported image format.');
             }
@@ -291,7 +291,6 @@ class InviteeController extends Controller
             }
             $invitation->save();
             $imagePath = $invitation->Template ? $invitation->Template->image : null;
-            //            $imagePath = 'https://api.dev1.gomaplus.tech/test_invitation/test.png';
 
             // Process the image (convert from WEBP to PNG)
             $tempPngPath = $this->processInvitationImage($imagePath);

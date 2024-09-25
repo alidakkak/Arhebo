@@ -11,6 +11,7 @@ use App\Models\QR;
 use App\Models\Reception;
 use App\Models\User;
 use App\Services\WhatsAppExtraInviterServices;
+use App\Services\WhatsAppReceptionServices;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -61,6 +62,16 @@ class ReceptionController extends Controller
             $invitation = Invitation::find($request->invitation_id);
             $event_name = $invitation->event_name;
             $user = User::where('phone', $request->phone)->first();
+            $number_of_compensation = floor($invitation->number_of_compensation);
+            $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
+
+            if (auth()->user()->phone === $request->phone) {
+                return response()->json(['message' => 'لا يمكن اضافة نفسك داعي اضافي'], 422);
+            }
+
+            if ($remaining < $request->number_can_invite) {
+                return response()->json(['message' => 'العدد المضاف اكبر من المتبقي'], 422);
+            }
 
             $isExist = Reception::where('user_id', optional($user)->id)
                 ->where('invitation_id', $request->invitation_id)
@@ -76,23 +87,29 @@ class ReceptionController extends Controller
                     'phone' => $request->phone,
                     'invitation_id' => $request->invitation_id,
                     'type' => $request->type,
-                    'flag' => true, //flag for non-registered user
+                    'number_can_invite' => $request->number_can_invite,
                 ]);
             } else {
                 $reception = Reception::create([
                     'user_id' => $user->id,
                     'invitation_id' => $request->invitation_id,
                     'type' => $request->type,
+                    'number_can_invite' => $request->number_can_invite,
                 ]);
             }
 
-            $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices;
-            $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
+            if ($request->type === '1') {
+                $whatsAppReceptionServices = new WhatsAppReceptionServices;
+                $whatsAppReceptionServices->receptionServices($request->phone, $event_name);
+            } else {
+                $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices;
+                $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
+            }
 
             DB::commit();
 
             return Response()->json([
-                'message' => 'تم تسجيلك بنجاح! إذا لم تكن مسجلاً في التطبيق، يرجى تحميل التطبيق باستخدام نفس الرقم الذي تلقيت منه الرسالة.',
+                'message' => 'تم تسجيلك بنجاح! إذا لم تكن مسجلاً في التطبيق، يرجى تحميل التطبيق والتسجيل به باستخدام نفس الرقم الذي تلقيت منه الرسالة.',
                 'data' => ReceptionResource::make($reception),
             ]);
         } catch (\Exception $e) {

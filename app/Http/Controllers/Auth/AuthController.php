@@ -112,7 +112,6 @@ class AuthController extends Controller
         if ($reception) {
             $reception->update([
                 'user_id' => $user->id,
-                'flag' => false,
             ]);
         }
 

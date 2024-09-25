@@ -16,6 +16,17 @@ class StoreReceptionRequest extends FormRequest
     }
 
     /**
+     * Get custom messages for validation errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'number_can_invite.required_if' => 'The number of invites is required when type is 2.',
+            'type.in' => 'The selected type is invalid. It must be either 1 or 2.',
+        ];
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -23,10 +34,20 @@ class StoreReceptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //            'receptions.*.user_id' => ['required', Rule::exists('users', 'id')],
             'invitation_id' => ['required', Rule::exists('invitations', 'id')],
             'type' => 'required',
-            'phone' => 'required|max:20|unique:receptions',
+            'number_can_invite' => [
+                'required_if:type,2',
+                'integer',
+                'min:1',
+            ],
+            'phone' => [
+                'required',
+                'max:20',
+                Rule::unique('receptions')->where(function ($query) {
+                    return $query->where('type', $this->type);
+                }),
+            ],
         ];
     }
 }

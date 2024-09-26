@@ -83,7 +83,7 @@ class ReceptionController extends Controller
                 return response()->json(['message' => 'العدد المضاف اكبر من المتبقي'], 422);
             }
 
-            if ($request->type === 2) {
+            if ($request->type === '2') {
                 for ($i = 0; $i < $request->number_can_invite; $i++) {
                     if ($invitation->number_of_invitees > 0) {
                         $invitation->number_of_invitees -= 1;
@@ -113,7 +113,7 @@ class ReceptionController extends Controller
                 ]);
             }
 
-            if ($request->type === 1) {
+            if ($request->type === '1') {
                 $whatsAppReceptionServices = new WhatsAppReceptionServices;
                 $whatsAppReceptionServices->receptionServices($request->phone, $event_name);
             } else {

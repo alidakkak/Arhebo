@@ -43,7 +43,7 @@ class InvitationResource extends JsonResource
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
         $isAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->isNotEmpty();
-        $remainingForAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->first()->number_can_invite;
+        $remainingForAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->first()->number_can_invite ?? 0;
 
         return [
             'id' => $this->id,

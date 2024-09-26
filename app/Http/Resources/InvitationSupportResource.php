@@ -18,7 +18,10 @@ class InvitationSupportResource extends JsonResource
             'id' => $this->id,
             'clint' => $this->user->name,
             'event_name' => $this->event_name,
-            'package' => $this->package->name,
+            'package' => [
+                'en' => $this->package->name,
+                'ar' => $this->package->name_ar
+            ],
             'number' => $this->packageDetail->number_of_invitees,
             'qrcode' => $this->is_with_qr,
             'status' => $this->status,

@@ -74,6 +74,7 @@ class InvitationResource extends JsonResource
             'invitationInput' => InvitationInputResource::collection($this->invitationInput),
             'InvitationFeature' => FeatureResource::collection($this->features),
             'template' => $this->template ? TemplateResource::make($this->template) : $this->imaage,
+            'image' => $this->image,
             'attribute' => AttributeResource::collection($this->package->attribute),
             'price_reminder_per_person' => $invitation->packageDetail->price_reminder_per_person,
             //            'message' => $this->message

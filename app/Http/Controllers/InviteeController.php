@@ -470,7 +470,6 @@ class InviteeController extends Controller
         }
     }
 
-
     //// Api For Support
     public function store(StoreInviteeRequest $request)
     {
@@ -608,7 +607,7 @@ class InviteeController extends Controller
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-//            'message' => 'required|string',
+            //            'message' => 'required|string',
             'invitation_id' => 'required|exists:invitations,id',
         ]);
         $invitation = Invitation::find($request->invitation_id);

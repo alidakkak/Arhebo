@@ -13,6 +13,16 @@ class AttributeSeeder extends Seeder
     public function run(): void
     {
         Attribute::create([
+            'package_id' => '1',
+            'key' => 'withCustom',
+        ]);
+
+        Attribute::create([
+            'package_id' => '2',
+            'key' => 'withCustom',
+        ]);
+
+        Attribute::create([
             'package_id' => '3',
             'key' => 'withCustom',
         ]);

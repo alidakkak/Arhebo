@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreReceptionRequest;
+use App\Http\Requests\UpdateReceptionRequest;
 use App\Http\Resources\ReceptionEventResource;
 use App\Http\Resources\ReceptionResource;
 use App\Models\Invitation;
@@ -74,7 +75,6 @@ class ReceptionController extends Controller
                 ->where('type', $request->type)
                 ->exists();
 
-
             if ($isExist) {
                 return Response()->json(['message' => 'المدعو موجود بالفعل'], 422);
             }
@@ -131,6 +131,55 @@ class ReceptionController extends Controller
             DB::rollback();
 
             return Response()->json(['message' => 'حدث خطأ أثناء المعالجة. يرجى المحاولة مرة أخرى.'], 500);
+        }
+    }
+
+    public function update(UpdateReceptionRequest $request, $reception)
+    {
+        DB::beginTransaction();
+        try {
+            $invitation = Invitation::find($request->invitation_id);
+            $number_of_compensation = floor($invitation->number_of_compensation);
+
+            $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
+
+            if ($remaining < $request->number_can_invite) {
+                return response()->json(['message' => 'العدد المضاف أكبر من المتبقي'], 422);
+            }
+
+            $difference = $request->number_can_invite - $reception->number_can_invite;
+
+            if ($difference > 0) {
+                // إذا تم إضافة مدعوين، يجب الخصم من الدعوة النظامية
+                for ($i = 0; $i < $difference; $i++) {
+                    if ($invitation->number_of_invitees > 0) {
+                        $invitation->number_of_invitees -= 1;
+                    } elseif ($invitation->additional_package > 0) {
+                        $invitation->additional_package -= 1;
+                    } elseif ($invitation->number_of_compensation > 0) {
+                        $invitation->number_of_compensation -= 1;
+                    }
+                }
+            } elseif ($difference < 0) {
+                // إذا تم تقليل العدد، يجب إضافة المستحقات إلى الداعي النظامي
+                $difference = abs($difference);
+                $invitation->number_of_invitees += $difference;
+            }
+
+            $reception->update([
+                'number_can_invite' => $request->number_can_invite,
+                'number_can_invite_without_decrease' => $request->number_can_invite,
+            ]);
+
+            $invitation->save();
+
+            DB::commit();
+
+            return response()->json(['message' => 'تم التعديل بنجاح']);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['message' => 'حدث خطأ أثناء المعالجة. يرجى المحاولة مرة أخرى.'], 500);
         }
     }
 

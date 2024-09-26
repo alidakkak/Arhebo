@@ -22,8 +22,8 @@ class WhatsAppReceptionServices
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url.$phone, [
-            'template_name' => 'extra_inviter_intation_request',
-            'broadcast_name' => 'extra_inviter_intation_request',
+            'template_name' => 'reception_invetation',
+            'broadcast_name' => 'reception_invetation',
             'parameters' => [
                 [
                     'name' => 'event_name',

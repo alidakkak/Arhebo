@@ -21,7 +21,7 @@ class StoreReceptionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'number_can_invite.required_if' => 'The number of invites is required when type is 2.',
+            'number_can_invite.required_if' => 'The number of invites is required when add extra inviter',
             'type.in' => 'The selected type is invalid. It must be either 1 or 2.',
         ];
     }

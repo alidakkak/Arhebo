@@ -9,6 +9,7 @@ use App\Http\Resources\ShowOrdersResource;
 use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
+use App\Models\Reception;
 use App\Statuses\InviteeTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -377,33 +378,57 @@ class InviteeController extends Controller
         DB::beginTransaction();
         try {
             $invitation = Invitation::find($request->invitation_id);
-            $number_of_people = $invitation->invitee()->sum('number_of_people');
+            $reception = Reception::where('invitation_id', $invitation->id)
+                ->where('user_id', auth()->user()->id)
+                ->first();
+
             $inviteesData = $request->input('invitees', []);
             $totalCount = array_reduce($inviteesData, function ($carry, $item) {
                 return $carry + $item['count'];
             }, 0);
-            $number_of_additional_package = $invitation->additional_package;
-            $number_can_invitee_new = $invitation->number_of_invitees;
-            $number_of_compensation = floor($invitation->number_of_compensation);
-            if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
-                DB::rollBack();
 
-                return response()->json([
-                    'message' => 'You have reached the maximum number of invitees allowed, including compensations.',
-                    'number_of_people' => $number_of_people,
-                ]);
-            }
-            $inviteesForWhatsapp = collect();
-            foreach ($inviteesData as $invitee) {
-                for ($i = 0; $i < $invitee['count']; $i++) {
-                    if ($invitation->number_of_invitees > 0) {
-                        $invitation->number_of_invitees -= 1;
-                    } elseif ($invitation->additional_package > 0) {
-                        $invitation->additional_package -= 1;
-                    } elseif ($invitation->number_of_compensation > 0) {
-                        $invitation->number_of_compensation -= 1;
+            if ($reception && $reception->type == '2') {
+                if ($reception->number_can_invite < $totalCount) {
+                    DB::rollBack();
+
+                    return response()->json([
+                        'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي الإضافي.',
+                        'number_can_invite' => $reception->number_can_invite,
+                    ]);
+                }
+
+                $reception->number_can_invite -= $totalCount;
+                $reception->save();
+            } else {
+                $number_of_people = $invitation->invitee()->sum('number_of_people');
+                $number_of_additional_package = $invitation->additional_package;
+                $number_can_invitee_new = $invitation->number_of_invitees;
+                $number_of_compensation = floor($invitation->number_of_compensation);
+
+                if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
+                    DB::rollBack();
+
+                    return response()->json([
+                        'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي النظامي.',
+                        'number_of_people' => $number_of_people,
+                    ]);
+                }
+
+                foreach ($inviteesData as $invitee) {
+                    for ($i = 0; $i < $invitee['count']; $i++) {
+                        if ($invitation->number_of_invitees > 0) {
+                            $invitation->number_of_invitees -= 1;
+                        } elseif ($invitation->additional_package > 0) {
+                            $invitation->additional_package -= 1;
+                        } elseif ($invitation->number_of_compensation > 0) {
+                            $invitation->number_of_compensation -= 1;
+                        }
                     }
                 }
+            }
+
+            $inviteesForWhatsapp = collect();
+            foreach ($inviteesData as $invitee) {
                 $uuid = Str::uuid();
                 $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
@@ -422,10 +447,10 @@ class InviteeController extends Controller
                 ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
-            $invitation->save();
-            $imagePath = $invitation->Template ? $invitation->Template->image : null;
 
-            // Process the image (convert from WEBP to PNG)
+            $invitation->save();
+
+            $imagePath = $invitation->Template ? $invitation->Template->image : null;
             $tempPngPath = $this->processInvitationImage($imagePath);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
@@ -433,17 +458,18 @@ class InviteeController extends Controller
             DB::commit();
 
             return response()->json([
-                'message' => 'Invitees Added and Messages Sent Successfully',
+                'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح.',
                 'whatsapp_response' => $whatsAppResponse,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return response()->json(['message' => 'An error occurred while processing your request.',
+            return response()->json(['message' => 'حدث خطأ أثناء معالجة الطلب.',
                 'err' => $e->getMessage(),
             ], 500);
         }
     }
+
 
     //// Api For Support
     public function store(StoreInviteeRequest $request)
@@ -580,6 +606,11 @@ class InviteeController extends Controller
     /// API To Store Image And Message
     public function storeImage(Request $request)
     {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+//            'message' => 'required|string',
+            'invitation_id' => 'required|exists:invitations,id',
+        ]);
         $invitation = Invitation::find($request->invitation_id);
         if (! $invitation) {
             return response()->json(['message' => 'Not Found'], 404);

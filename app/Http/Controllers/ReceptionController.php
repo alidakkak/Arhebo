@@ -69,17 +69,30 @@ class ReceptionController extends Controller
                 return response()->json(['message' => 'لا يمكن اضافة نفسك داعي اضافي'], 422);
             }
 
-            if ($remaining < $request->number_can_invite) {
-                return response()->json(['message' => 'العدد المضاف اكبر من المتبقي'], 422);
-            }
-
             $isExist = Reception::where('user_id', optional($user)->id)
                 ->where('invitation_id', $request->invitation_id)
                 ->where('type', $request->type)
                 ->exists();
 
+
             if ($isExist) {
                 return Response()->json(['message' => 'المدعو موجود بالفعل'], 422);
+            }
+
+            if ($remaining < $request->number_can_invite) {
+                return response()->json(['message' => 'العدد المضاف اكبر من المتبقي'], 422);
+            }
+
+            if ($request->type === 2) {
+                for ($i = 0; $i < $request->number_can_invite; $i++) {
+                    if ($invitation->number_of_invitees > 0) {
+                        $invitation->number_of_invitees -= 1;
+                    } elseif ($invitation->additional_package > 0) {
+                        $invitation->additional_package -= 1;
+                    } elseif ($invitation->number_of_compensation > 0) {
+                        $invitation->number_of_compensation -= 1;
+                    }
+                }
             }
 
             if (! $user) {
@@ -87,6 +100,7 @@ class ReceptionController extends Controller
                     'phone' => $request->phone,
                     'invitation_id' => $request->invitation_id,
                     'type' => $request->type,
+                    'number_can_invite_without_decrease' => $request->number_can_invite,
                     'number_can_invite' => $request->number_can_invite,
                 ]);
             } else {
@@ -94,11 +108,12 @@ class ReceptionController extends Controller
                     'user_id' => $user->id,
                     'invitation_id' => $request->invitation_id,
                     'type' => $request->type,
+                    'number_can_invite_without_decrease' => $request->number_can_invite,
                     'number_can_invite' => $request->number_can_invite,
                 ]);
             }
 
-            if ($request->type === '1') {
+            if ($request->type === 1) {
                 $whatsAppReceptionServices = new WhatsAppReceptionServices;
                 $whatsAppReceptionServices->receptionServices($request->phone, $event_name);
             } else {

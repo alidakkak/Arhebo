@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('invitation_id')->nullable()->references('id')
                 ->on('invitations')->onDelete('cascade');
             $table->string('phone')->nullable();
+            $table->integer('number_can_invite_without_decrease')->nullable();
             $table->integer('number_can_invite')->nullable();
             $table->enum('type', ['1', '2']);  /// 1 => reception , 2 => co-host
             $table->timestamps();

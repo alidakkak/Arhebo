@@ -36,12 +36,14 @@ class InvitationResource extends JsonResource
                 'city' => $this->invitation->city,
                 'region' => $this->invitation->region,
                 'template' => $this->invitation->template ? $this->invitation->template->image : $this->invitation->image,
+                'image' => $this->invitation->image,
             ];
         }
         $invitation = Invitation::find($this->id);
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
         $isAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->isNotEmpty();
+        $remainingForAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->select('number_can_invite');
 
         return [
             'id' => $this->id,
@@ -64,6 +66,7 @@ class InvitationResource extends JsonResource
             'confirmed' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::confirmed)->sum('number_of_people'),
             'rejected' => Invitee::where('invitation_id', $this->id)->where('status', InviteeTypes::rejected)->sum('number_of_people'),
             'remaining' => $remaining,
+            'remainingForAdditionalInvitee' => $remainingForAdditionalInvitee,
             'compensation' => $number_of_compensation,
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);

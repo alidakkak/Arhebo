@@ -12,5 +12,7 @@ class InvitationTypes
 
     public const updated = 4;
 
+    public const isPending = 5;
+
     public static array $statuses = [self::active, self::deleted, self::done, self::updated];
 }

@@ -387,7 +387,7 @@ class InviteeController extends Controller
                 return $carry + $item['count'];
             }, 0);
 
-            if ($reception && $reception->type == '2') {
+            if ($reception && $request->type == 2) {
                 if ($reception->number_can_invite < $totalCount) {
                     DB::rollBack();
 

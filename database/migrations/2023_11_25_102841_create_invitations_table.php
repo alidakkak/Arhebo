@@ -31,9 +31,9 @@ return new class extends Migration
             $table->text('location_name')->nullable();
             $table->string('inviter');
             $table->text('invitation_text')->nullable();
-            $table->string('status')->default(InvitationTypes::active);
+            $table->string('status')->default(InvitationTypes::isPending);
             $table->boolean('is_with_qr')->default(true);
-            $table->string('image')->nullable();
+            $table->string('image')->default('/test_invitation/work.jpg');
             $table->string('text_message')->nullable();
             $table->double('number_of_invitees');
             $table->double('number_of_compensation')->default(0);

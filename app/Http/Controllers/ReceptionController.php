@@ -84,6 +84,7 @@ class ReceptionController extends Controller
             }
 
             if ($request->type === 2) {
+                dd('ali');
                 for ($i = 0; $i < $request->number_can_invite; $i++) {
                     if ($invitation->number_of_invitees > 0) {
                         $invitation->number_of_invitees -= 1;

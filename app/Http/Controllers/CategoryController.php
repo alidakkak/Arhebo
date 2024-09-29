@@ -91,7 +91,7 @@ class CategoryController extends Controller
         }
 
         if ($filter) {
-            $templates = $category->templates()->whereHas('template_filters', fn($query) =>
+            $templates = $category->Template()->whereHas('template_filters', fn($query) =>
                 $query->where('filter_id' , $filter)
             )->get();
             return CategoryResource::collection($templates);

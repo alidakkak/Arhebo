@@ -153,7 +153,7 @@ class InviteeController extends Controller
             $qr = QR::where('invitee_id', $invitee->id)->first();
 
             if (! $qr) {
-                return response()->json(['message' => 'QR code not found'], 404);
+                return response()->json(['message' => 'Not found'], 404);
             }
 
             $qr->update([
@@ -161,7 +161,7 @@ class InviteeController extends Controller
                 'number_of_people' => $request->number_of_people,
             ]);
 
-            if ($request->number_of_people > $invitation->number_of_invitees + $invitation->additional_package + $invitation->number_of_compensation) {
+            if ($new_number_of_people > $invitation->number_of_invitees + $invitation->additional_package + $invitation->number_of_compensation) {
                 DB::rollBack();
 
                 return response()->json(['message' => 'You have reached the maximum number of invitees allowed'], 422);

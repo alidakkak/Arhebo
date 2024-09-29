@@ -83,31 +83,15 @@ class CategoryController extends Controller
         }
     }
 
-    public function show($category, $filter = null)
+    public function show($category)
     {
-        // البحث عن الفئة
         $category = Category::find($category);
 
-        // إذا لم يتم العثور على الفئة، إرسال رسالة خطأ
         if (! $category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        if ($filter) {
-            $filterInstance = Filter::where('category_id', $category->id)
-                ->first();
-
-            if (! $filterInstance) {
-                return response()->json(['message' => 'Filter not found'], 404);
-            }
-
-            $templates = $filterInstance->templates()->get();
-
-            return CategoryResource::collection($templates);
-        }
-
-        $allTemplates = $category->templates;
-        return CategoryResource::collection($allTemplates);
+            return CategoryResource::collection($category);
     }
 
 

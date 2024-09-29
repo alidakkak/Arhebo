@@ -8,7 +8,6 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryWithFilterResource;
 use App\Models\Category;
 use App\Models\Coupon;
-use App\Models\Filter;
 use App\Models\Input;
 use App\Models\Invitation;
 use App\Models\Invitee;
@@ -91,9 +90,8 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-            return CategoryResource::make($category);
+        return CategoryResource::make($category);
     }
-
 
     public function delete($categoryId)
     {

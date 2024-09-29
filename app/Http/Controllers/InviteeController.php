@@ -50,7 +50,7 @@ class InviteeController extends Controller
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->token,
+            'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
             'template_name' => 'ar7ebo_invitation_bz',
@@ -61,7 +61,7 @@ class InviteeController extends Controller
         // Parse response
         $responseData = $response->json();
         foreach ($responseData['receivers'] as $receiver) {
-            if (!$receiver['isValidWhatsAppNumber']) {
+            if (! $receiver['isValidWhatsAppNumber']) {
                 // Add invalid numbers to an array
                 $invalidNumbers[] = $receiver['waId'];
             }
@@ -72,7 +72,6 @@ class InviteeController extends Controller
             'invalidNumbers' => $invalidNumbers,
         ];
     }
-
 
     public function index(Request $request)
     {
@@ -632,7 +631,7 @@ class InviteeController extends Controller
         $invitation->update([
             'image' => $request->file('image'),
             'text_message' => $request->input('message'),
-            'status' => InvitationTypes::active
+            'status' => InvitationTypes::active,
         ]);
 
         return response()->json(['message' => 'Added Successfully']);

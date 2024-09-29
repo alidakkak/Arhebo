@@ -13,7 +13,7 @@ class Invitee extends Model
 
     public function invitation()
     {
-        return $this->belongsTo(Invitation::class, 'invitation_id');
+        return $this->belongsTo(Invitation::class);
     }
 
     public function qr()

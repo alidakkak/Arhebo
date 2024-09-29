@@ -22,6 +22,14 @@ class Template extends Model
         return $this->hasMany(Input::class, 'category_id', 'category_id');
     }
 
+    public function scopeFilter(array $filters , $query){
+        $query->when($filters['filter'] ?? false , fn($query , $filter) =>
+            $query->whereHas('template_filters' , fn($query) =>
+                $query->where('id' , $filter)
+            )
+        );
+    }
+
     public static $isSeederRunning = false;
 
     protected static function boot()

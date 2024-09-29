@@ -82,23 +82,25 @@ class CategoryController extends Controller
         }
     }
 
-    public function show($category, $filter = null)
+    public function show($category)
     {
-        $category = Category::find($category);
+        $category = Category::where('id' , $category)->first();
 
         if (! $category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        if ($filter) {
-            $templates = $category->Template()->whereHas('template_filters', fn($query) =>
-                $query->where('filter_id' , $filter)
-            )->get();
-            return CategoryResource::collection($templates);
-        }
+        $templates = $category->Template()->filters(\request(['filter']))->get();
 
-        $allTemplates = $category->templates;
-        return CategoryResource::collection($allTemplates);
+//
+//        if ($filter) {
+//                        $templates = $category->where('')
+//            )->get();
+//            return CategoryResource::collection($templates);
+//        }
+//
+//        $allTemplates = $category->templates;
+        return CategoryResource::collection($templates);
     }
 
     public function delete($categoryId)

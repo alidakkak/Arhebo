@@ -15,7 +15,17 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $templates = $this->Template()->paginate(10);
+        $filterId = $request->get('filter_id');
+        if ($filterId) {
+            // جلب التيمبلت المرتبطة بالفلتر المحدد
+            $templates = $this->Template()
+                ->whereHas('filters', function ($query) use ($filterId) {
+                    $query->where('filter_id', $filterId);
+                })->paginate(10);
+        } else {
+            // جلب جميع التيمبلت إذا لم يتم تمرير filter_id
+            $templates = $this->Template()->paginate(10);
+        }
 
         return [
             'id' => $this->id,

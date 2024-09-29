@@ -72,7 +72,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::post('deleteProfile', [AuthController::class, 'delete']);
 
     //////// Category
-    Route::get('categories/{category}', [CategoryController::class, 'show']);
+    Route::get('categories/{category}/{filter?}', [CategoryController::class, 'show']);
 
     ////  Filters
     Route::get('filters/{categoryId}', [FilterController::class, 'getFilterByCategory']);

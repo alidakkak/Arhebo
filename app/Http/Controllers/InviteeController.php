@@ -464,7 +464,7 @@ class InviteeController extends Controller
 
             $invitation->save();
 
-            $imagePath = $invitation->Template ? $invitation->Template->image : null;
+            $imagePath = $invitation->image;
             $tempPngPath = $this->processInvitationImage($imagePath);
             $whatsApp_template = $this->whatsApp_template($invitation->id);
             $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);

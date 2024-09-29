@@ -164,7 +164,7 @@ class InviteeController extends Controller
             if ($request->number_of_people > $invitation->number_of_invitees + $invitation->additional_package + $invitation->number_of_compensation) {
                 DB::rollBack();
 
-                return response()->json(['message' => 'You have reached the maximum number of invitees allowed']);
+                return response()->json(['message' => 'You have reached the maximum number of invitees allowed'], 422);
             }
 
             for ($i = 0; $i < $new_number_of_people; $i++) {

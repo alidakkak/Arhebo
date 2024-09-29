@@ -14,7 +14,7 @@ class FilterResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $templates = $this->templates()->paginate(10);
+//        $templates = $this->templates()->paginate(10);
 
         return [
             'id' => $this->id,
@@ -22,17 +22,17 @@ class FilterResource extends JsonResource
             'name_ar' => $this->name_ar,
             'category_id' => $this->category_id,
             'whatsApp_template' => $this->whatsApp_template,
-            'template' => TemplateResource::collection($templates),
-            'pagination' => [
-                'total' => $templates->total(),
-                'per_page' => $templates->perPage(),
-                'current_page' => $templates->currentPage(),
-                'last_page' => $templates->lastPage(),
-                'next_page_url' => $templates->nextPageUrl(),
-                'prev_page_url' => $templates->previousPageUrl(),
-                'first_page_url' => $templates->url(1),
-                'last_page_url' => $templates->url($templates->lastPage()),
-            ],
+//            'template' => TemplateResource::collection($templates),
+//            'pagination' => [
+//                'total' => $templates->total(),
+//                'per_page' => $templates->perPage(),
+//                'current_page' => $templates->currentPage(),
+//                'last_page' => $templates->lastPage(),
+//                'next_page_url' => $templates->nextPageUrl(),
+//                'prev_page_url' => $templates->previousPageUrl(),
+//                'first_page_url' => $templates->url(1),
+//                'last_page_url' => $templates->url($templates->lastPage()),
+//            ],
         ];
     }
 }

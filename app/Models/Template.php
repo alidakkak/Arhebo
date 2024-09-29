@@ -70,4 +70,8 @@ class Template extends Model
     {
         return $this->belongsToMany(Filter::class, 'filter_templates', 'template_id', 'filter_id');
     }
+
+    public function template_filters(){
+        return $this->hasMany(FilterTemplate::class);
+    }
 }

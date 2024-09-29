@@ -82,7 +82,7 @@ class CategoryController extends Controller
         }
     }
 
-    public function show($category)
+    public function show($category, $filter = null)
     {
         $category = Category::find($category);
 
@@ -90,7 +90,7 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        return CategoryResource::make($category);
+        return new CategoryResource($category, $filter);
     }
 
     public function delete($categoryId)

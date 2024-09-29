@@ -13,9 +13,17 @@ class CategoryResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    protected $filter;
+
+    public function __construct($resource, $filter = null)
+    {
+        parent::__construct($resource);
+        $this->filter = $filter;
+    }
+
     public function toArray(Request $request): array
     {
-        $filterId = $request->get('filter_id');
+        $filterId = $this->filter;
         if ($filterId) {
             $templates = $this->Template()
                 ->whereHas('filters', function ($query) use ($filterId) {

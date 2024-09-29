@@ -22,12 +22,12 @@ class StoreContactUsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|string',
-            'email' => 'required|string',
-            'facebook' => 'required|string',
-            'instagram' => 'required|string',
-            'whatsapp' => 'required|string',
-            'x' => 'required|string',
+            'phone' => 'nullable|string',
+            'email' => 'nullable|string',
+            'facebook' => 'nullable|string',
+            'instagram' => 'nullable|string',
+            'whatsapp' => 'nullable|string',
+            'x' => 'nullable|string',
         ];
     }
 }

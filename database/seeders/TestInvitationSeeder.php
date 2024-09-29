@@ -18,7 +18,7 @@ class TestInvitationSeeder extends Seeder
         Invitation::create([
             'category_id' => '1',
             'package_id' => '1',
-            'image' => 'https://api.dev1.gomaplus.tech/test_invitation/test1.jpg',
+            'image' => 'https://api.dev1.gomaplus.tech/test_invitation/test.png',
             'package_detail_id' => '1',
             'user_id' => '1',
             'hijri_date' => '1446-08-01',

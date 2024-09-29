@@ -22,14 +22,6 @@ class Template extends Model
         return $this->hasMany(Input::class, 'category_id', 'category_id');
     }
 
-    public function scopeFilter($query , array $filters){
-        $query->when($filters['filter'] ?? false , fn($query , $filter) =>
-            $query->whereHas('template_filters' , fn($query) =>
-                $query->where('filter_id' , $filter)
-            )
-        );
-    }
-
     public static $isSeederRunning = false;
 
     protected static function boot()
@@ -77,9 +69,5 @@ class Template extends Model
     public function filters()
     {
         return $this->belongsToMany(Filter::class, 'filter_templates', 'template_id', 'filter_id');
-    }
-
-    public function template_filters(){
-        return $this->hasMany(FilterTemplate::class);
     }
 }

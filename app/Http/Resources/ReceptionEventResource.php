@@ -55,6 +55,7 @@ class ReceptionEventResource extends JsonResource
             'remainingForAdditionalInvitee' => $remainingForAdditionalInvitee,
             'invitees' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
             'attendees' => $totalPresent,
+            'invitation_id' => $this->invitation->id,
         ];
     }
 }

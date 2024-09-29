@@ -66,7 +66,7 @@ class ShowOrdersResource extends JsonResource
                         'status' => $qr->number_of_people == 0 ? 1 : 0,
                     ];
                 }),
-                'template' => asset($template),
+                'template' => asset($this->invitation->image),
                 'passkit' => $this->externalId ? 1 : 0,
                 'test_invitation' => $this->uuid == 'test_invitation' ? 1 : 0,
             ];

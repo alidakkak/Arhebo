@@ -20,7 +20,7 @@ class ShowOrdersResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return $this->invitation;
+        return [$this->invitation];
 
         $invitaionInput = $this->invitation->invitationInput->map(fn ($input) => [
             'name' => Input::where('id', $input->input_id)->first()->input_name,

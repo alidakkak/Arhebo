@@ -91,7 +91,7 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-            return CategoryResource::collection($category);
+            return CategoryResource::make($category);
     }
 
 

@@ -90,9 +90,9 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        $templates = Template::where('category_id' , $category_id)->filter(['filter'])->get();
+        $tem = $category->Template;
 
-        return $templates;
+        return $tem;
 //
 
 //        if ($filter) {

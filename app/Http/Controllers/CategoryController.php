@@ -92,7 +92,9 @@ class CategoryController extends Controller
 
         $templates = Template::where('category_id' , $category)->filter(request(['filter']))->get();
 
+        return $templates;
 //
+
 //        if ($filter) {
 //                        $templates = $category->where('')
 //            )->get();
@@ -100,7 +102,7 @@ class CategoryController extends Controller
 //        }
 //
 //        $allTemplates = $category->templates;
-        return CategoryResource::collection($templates);
+//        return CategoryResource::collection($templates);
     }
 
     public function delete($categoryId)

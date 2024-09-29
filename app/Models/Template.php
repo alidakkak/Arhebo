@@ -24,7 +24,7 @@ class Template extends Model
 
     public function scopeFilter($query , array $filters){
         $query->when($filters['filter'] ?? false , fn($query , $filter) =>
-            $query->whereHas('template_filters' , fn($query) =>
+            $query->whereHas('template_filters' , fn() =>
                 $query->where('id' , $filter)
             )
         );

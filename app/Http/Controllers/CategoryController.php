@@ -82,15 +82,15 @@ class CategoryController extends Controller
         }
     }
 
-    public function show($category)
+    public function show($category_id)
     {
-        $category = Category::where('id' , $category)->first();
+        $category = Category::where('id' , $category_id)->first();
 
         if (! $category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        $templates = Template::where('category_id' , $category)->get();
+        $templates = Template::where('category_id' , $category_id)->get();
 
         return $templates;
 //

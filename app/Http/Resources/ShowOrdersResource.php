@@ -21,6 +21,13 @@ class ShowOrdersResource extends JsonResource
     public function toArray(Request $request): array
     {
 
+        $invitaionInput = $this->invitation->invitationInput->map(fn ($input) => [
+            'name' => Input::where('id', $input->input_id)->first()->input_name,
+            'name_ar' => Input::where('id', $input->input_id)->first()->input_name_ar,
+            'value' => $input->answer,
+        ]
+        );
+
         if ($request->route()->uri === 'api/showInvitationInfo/{invitee}') {
             if ($this->invitation->Template) {
                 $template = $this->invitation->Template->image;
@@ -48,6 +55,7 @@ class ShowOrdersResource extends JsonResource
                 'region' => $this->invitation->region,
                 'invitation_id' => $this->invitation->id,
                 'invitee_id' => $this->id,
+                'invitationInput' => $invitaionInput,
                 'apology_message' => $this->apology_message,
                 'accept_message' => $this->accept_message,
                 'QRCode' => $this->qr->map(function ($qr) {

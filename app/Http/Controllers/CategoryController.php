@@ -8,6 +8,7 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\CategoryWithFilterResource;
 use App\Models\Category;
 use App\Models\Coupon;
+use App\Models\Filter;
 use App\Models\Input;
 use App\Models\Invitation;
 use App\Models\Invitee;
@@ -82,30 +83,33 @@ class CategoryController extends Controller
         }
     }
 
-    public function show($category_id)
+    public function show($category, $filter = null)
     {
-        $category = Category::where('id' , $category_id)->first();
+        // البحث عن الفئة
+        $category = Category::find($category);
 
+        // إذا لم يتم العثور على الفئة، إرسال رسالة خطأ
         if (! $category) {
             return response()->json(['message' => 'Category not found'], 404);
         }
 
-        $tem = $category->Template()->whereHas('template_filters' , fn($query) =>
-            $query->where('filter_id' , 4)
-        );
+        if ($filter) {
+            $filterInstance = Filter::where('category_id', $category->id)
+                ->first();
 
-        return $tem;
-//
+            if (! $filterInstance) {
+                return response()->json(['message' => 'Filter not found'], 404);
+            }
 
-//        if ($filter) {
-//                        $templates = $category->where('')
-//            )->get();
-//            return CategoryResource::collection($templates);
-//        }
-//
-//        $allTemplates = $category->templates;
-//        return CategoryResource::collection($templates);
+            $templates = $filterInstance->templates()->get();
+
+            return CategoryResource::collection($templates);
+        }
+
+        $allTemplates = $category->templates;
+        return CategoryResource::collection($allTemplates);
     }
+
 
     public function delete($categoryId)
     {

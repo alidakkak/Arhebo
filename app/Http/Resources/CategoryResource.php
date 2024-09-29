@@ -20,13 +20,14 @@ class CategoryResource extends JsonResource
             $templates = $this->Template()
                 ->whereHas('filters', function ($query) use ($filterId) {
                     $query->where('filter_id', $filterId);
-                });
-//                ->paginate(10);
+                })
+                ->paginate(10);
         } else {
             $templates = $this->Template()->paginate(10);
         }
 
         return [
+            'filter' =>$filterId,
             'id' => $this->id,
             'name' => $this->name,
             'name_ar' => $this->name_ar,

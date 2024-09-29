@@ -203,7 +203,7 @@ class ReceptionController extends Controller
         $validatedData = $request->validate([
             'user_id' => ['required', Rule::exists('users', 'id')],
             'invitation_id' => ['required', Rule::exists('invitations', 'id')],
-            'type' => 'required'
+            'type' => 'required',
         ]);
 
         $userId = $validatedData['user_id'];
@@ -220,7 +220,7 @@ class ReceptionController extends Controller
         try {
             $number_can_invite = $reception->number_can_invite;
             $invitation->update([
-                'number_of_invitees' => $invitation->number_of_invitees + $number_can_invite
+                'number_of_invitees' => $invitation->number_of_invitees + $number_can_invite,
             ]);
             $reception->delete();
 

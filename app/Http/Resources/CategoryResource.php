@@ -20,7 +20,8 @@ class CategoryResource extends JsonResource
             $templates = $this->Template()
                 ->whereHas('filters', function ($query) use ($filterId) {
                     $query->where('filter_id', $filterId);
-                })->paginate(10);
+                });
+//                ->paginate(10);
         } else {
             $templates = $this->Template()->paginate(10);
         }
@@ -36,16 +37,16 @@ class CategoryResource extends JsonResource
             'category_code' => $this->category_code,
             'whatsApp_template' => $this->whatsApp_template,
             'template' => TemplateResource::collection($templates),
-            'pagination' => [
-                'total' => $templates->total(),
-                'per_page' => $templates->perPage(),
-                'current_page' => $templates->currentPage(),
-                'last_page' => $templates->lastPage(),
-                'next_page_url' => $templates->nextPageUrl(),
-                'prev_page_url' => $templates->previousPageUrl(),
-                'first_page_url' => $templates->url(1),
-                'last_page_url' => $templates->url($templates->lastPage()),
-            ],
+//            'pagination' => [
+//                'total' => $templates->total(),
+//                'per_page' => $templates->perPage(),
+//                'current_page' => $templates->currentPage(),
+//                'last_page' => $templates->lastPage(),
+//                'next_page_url' => $templates->nextPageUrl(),
+//                'prev_page_url' => $templates->previousPageUrl(),
+//                'first_page_url' => $templates->url(1),
+//                'last_page_url' => $templates->url($templates->lastPage()),
+//            ],
         ];
     }
 }

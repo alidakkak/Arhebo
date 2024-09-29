@@ -21,13 +21,6 @@ class ShowOrdersResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-        $invitationInput = $this->invitationInput->map(fn ($input) => [
-            'name' => Input::where('id', $input->input_id)->first()->input_name,
-            'name_ar' => Input::where('id', $input->input_id)->first()->input_name_ar,
-            'value' => $input->answer,
-        ]
-        );
-
         if ($request->route()->uri === 'api/showInvitationInfo/{invitee}') {
             if ($this->invitation->Template) {
                 $template = $this->invitation->Template->image;
@@ -57,7 +50,6 @@ class ShowOrdersResource extends JsonResource
                 'invitee_id' => $this->id,
                 'apology_message' => $this->apology_message,
                 'accept_message' => $this->accept_message,
-                'invitationInput' => $invitationInput,
                 'QRCode' => $this->qr->map(function ($qr) {
                     return [
                         'invitee_id' => $qr->invitee_id,
@@ -73,6 +65,12 @@ class ShowOrdersResource extends JsonResource
             ];
         }
 
+        $invitaionInput = $this->invitationInput->map(fn ($input) => [
+            'name' => Input::where('id', $input->input_id)->first()->input_name,
+            'name_ar' => Input::where('id', $input->input_id)->first()->input_name_ar,
+            'value' => $input->answer,
+        ]
+        );
 
         $message = Message::where('invitation_id', $this->id)
             ->orderBy('created_at', 'desc')
@@ -115,7 +113,7 @@ class ShowOrdersResource extends JsonResource
             'prohibitedThings' => ProhibitedThingResource::collection(ProhibitedThing::whereHas('invitationProhibited', function ($query) {
                 $query->where('invitation_id', $this->id);
             })->get()),
-            'invitationInput' => $invitationInput,
+            'invitationInput' => $invitaionInput,
             'extraFeature' => FeatureResource::collection($this->features),
             'additionalPackage' => AdditionalPackageResource::collection($this->additionalPackages),
             'attribute' => AttributeResource::collection($this->attributes),

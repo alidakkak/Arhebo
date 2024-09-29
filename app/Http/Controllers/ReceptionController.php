@@ -66,7 +66,7 @@ class ReceptionController extends Controller
             $number_of_compensation = floor($invitation->number_of_compensation);
             $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
 
-            if (auth()->user()->phone === $request->phone) {
+            if (auth()->user()->phone === $request->phone && $request->type == 2) {
                 return response()->json(['message' => 'لا يمكن اضافة نفسك داعي اضافي'], 422);
             }
 

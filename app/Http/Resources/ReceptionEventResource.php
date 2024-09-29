@@ -29,6 +29,7 @@ class ReceptionEventResource extends JsonResource
 
         $number_of_compensation = floor($invitation->number_of_compensation);
         $remaining = $invitation->number_of_invitees + $invitation->additional_package + $number_of_compensation;
+        $remainingForAdditionalInvitee = $invitation->receptions->where('type', 2)->where('user_id', auth()->id())->first()->number_can_invite ?? 0;
 
         return [
             'id' => $this->id,
@@ -46,11 +47,12 @@ class ReceptionEventResource extends JsonResource
             'city' => $invitation->city,
             'region' => $invitation->region,
             'template' => $invitation->template->image,
-            'invited' => Invitee::where('invitation_id', $invitation->id)->count(),
-            'waiting' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::waiting)->count(),
-            'confirmed' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::confirmed)->count(),
-            'rejected' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::rejected)->count(),
+            'invited' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
+            'waiting' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::waiting)->sum('number_of_people'),
+            'confirmed' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::confirmed)->sum('number_of_people'),
+            'rejected' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::rejected)->sum('number_of_people'),
             'remaining' => $remaining,
+            'remainingForAdditionalInvitee' => $remainingForAdditionalInvitee,
             'invitees' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
             'attendees' => $totalPresent,
         ];

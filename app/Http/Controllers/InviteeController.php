@@ -10,6 +10,7 @@ use App\Models\Invitation;
 use App\Models\Invitee;
 use App\Models\QR;
 use App\Models\Reception;
+use App\Statuses\InvitationTypes;
 use App\Statuses\InviteeTypes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class InviteeController extends Controller
     public function sendWhatsAppMessages(array $invitees, $image, $whatsApp_template)
     {
         $receivers = [];
+        $invalidNumbers = [];
 
         foreach ($invitees as $invitee) {
             $receivers[] = [
@@ -48,7 +50,7 @@ class InviteeController extends Controller
         }
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer '.$this->token,
+            'Authorization' => 'Bearer ' . $this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url, [
             'template_name' => 'ar7ebo_invitation_bz',
@@ -56,8 +58,21 @@ class InviteeController extends Controller
             'receivers' => $receivers,
         ]);
 
-        return $response->json();
+        // Parse response
+        $responseData = $response->json();
+        foreach ($responseData['receivers'] as $receiver) {
+            if (!$receiver['isValidWhatsAppNumber']) {
+                // Add invalid numbers to an array
+                $invalidNumbers[] = $receiver['waId'];
+            }
+        }
+
+        return [
+            'whatsAppResponse' => $responseData,
+            'invalidNumbers' => $invalidNumbers,
+        ];
     }
+
 
     public function index(Request $request)
     {
@@ -387,7 +402,7 @@ class InviteeController extends Controller
                 return $carry + $item['count'];
             }, 0);
 
-            if ($reception && $request->type == 2) {
+            if ($reception && $reception->type == 2) {
                 if ($reception->number_can_invite < $totalCount) {
                     DB::rollBack();
 
@@ -617,6 +632,7 @@ class InviteeController extends Controller
         $invitation->update([
             'image' => $request->file('image'),
             'text_message' => $request->input('message'),
+            'status' => InvitationTypes::active
         ]);
 
         return response()->json(['message' => 'Added Successfully']);

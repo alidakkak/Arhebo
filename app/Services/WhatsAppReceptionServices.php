@@ -36,15 +36,14 @@ class WhatsAppReceptionServices
         $receiver = $responseData['receivers'][0];
 
         if (! $receiver['isValidWhatsAppNumber']) {
-            return response()->json([
+            return [
                 'status' => false,
-                'message' => 'الرقم '.$phone.' غير متوفر على WhatsApp.',
-            ], 422);
+                'message' => 'الرقم ' . $phone . ' غير متوفر على WhatsApp.',
+            ];
         }
-
-        return response()->json([
-            'status' => true,
-            'result' => $responseData,
-        ]);
+            return [
+                'status' => true,
+                'result' => $responseData,
+            ];
     }
 }

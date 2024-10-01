@@ -2233,43 +2233,43 @@ class TemplateJawadSeeder extends Seeder
                 'template_code' => '8E00013',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00001.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00001.webp',
                 'template_code' => '8F00001',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00002.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00002.webp',
                 'template_code' => '8F00002',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00003.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00003.webp',
                 'template_code' => '8F00003',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00004.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00004.webp',
                 'template_code' => '8F00004',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00005.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00005.webp',
                 'template_code' => '8F00005',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00006.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00006.webp',
                 'template_code' => '8F00006',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00007.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00007.webp',
                 'template_code' => '8F00007',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00008.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00008.webp',
                 'template_code' => '8F00008',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00009.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00009.webp',
                 'template_code' => '8F00009',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
-                'image' => '/Invitations/Entertainment/Recovery - Healing/8F00010.webp',
+                'image' => '/Invitations/Entertainment/Recovery-Healing/8F00010.webp',
                 'template_code' => '8F00010',
                 'category_id' => $categories->where('name', '=', 'Entertainment')->first()?->id,
             ], [
@@ -5118,34 +5118,34 @@ class TemplateJawadSeeder extends Seeder
                 'filter_id' => $filters->where('name', '=', 'Receptions')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00001')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00002')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00003')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00004')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00005')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00006')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00007')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00008')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00009')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8F00010')->first()?->id,
-                'filter_id' => $filters->where('name', '=', 'Recovery - Healing')->first()?->id,
+                'filter_id' => $filters->where('name', '=', 'Recovery-Healing')->first()?->id,
             ], [
                 'template_id' => $templates->where('template_code', '=', '8G00001')->first()?->id,
                 'filter_id' => $filters->where('name', '=', 'Retirement')->first()?->id,

@@ -651,7 +651,7 @@ class InviteeController extends Controller
         ]);
 
         $whatsAppDesignerFinishingService = new WhatsAppDesignerFinishingService;
-        dd($invitation->event_name);
+        dd($invitation->inviter);
         $whatsAppDesignerFinishingService->WhatsAppDesignerFinishing($user->phone, $invitation->event_name,
             $invitation->inviter);
 

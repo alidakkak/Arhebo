@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-class WhatsAppReceptionServices
+class WhatsAppDesignerFinishingService
 {
     private $url;
 
@@ -16,35 +16,26 @@ class WhatsAppReceptionServices
         $this->token = env('WHATSAPP_API_TOKEN');
     }
 
-    public function receptionServices($phone, $event_name)
+    public function WhatsAppDesignerFinishing($phone, $event_name, $name)
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer '.$this->token,
             'Content-Type' => 'application/json',
         ])->post($this->url.$phone, [
-            'template_name' => 'reception_invetation',
-            'broadcast_name' => 'reception_invetation',
+            'template_name' => 'designer_finishing',
+            'broadcast_name' => 'designer_finishing',
             'parameters' => [
                 [
                     'name' => 'event_name',
                     'value' => $event_name,
                 ],
+                [
+                    'name' => 'name',
+                    'value' => $name,
+                ],
             ],
         ]);
 
-        $responseData = $response->json();
-        $receiver = $responseData['receivers'][0];
-
-        if (! $receiver['isValidWhatsAppNumber']) {
-            return [
-                'status' => false,
-                'message' => 'الرقم '.$phone.' غير متوفر على واتساب',
-            ];
-        }
-
-        return [
-            'status' => true,
-            'result' => $responseData,
-        ];
+        return $response->json();
     }
 }

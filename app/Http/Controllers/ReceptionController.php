@@ -204,38 +204,38 @@ class ReceptionController extends Controller
 
         return $users;
     }
-/*
-    public function delete(Request $request)
-    {
-        $validatedData = $request->validate([
-            'user_id' => ['required', Rule::exists('users', 'id')],
-            'invitation_id' => ['required', Rule::exists('invitations', 'id')],
-            'type' => 'required',
-        ]);
-
-        $userId = $validatedData['user_id'];
-        $invitationId = $validatedData['invitation_id'];
-        $invitation = Invitation::where('id', $invitationId)->first();
-        $reception = Reception::where('user_id', $userId)->where('invitation_id', $invitationId)
-            ->where('type', $request->type)
-            ->first();
-
-        if (! $reception) {
-            return response()->json(['message' => 'Reception not found'], 404);
-        }
-
-        try {
-            $number_can_invite = $reception->number_can_invite;
-            $invitation->update([
-                'number_of_invitees' => $invitation->number_of_invitees + $number_can_invite,
+    /*
+        public function delete(Request $request)
+        {
+            $validatedData = $request->validate([
+                'user_id' => ['required', Rule::exists('users', 'id')],
+                'invitation_id' => ['required', Rule::exists('invitations', 'id')],
+                'type' => 'required',
             ]);
-            $reception->delete();
 
-            return response()->json(['message' => 'Deleted Successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed to delete the reception', 'error' => $e->getMessage()], 500);
-        }
-    }*/
+            $userId = $validatedData['user_id'];
+            $invitationId = $validatedData['invitation_id'];
+            $invitation = Invitation::where('id', $invitationId)->first();
+            $reception = Reception::where('user_id', $userId)->where('invitation_id', $invitationId)
+                ->where('type', $request->type)
+                ->first();
+
+            if (! $reception) {
+                return response()->json(['message' => 'Reception not found'], 404);
+            }
+
+            try {
+                $number_can_invite = $reception->number_can_invite;
+                $invitation->update([
+                    'number_of_invitees' => $invitation->number_of_invitees + $number_can_invite,
+                ]);
+                $reception->delete();
+
+                return response()->json(['message' => 'Deleted Successfully']);
+            } catch (\Exception $e) {
+                return response()->json(['message' => 'Failed to delete the reception', 'error' => $e->getMessage()], 500);
+            }
+        }*/
 
     public function delete($reception)
     {

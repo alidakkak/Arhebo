@@ -19,7 +19,7 @@ class ReceptionResource extends JsonResource
             'user' => $this->user,
             'status' => $this->user ? 1 : 0,
             'phone' => $this->phone,
-//            'invitation' => $this->invitation,
+            //            'invitation' => $this->invitation,
         ];
     }
 }

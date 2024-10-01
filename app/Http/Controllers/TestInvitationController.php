@@ -28,8 +28,9 @@ class TestInvitationController extends Controller
             $remainingMinutes = 1440 - $lastInvitation->created_at->diffInMinutes(Carbon::now());
             $hours = floor($remainingMinutes / 60);
             $minutes = $remainingMinutes % 60;
+
             return response()->json([
-                'message' => 'لا يمكنك إرسال دعوة جديدة. يرجى المحاولة بعد ' . $hours . ' ساعات و ' . $minutes . ' دقائق.',
+                'message' => 'لا يمكنك إرسال دعوة جديدة. يرجى المحاولة بعد '.$hours.' ساعات و '.$minutes.' دقائق.',
             ], 422);
         }
         $response = Http::withHeaders([
@@ -57,12 +58,11 @@ class TestInvitationController extends Controller
         $responseData = $response->json();
         $receiver = $responseData['receivers'][0];
 
-        if (!$receiver['isValidWhatsAppNumber']) {
+        if (! $receiver['isValidWhatsAppNumber']) {
             return response()->json([
-                'message' => 'الرقم ' . $request->input('phone') . ' غير متوفر على WhatsApp.',
+                'message' => 'الرقم '.$request->input('phone').' غير متوفر على WhatsApp.',
             ], 422);
         }
-
 
         $TestInvitation = TestInvitation::create([
             'user_id' => $user->id,

@@ -116,10 +116,16 @@ class ReceptionController extends Controller
 
             if ($request->type == 1) {
                 $whatsAppReceptionServices = new WhatsAppReceptionServices;
-                $whatsAppReceptionServices->receptionServices($request->phone, $event_name);
+                $whatsAppResponse = $whatsAppReceptionServices->receptionServices($request->phone, $event_name);
+                if (! $whatsAppResponse['status']) {
+                    return response()->json(['message' => $whatsAppResponse['message']], 422);
+                }
             } else {
                 $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices;
-                $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
+                $whatsAppResponse = $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
+                if (! $whatsAppResponse['status']) {
+                    return response()->json(['message' => $whatsAppResponse['message']], 422);
+                }
             }
 
             DB::commit();

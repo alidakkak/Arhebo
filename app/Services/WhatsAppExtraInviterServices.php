@@ -35,13 +35,15 @@ class WhatsAppExtraInviterServices
         $responseData = $response->json();
         $receiver = $responseData['receivers'][0];
 
-        if (!$receiver['isValidWhatsAppNumber']) {
+        if (! $receiver['isValidWhatsAppNumber']) {
             return response()->json([
-                'message' => 'الرقم ' . $phone . ' غير متوفر على WhatsApp.',
+                'status' => false,
+                'message' => 'الرقم '.$phone.' غير متوفر على WhatsApp.',
             ], 422);
         }
 
         return response()->json([
+            'status' => true,
             'result' => $responseData,
         ]);
     }

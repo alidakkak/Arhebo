@@ -46,7 +46,7 @@ class ReceptionEventResource extends JsonResource
             'status' => $invitation->status,
             'city' => $invitation->city,
             'region' => $invitation->region,
-            'template' => $invitation->template->image,
+            'template' => $invitation->image,
             'invited' => Invitee::where('invitation_id', $invitation->id)->sum('number_of_people'),
             'waiting' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::waiting)->sum('number_of_people'),
             'confirmed' => Invitee::where('invitation_id', $invitation->id)->where('status', InviteeTypes::confirmed)->sum('number_of_people'),

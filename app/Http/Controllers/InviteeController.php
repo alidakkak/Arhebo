@@ -643,6 +643,7 @@ class InviteeController extends Controller
         if (! $invitation) {
             return response()->json(['message' => 'Not Found'], 404);
         }
+        $user = $invitation->user;
         $invitation->update([
             'image' => $request->file('image'),
             'text_message' => $request->input('message'),
@@ -650,7 +651,7 @@ class InviteeController extends Controller
         ]);
 
         $whatsAppDesignerFinishingService = new WhatsAppDesignerFinishingService;
-        $whatsAppDesignerFinishingService->WhatsAppDesignerFinishing($request->phone, $invitation->event_name,
+        $whatsAppDesignerFinishingService->WhatsAppDesignerFinishing($user->phone, $invitation->event_name,
             $invitation->inviter);
 
         return response()->json(['message' => 'Added Successfully']);

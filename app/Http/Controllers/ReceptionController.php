@@ -117,13 +117,13 @@ class ReceptionController extends Controller
             if ($request->type == 1) {
                 $whatsAppReceptionServices = new WhatsAppReceptionServices;
                 $whatsAppResponse = $whatsAppReceptionServices->receptionServices($request->phone, $event_name);
-                if (! $whatsAppResponse['status']) {
+                if ($whatsAppResponse['status'] === false) {
                     return response()->json(['message' => $whatsAppResponse['message']], 422);
                 }
             } else {
                 $whatsAppExtraInviterServices = new WhatsAppExtraInviterServices;
                 $whatsAppResponse = $whatsAppExtraInviterServices->extraInviterServices($request->phone, $event_name);
-                if (! $whatsAppResponse['status']) {
+                if ($whatsAppResponse['status'] === false) {
                     return response()->json(['message' => $whatsAppResponse['message']], 422);
                 }
             }

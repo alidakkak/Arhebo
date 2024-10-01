@@ -239,7 +239,7 @@ class ReceptionController extends Controller
 
     public function delete($reception)
     {
-        $reception = Reception::where('id', $reception)->find();
+        $reception = Reception::where('id', $reception)->first();
         $invitation = $reception->invitation;
 
         if (! $reception) {

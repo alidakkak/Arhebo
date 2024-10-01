@@ -138,7 +138,7 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
     Route::get('receptionsEvent', [ReceptionController::class, 'myEvent']);
     Route::get('receptionsEvent/{Id}', [ReceptionController::class, 'myEventById']);
     Route::post('receptions', [ReceptionController::class, 'store']);
-    Route::delete('receptionsDelete', [ReceptionController::class, 'delete']);
+    Route::delete('receptionsDelete/{reception}', [ReceptionController::class, 'delete']);
     Route::get('receptionList', [ReceptionController::class, 'receptionList']);
     Route::post('scanQRCodeForInvitee', [ReceptionController::class, 'scanQRCodeForInvitee']);
 

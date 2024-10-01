@@ -50,13 +50,26 @@ class TestInvitationController extends Controller
                 ],
             ],
         ]);
+
+        $responseData = $response->json();
+        $receiver = $responseData['receivers'][0];
+
+        if (!$receiver['isValidWhatsAppNumber']) {
+            return response()->json([
+                'message' => 'الرقم غير صالح على WhatsApp.',
+                'phone' => $receiver['waId'],
+                'error' => 'الرقم الذي أدخلته غير مسجل في WhatsApp.'
+            ], 422);
+        }
+
+
         $TestInvitation = TestInvitation::create([
             'user_id' => $user->id,
         ]);
 
-        return [
-            $response->json(),
+        return response()->json([
+            'result' => $responseData,
             'created_at' => $TestInvitation->created_at->format('Y-m-d H:i:s'),
-        ];
+        ]);
     }
 }

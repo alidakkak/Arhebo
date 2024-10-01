@@ -70,7 +70,7 @@ class ReceptionController extends Controller
                 return response()->json(['message' => 'لا يمكن اضافة نفسك داعي اضافي'], 422);
             }
 
-            $isExist = Reception::where('user_id', optional($user)->id)
+            $isExist = Reception::where('user_id', $user->id)
                 ->where('invitation_id', $request->invitation_id)
                 ->where('type', $request->type)
                 ->exists();

@@ -44,9 +44,9 @@ class StoreReceptionRequest extends FormRequest
             'phone' => [
                 'required',
                 'max:20',
-                //                Rule::unique('receptions')->where(function ($query) {
-                //                    return $query->where('type', $this->type);
-                //                }),
+//                                Rule::unique('receptions')->where(function ($query) {
+//                                    return $query->where('type', $this->type);
+//                                }),
             ],
         ];
     }

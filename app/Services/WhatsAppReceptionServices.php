@@ -38,7 +38,7 @@ class WhatsAppReceptionServices
         if (! $receiver['isValidWhatsAppNumber']) {
             return [
                 'status' => false,
-                'message' => 'الرقم ' . $phone . ' غير متوفر على واتساب.',
+                'message' => 'الرقم ' . $phone . ' غير متوفر على واتساب',
             ];
         }
             return [

@@ -60,7 +60,7 @@ class TestInvitationController extends Controller
 
         if (! $receiver['isValidWhatsAppNumber']) {
             return response()->json([
-                'message' => 'الرقم ' . $request->input('phone') . ' غير متوفر على واتساب.',
+                'message' => 'الرقم ' . $request->input('phone') . ' غير متوفر على واتساب',
             ], 422);
         }
 

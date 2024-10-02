@@ -197,7 +197,7 @@ class FilterSeeder extends Seeder
 
         Filter::create([
             'category_id' => '8',
-            'name' => 'Recovery – Healing',
+            'name' => 'Recovery-Healing',
             'name_ar' => 'شفاء',
             'whatsApp_template' => $whatsAppTemplate,
         ]);

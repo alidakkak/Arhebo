@@ -158,4 +158,3 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 Route::get('terms', [TermController::class, 'index']);
 ////  Nickname
 Route::get('nicknames', [NicknameController::class, 'index']);
-Route::get('nicknames', [NicknameController::class, 'index']);

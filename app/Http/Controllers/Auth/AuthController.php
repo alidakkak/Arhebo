@@ -117,7 +117,7 @@ class AuthController extends Controller
 
         if ($whatsapp_response['status'] === false) {
             return response()->json([
-                'whatsapp_response' => $whatsapp_response,
+                'message' => 'الرقم '.$user->phone.' غير متوفر على واتساب',
             ], 422);
         }
 

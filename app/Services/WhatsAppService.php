@@ -39,7 +39,6 @@ class WhatsAppService
             if (! $receiver['isValidWhatsAppNumber']) {
                 return [
                     'status' => false,
-                    'message' => 'الرقم '.$to.' غير متوفر على واتساب',
                 ];
             }
 

@@ -294,7 +294,7 @@ class InviteeController extends Controller
     public function addInvitees(StoreInviteeRequest $request)
     {
         DB::beginTransaction();
-//        try {
+        try {
             $invitation = Invitation::find($request->invitation_id);
             $reception = Reception::where('invitation_id', $invitation->id)
                 ->where('user_id', auth()->user()->id)
@@ -306,7 +306,6 @@ class InviteeController extends Controller
             if ($reception && $reception->type == 2) {
                 if ($reception->number_can_invite < $totalCount) {
                     DB::rollBack();
-
                     return response()->json([
                         'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي الإضافي.',
                         'number_can_invite' => $reception->number_can_invite,
@@ -320,7 +319,6 @@ class InviteeController extends Controller
 
                 if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
                     DB::rollBack();
-
                     return response()->json([
                         'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي النظامي.',
                         'number_of_people' => $number_of_people,
@@ -328,11 +326,27 @@ class InviteeController extends Controller
                 }
             }
 
-            $inviteesForWhatsapp = collect($inviteesData)->map(function ($invitee) {
-                return [
-                    'phone' => $invitee['number'],
-                    'count' => $invitee['count'],
+            $storedInvitees = collect();
+            foreach ($inviteesData as $invitee) {
+                $uuid = Str::uuid();
+                $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
+                    'phone' => $invitee['number'],
+                    'number_of_people' => $invitee['count'],
+                    'invitation_id' => $request->input('invitation_id'),
+                    'uuid' => $uuid,
+                ]);
+                $newInvitee->update([
+                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                ]);
+                $storedInvitees->push($newInvitee);
+            }
+
+            $inviteesForWhatsapp = $storedInvitees->map(function ($invitee) {
+                return [
+                    'phone' => $invitee->phone,
+                    'name' => $invitee->name,
+                    'link' => $invitee->link,
                 ];
             });
 
@@ -345,6 +359,12 @@ class InviteeController extends Controller
             $validInviteesData = collect($whatsAppResponse['validInvitees'])->mapWithKeys(function ($validInvitee) {
                 return [$validInvitee['phone'] => $validInvitee['count']];
             });
+
+            // حذف المدعوين غير الصالحين بناءً على الرد من واتساب
+            $invalidInvitees = collect($whatsAppResponse['invalidNumbers']);
+            if ($invalidInvitees->isNotEmpty()) {
+                Invitee::whereIn('phone', $invalidInvitees->toArray())->delete();
+            }
 
             $validInviteesCount = $validInviteesData->sum();
 
@@ -363,21 +383,6 @@ class InviteeController extends Controller
                 }
             }
 
-            foreach ($validInviteesData as $invitee) {
-                $uuid = Str::uuid();
-                $newInvitee = Invitee::create([
-                    'name' => $invitee['name'],
-                    'phone' => $invitee['number'],
-                    'number_of_people' => $invitee['count'],
-                    'invitation_id' => $request->input('invitation_id'),
-                    'uuid' => $uuid,
-                ]);
-                $newInvitee->update([
-                    'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
-                ]);
-                $this->generateQRCodeForInvitee($newInvitee->id);
-            }
-
             $invitation->save();
 
             DB::commit();
@@ -385,16 +390,17 @@ class InviteeController extends Controller
             return response()->json([
                 'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح.',
                 'whatsapp_response' => $whatsAppResponse,
-                'invalid_numbers' => $whatsAppResponse['invalidNumbers'],
+                'invalid_numbers' => $invalidInvitees,
             ]);
-//        } catch (\Exception $e) {
-//            DB::rollBack();
-//
-//            return response()->json(['message' => 'حدث خطأ أثناء معالجة الطلب.',
-//                'err' => $e->getMessage(),
-//            ], 500);
-//        }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'حدث خطأ أثناء معالجة الطلب.',
+                'err' => $e->getMessage(),
+            ], 500);
+        }
     }
+
     /*
         public function addInvitees(StoreInviteeRequest $request)
         {

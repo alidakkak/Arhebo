@@ -329,12 +329,14 @@ class InviteeController extends Controller
 
             DB::commit();
 
-            if ($invalidInvitees->isEmpty()) {
+            if ($validInviteesCount > 0 && $invalidInvitees->isEmpty()) {
+                // الحالة الأولى: جميع الأرقام صحيحة
                 return response()->json([
                     'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح. جميع الأرقام كانت صالحة.',
                     'whatsapp_response' => $whatsAppResponse,
                 ]);
-            } elseif ($invalidInvitees->isNotEmpty()) {
+            } elseif ($validInviteesCount > 0 && $invalidInvitees->isNotEmpty()) {
+                // الحالة الثانية: بعض الأرقام صحيحة والباقي غير صحيحة
                 return response()->json([
                     'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح. بعض الأرقام كانت غير صالحة.',
 //                    'valid_invitees_count' => $validInviteesCount,
@@ -342,6 +344,7 @@ class InviteeController extends Controller
                     'whatsapp_response' => $whatsAppResponse,
                 ]);
             } else {
+                // الحالة الثالثة: جميع الأرقام غير صحيحة
                 return response()->json([
                     'message' => 'لم يتم إرسال الرسائل. جميع الأرقام كانت غير صالحة.',
 //                    'invalid_numbers' => $invalidInvitees->toArray(),

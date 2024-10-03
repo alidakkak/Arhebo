@@ -430,7 +430,7 @@ class InviteeController extends Controller
             });
 
             // حذف المدعوين غير الصالحين بناءً على الرد من واتساب
-            $invalidInvitees = collect($whatsAppResponse['invalidNumbers']);
+            $invalidInvitees = collect($whatsAppResponse['invalidNumbers'])->pluck('phone');
             if ($invalidInvitees->isNotEmpty()) {
                 Invitee::whereIn('phone', $invalidInvitees->toArray())->delete();
             }

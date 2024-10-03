@@ -284,6 +284,7 @@ class InviteeController extends Controller
                     'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $storedInvitees->push($newInvitee);
+                $this->generateQRCodeForInvitee($newInvitee->id);
             }
 
             $inviteesForWhatsapp = $storedInvitees->map(function ($invitee) {
@@ -306,7 +307,7 @@ class InviteeController extends Controller
             });
 
             // حذف المدعوين غير الصالحين بناءً على الرد من واتساب
-            $invalidInvitees = collect($whatsAppResponse['invalidNumbers']);
+            $invalidInvitees = collect($whatsAppResponse['invalidNumbers'])->pluck('phone');
             if ($invalidInvitees->isNotEmpty()) {
                 Invitee::whereIn('phone', $invalidInvitees->toArray())->delete();
             }
@@ -407,6 +408,7 @@ class InviteeController extends Controller
                     'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
                 $storedInvitees->push($newInvitee);
+                $this->generateQRCodeForInvitee($newInvitee->id);
             }
 
             $inviteesForWhatsapp = $storedInvitees->map(function ($invitee) {

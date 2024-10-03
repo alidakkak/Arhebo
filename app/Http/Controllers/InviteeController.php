@@ -32,52 +32,6 @@ class InviteeController extends Controller
         $this->url = env('WHATSAPP_API_URL_SEND_TEMPLATE_MESSAGES');
         $this->token = env('WHATSAPP_API_TOKEN');
     }
-    /*
-        public function sendWhatsAppMessages(array $invitees, $image, $whatsApp_template)
-        {
-            $receivers = [];
-            $validInvitees = [];
-            $invalidNumbers = [];
-
-            foreach ($invitees as $invitee) {
-                $receivers[] = [
-                    'whatsappNumber' => $invitee['phone'],
-                    'customParams' => [
-                        ['name' => 'product_image_url', 'value' => $image],
-                        ['name' => 'nice_sentence', 'value' => $whatsApp_template],
-                        ['name' => 'name', 'value' => $invitee['name']],
-                        ['name' => '1', 'value' => $invitee['link']],
-                    ],
-                ];
-            }
-
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $this->token,
-                'Content-Type' => 'application/json',
-            ])->post($this->url, [
-                'template_name' => 'ar7ebo_invitation_bz',
-                'broadcast_name' => 'ar7ebo_invitation_bz',
-                'receivers' => $receivers,
-            ]);
-
-            // Parse response
-            $responseData = $response->json();
-            foreach ($responseData['receivers'] as $index => $receiver) {
-                if ($receiver['isValidWhatsAppNumber']) {
-                    // إذا كان الرقم صالحًا، أضفه إلى قائمة الأشخاص الصالحين
-                    $validInvitees[] = $invitees[$index];
-                } else {
-                    // أضف الأرقام غير الصالحة إلى مصفوفة الأرقام غير الصالحة
-                    $invalidNumbers[] = $receiver['waId'];
-                }
-            }
-
-            return [
-                'validInvitees' => $validInvitees,
-                'invalidNumbers' => $invalidNumbers,
-                'whatsAppResponse' => $responseData,
-            ];
-        }*/
 
     public function sendWhatsAppMessages(array $invitees, $image, $whatsApp_template)
     {
@@ -107,8 +61,54 @@ class InviteeController extends Controller
         ]);
 
         // Parse response
-        return $response->json();
+        $responseData = $response->json();
+        foreach ($responseData['receivers'] as $index => $receiver) {
+            if ($receiver['isValidWhatsAppNumber']) {
+                // إذا كان الرقم صالحًا، أضفه إلى قائمة الأشخاص الصالحين
+                $validInvitees[] = $invitees[$index];
+            } else {
+                // أضف الأرقام غير الصالحة إلى مصفوفة الأرقام غير الصالحة
+                $invalidNumbers[] = $receiver['waId'];
+            }
+        }
+
+        return [
+            'validInvitees' => $validInvitees,
+            'invalidNumbers' => $invalidNumbers,
+            'whatsAppResponse' => $responseData,
+        ];
     }
+
+    /* public function sendWhatsAppMessages(array $invitees, $image, $whatsApp_template)
+     {
+         $receivers = [];
+         $validInvitees = [];
+         $invalidNumbers = [];
+
+         foreach ($invitees as $invitee) {
+             $receivers[] = [
+                 'whatsappNumber' => $invitee['phone'],
+                 'customParams' => [
+                     ['name' => 'product_image_url', 'value' => $image],
+                     ['name' => 'nice_sentence', 'value' => $whatsApp_template],
+                     ['name' => 'name', 'value' => $invitee['name']],
+                     ['name' => '1', 'value' => $invitee['link']],
+                 ],
+             ];
+         }
+
+         $response = Http::withHeaders([
+             'Authorization' => 'Bearer '.$this->token,
+             'Content-Type' => 'application/json',
+         ])->post($this->url, [
+             'template_name' => 'ar7ebo_invitation_bz',
+             'broadcast_name' => 'ar7ebo_invitation_bz',
+             'receivers' => $receivers,
+         ]);
+
+         // Parse response
+         return $response->json();
+     }*/
 
     public function index(Request $request)
     {
@@ -291,117 +291,6 @@ class InviteeController extends Controller
     }
 
     /// Api For Flutter
-    /* public function addInvitees(StoreInviteeRequest $request)
-     {
-         DB::beginTransaction();
-         try {
-             $invitation = Invitation::find($request->invitation_id);
-             $reception = Reception::where('invitation_id', $invitation->id)
-                 ->where('user_id', auth()->user()->id)
-                 ->first();
-
-             $inviteesData = $request->input('invitees', []);
-             $inviteesForWhatsapp = collect();
-
-             foreach ($inviteesData as $invitee) {
-                 $inviteesForWhatsapp->push([
-                     'phone' => $invitee['number'],
-                     'count' => $invitee['count'],
-                     'name' => $invitee['name'],
-                 ]);
-             }
-
-             $imagePath = $invitation->image;
-             $tempPngPath = $this->processInvitationImage($imagePath);
-             $whatsApp_template = $this->whatsApp_template($invitation->id);
-             $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
-             File::delete($tempPngPath);
-
-             $validInviteesCount = 0;
-             $validInviteesData = collect();
-
-             foreach ($whatsAppResponse['validInvitees'] as $validInvitee) {
-                 foreach ($inviteesData as $invitee) {
-                     if ($invitee['number'] === $validInvitee['phone']) {
-                         $validInviteesCount += $invitee['count'];
-                         $validInviteesData->push($invitee);
-                     }
-                 }
-             }
-
-             if ($reception && $reception->type == 2) {
-                 if ($reception->number_can_invite < $validInviteesCount) {
-                     DB::rollBack();
-
-                     return response()->json([
-                         'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي الإضافي.',
-                         'number_can_invite' => $reception->number_can_invite,
-                     ]);
-                 }
-
-                 $reception->number_can_invite -= $validInviteesCount;
-                 $reception->save();
-             } else {
-                 $number_of_people = $invitation->invitee()->sum('number_of_people');
-                 $number_of_additional_package = $invitation->additional_package;
-                 $number_can_invitee_new = $invitation->number_of_invitees;
-                 $number_of_compensation = floor($invitation->number_of_compensation);
-
-                 if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $validInviteesCount) {
-                     DB::rollBack();
-
-                     return response()->json([
-                         'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي النظامي.',
-                         'number_of_people' => $number_of_people,
-                     ]);
-                 }
-
-                 foreach ($validInviteesData as $invitee) {
-                     for ($i = 0; $i < $invitee['count']; $i++) {
-                         if ($invitation->number_of_invitees > 0) {
-                             $invitation->number_of_invitees -= 1;
-                         } elseif ($invitation->additional_package > 0) {
-                             $invitation->additional_package -= 1;
-                         } elseif ($invitation->number_of_compensation > 0) {
-                             $invitation->number_of_compensation -= 1;
-                         }
-                     }
-                 }
-             }
-
-             foreach ($validInviteesData as $invitee) {
-                 $uuid = Str::uuid();
-                 $newInvitee = Invitee::create([
-                     'name' => $invitee['name'],
-                     'phone' => $invitee['number'],
-                     'number_of_people' => $invitee['count'],
-                     'invitation_id' => $request->input('invitation_id'),
-                     'uuid' => $uuid,
-                 ]);
-                 $newInvitee->update([
-                     'link' => 'invitation-card/' . $newInvitee->id . '?uuid=' . $uuid,
-                 ]);
-                 $this->generateQRCodeForInvitee($newInvitee->id);
-             }
-
-             $invitation->save();
-
-             DB::commit();
-
-             return response()->json([
-                 'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح.',
-                 'whatsapp_response' => $whatsAppResponse,
-                 'invalid_numbers' => $whatsAppResponse['invalidNumbers'],
-             ]);
-         } catch (\Exception $e) {
-             DB::rollBack();
-
-             return response()->json(['message' => 'حدث خطأ أثناء معالجة الطلب.',
-                 'err' => $e->getMessage(),
-             ], 500);
-         }
-     }*/
-
     public function addInvitees(StoreInviteeRequest $request)
     {
         DB::beginTransaction();
@@ -412,9 +301,7 @@ class InviteeController extends Controller
                 ->first();
 
             $inviteesData = $request->input('invitees', []);
-            $totalCount = array_reduce($inviteesData, function ($carry, $item) {
-                return $carry + $item['count'];
-            }, 0);
+            $totalCount = array_sum(array_column($inviteesData, 'count'));
 
             if ($reception && $reception->type == 2) {
                 if ($reception->number_can_invite < $totalCount) {
@@ -425,9 +312,6 @@ class InviteeController extends Controller
                         'number_can_invite' => $reception->number_can_invite,
                     ]);
                 }
-
-                $reception->number_can_invite -= $totalCount;
-                $reception->save();
             } else {
                 $number_of_people = $invitation->invitee()->sum('number_of_people');
                 $number_of_additional_package = $invitation->additional_package;
@@ -442,22 +326,44 @@ class InviteeController extends Controller
                         'number_of_people' => $number_of_people,
                     ]);
                 }
+            }
 
-                foreach ($inviteesData as $invitee) {
-                    for ($i = 0; $i < $invitee['count']; $i++) {
-                        if ($invitation->number_of_invitees > 0) {
-                            $invitation->number_of_invitees -= 1;
-                        } elseif ($invitation->additional_package > 0) {
-                            $invitation->additional_package -= 1;
-                        } elseif ($invitation->number_of_compensation > 0) {
-                            $invitation->number_of_compensation -= 1;
-                        }
+            $inviteesForWhatsapp = collect($inviteesData)->map(function ($invitee) {
+                return [
+                    'phone' => $invitee['number'],
+                    'count' => $invitee['count'],
+                    'name' => $invitee['name'],
+                ];
+            });
+
+            $imagePath = $invitation->image;
+            $tempPngPath = $this->processInvitationImage($imagePath);
+            $whatsApp_template = $this->whatsApp_template($invitation->id);
+            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
+            File::delete($tempPngPath);
+
+            $validInviteesData = collect($whatsAppResponse['validInvitees'])->mapWithKeys(function ($validInvitee) {
+                return [$validInvitee['phone'] => $validInvitee['count']];
+            });
+
+            $validInviteesCount = $validInviteesData->sum();
+
+            if ($reception && $reception->type == 2) {
+                $reception->number_can_invite -= $validInviteesCount;
+                $reception->save();
+            } else {
+                for ($i = 0; $i < $validInviteesCount; $i++) {
+                    if ($invitation->number_of_invitees > 0) {
+                        $invitation->number_of_invitees -= 1;
+                    } elseif ($invitation->additional_package > 0) {
+                        $invitation->additional_package -= 1;
+                    } elseif ($invitation->number_of_compensation > 0) {
+                        $invitation->number_of_compensation -= 1;
                     }
                 }
             }
 
-            $inviteesForWhatsapp = collect();
-            foreach ($inviteesData as $invitee) {
+            foreach ($validInviteesData as $invitee) {
                 $uuid = Str::uuid();
                 $newInvitee = Invitee::create([
                     'name' => $invitee['name'],
@@ -469,26 +375,17 @@ class InviteeController extends Controller
                 $newInvitee->update([
                     'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
                 ]);
-                $inviteesForWhatsapp->push([
-                    'phone' => $newInvitee->phone,
-                    'link' => $newInvitee->link,
-                    'name' => $newInvitee->name,
-                ]);
                 $this->generateQRCodeForInvitee($newInvitee->id);
             }
 
             $invitation->save();
 
-            $imagePath = $invitation->image;
-            $tempPngPath = $this->processInvitationImage($imagePath);
-            $whatsApp_template = $this->whatsApp_template($invitation->id);
-            $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
-            File::delete($tempPngPath);
             DB::commit();
 
             return response()->json([
                 'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح.',
                 'whatsapp_response' => $whatsAppResponse,
+                'invalid_numbers' => $whatsAppResponse['invalidNumbers'],
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -498,6 +395,103 @@ class InviteeController extends Controller
             ], 500);
         }
     }
+    /*
+        public function addInvitees(StoreInviteeRequest $request)
+        {
+            DB::beginTransaction();
+            try {
+                $invitation = Invitation::find($request->invitation_id);
+                $reception = Reception::where('invitation_id', $invitation->id)
+                    ->where('user_id', auth()->user()->id)
+                    ->first();
+
+                $inviteesData = $request->input('invitees', []);
+                $totalCount = array_reduce($inviteesData, function ($carry, $item) {
+                    return $carry + $item['count'];
+                }, 0);
+
+                if ($reception && $reception->type == 2) {
+                    if ($reception->number_can_invite < $totalCount) {
+                        DB::rollBack();
+
+                        return response()->json([
+                            'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي الإضافي.',
+                            'number_can_invite' => $reception->number_can_invite,
+                        ]);
+                    }
+
+                    $reception->number_can_invite -= $totalCount;
+                    $reception->save();
+                } else {
+                    $number_of_people = $invitation->invitee()->sum('number_of_people');
+                    $number_of_additional_package = $invitation->additional_package;
+                    $number_can_invitee_new = $invitation->number_of_invitees;
+                    $number_of_compensation = floor($invitation->number_of_compensation);
+
+                    if ($number_can_invitee_new + $number_of_compensation + $number_of_additional_package < $totalCount) {
+                        DB::rollBack();
+
+                        return response()->json([
+                            'message' => 'لقد تجاوزت العدد المسموح به للمدعوين بالنسبة للداعي النظامي.',
+                            'number_of_people' => $number_of_people,
+                        ]);
+                    }
+
+                    foreach ($inviteesData as $invitee) {
+                        for ($i = 0; $i < $invitee['count']; $i++) {
+                            if ($invitation->number_of_invitees > 0) {
+                                $invitation->number_of_invitees -= 1;
+                            } elseif ($invitation->additional_package > 0) {
+                                $invitation->additional_package -= 1;
+                            } elseif ($invitation->number_of_compensation > 0) {
+                                $invitation->number_of_compensation -= 1;
+                            }
+                        }
+                    }
+                }
+
+                $inviteesForWhatsapp = collect();
+                foreach ($inviteesData as $invitee) {
+                    $uuid = Str::uuid();
+                    $newInvitee = Invitee::create([
+                        'name' => $invitee['name'],
+                        'phone' => $invitee['number'],
+                        'number_of_people' => $invitee['count'],
+                        'invitation_id' => $request->input('invitation_id'),
+                        'uuid' => $uuid,
+                    ]);
+                    $newInvitee->update([
+                        'link' => 'invitation-card/'.$newInvitee->id.'?uuid='.$uuid,
+                    ]);
+                    $inviteesForWhatsapp->push([
+                        'phone' => $newInvitee->phone,
+                        'link' => $newInvitee->link,
+                        'name' => $newInvitee->name,
+                    ]);
+                    $this->generateQRCodeForInvitee($newInvitee->id);
+                }
+
+                $invitation->save();
+
+                $imagePath = $invitation->image;
+                $tempPngPath = $this->processInvitationImage($imagePath);
+                $whatsApp_template = $this->whatsApp_template($invitation->id);
+                $whatsAppResponse = $this->sendWhatsAppMessages($inviteesForWhatsapp->toArray(), url($tempPngPath), $whatsApp_template);
+                File::delete($tempPngPath);
+                DB::commit();
+
+                return response()->json([
+                    'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح.',
+                    'whatsapp_response' => $whatsAppResponse,
+                ]);
+            } catch (\Exception $e) {
+                DB::rollBack();
+
+                return response()->json(['message' => 'حدث خطأ أثناء معالجة الطلب.',
+                    'err' => $e->getMessage(),
+                ], 500);
+            }
+        }*/
 
     //// Api For Support
     public function store(StoreInviteeRequest $request)

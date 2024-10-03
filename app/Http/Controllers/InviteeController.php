@@ -68,7 +68,10 @@ class InviteeController extends Controller
                 $validInvitees[] = $invitees[$index];
             } else {
                 // أضف الأرقام غير الصالحة إلى مصفوفة الأرقام غير الصالحة
-                $invalidNumbers[] = $receiver['waId'];
+                $invalidNumbers[] = [
+                    'phone' => $invitees[$index]['phone'],
+                    'name' => $invitees[$index]['name'],
+                ];
             }
         }
 

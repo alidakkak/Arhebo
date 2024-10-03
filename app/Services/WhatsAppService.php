@@ -33,15 +33,20 @@ class WhatsAppService
                 ],
             ]);
 
-            if ($response->successful()) {
-                return $response->json();
-            } else {
+            $responseData = $response->json();
+            $receiver = $responseData['receivers'][0];
+
+            if (! $receiver['isValidWhatsAppNumber']) {
                 return [
-                    'status' => 'error',
-                    'message' => 'Failed to send message',
-                    'details' => $response->json(),
+                    'status' => false,
+                    'message' => 'الرقم '.$to.' غير متوفر على واتساب',
                 ];
             }
+
+            return [
+                'status' => true,
+                'result' => $responseData,
+            ];
         } catch (\Exception $e) {
             return [
                 'status' => 'error',

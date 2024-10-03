@@ -294,7 +294,7 @@ class InviteeController extends Controller
     public function addInvitees(StoreInviteeRequest $request)
     {
         DB::beginTransaction();
-        try {
+//        try {
             $invitation = Invitation::find($request->invitation_id);
             $reception = Reception::where('invitation_id', $invitation->id)
                 ->where('user_id', auth()->user()->id)
@@ -387,13 +387,13 @@ class InviteeController extends Controller
                 'whatsapp_response' => $whatsAppResponse,
                 'invalid_numbers' => $whatsAppResponse['invalidNumbers'],
             ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json(['message' => 'حدث خطأ أثناء معالجة الطلب.',
-                'err' => $e->getMessage(),
-            ], 500);
-        }
+//        } catch (\Exception $e) {
+//            DB::rollBack();
+//
+//            return response()->json(['message' => 'حدث خطأ أثناء معالجة الطلب.',
+//                'err' => $e->getMessage(),
+//            ], 500);
+//        }
     }
     /*
         public function addInvitees(StoreInviteeRequest $request)

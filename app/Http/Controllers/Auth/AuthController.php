@@ -101,7 +101,7 @@ class AuthController extends Controller
         ));
         $otp = $user->generate_code();
         $whatsApp = new WhatsAppService;
-        $whatsApp->sendWhatsAppMessage($user->phone, $otp);
+        $whatsapp_response = $whatsApp->sendWhatsAppMessage($user->phone, $otp);
 
         DeviceToken::updateOrCreate(
             ['user_id' => $user->id, 'device_token' => $request->device_token],
@@ -113,6 +113,12 @@ class AuthController extends Controller
             $reception->update([
                 'user_id' => $user->id,
             ]);
+        }
+
+        if ($whatsapp_response['status'] === false) {
+            return response()->json([
+                'whatsapp_response' => $whatsapp_response,
+            ], 422);
         }
 
         return response()->json([

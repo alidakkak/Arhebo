@@ -347,6 +347,7 @@ class InviteeController extends Controller
                     'phone' => $invitee->phone,
                     'name' => $invitee->name,
                     'link' => $invitee->link,
+                    'count' => $invitee->number_of_people,
                 ];
             });
 

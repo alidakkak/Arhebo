@@ -30,21 +30,25 @@ class messageThanksToAttendees extends Command
 
         $now = Carbon::now()->format('Y-m-d H:i');
 
-        $invitations = Invitation::whereRaw("STR_TO_DATE(CONCAT(miladi_date, ' ', `to`), '%Y-%m-%d %H:%i') <= ?", [$now])
+        $invitations = Invitation::where('is_sending_to_attendees', 0)
+        ->whereRaw("STR_TO_DATE(CONCAT(miladi_date, ' ', `to`), '%Y-%m-%d %H:%i') <= ?", [$now])
             ->whereRaw("STR_TO_DATE(CONCAT(miladi_date, ' ', `to`), '%Y-%m-%d %H:%i') >= ?", [Carbon::now()->subHour()->format('Y-m-d H:i')])
             ->get();
 
         foreach ($invitations as $invitation) {
-            $result = $this->sendWhatsAppReminder($invitation);
+            $result = $this->sendWhatsAppThanks($invitation);
             if ($result['status']) {
-                $this->info('Reminder sent successfully for invitation ID: '.$invitation->id);
+                $invitation->update([
+                    'is_sending_to_attendees' => 1,
+                ]);
+                $this->info('Sent successfully for invitation ID: '.$invitation->id);
             } else {
-                $this->error('Failed to send reminder for invitation ID: '.$invitation->id.' with error: '.$result['message']);
+                $this->error('Failed to send for invitation ID: '.$invitation->id.' with error: '.$result['message']);
             }
         }
     }
 
-    private function sendWhatsAppReminder($invitation)
+    private function sendWhatsAppThanks($invitation)
     {
         $invitees = $invitation->invitee()->where('status', InviteeTypes::confirmed)->get(['name', 'phone']);
         if ($invitees->isEmpty()) {
@@ -78,11 +82,11 @@ class messageThanksToAttendees extends Command
         $result = $responseData['result'] ?? false;
 
         if ($result) {
-            return ['status' => true, 'message' => 'Reminder sent successfully'];
+            return ['status' => true, 'message' => 'Sent successfully'];
         } else {
             $errors = $responseData['errors'] ?? [];
 
-            return ['status' => false, 'message' => 'Failed to send reminder', 'errors' => $errors];
+            return ['status' => false, 'message' => 'Send reminder', 'errors' => $errors];
         }
     }
 }

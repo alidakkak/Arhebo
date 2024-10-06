@@ -310,7 +310,7 @@ class InviteeController extends Controller
             $invalidInvitees = collect($whatsAppResponse['invalidNumbers'])->pluck('phone');
             if ($invalidInvitees->isNotEmpty()) {
                 $invitee_id = Invitee::whereIn('phone', $invalidInvitees->toArray())->delete();
-                QR::where('invitee_id', $invitee_id)->delete();
+                QR::where('invitee_id', $invitee_id->id)->delete();
             }
 
             $validInviteesCount = $validInviteesData->sum();

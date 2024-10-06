@@ -308,12 +308,15 @@ class InviteeController extends Controller
 
             // حذف المدعوين غير الصالحين بناءً على الرد من واتساب
             $invalidInvitees = collect($whatsAppResponse['invalidNumbers'])->pluck('phone');
-            $inviteeID = collect($whatsAppResponse['invalidNumbers'])->pluck('id');
             if ($invalidInvitees->isNotEmpty()) {
-                Invitee::whereIn('phone', $invalidInvitees->toArray())->delete();
-                QR::whereIn('invitee_id', $inviteeID->toArray())->delete();
-            }
+                $inviteesToDelete = Invitee::whereIn('phone', $invalidInvitees->toArray())->get();
 
+                $inviteeIds = $inviteesToDelete->pluck('id');
+
+                Invitee::whereIn('id', $inviteeIds)->delete();
+
+                QR::whereIn('invitee_id', $inviteeIds)->delete();
+            }
             $validInviteesCount = $validInviteesData->sum();
 
             if ($reception && $reception->type == 2) {
@@ -343,14 +346,14 @@ class InviteeController extends Controller
             } elseif ($validInviteesCount > 0 && $invalidInvitees->isNotEmpty()) {
                 return response()->json([
                     'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح. بعض الأرقام كانت غير صالحة.',
-//                    'valid_invitees_count' => $validInviteesCount,
-//                    'invalid_numbers' => $invalidInvitees->toArray(),
+                    //                    'valid_invitees_count' => $validInviteesCount,
+                    //                    'invalid_numbers' => $invalidInvitees->toArray(),
                     'whatsapp_response' => $whatsAppResponse,
                 ]);
             } else {
                 return response()->json([
                     'message' => 'لم يتم إرسال الرسائل. جميع الأرقام كانت غير صالحة.',
-//                    'invalid_numbers' => $invalidInvitees->toArray(),
+                    //                    'invalid_numbers' => $invalidInvitees->toArray(),
                     'whatsapp_response' => $whatsAppResponse,
                 ], 422);
             }
@@ -461,14 +464,14 @@ class InviteeController extends Controller
             } elseif ($validInviteesCount > 0 && $invalidInvitees->isNotEmpty()) {
                 return response()->json([
                     'message' => 'تم إضافة المدعوين وإرسال الرسائل بنجاح. بعض الأرقام كانت غير صالحة.',
-//                    'valid_invitees_count' => $validInviteesCount,
-//                    'invalid_numbers' => $invalidInvitees->toArray(),
+                    //                    'valid_invitees_count' => $validInviteesCount,
+                    //                    'invalid_numbers' => $invalidInvitees->toArray(),
                     'whatsapp_response' => $whatsAppResponse,
                 ]);
             } else {
                 return response()->json([
                     'message' => 'لم يتم إرسال الرسائل. جميع الأرقام كانت غير صالحة.',
-//                    'invalid_numbers' => $invalidInvitees->toArray(),
+                    //                    'invalid_numbers' => $invalidInvitees->toArray(),
                     'whatsapp_response' => $whatsAppResponse,
                 ], 422);
             }

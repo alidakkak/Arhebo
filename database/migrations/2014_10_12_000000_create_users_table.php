@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('is_verified')->default(0);
             $table->boolean('isActive')->default(1);  // If User want to delete Account
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

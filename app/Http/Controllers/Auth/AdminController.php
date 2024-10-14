@@ -83,4 +83,8 @@ class AdminController extends Controller
             return response()->json(['message' => 'Invalid or expired OTP.'], 400);
         }
     }
+
+    public function getUserToDelete(){
+
+    }
 }

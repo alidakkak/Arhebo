@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'type' => UserTypes::SUPPORT,
         ]);
 
-        \App\Models\User::factory()->create([
+        \App\Models\User::create([
             'name' => 'Ali',
             'email' => 'ali@gmail.com',
             'phone' => '0937356470',

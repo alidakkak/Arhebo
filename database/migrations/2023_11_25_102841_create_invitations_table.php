@@ -38,7 +38,7 @@ return new class extends Migration
             $table->double('number_of_invitees');
             $table->double('number_of_compensation')->default(0);
             $table->double('additional_package')->default(0);
-            $table->double('is_sending_to_attendees')->default(0); /// Things message 
+            $table->double('is_sending_to_attendees')->default(0); /// Things message
             $table->timestamps();
         });
     }

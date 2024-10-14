@@ -34,6 +34,7 @@ class UserProfileResource extends JsonResource
             'code' => $this->code,
             'expired_at' => $this->expired_at,
             'is_verified' => $this->is_verified,
+            'isActive' => $this->isActive,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

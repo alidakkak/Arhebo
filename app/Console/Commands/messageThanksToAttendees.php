@@ -31,7 +31,7 @@ class messageThanksToAttendees extends Command
         $now = Carbon::now()->format('Y-m-d H:i');
 
         $invitations = Invitation::where('is_sending_to_attendees', 0)
-        ->whereRaw("STR_TO_DATE(CONCAT(miladi_date, ' ', `to`), '%Y-%m-%d %H:%i') <= ?", [$now])
+            ->whereRaw("STR_TO_DATE(CONCAT(miladi_date, ' ', `to`), '%Y-%m-%d %H:%i') <= ?", [$now])
             ->whereRaw("STR_TO_DATE(CONCAT(miladi_date, ' ', `to`), '%Y-%m-%d %H:%i') >= ?", [Carbon::now()->subHour()->format('Y-m-d H:i')])
             ->get();
 

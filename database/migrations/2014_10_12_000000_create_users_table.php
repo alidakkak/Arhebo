@@ -27,6 +27,7 @@ return new class extends Migration
             $table->integer('code')->nullable();
             $table->dateTime('expired_at')->nullable();
             $table->boolean('is_verified')->default(0);
+            $table->boolean('isActive')->default(1);  // If User want to delete Account
             $table->rememberToken();
             $table->timestamps();
         });

@@ -163,4 +163,5 @@ Route::get('nicknames', [NicknameController::class, 'index']);
 ////  Delete User
 Route::post('deleteUser', [AdminController::class, 'deleteUser']);
 Route::post('whatsAppVerificationToDeleteUser', [AdminController::class, 'whatsAppVerificationToDeleteUser']);
-Route::post('deleteUser', [AdminController::class, 'deleteUser']);
+Route::get('getUserToDelete', [AdminController::class, 'getUserToDelete']);
+Route::delete('deleteUserForSupport/{userID}', [AdminController::class, 'deleteUserForSupport']);

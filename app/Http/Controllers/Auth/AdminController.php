@@ -38,7 +38,8 @@ class AdminController extends Controller
         ], 201);
     }
 
-    public function deleteUser(Request $request) {
+    public function deleteUser(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:100',
             'phone' => 'required|max:20',
@@ -48,7 +49,7 @@ class AdminController extends Controller
         }
         $user = User::where('email', $request->email)->where('phone', $request->phone)->first();
 
-        if (!$user) {
+        if (! $user) {
             return response()->json(['message' => 'المستخدم غير موجود'], 422);
         }
 
@@ -72,7 +73,7 @@ class AdminController extends Controller
             $user->save();
 
             $user->update([
-               'isActive' => 0,
+                'isActive' => 0,
             ]);
 
             return response()->json([
@@ -84,7 +85,21 @@ class AdminController extends Controller
         }
     }
 
-    public function getUserToDelete(){
+    public function getUserToDelete()
+    {
+        $users = User::where('isActive', 0)->get();
 
+        return UserProfileResource::collection($users);
+    }
+
+    public function deleteUserForSupport($userID)
+    {
+        $user = User::find($userID);
+        if (! $user) {
+            return response()->json(['message' => 'Not Found'], 404);
+        }
+        $user->delete();
+
+        return response()->json(['message' => 'Deleted SuccessFully']);
     }
 }

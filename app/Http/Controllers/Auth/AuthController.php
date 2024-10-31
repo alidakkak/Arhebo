@@ -79,7 +79,7 @@ class AuthController extends Controller
         })->where('is_verified', 0)
             ->first();
         if ($existingUser) {
-            $existingUser->delete();
+            $existingUser->forceDelete();
         }
 
         $validator = Validator::make($request->all(), [
@@ -123,6 +123,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Verify Your Email',
+            'whatsapp_response' => $whatsapp_response
         ], 201);
     }
 

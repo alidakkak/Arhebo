@@ -23,31 +23,41 @@ class StoreInvitationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // General invitation information
             'category_id' => ['required', Rule::exists('categories', 'id')->whereNull('deleted_at')],
             'filter_id' => ['nullable', Rule::exists('filters', 'id')],
             'template_id' => ['nullable', Rule::exists('templates', 'id')->whereNull('deleted_at')],
             'package_id' => ['required', Rule::exists('packages', 'id')->whereNull('deleted_at')],
             'package_detail_id' => ['required', Rule::exists('package_details', 'id')->whereNull('deleted_at')],
-            'prohibited.*.prohibited_thing_id' => ['required', Rule::exists('prohibited_things', 'id')],
+
+            // Event details
             'hijri_date' => 'required|string',
             'miladi_date' => 'required|string',
             'from' => 'required|string',
             'to' => 'required|string',
             'event_name' => 'required|string',
-            //            'city' => 'string',
-            //            'region' => 'string',
             'location_link' => 'required|string',
             'location_name' => 'nullable|string',
             'inviter' => 'required|string',
-            //            'is_with_qr' => 'required|boolean',
-            'answers.*.answer' => 'required',
+
+            // Prohibited items
+            'prohibited' => 'array',
+            'prohibited.*.prohibited_thing_id' => ['nullable', Rule::exists('prohibited_things', 'id')],
+
+            // Invitation answers
+            'answers' => 'array',
+            'answers.*.answer' => 'nullable|string',
             'answers.*.input_id' => ['required', Rule::exists('inputs', 'id')],
-            'features.*.value' => 'nullable',
-            'features.*.quantity' => 'required',
-            'features.*.feature_id' => ['required', Rule::exists('features', 'id')],
-            'Attributes' => 'array',
-            'Attributes.*.attribute_id' => 'required|exists:attributes,id',
-            'Attributes.*.value' => 'required',
+
+            // Features and attributes
+            'features' => 'array',
+            'features.*.value' => 'nullable|string',
+            'features.*.quantity' => 'nullable|integer',
+            'features.*.feature_id' => ['nullable', Rule::exists('features', 'id')],
+
+            'attributes' => 'array',
+            'attributes.*.attribute_id' => ['nullable', Rule::exists('attributes', 'id')],
+            'attributes.*.value' => 'nullable|string',
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\InviteeController;
 use App\Http\Controllers\PassKitController;
@@ -27,8 +28,16 @@ Route::group(['middleware' => ['check_user:1,3', 'lang']], function () {
     ////  Template By Code
     Route::get('templateByCode', [TemplateController::class, 'templateByCode']);
 
+    ////  Delete User
+    Route::get('getUserToDelete', [AdminController::class, 'getUserToDelete']);
+    Route::delete('deleteUserForSupport/{userID}', [AdminController::class, 'deleteUserForSupport']);
+
 });
 
 /// PassKit
 Route::post('createMember', [PassKitController::class, 'createMember']);
 Route::put('updateMember', [PassKitController::class, 'updateMember']);
+
+////  Delete User
+Route::post('deleteUser', [AdminController::class, 'deleteUser']);
+Route::post('whatsAppVerificationToDeleteUser', [AdminController::class, 'whatsAppVerificationToDeleteUser']);

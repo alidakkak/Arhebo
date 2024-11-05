@@ -123,7 +123,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Verify Your Email',
-            'whatsapp_response' => $whatsapp_response
+            'whatsapp_response' => $whatsapp_response,
         ], 201);
     }
 

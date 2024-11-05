@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AboutAppController;
 use App\Http\Controllers\AdditionalPackageController;
-use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailOTP\EmailVerificationsController;
 use App\Http\Controllers\Auth\EmailOTP\ForgetPasswordController;
@@ -159,4 +158,3 @@ Route::group(['middleware' => ['check_user:1,2', 'lang']], function () {
 Route::get('terms', [TermController::class, 'index']);
 ////  Nickname
 Route::get('nicknames', [NicknameController::class, 'index']);
-

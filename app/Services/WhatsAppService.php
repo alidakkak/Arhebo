@@ -39,6 +39,7 @@ class WhatsAppService
             if (! $receiver['isValidWhatsAppNumber']) {
                 return [
                     'status' => false,
+                    'result' => $responseData,
                 ];
             }
 
